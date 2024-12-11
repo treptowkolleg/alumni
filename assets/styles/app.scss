@@ -1,0 +1,134 @@
+
+
+// prepare vars
+$enable-caret: true;
+$fa-font-path: "../../node_modules/font-awesome/fonts";
+$font-size-base: 1rem;
+$font-weight-normal: 300;
+
+@import url("https://use.typekit.net/elf7icg.css");
+
+$enable-shadows: false;
+$enable-gradients: false;
+$enable-rounded: false;
+
+$systemBlue: #294a70;
+$systemGreen:	rgba( 52,199, 89,1);
+$systemIndigo:	rgba( 88, 86,214,1);
+$systemOrange:	rgba(255,149,  0,1);
+$systemPink:	rgba(255, 45, 85,1);
+$systemPurple:	rgba(175, 82,222,1);
+$systemRed:	    rgba(255, 59, 48,1);
+$systemTeal:	rgba( 90,200,250,1);
+$systemYellow: #eea943;
+
+
+$systemGray:	rgba(142,142,147,1);
+$systemGray2:	rgba(174,174,178,1);
+$systemGray3:	rgba(199,199,204,1);
+$systemGray4:	rgba(209,209,214,1);
+$systemGray5:	rgba(229,229,234,1);
+$systemGray6:	rgba(242,242,247,.8);
+
+$clear: 		rgba(  0,  0,  0,0);
+$full-black:	rgba( 8, 8, 12,1);
+$black:		    rgba( 54, 54, 54,1);
+$white:		    rgba(255,255,255,1);
+
+
+$body-bg:       lighten($systemGray6,3);
+$body-color:    rgba($black,.9);
+$table-striped-bg: lighten($systemGray6,1);
+$list-group-action-hover-bg: lighten($systemGray6,1);
+$list-group-action-active-bg: darken($systemGray6,2);
+$table-hover-bg: darken($systemGray6,2);
+
+
+.bg-lighter{background-color: lighten($systemGray6,1)!important;}
+
+
+$grays: (
+        "100": $systemGray6,
+        "200": $systemGray6,
+        "300": $systemGray5,
+        "400": $systemGray5,
+        "500": $systemGray4,
+        "600": $systemGray4,
+        "700": $systemGray3,
+        "800": $systemGray2,
+        "900": $systemGray,
+);
+
+$input-bg:                              rgba($white,.8);
+$input-disabled-bg:                     rgba($systemGray5,.8);
+$input-color:                           $body-color;
+$input-border-color:                    $systemGray6;
+$border-color:                      $systemGray5;
+$input-border-color:                $systemGray5;
+$input-focus-border-color:          $systemBlue;
+
+$theme-colors: (
+        "primary":    $systemBlue,
+        "secondary":  $systemYellow,
+        "success":    $systemGreen,
+        "warning":    $systemOrange,
+        "danger":     $systemRed,
+        "info":       $systemTeal,
+        "light":      $systemGray6,
+        "dark":       $black,
+        "black":       $full-black,
+        "white":      $white,
+        "side":       $body-bg
+);
+
+
+// Input Forms
+//======================================================================================================================
+
+$input-bg:                              rgba($white,.8);
+$input-disabled-bg:                     rgba($systemGray5,.8);
+$input-color:                           $body-color;
+$input-border-color:                    $systemGray6;
+
+
+// Component Settings
+//======================================================================================================================
+
+$component-active-bg:               rgba($systemGray5,.2);
+$input-btn-focus-width:             1px;
+$link-hover-color:                  $systemBlue;
+
+$border-color:                      $systemGray5;
+$input-border-color:                $systemGray5;
+$input-focus-border-color:          $systemBlue;
+
+$border-radius:                     .3rem;
+$border-radius-lg:                  .3rem;
+$border-radius-sm:                  .2rem;
+$grid-gutter-width:                 2.5rem;
+
+
+// Card Colors
+//======================================================================================================================
+
+$card-border-color:                 $input-border-color;
+
+// List Group
+//======================================================================================================================
+$list-group-bg:                     rgba($white,.8);
+$list-group-hover-bg:               rgba($systemGray5,.1);
+$list-group-action-active-bg:       rgba($systemGray5,.2);
+$list-group-border-color:           $card-border-color;
+
+// include Bootstrap
+@import "../../vendor/twbs/bootstrap/scss/bootstrap";
+
+nav,.offcanvas,.modal-header,.modal-footer, .toast{
+  background-color: map-get($theme-colors, 'light');
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
+}
