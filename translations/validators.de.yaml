@@ -1,3 +1,6 @@
 There is already an account with this email: Diese E-Mail-Adresse wird bereits verwendet
 Your password should be at least {{ limit }} characters: Dein Passwort sollte mindestens {{ limit }} Zeichen lang sein
 Please enter a password: Bitte Passwort angeben
+Please enter your email address: Bitte E-Mail-Adresse angeben
+Please enter your firstname: Bitte Vornamen angeben
+Please enter your lastname: Bitte Nachnamen angeben

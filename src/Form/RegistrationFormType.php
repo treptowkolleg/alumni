@@ -24,23 +24,27 @@ class RegistrationFormType extends AbstractType
                 'attr' => ['placeholder' => 'Firstname'],
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Please enter a password',
-                    ]),
-                    new Length([
-                        'min' => 6,
-                        'minMessage' => 'Your password should be at least {{ limit }} characters',
-                        // max length allowed by Symfony for security reasons
-                        'max' => 4096,
+                        'message' => 'Please enter your firstname',
                     ]),
                 ],
             ])
             ->add('lastname', TextType::class, [
                 'row_attr' => ['class' => 'form-floating mb-3'],
                 'attr' => ['placeholder' => 'Lastname'],
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Please enter your lastname',
+                    ]),
+                ],
             ])
             ->add('email', EmailType::class, [
                 'row_attr' => ['class' => 'form-floating mb-3'],
                 'attr' => ['placeholder' => 'Email'],
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Please enter your email address',
+                    ]),
+                ],
             ])
             ->add('plainPassword', PasswordType::class, [
                                 // instead of being set onto the object directly,
