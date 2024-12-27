@@ -5,19 +5,22 @@
 {% block body %}
 
     <div class="container">
-        <div class="row my-5">
-            <div class="col">
-                <h1>Alumni-Portal des Treptow-Kollegs Berlin</h1>
-                <p class="lead mb-5">
+        <div class="row g-3">
+            <div class="col-12 col-md-8">
+                <h1 class="h3">Alumni-Portal des Treptow-Kollegs Berlin</h1>
+                <p class="lead">
                     Hier entsteht das Alumni-Portal für alle Alumni und Lehrkräfte des Kollegs zur Erhaltung und Pflege eines
                     Kompetenznetzwerks.
                 </p>
+                <a href="https://www.treptow-kolleg.de" target="_blank" class="btn btn-lg btn-secondary mt-5">Weiter zum Treptow-Kolleg Berlin<i class="ms-2 fa fa-chevron-right"></i></a>
+            </div>
+            <div class="col-12 col-md-4">
                 {% for message in app.flashes('success') %}
                     <div class="alert alert-success">
                         {{ message }}
                     </div>
                 {% endfor %}
-                <p class="fs-4">
+                <p class="">
                     Bleib auf dem Laufenden und trage dich schon jetzt für den Alumni-Newsletter ein.
                 </p>
                 {{ form_start(form) }}
@@ -30,7 +33,6 @@
                     </div>
                 </div>
                 {{ form_end(form) }}
-                <a href="https://www.treptow-kolleg.de" target="_blank" class="btn btn-lg btn-secondary mt-5">Weiter zum Treptow-Kolleg Berlin<i class="ms-2 fa fa-chevron-right"></i></a>
             </div>
         </div>
     </div>

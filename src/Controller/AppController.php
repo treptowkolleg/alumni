@@ -28,7 +28,7 @@ class AppController extends AbstractController
             return $this->redirectToRoute('app_index');
         }
 
-        return $this->render('app/maintaining.html.twig', [
+        return $this->render('app/index.html.twig', [
             'form' => $form,
         ]);
     }

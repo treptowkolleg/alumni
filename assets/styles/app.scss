@@ -28,11 +28,11 @@ $systemGray2:	rgba(174,174,178,1);
 $systemGray3:	rgba(199,199,204,1);
 $systemGray4:	rgba(209,209,214,1);
 $systemGray5:	rgba(229,229,234,1);
-$systemGray6:	rgba(242,242,247,.8);
+$systemGray6:	rgba(242,242,247,1);
 
 $clear: 		rgba(  0,  0,  0,0);
 $full-black:	rgba( 8, 8, 12,1);
-$black:		    rgba( 54, 54, 54,1);
+$black:		    rgba( 32, 32, 32,1);
 $white:		    rgba(255,255,255,1);
 
 
@@ -94,7 +94,7 @@ $input-border-color:                    $systemGray6;
 // Component Settings
 //======================================================================================================================
 
-$component-active-bg:               rgba($systemGray5,.2);
+$component-active-bg:               rgba($systemBlue,.9);
 $input-btn-focus-width:             1px;
 $link-hover-color:                  $systemBlue;
 

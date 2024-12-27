@@ -2,9 +2,18 @@
 <html lang="de">
     <head>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, viewport-fit=cover, initial-scale=1, maximum-scale=1">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, viewport-fit=cover, initial-scale=1, shrink-to-fit=no">
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+        <link rel="manifest" href="/site.webmanifest">
+        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+        <meta name="msapplication-TileColor" content="#2b5797">
+        <meta name="theme-color" content="#ffffff">
+        <meta name="description" content="Portal für Alumni, Lernende und Lehrkräfte des Treptow-Kollegs Berlin">
         <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
+
         {% block stylesheets %}
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         {% endblock %}
@@ -17,44 +26,82 @@
 
     {% set route = app.request.get('_route') %}
 
-    <nav class="py-3 bg-transparent">
+    <div class="py-3 bg-transparent">
         <div class="container d-flex justify-content-between align-items-center">
             <a href="{{ path('app_index') }}" class="d-flex align-items-center link-body-emphasis text-decoration-none">
-                <img src="{{ asset('images/tk.png') }}" height="32" class="me-2" alt="logo">
-                <span class="fs-4 link-black fw-light">Alumni Portal</span>
+                <img src="{{ asset('images/logo.svg') }}" height="48" class="me-2" alt="logo">
             </a>
             <ul class="nav">
-                {#
-                <li class="nav-item"><a href="#" class="nav-link p-3 text-uppercase link-dark me-2">Menü</a></li>
-                <li class="nav-item d-none d-md-block"><a href="#" class="btn btn-primary p-3 text-uppercase me-2">Mitglied werden</a></li>
-                <li class="nav-item d-none d-md-block"><a href="#" class="btn btn-primary p-3 text-uppercase">Mein Bereich</a></li>
-                #}
+                <li class="nav-item d-block d-md-none"><a href="#" class="nav-link p-3 text-uppercase link-dark me-2"><i class="fas fa-bars me-2"></i>Menü</a></li>
+                {% if app.user %}
+                    <li class="nav-item d-none d-md-block"><a href="{{ url('app_logout') }}" class="btn btn-primary p-3 text-uppercase me-2">Abmelden</a></li>
+                {% else %}
+                    <li class="nav-item d-none d-md-block"><a href="{{ url('app_register') }}" class="btn btn-primary p-3 text-uppercase me-2">Mitglied werden</a></li>
+                {% endif %}
+                <li class="nav-item d-none d-md-block"><a href="{{ url('profile_index') }}" class="btn btn-primary p-3 text-uppercase">Mein Bereich</a></li>
             </ul>
         </div>
-    </nav>
+    </div>
+    <nav class="navbar navbar-expand bg-body-tertiary d-none d-md-block">
+            <div class="container">
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">Aktuelles</a>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="#">Projekte</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#">Angebote</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#">Termine</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#">Personen</a></li>
+                    </ul>
+                    <form class="d-flex" role="search">
+                        <input class="form-control me-2" type="search" placeholder="Suchen" aria-label="Suchen">
+                        <button class="btn btn-light" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    </form>
+                </div>
+            </div>
+        </nav>
 
-    <main class="pb-5 h-100">
-        {% block body %}{% endblock %}
+    <main class="pb-5 mt-5">
+        {% block page %}
+            <div class="container">
+                <div class="row mb-5">
+                    <div class="col-12">
+                        {% block page_header %}{% endblock %}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-md-8">
+                        {% block body %}{% endblock %}
+                    </div>
+                    <div class="col-12 col-md-4">
+                        {% block aside %}{% endblock %}
+                    </div>
+                </div>
+            </div>
+        {% endblock %}
+
     </main>
     <div class="bg-light py-3 mt-5">
         <div class="container">
-            Dieses Projekt befindet sich zurzeit in der Entwicklung. Es werden keine Cookies gespeichert.
+            <div class="d-flex flex-wrap">
+                <a class="btn btn-sm btn-light" href="#"><i class="fa-brands fa-instagram me-2"></i>Instagram</a>
+                <a class="btn btn-sm btn-light" href="#"><i class="fa-brands fa-youtube me-2"></i>YouTube</a>
+                <a class="btn btn-sm btn-light" href="#"><i class="fa-brands fa-linkedin me-2"></i>LinkedIn</a>
+            </div>
         </div>
     </div>
     <footer class="text-bg-primary py-3">
         <div class="container">
             <div class="d-flex justify-content-between align-items-center">
                 <div>
-                    &copy;2024-2025 Benjamin Wagner
+                    &copy;2024 Alumni am Treptow-Kolleg Berlin e.V.
                 </div>
                 <div>
                     <ul class="nav">
-                        {#
                         <li class="nav-item"><a href="#" class="nav-link link-white">Impressum</a></li>
                         <li class="nav-item"><a href="#" class="nav-link link-white">Datenschutz</a></li>
                         <li class="nav-item"><a href="#" class="nav-link link-white">Kontakt</a></li>
-                        #}
-
                     </ul>
                 </div>
             </div>

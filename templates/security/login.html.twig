@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Anmelden{% endblock %}
+
+{% block body %}
+    <div class="mb-5">
+        <form method="post">
+                        <h1 class="h3 mb-3 font-weight-normal">Dein Zugang zum Mitgliederbereich</h1>
+                        <p>
+                            Im Mitgliederbereich haben Sie Zugang zu zahlreichen Vorteilen und Vergünstigungen. Außerdem können Sie Ihre Mitgliedsdaten einsehen, sich ein persönliches Profil anlegen, eine Spendenquittung anfordern und Ihre Mitgliedschaften in Fach- oder Regionalgruppen verwalten.
+                        </p>
+
+                        {% if error %}
+                            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                        {% endif %}
+
+                        <div class="form-floating mb-3">
+                            <input type="email" value="{{ last_username }}" placeholder="{{ "Email"|trans }}" name="_username" id="username" class="form-control" autocomplete="email" required autofocus>
+                            <label for="username">{{ "Email"|trans }}</label>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input type="password" placeholder="{{ "Password"|trans }}" name="_password" id="password" class="form-control" autocomplete="current-password" required>
+                            <label for="password">{{ "Password"|trans }}</label>
+                        </div>
+
+                        <input type="hidden" name="_csrf_token"
+                               value="{{ csrf_token('authenticate') }}"
+                        >
+
+                        {#
+                        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+                        See https://symfony.com/doc/current/security/remember_me.html
+
+                        <div class="checkbox mb-3">
+                            <input type="checkbox" name="_remember_me" id="_remember_me">
+                            <label for="_remember_me">Remember me</label>
+                        </div>
+                        #}
+
+                        <button class="btn btn-primary" type="submit">
+                            {{ "Login"|trans }}
+                        </button>
+                    </form>
+    </div>
+
+    <div class="mb-5">
+        <a href="#" class="btn btn-secondary">Mitgliedschaft kündigen</a>
+    </div>
+{% endblock %}

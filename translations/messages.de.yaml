@@ -1,0 +1,9 @@
+Firstname: Vorname
+Lastname: Nachname
+Email: E-Mail-Adresse
+Password: Passwort
+Login: Anmelden
+Roles: Rollen
+ROLE_USER: Standardbenutzer
+ROLE_AUTHOR: Autor
+ROLE_ADMIN: Administrator

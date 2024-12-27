@@ -2,10 +2,9 @@
 
 {% block title %}Almuni Portal{% endblock %}
 
-{% block body %}
 
-    <div class="container">
-        <div class="row my-5">
+{% block page_header %}
+        <div class="row">
             <div class="col">
                 <div class="card text-bg-light border-0 h-100">
                     <img src="{{ asset('images/csm_informatikunterricht2_83e54e0626.jpeg') }}" alt="Image">
@@ -45,11 +44,10 @@
                 </div>
             </div>
         </div>
-    </div>
-
-    <div class="container">
+{% endblock %}
+{% block body %}
         <div class="row">
-            <div class="col-12 col-lg-8">
+            <div class="col">
                 <h2 class="mb-3 mt-5 h4 fw-normal">Aktuelle Meldungen</h2>
                 <div class="row row-cols-1 row-cols-lg-2 g-3 align-content-stretch">
                     <div class="col">
@@ -85,22 +83,20 @@
                 </div>
                 <a href="#" class="btn btn-secondary btn-lg mt-3">Weitere Meldungen</a>
             </div>
-            <div class="col-12 col-lg-4">
-                <h2 class="mb-3 mt-5 h4 fw-normal">Nächste Veranstaltungen</h2>
-                <div class="d-flex flex-column">
-                    <div class="mb-2 pb-2 border-bottom">
-                        <div class="fw-bold">22.06.2025</div>
-                        <a href="#" class="fs-4 link-primary text-decoration-none">Sommerfest der Alumni am Gymnasium 09Y12</a>
-                    </div>
-                    <div class="mb-2 pb-2 border-bottom">
-                        <div class="fw-bold">13.12.2025</div>
-                        <a href="#" class="fs-4 link-primary text-decoration-none">Vorstandssitzung</a>
-                    </div>
-                </div>
-                <a href="#" class="btn btn-secondary btn-lg mt-3">Weitere Termine</a>
-            </div>
+        </div>
+{% endblock %}
+
+{% block aside %}
+    <h2 class="mb-3 mt-5 h4 fw-normal">Nächste Veranstaltungen</h2>
+    <div class="d-flex flex-column">
+        <div class="mb-2 pb-2 border-bottom">
+            <div class="fw-bold">22.06.2025</div>
+            <a href="#" class="fs-4 link-primary text-decoration-none">Sommerfest der Alumni am Gymnasium 09Y12</a>
+        </div>
+        <div class="mb-2 pb-2 border-bottom">
+            <div class="fw-bold">13.12.2025</div>
+            <a href="#" class="fs-4 link-primary text-decoration-none">Vorstandssitzung</a>
         </div>
     </div>
-
-
+    <a href="#" class="btn btn-secondary btn-lg mt-3">Weitere Termine</a>
 {% endblock %}
