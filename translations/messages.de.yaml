@@ -7,3 +7,135 @@ Roles: Rollen
 ROLE_USER: Standardbenutzer
 ROLE_AUTHOR: Autor
 ROLE_ADMIN: Administrator
+Start date: Von
+End date: Bis
+Title: Titel
+Description: Beschreibung
+Website: Website
+Location: Ort
+Contact person: Ansprechpartner
+Contact email: E-Mail-Adresse
+Type: Typ
+teacher: Lehrkräfte
+student: Lernende
+User type: Personenkreis
+School: Schule
+employer: Angestellte
+Has school: Ja, ich war oder bin Teil einer Bildungseinrichtung des Zweiten Bildungswegs.
+No: Nein
+Publish: Veröffentlichen
+Content: Artikeltext
+Image file: Artikelbild
+Audio file: Audio-Datei
+Subtitle: Untertitel
+isLeadPost: Leitartikel
+Performance course: Leistungskurse
+Favorite school subjects: Lieblingsfächer
+In year: Eintrittsjahr
+Out year: Abschlussjahr
+Exam type: Abschluss
+abitur: Hochschulreife
+fachabitur: Fachhochschulreife
+msa: Mittlerer Schulabschluss
+Hobbies: 'Hobbys'
+Lesen: 'Lesen'
+Kreatives Schreiben: 'Kreatives Schreiben'
+Debattieren: 'Debattieren'
+Fremdsprachen: 'Fremdsprachen'
+Literaturanalyse: 'Literaturanalyse'
+Physik: 'Physik'
+Chemie: 'Chemie'
+Biologie: 'Biologie'
+Astronomie: 'Astronomie'
+Robotik: 'Robotik'
+Programmieren: 'Programmieren'
+Umweltforschung: 'Umweltforschung'
+Mathematik-Wettbewerbe: 'Mathematik-Wettbewerbe'
+Statistik: 'Statistik'
+Logikspiele: 'Logikspiele'
+Finanzbildung: 'Finanzbildung'
+Geometrie: 'Geometrie'
+Malen und Zeichnen: 'Malen und Zeichnen'
+Fotografie: 'Fotografie'
+Grafikdesign: 'Grafikdesign'
+Skulptur: 'Skulptur'
+Mode-Design: 'Mode-Design'
+Musikinstrumente spielen: 'Musikinstrumente spielen'
+Gesang: 'Gesang'
+Tanzen: 'Tanzen'
+Theater und Schauspiel: 'Theater und Schauspiel'
+Chor: 'Chor'
+Musikproduktion: 'Musikproduktion'
+Geschichte: 'Geschichte'
+Philosophie: 'Philosophie'
+Sozialwissenschaften: 'Sozialwissenschaften'
+Politik und Debatten: 'Politik und Debatten'
+Kulturelle Studien: 'Kulturelle Studien'
+Teamsportarten: 'Teamsportarten'
+Einzelsportarten: 'Einzelsportarten'
+Fitness: 'Fitness'
+Yoga und Meditation: 'Yoga und Meditation'
+Ernaehrungswissenschaft: 'Ernährungswissenschaft'
+Film und Videoproduktion: 'Film und Videoproduktion'
+Journalismus: 'Journalismus'
+Podcasting: 'Podcasting'
+Social Media Management: 'Social Media Management'
+Fotobearbeitung: 'Fotobearbeitung'
+Wandern: 'Wandern'
+Camping: 'Camping'
+Gaertnern: 'Gärtnern'
+Vogelbeobachtung: 'Vogelbeobachtung'
+Reisen: 'Reisen'
+Angeln: 'Angeln'
+Kochen und Backen: 'Kochen und Backen'
+Schreinern und Bauen: 'Schreinern und Bauen'
+Elektronikbasteln: 'Elektronikbasteln'
+Naehen und Textilarbeiten: 'Nähen und Textilarbeiten'
+DIY-Projekte: 'DIY-Projekte'
+Informatik: 'Informatik'
+Mathematik: 'Mathematik'
+Bio: 'Bio'
+Englisch: 'Englisch'
+French: 'Französisch'
+Spanisch: 'Spanisch'
+Sport: 'Sport'
+About: Was mich antreibt und wie es anderen zugutekommt
+Portfolio link: Meine Website
+Current profession: Ich arbeite zurzeit als
+Current company: Mein Arbeitgeber
+Studium: Studiengang
+University: Hochschule
+Network state: Sichtbarkeit innerhalb des Netzwerks
+public: Für jeden sichtbar
+registered: Nur für verifizierte Alumni sichtbar 
+group: Nur für meine Schule sichtbar
+examYear: Nur für meinen Abschlussjahrgang sichtbar
+private: Nur für mich sichtbar
+Berufliche Interessen: Berufliche Interessen
+IT und Softwareentwicklung: 'IT und Softwareentwicklung'
+Marketing und Werbung: 'Marketing und Werbung'
+Vertrieb und Verkauf: 'Vertrieb und Verkauf'
+Personal und HR: 'Personal und HR'
+Finanzen und Buchhaltung: 'Finanzen und Buchhaltung'
+Beratung und Consulting: 'Beratung und Consulting'
+Gesundheitswesen und Pflege: 'Gesundheitswesen und Pflege'
+Recht und Verwaltung: 'Recht und Verwaltung'
+Fuehrungskompetenzen: 'Führungskompetenzen'
+Projektmanagement: 'Projektmanagement'
+Entrepreneurship: 'Entrepreneurship'
+Weiterbildung und Training: 'Weiterbildung und Training'
+Karriereplanung und Coaching: 'Karriereplanung und Coaching'
+Kommunikationsfaehigkeiten: 'Kommunikationsfähigkeiten'
+Teamarbeit: 'Teamarbeit'
+Selbststaendigkeit: 'Selbstständigkeit'
+Verhandlungen und Vertragsabschluesse: 'Verhandlungen und Vertragsabschlüsse'
+Rekrutierung und Mitarbeiterfuehrung: 'Rekrutierung und Mitarbeiterführung'
+Strategische Planung: 'Strategische Planung'
+Kundenbetreuung und -beratung: 'Kundenbetreuung und -beratung'
+Datenanalyse und Forschung: 'Datenanalyse und Forschung'
+Marktforschung und Analyse: 'Marktforschung und Analyse'
+Tags: Stichworte zu Interessen / Schwerpunkten
+Display name: Namensformat
+fullnameEx: Vorname Nachname
+firstnameEx: Vorname N.
+lastnameEx: V. Nachname

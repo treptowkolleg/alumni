@@ -1,0 +1,22 @@
+liip_imagine:
+    driver: "gd"
+    webp:
+        generate: true
+    resolvers:
+        default:
+            web_path: ~
+
+    filter_sets:
+        cache: ~
+        post_thumbnail:
+            quality: 75
+            filters:
+                thumbnail: { size: [800, 480], mode: outbound }
+                scale:
+                    dim: [ 800, 480 ]
+        lead_thumbnail:
+            quality: 75
+            filters:
+                thumbnail: { size: [ 1440, 480 ], mode: outbound }
+                scale:
+                    dim: [ 1440, 480 ]

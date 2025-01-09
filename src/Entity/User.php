@@ -3,10 +3,13 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
@@ -20,6 +23,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 180)]
     private ?string $email = null;
+
+    #[ORM\Column(length: 128, unique: true)]
+    #[Gedmo\Slug(fields: ['firstname', 'lastname'])]
+    private $slug;
 
     /**
      * @var list<string> The user roles
@@ -41,6 +48,33 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column]
     private bool $isVerified = false;
+
+    #[ORM\ManyToOne(inversedBy: 'users')]
+    private ?School $school = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $userType = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?bool $hasSchool = null;
+
+    /**
+     * @var Collection<int, BlogPost>
+     */
+    #[ORM\OneToMany(targetEntity: BlogPost::class, mappedBy: 'author')]
+    private Collection $blogPosts;
+
+    /**
+     * @var Collection<int, UserProfile>
+     */
+    #[ORM\OneToMany(targetEntity: UserProfile::class, mappedBy: 'user')]
+    private Collection $userProfiles;
+
+    public function __construct()
+    {
+        $this->blogPosts = new ArrayCollection();
+        $this->userProfiles = new ArrayCollection();
+    }
 
     public function __toString(): string
     {
@@ -72,6 +106,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getUserIdentifier(): string
     {
         return (string) $this->email;
+    }
+
+    public function getFullname(): string
+    {
+        return $this->firstname.' '.$this->lastname;
+    }
+
+    public function getShortName(): string
+    {
+        return strtoupper(substr($this->getFirstname(),0,1) . substr($this->getLastname(),0,2));
+    }
+
+    public function getAvatar(): string
+    {
+        return strtoupper(substr($this->getFirstname(),0,1) . substr($this->getLastname(),0,1));
     }
 
     /**
@@ -145,6 +194,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function getSlug(): string
+    {
+        return $this->slug;
+    }
+
     public function isVerified(): bool
     {
         return $this->isVerified;
@@ -153,6 +207,102 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setVerified(bool $isVerified): static
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    public function getSchool(): ?School
+    {
+        return $this->school;
+    }
+
+    public function setSchool(?School $school): static
+    {
+        $this->school = $school;
+
+        return $this;
+    }
+
+    public function getUserType(): ?string
+    {
+        return $this->userType;
+    }
+
+    public function setUserType(string $userType): static
+    {
+        $this->userType = $userType;
+
+        return $this;
+    }
+
+    public function hasSchool(): ?bool
+    {
+        return $this->hasSchool;
+    }
+
+    public function setHasSchool(?bool $hasSchool): static
+    {
+        $this->hasSchool = $hasSchool;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, BlogPost>
+     */
+    public function getBlogPosts(): Collection
+    {
+        return $this->blogPosts;
+    }
+
+    public function addBlogPost(BlogPost $blogPost): static
+    {
+        if (!$this->blogPosts->contains($blogPost)) {
+            $this->blogPosts->add($blogPost);
+            $blogPost->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBlogPost(BlogPost $blogPost): static
+    {
+        if ($this->blogPosts->removeElement($blogPost)) {
+            // set the owning side to null (unless already changed)
+            if ($blogPost->getAuthor() === $this) {
+                $blogPost->setAuthor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, UserProfile>
+     */
+    public function getUserProfiles(): Collection
+    {
+        return $this->userProfiles;
+    }
+
+    public function addUserProfile(UserProfile $userProfile): static
+    {
+        if (!$this->userProfiles->contains($userProfile)) {
+            $this->userProfiles->add($userProfile);
+            $userProfile->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserProfile(UserProfile $userProfile): static
+    {
+        if ($this->userProfiles->removeElement($userProfile)) {
+            // set the owning side to null (unless already changed)
+            if ($userProfile->getUser() === $this) {
+                $userProfile->setUser(null);
+            }
+        }
 
         return $this;
     }

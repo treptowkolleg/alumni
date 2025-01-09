@@ -17,6 +17,13 @@
     {{ form_start(registrationForm, { 'attr': {'novalidate':'novalidate'} }) }}
     {{ form_row(registrationForm.firstname) }}
     {{ form_row(registrationForm.lastname) }}
+
+    {{ form_row(registrationForm.hasSchool) }}
+    <fieldset class="" id="school-fieldset" style="display: none">
+        {{ form_row(registrationForm.school) }}
+        {{ form_row(registrationForm.userType) }}
+    </fieldset>
+    <div class="mb-2">&nbsp;</div>
     {{ form_row(registrationForm.email) }}
     {{ form_row(registrationForm.plainPassword, {
         label: 'Password'
@@ -27,4 +34,27 @@
     </p>
     <button type="submit" class="btn btn-primary">Registrieren</button>
     {{ form_end(registrationForm) }}
+
+    <script type="text/javascript">
+        (function () {
+
+            let $isCompany = document.querySelector('#registration_form_hasSchool');
+            let $companyFieldset = document.querySelector('#school-fieldset');
+
+            if($isCompany.checked){
+                $companyFieldset.style.display ="grid";
+            } else {
+                $companyFieldset.style.display ="none";
+            }
+
+            $isCompany.addEventListener ('change', function (evt) {
+                if($isCompany.checked){
+                    $companyFieldset.style.display ="grid";
+                } else {
+                    $companyFieldset.style.display ="none";
+                }
+            });
+
+        })()
+    </script>
 {% endblock %}

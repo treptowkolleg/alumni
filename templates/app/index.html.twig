@@ -4,99 +4,103 @@
 
 
 {% block page_header %}
-        <div class="row">
+        <div class="row mb-5">
+            {% if lead %}
             <div class="col">
-                <div class="card text-bg-light border-0 h-100">
-                    <img src="{{ asset('images/csm_informatikunterricht2_83e54e0626.jpeg') }}" alt="Image">
-                    <div class="card-img-overlay">
-                        <div class="text-bg-secondary p-3" style="position: absolute; bottom: 30px; left: -40px; min-width: 300px; max-width: 450px;">
-                            <h3>AG Informatik am Treptow-Kolleg</h3>
-                            <p>Arbeitsgemeinschaft begrüßt interessierte Lernende des Gymnasiums. Groß und Klein entwickeln neue Projekte.</p>
-                            <a href="{{ path('app_index') }}" class="card-link stretched-link text-decoration-none link-black fs-3 mt-5">weiterlesen >>></a>
-                        </div>
+                <div class="card text-white shadow-sm h-100">
+                    <img class="card-img d-none d-md-block" src="{{ vich_uploader_asset(lead)|imagine_filter('lead_thumbnail')  }}" alt="{{ lead }}" style="filter: brightness(80%);">
+                    <img class="card-img d-block d-md-none" src="{{ vich_uploader_asset(lead)|imagine_filter('post_thumbnail')  }}" alt="{{ lead }}" style="filter: brightness(80%);">
+                    <div class="card-img-overlay h-100 align-content-end">
+                        <div class="text-uppercase small card-text">{{ lead.type }}</div>
+                        <h3 class="fw-normal h2 mb-0">{{ lead.title }}</h3>
+                        <p class="card-text lead d-none d-md-block fw-bolder">{{ lead.subtitle }}</p>
+                        <a href="{{ path('blog_show',{'slug':lead.slug}) }}" class="card-link stretched-link text-decoration-none link-white fs-5">mehr erfahren <i class="fas fa-chevron-right"></i></a>
                     </div>
                 </div>
             </div>
+            {% endif %}
         </div>
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3 align-content-stretch">
+            {% if podcast %}
             <div class="col">
-                <div class="card card-body text-bg-primary border-0 h-100">
-                    <div class="text-uppercase small">podcast</div>
-                    <h3>Game-Engineering</h3>
-                    <p>Wie ich mein eigenes Computerspiel entwickle.</p>
-                    <a href="{{ path('app_index') }}" class="card-link stretched-link text-decoration-none link-white  fs-3 mt-5">weiterlesen >>></a>
+                <div class="card card-body shadow-sm bg-white border-primary h-100">
+                    <div class="text-uppercase small">{{ podcast.type }}</div>
+                    <h3 class="text-primary fw-normal">{{ podcast.title }}</h3>
+                    <p>Neuer Podcast online</p>
+                    <a href="{{ path('blog_show',{'slug':podcast.slug}) }}" class="card-link stretched-link text-decoration-none link-black mt-auto fs-5">anhören <i class="fas fa-chevron-right"></i></a>
                 </div>
             </div>
+            {% endif %}
+            {% if interview %}
             <div class="col">
-                <div class="card card-body text-bg-secondary border-0 h-100">
-                    <div class="text-uppercase small">erfahrungsbericht</div>
-                    <h3>Computer-Engineering</h3>
-                    <p>Fluch und Segen</p>
-                    <a href="{{ path('app_index') }}" class="card-link stretched-link text-decoration-none link-black fs-3 mt-5">weiterlesen >>></a>
+                <div class="card card-body shadow-sm bg-white border-primary h-100">
+                    <div class="text-uppercase small">{{ interview.type }}</div>
+                    <h3 class="text-primary fw-normal">{{ interview.title }}</h3>
+                    <p>{{ interview.title }}</p>
+                    <a href="{{ path('blog_show',{'slug':interview.slug}) }}" class="card-link stretched-link text-decoration-none link-black mt-auto fs-5">lesen <i class="fas fa-chevron-right"></i></a>
                 </div>
             </div>
+            {% endif %}
+            {% if blog_post %}
             <div class="col">
-                <div class="card card-body text-bg-primary border-0 h-100">
-                    <div class="text-uppercase small">fotostrecke</div>
-                    <h3>Sommerfest 2024</h3>
-                    <p>Erstes Fest mit Kolleg und Gymnasium</p>
-                    <a href="{{ path('app_index') }}" class="card-link stretched-link text-decoration-none link-white fs-3 mt-5">weiterlesen >>></a>
+                <div class="card card-body shadow-sm text-bg-primary border-0 h-100">
+                    <div class="text-uppercase small">{{ blog_post.type }}</div>
+                    <h3 class="text-light fw-normal">{{ blog_post.title }}</h3>
+                    <p>Aktueller Themenbeitrag</p>
+                    <a href="{{ path('blog_show',{'slug':blog_post.slug}) }}" class="card-link stretched-link text-decoration-none link-white mt-auto fs-5">lesen <i class="fas fa-chevron-right"></i></a>
                 </div>
             </div>
+            {% endif %}
         </div>
 {% endblock %}
 {% block body %}
         <div class="row">
             <div class="col">
-                <h2 class="mb-3 mt-5 h4 fw-normal">Aktuelle Meldungen</h2>
+                <h2 class="mb-5 mt-5 fs-3 fw-light text-muted">Aktuelle Meldungen</h2>
                 <div class="row row-cols-1 row-cols-lg-2 g-3 align-content-stretch">
-                    <div class="col">
-                        <div class="card text-bg-light border-0 h-100">
-                            <div class="card card-body text-bg-light border-0 h-100">
-                                <h3>Schmott-Talk</h3>
-                                <p>Theater am Kolleg</p>
-                                <a href="{{ path('app_index') }}" class="card-link stretched-link text-decoration-none link-black fs-3 mt-5">weiterlesen >>></a>
+                    {% for post in posts %}
+                        {% if post.isPublished %}
+                        <div class="col">
+                            <div class="card border-0 bg-transparent mb-2 pb-2 border-bottom h-100">
+                                {% if post.image %}
+                                    <img src="{{ vich_uploader_asset(post)|imagine_filter('post_thumbnail')  }}" alt="{{ post }}" class="img-fluid mb-2">
+                                    <div class="mb-0"><span class="fw-bold">{{ post.updatedAt|date('d.m.Y') }}</span> <span class="text-uppercase">{{ post.type }}</span></div>
+                                    <a href="{{ path('blog_news_show',{'slug':post.slug}) }}" class="fs-3 card-link link-primary stretched-link text-decoration-none">{{ post }}</a>
+                                {% else %}
+                                    <a href="{{ path('blog_news_show',{'slug':post.slug}) }}" class="fs-3 card-link link-primary stretched-link text-decoration-none">{{ post }}</a>
+                                    <div class="mb-0"><span class="fw-bold">{{ post.updatedAt|date('d.m.Y') }}</span> {{ post.type }}</div>
+                                    <div class="d-block text-truncate text-wrap">{{ post.content|striptags|u.truncate(150) }} ...</div>
+                                {% endif %}
                             </div>
                         </div>
-                    </div>
-                    <div class="col">
-                        <div class="card card-body text-bg-light border-0 h-100">
-                            <h3>Eltern-Lehrkraft-Grillen</h3>
-                            <p>Ehemalige, Lehrkräfte und Eltern tauschen sich aus.</p>
-                            <a href="{{ path('app_index') }}" class="card-link stretched-link text-decoration-none link-black fs-3 mt-5">weiterlesen >>></a>
+                        {% endif %}
+                    {% else %}
+                        <div class="col">
+                            Aktuell sind keine Meldungen vorhanden
                         </div>
-                    </div>
-                    <div class="col">
-                        <div class="card card-body text-bg-light border-0 h-100">
-                            <h3>Digitalisierung</h3>
-                            <p>Lernende entwickeln neue Software.</p>
-                            <a href="{{ path('app_index') }}" class="card-link stretched-link text-decoration-none link-black fs-3 mt-5">weiterlesen >>></a>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card card-body text-bg-light border-0 h-100">
-                            <h3>Der gute Ton</h3>
-                            <p>Lernende kreieren Kunst im Ofen.</p>
-                            <a href="{{ path('app_index') }}" class="card-link stretched-link text-decoration-none link-black fs-3 mt-5">weiterlesen >>></a>
-                        </div>
-                    </div>
+                    {% endfor %}
                 </div>
-                <a href="#" class="btn btn-secondary btn-lg mt-3">Weitere Meldungen</a>
+                <a href="{{ url('blog_news_index') }}" class="btn btn-outline-primary btn-lg mt-5">Weitere Meldungen</a>
             </div>
         </div>
 {% endblock %}
 
 {% block aside %}
-    <h2 class="mb-3 mt-5 h4 fw-normal">Nächste Veranstaltungen</h2>
+    <h2 class="mb-5 mt-5 fs-3 fw-light text-muted">Nächste Veranstaltungen</h2>
     <div class="d-flex flex-column">
-        <div class="mb-2 pb-2 border-bottom">
-            <div class="fw-bold">22.06.2025</div>
-            <a href="#" class="fs-4 link-primary text-decoration-none">Sommerfest der Alumni am Gymnasium 09Y12</a>
-        </div>
-        <div class="mb-2 pb-2 border-bottom">
-            <div class="fw-bold">13.12.2025</div>
-            <a href="#" class="fs-4 link-primary text-decoration-none">Vorstandssitzung</a>
-        </div>
+        {% for event in events|sort((a, b) => a.startDate <=> b.startDate) %}
+            {% if event.endDate|date('Ymd') >= date('now')|date('Ymd')%}
+            <div class="mb-2 pb-2 border-bottom d-flex flex-column">
+                <div class="fw-bold">{{ event.startDate|date('d.m.Y') }}</div>
+                <a href="{{ url('event_show',{'slug':event.slug}) }}" class="fs-4 link-primary text-decoration-none">{{ event.title }}</a>
+                <small>{{ event.location }}</small>
+            </div>
+            {% endif %}
+        {% else %}
+            <div class="mb-2 pb-2 border-bottom">
+                Aktuell sind keine Veranstaltungen geplant
+            </div>
+        {% endfor %}
     </div>
-    <a href="#" class="btn btn-secondary btn-lg mt-3">Weitere Termine</a>
+    <a href="{{ url('event_index') }}" class="btn btn-outline-primary btn-lg mt-5">Weitere Termine</a>
 {% endblock %}

@@ -1,0 +1,5 @@
+http:
+  document_root: public/ # Path to the project document root
+  passthru: index.php # Project passthru index
+  port: 8000 # Force the port that will be used to run the server
+  ajax_loading: false

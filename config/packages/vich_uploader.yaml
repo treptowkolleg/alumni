@@ -1,0 +1,30 @@
+vich_uploader:
+    db_driver: orm
+
+    mappings:
+        blogposts: # This is the section identifier that we remembered from the entity.
+            uri_prefix: /images/blogpost  # Prefix for the path of our images.
+            upload_destination: '%kernel.project_dir%/public/images/blogpost' # The bundle will upload images here.
+            namer:
+                service: vich_uploader.namer_hash  # The service describes the method of naming images.
+                options: { algorithm: 'md5' }
+        userprofiles: # This is the section identifier that we remembered from the entity.
+            uri_prefix: /images/profiles  # Prefix for the path of our images.
+            upload_destination: '%kernel.project_dir%/public/images/profiles' # The bundle will upload images here.
+            namer:
+                service: vich_uploader.namer_hash  # The service describes the method of naming images.
+                options: { algorithm: 'md5' }
+        podcasts: # This is the section identifier that we remembered from the entity.
+            uri_prefix: /audio/podcast  # Prefix for the path of our images.
+            # For example, our image will be displayed with the following path.
+            # http://localhost:8008/images/banners/custom-image.png
+            upload_destination: '%kernel.project_dir%/public/audio/podcast' # The bundle will upload images here.
+            namer:
+                service: vich_uploader.namer_hash  # The service describes the method of naming images.
+                options: { algorithm: 'md5' }
+
+    #mappings:
+    #    products:
+    #        uri_prefix: /images/products
+    #        upload_destination: '%kernel.project_dir%/public/images/products'
+    #        namer: Vich\UploaderBundle\Naming\SmartUniqueNamer

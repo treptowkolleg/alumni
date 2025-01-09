@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Aktuelles{% endblock %}
+
+{% block page_header %}
+    <nav class="bg-transparent" style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url('app_index') }}">treptowkolleg.de</a></li>
+            <li class="breadcrumb-item active fw-bolder" aria-current="page">Aktuelles</li>
+        </ol>
+    </nav>
+
+    <h1 class="h3 mb-5">Alle News auf einen Blick</h1>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3 align-content-stretch">
+        <div class="col">
+            <div class="card card-body shadow-sm bg-white border-dark h-100">
+                <h3 class="text-primary fw-normal mb-lg-5">Aktuelle Meldungen</h3>
+                <a href="{{ path('blog_news_index') }}" class="card-link stretched-link text-decoration-none link-black mt-auto fs-5">mehr erfahren <i class="fas fa-chevron-right"></i></a>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card card-body shadow-sm bg-white border-dark h-100">
+                <h3 class="text-primary fw-normal mb-lg-5">Themen-Blog</h3>
+                <a href="{{ path('blog_index') }}" class="card-link stretched-link text-decoration-none link-black mt-auto fs-5">mehr erfahren <i class="fas fa-chevron-right"></i></a>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card card-body shadow-sm bg-white border-dark h-100">
+                <h3 class="text-primary fw-normal mb-lg-5">Presse</h3>
+                <a href="{{ path('blog_news_index') }}" class="card-link stretched-link text-decoration-none link-black mt-auto fs-5">mehr erfahren <i class="fas fa-chevron-right"></i></a>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card card-body shadow-sm bg-white border-primary h-100">
+                <h3 class="text-primary fw-normal mb-lg-5">Veranstaltungen</h3>
+                <a href="{{ path('event_index') }}" class="card-link stretched-link text-decoration-none link-black mt-auto fs-5">mehr erfahren <i class="fas fa-chevron-right"></i></a>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card card-body shadow-sm bg-white border-primary h-100">
+                <h3 class="text-primary fw-normal mb-lg-5">Wahlen</h3>
+                <a href="{{ path('blog_news_index') }}" class="card-link stretched-link text-decoration-none link-black mt-auto fs-5">mehr erfahren <i class="fas fa-chevron-right"></i></a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block body %}
+
+{% endblock %}
+
+{% block aside %}
+
+{% endblock %}

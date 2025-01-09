@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ post }}{% endblock %}
+
+{% block page_header %}
+    <nav class="bg-transparent" style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url('app_index') }}">treptowkolleg.de</a></li>
+            <li class="breadcrumb-item"><a href="{{ url('blog_news_all_index') }}">Aktuelles</a></li>
+            <li class="breadcrumb-item"><a href="{{ url('blog_index') }}">Themen</a></li>
+            <li class="breadcrumb-item active fw-bolder" aria-current="page">Details</li>
+        </ol>
+    </nav>
+
+    <h1 class="h3">{{ post }}</h1>
+    <h2 class="h5 mb-0 text-primary">{{ post.subtitle }}</h2>
+{% endblock %}
+{% block body %}
+
+    {% if post.image.name %}
+        <img src="{{ vich_uploader_asset(post, "imageFile")|imagine_filter('lead_thumbnail')  }}" alt="{{ post }}" class="img-fluid mb-1">
+        <small class="d-block mb-3 fst-italic">Bildunterschrift und Quelle</small>
+    {% endif %}
+    <div class="fs-6">
+        {{ post.content|raw }}
+    </div>
+    {% if post.audio.name %}
+        <figure class="d-block mt-5">
+            <audio controls class="w-100">
+                <source src="{{ vich_uploader_asset(post, 'audioFile')  }}" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+        </figure>
+    {% endif %}
+    <div class="mt-5 mb-0 small"><span>{{ post.updatedAt|date('d.m.Y') }}</span> | <span class="text-uppercase">{{ post.type }}</span></div>
+    <div class="fst-italic">Verfasst von: {{ post.author ? post.author.shortName : 'none' }}</div>
+{% endblock %}
+
+{% block aside %}
+
+{% endblock %}

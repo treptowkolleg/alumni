@@ -1,0 +1,10 @@
+    {{ form_errors(form) }}
+    {{ form_start(form, { 'attr': {'novalidate':'novalidate'} }) }}
+    <h4 class="h5 mb-3">Pflichtangaben</h4>
+    {{ form_row(form.title) }}
+
+    {{ form_row(form.description) }}
+
+    <button type="submit" class="btn btn-primary">{{ button }}</button> <a href="{{ path('authoring_event_type_index') }}" class="btn btn-light ms-2">Abbrechen</a>
+    {{ form_end(form) }}
+

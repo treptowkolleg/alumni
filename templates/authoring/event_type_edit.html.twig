@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ event_type}} bearbeiten{% endblock %}
+
+{% block page_header %}
+    <h1 class="h3">{{ event_type}} bearbeiten</h1>
+    <h2 class="h5 text-primary">Organisiere deine Veranstaltungen</h2>
+{% endblock %}
+{% block body %}
+    {{ include('authoring/event_type_form.html.twig',{'button':'Aktualiseren'}) }}
+{% endblock %}

@@ -1,0 +1,30 @@
+    {{ form_errors(form) }}
+    {{ form_start(form, { 'attr': {'novalidate':'novalidate'} }) }}
+    <h4 class="h5 mb-3">Pflichtangaben</h4>
+    {{ form_row(form.title) }}
+    {{ form_row(form.type) }}
+
+    <div class="mb-5">
+        {{ form_label(form.description) }}
+        {{ form_widget(form.description) }}
+        <trix-editor class="focus-ring" input="event_form_description" style="min-height: 200px"></trix-editor>
+        {{ form_errors(form.description) }}
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-2 mb-3 g-3">
+        <div>
+            {{ form_row(form.startDate) }}
+        </div>
+        <div>
+            {{ form_row(form.endDate) }}
+        </div>
+    </div>
+    {{ form_row(form.location) }}
+    <h3 class="h5 mb-3">Optionale Angaben</h3>
+    {{ form_row(form.website) }}
+    {{ form_row(form.contactPerson) }}
+    {{ form_row(form.contactEmail) }}
+
+    <button type="submit" class="btn btn-primary">{{ button }}</button> <a href="{{ path('authoring_event_index') }}" class="btn btn-light ms-2">Abbrechen</a>
+    {{ form_end(form) }}
+

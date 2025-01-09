@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Veranstaltungen{% endblock %}
+
+{% block page_header %}
+    <h1 class="h3">Veranstaltungen</h1>
+    <h2 class="h5 mb-3 text-primary">
+        Planen und Verwalten
+    </h2>
+    <div class="d-flex justify-content-end align-items-center flex-wrap my-4">
+        <a href="{{ path('authoring_event_new') }}" class="btn btn-primary">Veranstaltung anlegen</a>
+    </div>
+    <div class="table-responsive">
+        <table class="table" id="datatable">
+            <thead>
+            <tr>
+                <th>Titel</th>
+                <th>Von</th>
+                <th>Bis</th>
+                <th>Ort</th>
+                <th>Aktion</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for event in events %}
+                <tr>
+                    <td><a href="{{ path('authoring_event_update',{'id': event.id}) }}">{{ event.title }}</a></td>
+                    <td>{{ event.startDate|date('d.m.Y H:i') }} Uhr</td>
+                    <td>{{ event.endDate|date('d.m.Y H:i') }} Uhr</td>
+                    <td>{{ event.location }}</td>
+                    <td></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <script> let table = new DataTable('#datatable');</script>
+{% endblock %}

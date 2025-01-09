@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ post }}{% endblock %}
+
+{% block page_header %}
+    <nav class="bg-transparent" style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url('app_index') }}">treptowkolleg.de</a></li>
+            <li class="breadcrumb-item"><a href="{{ url('blog_news_all_index') }}">Aktuelles</a></li>
+            <li class="breadcrumb-item"><a href="{{ url('event_index') }}">Termine</a></li>
+            <li class="breadcrumb-item active fw-bolder" aria-current="page">Details</li>
+        </ol>
+    </nav>
+
+    <div class="mb-0"><span class="text-uppercase">{{ post.type }}</span></div>
+    <h1 class="h3">{{ post }}</h1>
+    {% if post.website %}
+        <a href="{{ post.website }}" target="_blank"><i class="fa fa-link me-2"></i>Website der Veranstaltung</a>
+    {% endif %}
+    <div class="row row-cols-1 row-cols-lg-3 g-3 align-content-stretch my-3">
+        <div class="col">
+            <div class="card card-body h-100">
+                <div class="h5 text-primary"><i class="fa fa-calendar fa-fw me-1 text-black"></i>Datum und Uhrzeit</div>
+                <div>{{ post.startDate|date('d.m.Y, H:i') }} - {{ post.endDate|date('d.m.Y, H:i') }}</div>
+            </div>
+        </div>
+        {% if post.location %}
+            <div class="col">
+                <div class="card card-body h-100">
+                    <div class="h5 text-primary"><i class="fa fa-location-dot fa-fw me-1 text-black"></i>Veranstaltungsort</div>
+                    {% for line in post.location|split(',') %}
+                    <div>{{ line }}</div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+        {% if post.contactPerson %}
+            <div class="col">
+                <div class="card card-body bg-white border-primary h-100">
+                    <div class="h5 text-primary"><i class="fa fa-address-book fa-fw me-1 text-black"></i>Kontakt</div>
+                    <div>{{ post.contactPerson }}</div>
+                    {% if post.contactEmail %}
+                        <a href="mailto:{{ post.contactEmail }}">E-Mail schreiben</a>
+                    {% endif %}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
+{% block body %}
+
+    <div class="fs-6">
+        {{ post.description|raw }}
+    </div>
+
+
+{% endblock %}
+
+{% block aside %}
+
+{% endblock %}

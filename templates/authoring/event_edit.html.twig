@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ event }} bearbeiten{% endblock %}
+
+{% block page_header %}
+    <h1 class="h3">{{ event }} bearbeiten</h1>
+    <h2 class="h5 text-primary">Aktualisiere diese Veranstaltung</h2>
+{% endblock %}
+{% block body %}
+    {{ include('authoring/event_form.html.twig',{'button':'Aktualisieren'}) }}
+{% endblock %}

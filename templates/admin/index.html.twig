@@ -8,7 +8,7 @@
         Ändere die Rollenzuordnung der Benutzerkonten.
     </h2>
     <div class="table-responsive">
-        <table class="table table-striped table-hover table-borderless">
+        <table class="table table-hover" id="datatable">
             <thead>
             <tr>
                 <th>Benutzername</th>
@@ -32,6 +32,17 @@
             </tbody>
         </table>
     </div>
+
+    <script>
+        let tableOptions = {
+            "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
+        }
+
+        let table = new DataTable('#datatable', {
+            responsive: false,
+            "language": tableOptions
+        });
+    </script>
 {% endblock %}
 {% block body %}
 

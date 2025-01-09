@@ -15,30 +15,37 @@
         <title>{% block title %}Welcome!{% endblock %}</title>
 
         {% block stylesheets %}
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput-typeahead.css" integrity="sha512-wu4jn1tktzX0SHl5qNLDtx1uRPSj+pm9dDgqsrYUS16AqwzfdEmh1JR8IQL7h+phL/EAHpbBkISl5HXiZqxBlQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.css" integrity="sha512-xmGTNt20S0t62wHLmQec2DauG9T+owP9e6VU8GigI0anN7OXLip9i7IwEhelasml2osdxX71XcYm6BQunTQeQg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.8/dist/trix.css">
+            <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.min.css">
+
         {% endblock %}
 
         {% block javascripts %}
             {% block importmap %}{{ importmap('app') }}{% endblock %}
+            <script type="text/javascript" src="https://unpkg.com/trix@2.0.8/dist/trix.umd.min.js"></script>
+            <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+            <script type="text/javascript" src="https://cdn.datatables.net/2.1.8/js/dataTables.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.min.js" integrity="sha512-9UR1ynHntZdqHnwXKTaOm1s6V9fExqejKvg5XMawEMToW4sSw+3jtLrYfZPijvnwnnE8Uol1O9BcAskoxgec+g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         {% endblock %}
     </head>
     <body>
 
-    {% set route = app.request.get('_route') %}
-
     <div class="py-3 bg-transparent">
         <div class="container d-flex justify-content-between align-items-center">
             <a href="{{ path('app_index') }}" class="d-flex align-items-center link-body-emphasis text-decoration-none">
-                <img src="{{ asset('images/logo.svg') }}" height="48" class="me-2" alt="logo">
+                <img src="{{ asset('images/logo.svg') }}" height="56" class="me-2" alt="logo">
             </a>
             <ul class="nav">
                 <li class="nav-item d-block d-md-none"><a href="#" class="nav-link p-3 text-uppercase link-dark me-2"><i class="fas fa-bars me-2"></i>Menü</a></li>
                 {% if app.user %}
-                    <li class="nav-item d-none d-md-block"><a href="{{ url('app_logout') }}" class="btn btn-primary p-3 text-uppercase me-2">Abmelden</a></li>
+                    <li class="nav-item d-none d-md-block"><a href="{{ url('app_logout') }}" class="btn btn-outline-primary py-3 px-5 text-uppercase me-2">Abmelden</a></li>
                 {% else %}
-                    <li class="nav-item d-none d-md-block"><a href="{{ url('app_register') }}" class="btn btn-primary p-3 text-uppercase me-2">Mitglied werden</a></li>
+                    <li class="nav-item d-none d-md-block"><a href="{{ url('app_register') }}" class="btn btn-outline-primary py-3 px-5 text-uppercase me-2">Mitglied werden</a></li>
                 {% endif %}
-                <li class="nav-item d-none d-md-block"><a href="{{ url('profile_index') }}" class="btn btn-primary p-3 text-uppercase">Mein Bereich</a></li>
+                <li class="nav-item d-none d-md-block"><a href="{{ url('profile_index') }}" class="btn btn-primary py-3 px-5 text-uppercase">Mein Bereich</a></li>
             </ul>
         </div>
     </div>
@@ -47,12 +54,12 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Aktuelles</a>
+                            <a class="nav-link active" aria-current="page" href="{{ url('blog_news_all_index') }}">Aktuelles</a>
                         </li>
-                        <li class="nav-item"><a class="nav-link" href="#">Projekte</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url('blog_index') }}">Themen</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url('event_index') }}">Termine</a></li>
                         <li class="nav-item"><a class="nav-link" href="#">Angebote</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#">Termine</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#">Personen</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url('people_index') }}">Personen</a></li>
                     </ul>
                     <form class="d-flex" role="search">
                         <input class="form-control me-2" type="search" placeholder="Suchen" aria-label="Suchen">
@@ -63,19 +70,54 @@
         </nav>
 
     <main class="pb-5 mt-5">
+        <div class="container mb-3">
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            {% for message in app.flashes('warning') %}
+                <div class="alert alert-warning">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            {% for message in app.flashes('danger') %}
+                <div class="alert alert-danger">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
         {% block page %}
             <div class="container">
-                <div class="row mb-5">
+                <div class="row mb-3">
                     <div class="col-12">
                         {% block page_header %}{% endblock %}
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-12 col-md-8">
+                    <div class="col-12 col-md-8 mb-5 mb-md-0">
                         {% block body %}{% endblock %}
                     </div>
                     <div class="col-12 col-md-4">
-                        {% block aside %}{% endblock %}
+                        <div class="sticky-md-top" style="top:40px">
+                            {% block aside %}
+                                <div class="card bg-white">
+                                    <div class="card-body">
+                                        <h5>Ordnungen & Informationen</h5>
+                                        <p>Folgende Regelwerke sind die Grundlage für die Wahlen innerhalb der GI-Gliederungen:</p>
+                                    </div>
+                                    <div class="list-group list-group-flush">
+                                        <a href="#" class="list-group-item list-group-item-action link-primary d-flex align-items-center">
+                                            <i class="fas fa-link fa-fw me-2"></i> Vereinbarung.pdf
+                                        </a>
+                                        <a href="#" class="list-group-item list-group-item-action">Link</a>
+                                        <a href="#" class="list-group-item list-group-item-action">Link</a>
+                                        <a href="#" class="list-group-item list-group-item-action">Link</a>
+                                    </div>
+                                </div>
+                            {% endblock %}
+                        </div>
+
                     </div>
                 </div>
             </div>

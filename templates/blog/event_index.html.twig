@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Veranstaltungen{% endblock %}
+
+{% block page_header %}
+    <nav class="bg-transparent" style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url('app_index') }}">treptowkolleg.de</a></li>
+            <li class="breadcrumb-item"><a href="{{ url('blog_news_all_index') }}">Aktuelles</a></li>
+            <li class="breadcrumb-item active fw-bolder" aria-current="page">Termine</li>
+        </ol>
+    </nav>
+
+    <h1 class="h3">Kommende Veranstaltungen</h1>
+{% endblock %}
+{% block body %}
+    <div class="row row-cols-1 g-3 align-content-stretch">
+        {% for post in posts|sort((a, b) => a.startDate <=> b.startDate) %}
+            {% if post.endDate|date('Ymd') >= date('now')|date('Ymd')%}
+            <div class="col">
+                <div class="card border-0 bg-transparent mb-2 pb-2 border-bottom h-100">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="fw-bold">{{ post.startDate|date('d.m.Y') }}{% if post.endDate|date('d.m.Y') != post.startDate|date('d.m.Y') %} - {{ post.endDate|date('d.m.Y') }}{% endif %}</div>
+                            <div class="text-muted">{{ post.type }}</div>
+                        </div>
+                        <div class="col-lg-8">
+                            <a href="{{ path('event_show',{'slug':post.slug}) }}" class="fs-4 card-link link-primary text-decoration-none">{{ post }}</a>
+                            <div class="fs-5">{{ post.location|split(',').0 }}</div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        {% else %}
+            <div class="col">
+                Aktuell sind keine Meldungen vorhanden
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block aside %}
+
+    <div class="fs-4 mb-1">Filtern nach ...</div>
+    <a href="{{ url('event_index') }}" class="mb-3 d-block">Alle Veranstaltungen anzeigen</a>
+    <div class="fs-5 fw-bolder mb-1">Veranstaltungsart</div>
+    <div class="card  border-primary">
+        <div class="list-group list-group-flush">
+            {% for type in types|sort((a, b) => b.events.count <=> a.events.count) %}
+                {% if type.events.count > 0 %}
+                    {% if type.title in filtered_types %}
+                        <div class="list-group-item  d-flex justify-content-between align-items-center py-3 active">
+                            <span>{{ type.title }}</span><span class="badge text-bg-primary">{{ type.events.count }}</span>
+                        </div>
+                    {% else %}
+                        <a href="{{ url('event_index',{'types': type.title ~ ',' ~ filtered_types|join(',')}) }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3">
+                            <span>{{ type.title }}</span><span class="badge text-bg-primary">{{ type.events.count }}</span>
+                        </a>
+                    {% endif %}
+
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

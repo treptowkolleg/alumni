@@ -2,9 +2,15 @@
 
 namespace App\Form;
 
+use App\Entity\School;
 use App\Entity\User;
+use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\QueryBuilder;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\ChoiceList\ChoiceList;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -29,11 +35,42 @@ class RegistrationFormType extends AbstractType
                 ],
             ])
             ->add('lastname', TextType::class, [
-                'row_attr' => ['class' => 'form-floating mb-3'],
+                'row_attr' => ['class' => 'form-floating mb-5'],
                 'attr' => ['placeholder' => 'Lastname'],
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Please enter your lastname',
+                    ]),
+                ],
+            ])
+            ->add('hasSchool', CheckboxType::class, [
+                'row_attr' => ['class' => 'mb-3'],
+            ])
+            ->add('school', EntityType::class, [
+                'class' => School::class,
+                'row_attr' => ['class' => 'form-floating mb-3'],
+                'attr' => ['placeholder' => 'School'],
+                'query_builder' => function (EntityRepository $er): QueryBuilder {
+                    return $er->createQueryBuilder('u')
+                        ->orderBy('u.city', 'ASC')
+                        ->addOrderBy('u.title', 'ASC');
+                },
+                'group_by' => function (School $school) {
+                    return $school->getCity();
+                },
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Please enter your school',
+                    ]),
+                ],
+            ])
+            ->add('userType', ChoiceType::class, [
+                'choices' => ['student' => 'Student', 'teacher' => 'Teacher','employer' => 'Employer'],
+                'row_attr' => ['class' => 'form-floating mb-3'],
+                'attr' => ['placeholder' => 'User type'],
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Please enter your user type',
                     ]),
                 ],
             ])
