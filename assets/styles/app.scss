@@ -255,3 +255,8 @@ input.form-control.is-invalid ~ trix-editor {
   color: $black;
   border-radius: 0;
 }
+
+.navbar-nav .nav-link.active {
+  color: $systemBlue!important;
+  font-weight: bolder;
+}

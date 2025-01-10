@@ -53,13 +53,13 @@
             <div class="container">
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="{{ url('blog_news_all_index') }}">Aktuelles</a>
-                        </li>
-                        <li class="nav-item"><a class="nav-link" href="{{ url('blog_index') }}">Themen</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ url('event_index') }}">Termine</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#">Angebote</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ url('people_index') }}">Personen</a></li>
+                        {% block navbar %}
+                            <li class="nav-item"><a class="nav-link" href="{{ url('blog_news_all_index') }}">Aktuelles</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{{ url('blog_index') }}">Themen</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{{ url('event_index') }}">Termine</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#">Angebote</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{{ url('people_index') }}">Personen</a></li>
+                        {% endblock %}
                     </ul>
                     <form class="d-flex" role="search">
                         <input class="form-control me-2" type="search" placeholder="Suchen" aria-label="Suchen">
