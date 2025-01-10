@@ -150,7 +150,7 @@ class UserprofileFormType extends AbstractType
             ->add('currentProfession', TextType::class, [])
             ->add('currentCompany', TextType::class, [])
             ->add('networkState', ChoiceType::class, [
-                'choices' => ['public' => 'public', 'registered' => 'registered', 'group' => 'group', 'examYear' => 'examYear', 'private' => 'private'],
+                'choices' => ['public' => 'public', 'registered' => 'registered', 'private' => 'private'],
                 'multiple' => false,
                 'expanded' => false,
             ])
