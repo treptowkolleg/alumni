@@ -35,4 +35,23 @@ class AppController extends AbstractController
             'lead' => $lead
         ]);
     }
+
+    #[Route('/rechtliches/datenschutz', name: 'privacy')]
+    public function privacy(): Response
+    {
+        return $this->render('app/privacy.html.twig');
+    }
+
+    #[Route('/rechtliches/impressum', name: 'imprint')]
+    public function imprint(): Response
+    {
+        return $this->render('app/imprint.html.twig');
+    }
+
+    #[Route('/rechtliches/nutzungsbedingungen', name: 'terms')]
+    public function terms(): Response
+    {
+        return $this->render('app/terms.html.twig');
+    }
+
 }

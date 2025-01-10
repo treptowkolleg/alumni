@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Datenschutzerklärung{% endblock %}
+
+{% block navbar %}
+    <li class="nav-item"><a class="nav-link" href="{{ url('blog_news_all_index') }}">Aktuelles</a></li>
+    <li class="nav-item"><a class="nav-link" href="{{ url('blog_index') }}">Themen</a></li>
+    <li class="nav-item"><a class="nav-link" href="{{ url('event_index') }}">Termine</a></li>
+    <li class="nav-item"><a class="nav-link" href="#">Angebote</a></li>
+    <li class="nav-item"><a class="nav-link active" href="{{ url('people_index') }}">Personen</a></li>
+{% endblock %}
+
+{% block page_header %}
+    <nav class="bg-transparent" style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url('app_index') }}">treptowkolleg.de</a></li>
+            <li class="breadcrumb-item active">Datenschutzerklärung</li>
+        </ol>
+    </nav>
+
+
+{% endblock %}
+{% block body %}
+    <h1>Datenschutzerklärung</h1>
+    <p>
+        Wir nehmen den Schutz Ihrer persönlichen Daten sehr ernst. Ihre Daten werden vertraulich und gemäß der gesetzlichen Datenschutzvorschriften behandelt.
+    </p>
+    <h2>Verantwortliche Stelle</h2>
+    <p>
+        Dein Name oder der Name des Unternehmens<br>
+        Deine Straße und Hausnummer<br>
+        Deine PLZ und Ort<br>
+        E-Mail: <a href="mailto:deine-email@example.com">deine-email@example.com</a><br>
+    </p>
+    <h2>Erhebung und Speicherung personenbezogener Daten</h2>
+    <p>
+        Beim Besuch unserer Website werden automatisch folgende Daten erfasst:
+    <ul>
+        <li>IP-Adresse (anonymisiert, falls möglich)</li>
+        <li>Datum und Uhrzeit der Anfrage</li>
+        <li>Browsertyp und -version</li>
+        <li>Betriebssystem</li>
+    </ul>
+    Diese Daten werden ausschließlich zur Verbesserung der Website genutzt und nicht an Dritte weitergegeben.
+    </p>
+    <h2>Rechte der Betroffenen</h2>
+    <p>
+        Sie haben das Recht auf:
+    <ul>
+        <li>Auskunft über Ihre gespeicherten Daten</li>
+        <li>Berichtigung oder Löschung Ihrer Daten</li>
+        <li>Einschränkung der Verarbeitung</li>
+        <li>Widerspruch gegen die Verarbeitung</li>
+        <li>Datenübertragbarkeit</li>
+    </ul>
+    Kontaktieren Sie uns bei Fragen unter der oben genannten E-Mail-Adresse.
+    </p>
+    <p>
+        Weitere Informationen können wir auf Anfrage bereitstellen.
+    </p>
+{% endblock %}
+
+{% block aside %}
+{% endblock %}
+
+
+
+
+
