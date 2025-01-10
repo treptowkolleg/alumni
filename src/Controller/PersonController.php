@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\BlogPost;
 use App\Entity\Event;
+use App\Entity\User;
 use App\Entity\UserProfile;
 use App\Repository\BlogPostRepository;
 use App\Repository\EventRepository;
@@ -45,10 +46,17 @@ class PersonController extends AbstractController
     }
 
     #[Route('/{slug}', name: 'show')]
-    public function show(UserProfile $userProfile): Response
+    public function show(User $user): Response
     {
-        return $this->render('people/show.html.twig', [
-            'person' => $userProfile,
-        ]);
+        $profile = $user->getUserProfiles()->first();
+        if($profile != null){
+            if(($this->getUser() and $profile->getNetworkState() == 'registered') or ($profile->getNetworkState() == 'public')){
+                return $this->render('people/show.html.twig', [
+                    'person' => $profile,
+                ]);
+            }
+        }
+        $this->addFlash('warning', 'Person existiert nicht oder nicht mehr.');
+        return $this->redirectToRoute('people_index');
     }
 }

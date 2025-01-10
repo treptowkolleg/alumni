@@ -90,7 +90,11 @@ class UserProfile
 
     public function __toString(): string
     {
-        return $this->user;
+        return match ($this->displayName) {
+            'fullnameEx' => $this->user->getFullname(),
+            'firstnameEx' => $this->user->getFirstname().' '.substr($this->user->getLastname(),0,1).'.',
+            'lastnameEx' => substr($this->user->getFirstname(),0,1).'. '.$this->user->getLastname(),
+        };
     }
 
     public function getId(): ?int

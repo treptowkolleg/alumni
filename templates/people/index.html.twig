@@ -15,23 +15,25 @@
 {% block body %}
     <div class="row row-cols-1 row-cols-lg-2 g-3 align-content-stretch">
         {% for person in people %}
-            {% if filtered_dates is empty or person.outYear in filtered_dates %}
-                <div class="col">
-                    <div class="card bg-body-tertiary border-0 h-100">
-                        <div class="row g-0">
-                            <div class="col-md-4">
-                                <img src="{{ asset('images/avatar_no_text.svg') }}" class="img-fluid" alt="...">
-                            </div>
-                            <div class="col-md-8">
-                                    <div class="card-body d-flex flex-column h-100">
-                                        <h3 class="h4 text-truncate">{{ person.user.fullname }}</h3>
-                                        <p class="">{{ person.user.school }}</p>
-                                        <a href="#" class="card-link stretched-link text-decoration-none mt-auto">mehr erfahren <i class="fas fa-chevron-right"></i></a>
-                                    </div>
+            {% if (app.user and person.networkState == 'registered') or person.networkState == 'public' %}
+                {% if filtered_dates is empty or person.outYear in filtered_dates %}
+                    <div class="col">
+                        <div class="card bg-body-tertiary border-0 h-100">
+                            <div class="row g-0">
+                                <div class="col-md-4">
+                                    <img src="{{ asset('images/avatar_no_text.svg') }}" class="img-fluid" alt="...">
+                                </div>
+                                <div class="col-md-8">
+                                        <div class="card-body d-flex flex-column h-100">
+                                            <h3 class="h4 text-truncate">{{ person }}</h3>
+                                            <p class="">{{ person.user.school }}</p>
+                                            <a href="{{ url('people_show',{'slug':person.user.slug }) }}" class="card-link stretched-link text-decoration-none mt-auto">mehr erfahren <i class="fas fa-chevron-right"></i></a>
+                                        </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                {% endif %}
             {% endif %}
         {% else %}
             <div class="col">

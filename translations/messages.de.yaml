@@ -17,10 +17,13 @@ Contact person: Ansprechpartner
 Contact email: E-Mail-Adresse
 Type: Typ
 teacher: Lehrkräfte
+Teacher: Lehrkräfte
 student: Lernende
+Student: Lernende
 User type: Personenkreis
 School: Schule
 employer: Angestellte
+Employer: Angestellte
 Has school: Ja, ich war oder bin Teil einer Bildungseinrichtung des Zweiten Bildungswegs.
 No: Nein
 Publish: Veröffentlichen
@@ -139,3 +142,8 @@ Display name: Namensformat
 fullnameEx: Vorname Nachname
 firstnameEx: Vorname N.
 lastnameEx: V. Nachname
+
+inf: Informatik
+ma: Mathematik
+ph: Physik
+phi: Philosophie

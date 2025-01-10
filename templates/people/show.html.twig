@@ -1,0 +1,84 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block title %}Alumni {{ person }}{% endblock %}
+{% block page_header %}
+    <nav class="bg-transparent" style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url('app_index') }}">treptowkolleg.de</a></li>
+            <li class="breadcrumb-item"><a href="{{ url('people_index') }}">Personen</a></li>
+            <li class="breadcrumb-item active fw-bolder" aria-current="page">Details</li>
+        </ol>
+    </nav>
+
+    <div class="row mb-3">
+        <div class="col-md-4">
+            <img src="{{ asset('images/avatar_no_text.svg') }}" class="img-fluid" alt="...">
+        </div>
+    </div>
+
+    <div class="mb-0"><span class="text-uppercase">{{ person.user.school }}</span></div>
+    <div class="mb-5">
+        <h1 class="h3 mb-1">{{ person }} <small class="text-muted fst-italic">{{ person.user.userType|trans }}</small></h1>
+        {% if person.portfolioLink %}
+            <a href="{{ person.portfolioLink }}" target="_blank"><i class="fa fa-link me-2"></i>Portfolio-Website</a>
+        {% endif %}
+    </div>
+
+
+    <div class="border-bottom">
+        <div class="row row-cols-1 row-cols-lg-3 g-3">
+            {% if person.user.userType == 'student' %}
+                <div class="col">
+                    <h2 class="h6">Abschluss</h2>
+                    <div>{{ person.examType|trans }} ({{ person.outYear }})</div>
+                </div>
+            {% endif %}
+            <div class="col">
+                <h2 class="h6">Leistungskurse</h2>
+                <ul class="list-inline">
+                    {% for item in person.performanceCourse %}
+                        <li class="list-inline-item"><span class="badge text-bg-primary">{{ item|trans }}</span></li>
+                    {% else %}
+                        <li class="list-inline-item">unbekannt</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="col">
+                <h2 class="h6">Lieblingsfächer</h2>
+                <ul class="list-inline">
+                    {% for item in person.favoriteSchoolSubjects %}
+                        <li class="list-inline-item"><span class="badge text-bg-primary">{{ item|trans }}</span></li>
+                    {% else %}
+                        <li class="list-inline-item">unbekannt</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+{% block body %}
+    <h2 class="h5">Kurzvita</h2>
+    <p class="fs-6">
+        {{ person.about|striptags|nl2br }}
+    </p>
+
+    <h2 class="h5">Interessenschwerpunkte</h2>
+    <ul class="list-inline">
+        {% for item in person.tags %}
+            <li class="list-inline-item"><span class="badge text-bg-light">{{ item }}</span></li>
+        {% else %}
+            <li class="list-inline-item">unbekannt</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
+
+{% block aside %}
+{% endblock %}
+
+
+
+
+
