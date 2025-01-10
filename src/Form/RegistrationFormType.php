@@ -6,6 +6,7 @@ use App\Entity\School;
 use App\Entity\User;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
+use Gregwar\CaptchaBundle\Type\CaptchaType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\ChoiceList\ChoiceList;
@@ -101,6 +102,12 @@ class RegistrationFormType extends AbstractType
                         'max' => 4096,
                     ]),
                 ],
+            ])
+            ->add('captcha', CaptchaType::class,[
+                'label' => false,
+                'row_attr' => ['class' => 'mt-2 mb-3'],
+                'attr' => ['class' => 'mt-2'],
+                'help' => 'Captcha ausfüllen, um Spam zu vermeiden.',
             ])
         ;
     }
