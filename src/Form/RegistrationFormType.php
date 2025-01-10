@@ -45,6 +45,7 @@ class RegistrationFormType extends AbstractType
             ])
             ->add('hasSchool', CheckboxType::class, [
                 'row_attr' => ['class' => 'mb-3'],
+                'required' => false,
             ])
             ->add('school', EntityType::class, [
                 'class' => School::class,

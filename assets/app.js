@@ -1,4 +1,4 @@
-import './bootstrap.js';
+//import './bootstrap.js';
 /*
  * Welcome to your app's main JavaScript file!
  *
@@ -12,24 +12,23 @@ import * as bootstrap from 'bootstrap';
 
 
 // Loop over them and prevent submission
+document.addEventListener("DOMContentLoaded", (event) => {
+    'use strict'
 
-    (() => {
-        'use strict'
+    const forms = document.querySelectorAll('.needs-validation')
 
-        const forms = document.querySelectorAll('.needs-validation')
+    $('input').tagsinput('refresh');
 
+    Array.from(forms).forEach(form => {
+        form.addEventListener('submit', event => {
+            if (!form.checkValidity()) {
+                event.preventDefault()
+                event.stopPropagation()
+            }
 
-        Array.from(forms).forEach(form => {
-            form.addEventListener('submit', event => {
-                if (!form.checkValidity()) {
-                    event.preventDefault()
-                    event.stopPropagation()
-                }
-
-                form.classList.add('was-validated')
-            }, false)
-        })
-
-    })()
+            form.classList.add('was-validated')
+        }, false)
+    })
+});
 
 
