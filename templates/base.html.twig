@@ -36,10 +36,10 @@
     <div class="py-3 bg-transparent">
         <div class="container d-flex justify-content-between align-items-center">
             <a href="{{ path('app_index') }}" class="d-flex align-items-center link-body-emphasis text-decoration-none">
-                <img src="{{ asset('images/logo.svg') }}" height="56" class="me-2" alt="logo">
+                <img src="{{ asset('images/logo.svg') }}" height="56" class="" alt="logo">
             </a>
             <ul class="nav">
-                <li class="nav-item d-block d-md-none"><a href="#" class="nav-link p-3 text-uppercase link-dark me-2"><i class="fas fa-bars me-2"></i>Menü</a></li>
+                <li class="nav-item d-block d-md-none"><a href="#" class="nav-link p-3 text-uppercase link-dark me-2"><i class="fas fa-bars me-2"></i></a></li>
                 {% if app.user %}
                     <li class="nav-item d-none d-md-block"><a href="{{ url('app_logout') }}" class="btn btn-outline-primary py-3 px-5 text-uppercase me-2">Abmelden</a></li>
                 {% else %}

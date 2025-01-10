@@ -33,8 +33,8 @@
                             <div class="text-muted">{{ post.type }}</div>
                         </div>
                         <div class="col-lg-8">
-                            <a href="{{ path('event_show',{'slug':post.slug}) }}" class="fs-4 card-link link-primary text-decoration-none">{{ post }}</a>
-                            <div class="fs-5">{{ post.location|split(',').0 }}</div>
+                            <a href="{{ path('event_show',{'slug':post.slug}) }}" class="card-link fs-5 stretched-link text-decoration-none">{{ post }}</a>
+                            <div class="small">{{ post.location|split(',').0 }}</div>
 
                         </div>
                     </div>

@@ -30,7 +30,7 @@
                         <div class="row">
                             <div class="col-12 mb-2">
                                 <div class="mb-0"><span>{{ post.updatedAt|date('d.m.Y') }}</span> | <span class="text-uppercase">{{ post.type }}</span></div>
-                                <a href="{{ path('blog_news_show',{'slug':post.slug}) }}" class="fs-3 card-link link-primary text-decoration-none">{{ post }}</a>
+                                <a href="{{ path('blog_news_show',{'slug':post.slug}) }}" class="fs-4 card-link stretched-link text-decoration-none">{{ post }}</a>
                             </div>
                             {% if post.image.name %}
                                 <div class="col-12 col-md-4">

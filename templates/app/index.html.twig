@@ -25,7 +25,7 @@
             <div class="col">
                 <div class="card card-body shadow-sm bg-white border-primary h-100">
                     <div class="text-uppercase small">{{ podcast.type }}</div>
-                    <h3 class="text-primary fw-normal">{{ podcast.title }}</h3>
+                    <h3 class="h4 text-primary fw-normal">{{ podcast.title }}</h3>
                     <p>Neuer Podcast online</p>
                     <a href="{{ path('blog_show',{'slug':podcast.slug}) }}" class="card-link stretched-link text-decoration-none link-black mt-auto fs-5">anhören <i class="fas fa-chevron-right"></i></a>
                 </div>
@@ -35,7 +35,7 @@
             <div class="col">
                 <div class="card card-body shadow-sm bg-white border-primary h-100">
                     <div class="text-uppercase small">{{ interview.type }}</div>
-                    <h3 class="text-primary fw-normal">{{ interview.title }}</h3>
+                    <h3 class="h4 text-primary fw-normal">{{ interview.title }}</h3>
                     <p>{{ interview.title }}</p>
                     <a href="{{ path('blog_show',{'slug':interview.slug}) }}" class="card-link stretched-link text-decoration-none link-black mt-auto fs-5">lesen <i class="fas fa-chevron-right"></i></a>
                 </div>
@@ -45,7 +45,7 @@
             <div class="col">
                 <div class="card card-body shadow-sm text-bg-primary border-0 h-100">
                     <div class="text-uppercase small">{{ blog_post.type }}</div>
-                    <h3 class="text-light fw-normal">{{ blog_post.title }}</h3>
+                    <h3 class="h4 text-light fw-normal">{{ blog_post.title }}</h3>
                     <p>Aktueller Themenbeitrag</p>
                     <a href="{{ path('blog_show',{'slug':blog_post.slug}) }}" class="card-link stretched-link text-decoration-none link-white mt-auto fs-5">lesen <i class="fas fa-chevron-right"></i></a>
                 </div>
@@ -65,7 +65,7 @@
                                 {% if post.image %}
                                     <img src="{{ vich_uploader_asset(post)|imagine_filter('post_thumbnail')  }}" alt="{{ post }}" class="img-fluid mb-2">
                                     <div class="mb-0"><span class="fw-bold">{{ post.updatedAt|date('d.m.Y') }}</span> <span class="text-uppercase">{{ post.type }}</span></div>
-                                    <a href="{{ path('blog_news_show',{'slug':post.slug}) }}" class="fs-3 card-link link-primary stretched-link text-decoration-none">{{ post }}</a>
+                                    <a href="{{ path('blog_news_show',{'slug':post.slug}) }}" class="fs-5 card-link stretched-link text-decoration-none">{{ post }}</a>
                                 {% else %}
                                     <a href="{{ path('blog_news_show',{'slug':post.slug}) }}" class="fs-3 card-link link-primary stretched-link text-decoration-none">{{ post }}</a>
                                     <div class="mb-0"><span class="fw-bold">{{ post.updatedAt|date('d.m.Y') }}</span> {{ post.type }}</div>
@@ -90,10 +90,10 @@
     <div class="d-flex flex-column">
         {% for event in events|sort((a, b) => a.startDate <=> b.startDate) %}
             {% if event.endDate|date('Ymd') >= date('now')|date('Ymd')%}
-            <div class="mb-2 pb-2 border-bottom d-flex flex-column">
+            <div class="mb-2 pb-2 border-bottom d-flex flex-column card border-0">
                 <div class="fw-bold">{{ event.startDate|date('d.m.Y') }}</div>
-                <a href="{{ url('event_show',{'slug':event.slug}) }}" class="fs-4 link-primary text-decoration-none">{{ event.title }}</a>
-                <small>{{ event.location }}</small>
+                <a href="{{ url('event_show',{'slug':event.slug}) }}" class="fs-5 stretched-link text-decoration-none">{{ event.title }}</a>
+                <small>{{ event.location|split(',').0 }}</small>
             </div>
             {% endif %}
         {% else %}
