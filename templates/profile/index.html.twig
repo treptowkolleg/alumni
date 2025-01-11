@@ -37,10 +37,11 @@
 
 
     {% if not app.user.isVerified %}
-        <div class="mb-5 alert alert-danger">
-            <h4>E-Mail-Adresse bestätigen!</h4>
-            <a href="{{ url('app_confirm') }}">Erneut E-Mail zur Verifizierung senden</a>
-            <p>Schaue bitte auch in deinem Spam-Ordner nach.</p>
+        <div class="mb-5 alert alert-light">
+            <h5>E-Mail-Adresse bestätigen!</h5>
+            <p>Schaue bitte auch in deinem Spam-Ordner nach, solltest du keine E-Mail erhalten haben.</p>
+            <a class="btn btn-outline-primary" href="{{ url('app_confirm') }}">Erneut E-Mail zur Verifizierung senden</a>
+
         </div>
     {% else %}
         <div class="row row-cols-1 row-cols-md-3 g-3 mb-5">
