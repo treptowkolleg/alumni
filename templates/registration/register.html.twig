@@ -40,19 +40,28 @@
     <script type="text/javascript">
         (function () {
 
-            let $isCompany = document.querySelector('#registration_form_hasSchool');
+            let $isCompany = document.querySelector('#registration_form_hasSchool_1');
+            let $isNotCompany = document.querySelector('#registration_form_hasSchool_0');
             let $companyFieldset = document.querySelector('#school-fieldset');
 
             if($isCompany.checked){
                 $companyFieldset.style.display ="grid";
-            } else {
+            } else if($isNotCompany.checked) {
                 $companyFieldset.style.display ="none";
             }
 
             $isCompany.addEventListener ('change', function (evt) {
                 if($isCompany.checked){
                     $companyFieldset.style.display ="grid";
-                } else {
+                } else if ($isNotCompany.checked) {
+                    $companyFieldset.style.display ="none";
+                }
+            });
+
+            $isNotCompany.addEventListener ('change', function (evt) {
+                if($isCompany.checked){
+                    $companyFieldset.style.display ="grid";
+                } else if ($isNotCompany.checked) {
                     $companyFieldset.style.display ="none";
                 }
             });

@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RadioType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -44,9 +45,15 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('hasSchool', CheckboxType::class, [
+            ->add('hasSchool', ChoiceType::class, [
+                'choices' => [
+                    'Nein, ich war oder bin NICHT Teil einer Einrichtung des Zweiten Bildungswegs' => '0',
+                    'Ja, ich war oder bin Teil einer Einrichtung des Zweiten Bildungswegs' => '1'
+                ],
+                'expanded' => true,
+                'multiple' => false,
                 'row_attr' => ['class' => 'mb-3'],
-                'required' => false,
+                'required' => true,
             ])
             ->add('school', EntityType::class, [
                 'class' => School::class,
