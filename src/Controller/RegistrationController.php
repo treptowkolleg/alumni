@@ -60,6 +60,7 @@ class RegistrationController extends AbstractController
         ]);
     }
 
+    #[Route('/register/confirm', name: 'app_confirm')]
     public function resendConfirmationEmail(Request $request, UserRepository $userRepository): Response
     {
         $user = $userRepository->find($this->getUser());

@@ -31,7 +31,7 @@
         </div>
         <div class="mb-3">
             {% if not app.user.isVerified %}
-                <a href="{{ url('') }}"
+                <a href="{{ url('app_confirm') }}">Erneut E-Mail zur Verifizierung senden</a>
             {% endif %}
         </div>
         <div class="">
