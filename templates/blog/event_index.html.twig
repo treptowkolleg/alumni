@@ -52,7 +52,7 @@
 
     <div class="row row-cols-1 g-3 align-content-stretch">
         {% for post in posts|sort((a, b) => b.startDate <=> a.startDate) %}
-            {% if post.endDate|date('Ymd') <= date('now')|date('Ymd')%}
+            {% if post.endDate|date('Ymd') <= date('+1 days')|date('Ymd')%}
                 <div class="col">
                     <div class="card border-0 bg-transparent mb-2 pb-2 border-bottom h-100">
                         <div class="row">
