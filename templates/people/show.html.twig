@@ -39,7 +39,7 @@
             {% if person.user.userType == 'Student' %}
                 <div class="col">
                     <h2 class="h6">Abschluss</h2>
-                    <div>{{ person.examType|trans }} ({% if person.outYear.length > 0 %}{{ person.outYear }}{% else %}immatrikuliert{% endif %})</div>
+                    <div>{{ person.examType|trans }} ({% if person.outYear != "" %}{{ person.outYear }}{% else %}immatrikuliert{% endif %})</div>
                 </div>
             {% endif %}
             <div class="col">
