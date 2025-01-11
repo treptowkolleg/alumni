@@ -17,8 +17,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
     const forms = document.querySelectorAll('.needs-validation')
 
-    $('input').tagsinput('refresh');
-
     Array.from(forms).forEach(form => {
         form.addEventListener('submit', event => {
             if (!form.checkValidity()) {

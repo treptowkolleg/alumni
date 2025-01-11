@@ -36,10 +36,10 @@
 
     <div class="border-bottom">
         <div class="row row-cols-1 row-cols-lg-3 g-3">
-            {% if person.user.userType == 'student' %}
+            {% if person.user.userType == 'Student' %}
                 <div class="col">
                     <h2 class="h6">Abschluss</h2>
-                    <div>{{ person.examType|trans }} ({{ person.outYear }})</div>
+                    <div>{{ person.examType|trans }} ({{ person.outYear ?? 'immatrikuliert' }})</div>
                 </div>
             {% endif %}
             <div class="col">
