@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\RegistrationFormType;
+use App\Repository\UserRepository;
 use App\Security\EmailVerifier;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -57,6 +58,21 @@ class RegistrationController extends AbstractController
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form,
         ]);
+    }
+
+    public function resendConfirmationEmail(Request $request, UserRepository $userRepository): Response
+    {
+        $user = $userRepository->find($this->getUser());
+        $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
+            (new TemplatedEmail())
+                ->from(new Address('aulumniportal@treptowkolleg.de', 'Alumni Portal'))
+                ->to((string) $user->getEmail())
+                ->subject('Bitte bestätige deine Email-Adresse')
+                ->htmlTemplate('registration/confirmation_email.html.twig')
+        );
+
+        $this->addFlash('success','E-Mail wurde erfolgreich versendet.');
+        return $this->redirectToRoute('profile_index');
     }
 
     #[Route('/register/complete', name: 'app_register_complete')]
