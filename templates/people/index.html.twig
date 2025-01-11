@@ -25,6 +25,7 @@
         {% for person in people %}
             {% if (app.user and person.networkState == 'registered') or person.networkState == 'public' %}
                 {% if filtered_dates is empty or person.outYear in filtered_dates %}
+                    {% if filtered_courses is empty or person.performanceCourse|filter((course) => course in filtered_courses)  %}
                     <div class="col">
                         <div class="card bg-body-tertiary border-0 h-100">
                             <div class="row g-0">
@@ -43,6 +44,7 @@
                             </div>
                         </div>
                     </div>
+                    {% endif %}
                 {% endif %}
             {% endif %}
         {% else %}
@@ -63,11 +65,11 @@
                 {% if school.users.count > 0 %}
                     {% if school.title in filtered_schools %}
                         <div class="list-group-item d-flex justify-content-between align-items-center py-3 active">
-                            <span>{{ school.title }}</span><span class="badge text-bg-primary">{{ school.users.count }}</span>
+                            <span>{{ school.title }}</span>
                         </div>
                     {% else %}
-                        <a href="{{ url('people_index',{'schools': school.title ~ ',' ~ filtered_schools|join(','), 'dates':filtered_dates|join(',')}) }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3">
-                            <span>{{ school.title }}</span><span class="badge text-bg-primary">{{ school.users.count }}</span>
+                        <a href="{{ url('people_index',{'courses':filtered_courses|join(','),'schools': school.title ~ ',' ~ filtered_schools|join(','), 'dates':filtered_dates|join(',')}) }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3">
+                            <span>{{ school.title }}</span>
                         </a>
                     {% endif %}
                 {% endif %}
@@ -82,11 +84,11 @@
                 {% if date.total > 0 %}
                     {% if date.outYear in filtered_dates %}
                         <div class="list-group-item d-flex justify-content-between align-items-center py-3 active">
-                            <span>{{ date.outYear }}</span><span class="badge text-bg-primary">{{ date.total }}</span>
+                            <span>{{ date.outYear }}</span>
                         </div>
                     {% else %}
-                        <a href="{{ url('people_index',{'schools':filtered_schools|join(','),'dates': date.outYear ~ ',' ~ filtered_dates|join(',')}) }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3">
-                            <span>{{ date.outYear }}</span><span class="badge text-bg-primary">{{ date.total }}</span>
+                        <a href="{{ url('people_index',{'courses':filtered_courses|join(','),'schools':filtered_schools|join(','),'dates': date.outYear ~ ',' ~ filtered_dates|join(',')}) }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3">
+                            <span>{{ date.outYear }}</span>
                         </a>
                     {% endif %}
                 {% endif %}
@@ -97,18 +99,16 @@
     <div class="fs-5 fw-bolder mb-1">Leistungskurs</div>
     <div class="card  border-primary">
         <div class="list-group list-group-flush">
-            {% for date in dates|sort((a, b) => a.outYear <=> b.outYear) %}
-                {% if date.total > 0 %}
-                    {% if date.outYear in filtered_dates %}
+            {% for course in courses|sort((a, b) => a.value <=> b.value) %}
+                    {% if course.value in filtered_courses %}
                         <div class="list-group-item d-flex justify-content-between align-items-center py-3 active">
-                            <span>{{ date.outYear }}</span><span class="badge text-bg-primary">{{ date.total }}</span>
+                            <span>{{ course.value|trans }}</span>
                         </div>
                     {% else %}
-                        <a href="{{ url('people_index',{'schools':filtered_schools|join(','),'dates': date.outYear ~ ',' ~ filtered_dates|join(',')}) }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3">
-                            <span>{{ date.outYear }}</span><span class="badge text-bg-primary">{{ date.total }}</span>
+                        <a href="{{ url('people_index',{'courses':course.value ~ ',' ~ filtered_courses|join(','),'schools':filtered_schools|join(','),'dates': filtered_dates|join(',')}) }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3">
+                            <span>{{ course.value|trans }}</span>
                         </a>
                     {% endif %}
-                {% endif %}
             {% endfor %}
         </div>
     </div>

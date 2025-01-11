@@ -14,5 +14,11 @@ enum PerformanceCourseEnum: string
     case Sport = "spo";
     case Physik = "ph";
     case Philosophie = "phi";
+    case Kunst = "ku";
+    case Psychologie = "psy";
+    case Theater = "ds";
+    case Latein = "la";
+    case Musik = "mu";
+
 
 }

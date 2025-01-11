@@ -6,6 +6,7 @@ use App\Entity\BlogPost;
 use App\Entity\Event;
 use App\Entity\User;
 use App\Entity\UserProfile;
+use App\Enums\PerformanceCourseEnum;
 use App\Repository\BlogPostRepository;
 use App\Repository\EventRepository;
 use App\Repository\EventTypeRepository;
@@ -25,8 +26,10 @@ class PersonController extends AbstractController
     {
         $filteredTypesQuery = trim($request->query->get('schools'),',');
         $filteredDatesQuery = trim($request->query->get('dates'),',');
+        $filteredCoursesQuery = trim($request->query->get('courses'),',');
         $filteredTypes = array_filter(explode(',', $filteredTypesQuery));
         $filteredDates = array_filter(explode(',', $filteredDatesQuery));
+        $filteredCourses = array_filter(explode(',', $filteredCoursesQuery));
         if (!empty($filteredTypes)) {
             $people = $repository->findBySchool($filteredTypes);
         } else {
@@ -40,8 +43,10 @@ class PersonController extends AbstractController
             'people' => $people,
             'schools' => $schoolRepository->findAll(),
             'dates' => $usedDates,
+            'courses' => PerformanceCourseEnum::cases(),
             'filtered_schools' => $filteredTypes,
             'filtered_dates' => $filteredDates,
+            'filtered_courses' => $filteredCourses,
         ]);
     }
 

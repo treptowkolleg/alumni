@@ -143,7 +143,18 @@ fullnameEx: Vorname Nachname
 firstnameEx: Vorname N.
 lastnameEx: V. Nachname
 
+bi: Biologie
 inf: Informatik
 ma: Mathematik
 ph: Physik
 phi: Philosophie
+ch: Chemie
+en: Englisch
+fr: Französisch
+sp: Spanisch
+spo: Sport
+ku: Kunst
+mu: Musik
+ds: Darstellendes Spiel
+la: Latein
+psy: Psychologie
