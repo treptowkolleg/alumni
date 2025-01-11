@@ -24,6 +24,8 @@ class PersonController extends AbstractController
     #[Route('', name: 'index')]
     public function index(Request $request, UserProfileRepository $repository, SchoolRepository $schoolRepository): Response
     {
+        $search = $request->get('person_search');
+
         $filteredTypesQuery = trim($request->query->get('schools'),',');
         $filteredDatesQuery = trim($request->query->get('dates'),',');
         $filteredCoursesQuery = trim($request->query->get('courses'),',');
@@ -31,9 +33,9 @@ class PersonController extends AbstractController
         $filteredDates = array_filter(explode(',', $filteredDatesQuery));
         $filteredCourses = array_filter(explode(',', $filteredCoursesQuery));
         if (!empty($filteredTypes)) {
-            $people = $repository->findBySchool($filteredTypes);
+            $people = $repository->findBySchool($filteredTypes,$search);
         } else {
-            $people = $repository->findAll();
+            $people = $repository->findBySearchQuery($search);
         }
 
         $usedDates = $repository->findExamDates();

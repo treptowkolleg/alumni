@@ -61,9 +61,16 @@
                             <li class="nav-item"><a class="nav-link" href="{{ url('people_index') }}">Personen</a></li>
                         {% endblock %}
                     </ul>
-                    <form class="d-flex" role="search">
-                        <input class="form-control me-2" type="search" placeholder="Suchen" aria-label="Suchen">
-                        <button class="btn btn-light" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    <form method="post" class="">
+                        <div class="input-group">
+                            <label for="blog_search" class="d-none"></label>
+                            <input type="search" id="blog_search" name="blog_search" class="form-control" placeholder="Auf Seite suchen">
+                            <div class="input-group-btn">
+                                <button class="btn btn-primary" type="submit">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>

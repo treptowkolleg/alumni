@@ -21,18 +21,37 @@ class UserProfileRepository extends ServiceEntityRepository
     /**
      * @return UserProfile[] Returns an array of UserProfile objects
      */
-    public function findBySchool(array $value): array
+    public function findBySchool(array $value, ?string $query = ""): array
     {
         return $this->createQueryBuilder('up')
             ->addSelect('s')
             ->addSelect('u')
             ->leftJoin('up.user', 'u')
             ->leftJoin('u.school', 's')
+            ->andWhere('u.firstname LIKE :query')
+            ->orWhere('u.lastname LIKE :query')
             ->andWhere('s.title IN (:val)')
             ->setParameter('val', $value)
+            ->setParameter('query', "%$query%")
             ->getQuery()
             ->getResult()
         ;
+    }
+
+    /**
+     * @return UserProfile[] Returns an array of UserProfile objects
+     */
+    public function findBySearchQuery(?string $query = ""): array
+    {
+        return $this->createQueryBuilder('up')
+            ->addSelect('u')
+            ->leftJoin('up.user', 'u')
+            ->andWhere('u.firstname LIKE :query')
+            ->orWhere('u.lastname LIKE :query')
+            ->setParameter('query', "%$query%")
+            ->getQuery()
+            ->getResult()
+            ;
     }
 
     /**
