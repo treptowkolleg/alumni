@@ -22,7 +22,7 @@
     <h1 class="h3">Kommende Veranstaltungen</h1>
 {% endblock %}
 {% block body %}
-    <div class="row row-cols-1 g-3 align-content-stretch">
+    <div class="row row-cols-1 g-3 align-content-stretch mb-5">
         {% for post in posts|sort((a, b) => a.startDate <=> b.startDate) %}
             {% if post.endDate|date('Ymd') >= date('now')|date('Ymd')%}
             <div class="col">
@@ -47,6 +47,35 @@
             </div>
         {% endfor %}
     </div>
+
+    <h2 class="h4">Vergangene Veranstaltungen</h2>
+
+    <div class="row row-cols-1 g-3 align-content-stretch">
+        {% for post in posts|sort((a, b) => a.startDate <=> b.startDate) %}
+            {% if post.endDate|date('Ymd') <= date('now')|date('Ymd')%}
+                <div class="col">
+                    <div class="card border-0 bg-transparent mb-2 pb-2 border-bottom h-100">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="fw-bold">{{ post.startDate|date('d.m.Y') }}{% if post.endDate|date('d.m.Y') != post.startDate|date('d.m.Y') %} - {{ post.endDate|date('d.m.Y') }}{% endif %}</div>
+                                <div class="text-muted">{{ post.type }}</div>
+                            </div>
+                            <div class="col-lg-8">
+                                <a href="{{ path('event_show',{'slug':post.slug}) }}" class="card-link fs-5 stretched-link text-decoration-none">{{ post }}</a>
+                                <div class="small">{{ post.location|split(',').0 }}</div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        {% else %}
+            <div class="col">
+                Aktuell sind keine Meldungen vorhanden
+            </div>
+        {% endfor %}
+    </div>
+
 {% endblock %}
 
 {% block aside %}
