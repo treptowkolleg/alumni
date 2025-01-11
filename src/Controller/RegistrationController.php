@@ -44,7 +44,7 @@ class RegistrationController extends AbstractController
             // generate a signed url and email it to the user
             $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
                 (new TemplatedEmail())
-                    ->from(new Address('aulumniportal@treptowkolleg.de', 'Alumni Portal'))
+                    ->from(new Address('alumniportal@treptowkolleg.de', 'Alumni Portal'))
                     ->to((string) $user->getEmail())
                     ->subject('Please Confirm your Email')
                     ->htmlTemplate('registration/confirmation_email.html.twig')
@@ -67,7 +67,7 @@ class RegistrationController extends AbstractController
         $user = $userRepository->find($this->getUser());
         $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
             (new TemplatedEmail())
-                ->from(new Address('aulumniportal@treptowkolleg.de', 'Alumni Portal'))
+                ->from(new Address('alumniportal@treptowkolleg.de', 'Alumni Portal'))
                 ->to((string) $user->getEmail())
                 ->subject('Bitte bestätige deine Email-Adresse')
                 ->htmlTemplate('registration/confirmation_email.html.twig')
