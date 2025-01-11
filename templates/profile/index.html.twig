@@ -29,15 +29,16 @@
                 <div class="small badge text-bg-light text-muted"><span class="d-none d-md-inline">Verifizierung ausstehend</span> <i class="fas fa-circle-exclamation text-danger"></i></div>
             {% endif %}
         </div>
-        <div class="mb-3">
-            {% if not app.user.isVerified %}
-                <a href="{{ url('app_confirm') }}">Erneut E-Mail zur Verifizierung senden</a>
-            {% endif %}
-        </div>
         <div class="">
             <div class="small badge text-bg-light text-muted"><span class="d-none d-md-inline">offizielles Schulmitglied</span> <i class="fas fa-graduation-cap text-primary"></i></div>
         </div>
         <div class="ms-auto d-none d-md-block">{{ app.user.school ?? '' }}</div>
+    </div>
+
+    <div class="mb-3">
+        {% if not app.user.isVerified %}
+            <a href="{{ url('app_confirm') }}">Erneut E-Mail zur Verifizierung senden</a>
+        {% endif %}
     </div>
 
     <div class="row row-cols-1 row-cols-md-3 g-3 mb-5">
