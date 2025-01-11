@@ -34,7 +34,9 @@
                                 <div class="col-md-8">
                                         <div class="card-body d-flex flex-column h-100">
                                             <h3 class="h4 text-truncate">{{ person }}</h3>
-                                            <p class="">{{ person.user.school }}</p>
+                                            {% if person.user.hasSchool %}
+                                                <p class="">{{ person.user.school }}</p>
+                                            {% endif %}
                                             <a href="{{ url('people_show',{'slug':person.user.slug }) }}" class="card-link stretched-link text-decoration-none mt-auto">mehr erfahren <i class="fas fa-chevron-right"></i></a>
                                         </div>
                                 </div>

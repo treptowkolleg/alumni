@@ -25,7 +25,9 @@
         </div>
     </div>
 
-    <div class="mb-0"><span class="text-uppercase">{{ person.user.school }}</span></div>
+    {% if person.user.hasSchool %}
+        <div class="mb-0"><span class="text-uppercase">{{ person.user.school }}</span></div>
+    {% endif %}
     <div class="mb-5">
         <h1 class="h3 mb-1">{{ person }} <small class="text-muted fst-italic">{{ person.user.userType|trans }}</small></h1>
         {% if person.portfolioLink %}
