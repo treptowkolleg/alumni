@@ -48,6 +48,7 @@ class RegistrationController extends AbstractController
                     ->to((string) $user->getEmail())
                     ->subject('Please Confirm your Email')
                     ->htmlTemplate('registration/confirmation_email.html.twig')
+                    ->context(['user' => $user])
             );
 
             // do anything else you need here, like send an email
@@ -70,6 +71,7 @@ class RegistrationController extends AbstractController
                 ->to((string) $user->getEmail())
                 ->subject('Bitte bestätige deine Email-Adresse')
                 ->htmlTemplate('registration/confirmation_email.html.twig')
+                ->context(['user' => $user])
         );
 
         $this->addFlash('success','E-Mail wurde erfolgreich versendet.');
