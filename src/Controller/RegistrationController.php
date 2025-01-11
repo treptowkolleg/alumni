@@ -70,6 +70,7 @@ class RegistrationController extends AbstractController
                 ->from(new Address('aulumniportal@treptowkolleg.de', 'Alumni Portal'))
                 ->to((string) $user->getEmail())
                 ->subject('Bitte bestätige deine Email-Adresse')
+                ->setHeaders()
                 ->htmlTemplate('registration/confirmation_email.html.twig')
                 ->context(['user' => $user])
         );
