@@ -28,7 +28,7 @@ class UserProfileRepository extends ServiceEntityRepository
             ->addSelect('u')
             ->leftJoin('up.user', 'u')
             ->leftJoin('u.school', 's')
-            ->orWhere('s.title IN (:val)')
+            ->andWhere('s.title IN (:val)')
             ->setParameter('val', $value)
             ->getQuery()
             ->getResult()
