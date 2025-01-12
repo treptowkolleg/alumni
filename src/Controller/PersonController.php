@@ -40,6 +40,7 @@ class PersonController extends AbstractController
 
         $usedDates = $repository->findExamDates();
 
+        shuffle($people);
 
         return $this->render('people/index.html.twig', [
             'people' => $people,
