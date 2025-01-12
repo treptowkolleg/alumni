@@ -33,6 +33,7 @@ class UserProfileRepository extends ServiceEntityRepository
             ->andWhere('s.title IN (:val)')
             ->setParameter('val', $value)
             ->setParameter('query', "%$query%")
+            ->setMaxResults(30)
             ->getQuery()
             ->getResult()
         ;
@@ -49,6 +50,7 @@ class UserProfileRepository extends ServiceEntityRepository
             ->andWhere('u.firstname LIKE :query')
             ->orWhere('u.lastname LIKE :query')
             ->setParameter('query', "%$query%")
+            ->setMaxResults(30)
             ->getQuery()
             ->getResult()
             ;
