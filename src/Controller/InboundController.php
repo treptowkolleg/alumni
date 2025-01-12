@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class InboundController extends AbstractController
 {
 
-    #[Route('/', name: 'receive', methods: ['POST'])]
+    #[Route('', name: 'receive', methods: ['POST'])]
     public function index(Request $request, EntityManagerInterface $entityManager): Response
     {
 
