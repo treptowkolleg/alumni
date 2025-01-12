@@ -10,6 +10,7 @@ use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\DomCrawler\Field\TextareaFormField;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
@@ -108,6 +109,46 @@ class EventFormType extends AbstractType
                 'required' => false,
             ])
         ;
+
+        $builder->get('startDate')->addModelTransformer(new CallbackTransformer(
+            function ($value) {
+                if(!$value) {
+                    $value =  new \DateTime('now +1 month');
+                    $value->setTime(10, 0);
+                }
+                return $value;
+            },
+            function ($value) {
+                return $value;
+            }
+        ));
+
+        $builder->get('startDate')->addModelTransformer(new CallbackTransformer(
+            function ($value) {
+                if(!$value) {
+                    $value =  new \DateTime('now');
+                    $value->setTime(10, 0);
+                }
+                return $value;
+            },
+            function ($value) {
+                return $value;
+            }
+        ));
+
+        $builder->get('endDate')->addModelTransformer(new CallbackTransformer(
+            function ($value) {
+                if(!$value) {
+                    $value =  new \DateTime('now');
+                    $value->setTime(10, 0);
+                }
+                return $value;
+            },
+            function ($value) {
+                return $value;
+            }
+        ));
+
     }
 
     public function configureOptions(OptionsResolver $resolver): void
