@@ -16,14 +16,17 @@ class InboundController extends AbstractController
     #[Route('/', name: 'receive', methods: ['POST'])]
     public function index(Request $request, EntityManagerInterface $entityManager): Response
     {
-        $inbound = new Inbound();
-        $inbound->setSender($request->get('from'));
-        $inbound->setSubject($request->get('subject'));
-        $inbound->setHtml($request->get('html'));
-        $inbound->setText($request->get('text'));
-        $entityManager->persist($inbound);
-        $entityManager->flush();
-        return new Response('OK', Response::HTTP_OK);
+        if($request->isMethod('POST')) {
+            $inbound = new Inbound();
+            $inbound->setSender($request->get('from'));
+            $inbound->setSubject($request->get('subject'));
+            $inbound->setHtml($request->get('html'));
+            $inbound->setText($request->get('text'));
+            $entityManager->persist($inbound);
+            $entityManager->flush();
+            return new Response('OK', Response::HTTP_OK);
+        }
+        return new Response('Ist auf GET', Response::HTTP_OK);
     }
 
 }
