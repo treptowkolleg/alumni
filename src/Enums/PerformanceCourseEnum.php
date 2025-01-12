@@ -19,6 +19,7 @@ enum PerformanceCourseEnum: string
     case Theater = "ds";
     case Latein = "la";
     case Musik = "mu";
+    case Politik = "pw";
 
 
 }
