@@ -16,14 +16,6 @@ class InboundController extends AbstractController
     #[Route('/', name: 'receive', methods: ['POST'])]
     public function index(Request $request, EntityManagerInterface $entityManager): Response
     {
-        // Prüfe den Content-Type, falls nötig
-        if (!$request->isMethod('POST')) {
-            return new Response('Only POST requests are allowed', Response::HTTP_METHOD_NOT_ALLOWED);
-        }
-
-        $body = $request->getContent(); // Den Rohinhalt des Requests auslesen
-        file_put_contents('/tmp/request.log', $body);
-        return new Response('Logged', Response::HTTP_OK);
 
         // Beispiel: Daten auswerten
         $from = $request->request->get('from'); // Absender-E-Mail
