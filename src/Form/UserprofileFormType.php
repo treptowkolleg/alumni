@@ -126,7 +126,7 @@ class UserprofileFormType extends AbstractType
             ->add('hobbies', ChoiceType::class, [
                 'choices' => $interests,
                 'multiple' => true,  // Mehrfachauswahl moeglich
-                'expanded' => true,  // Checkboxen statt Dropdown
+                'expanded' => false,  // Checkboxen statt Dropdown
                 'group_by' => function ($choice, $key, $value) use ($interests) {
                     // Gruppierung nach Hauptkategorien
                     foreach ($interests as $group => $items) {
@@ -185,7 +185,7 @@ class UserprofileFormType extends AbstractType
                         'Marktforschung und Analyse' => 'marktforschung_analyse',
                     ],
                 ],
-                'expanded' => true, // optional, wenn du Checkboxen oder Radios moechtest
+                'expanded' => false, // optional, wenn du Checkboxen oder Radios moechtest
                 'multiple' => true, // optional, wenn du mehrere Optionen auswaehlen lassen moechtest
                 'label' => 'Berufliche Interessen',
             ])

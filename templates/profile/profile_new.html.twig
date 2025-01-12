@@ -41,11 +41,12 @@
     </div>
 
     <div class="h5 fw-normal">Fächer und Interessen</div>
-    <div class="row">
-        <div class="col-md-4">{{ form_row(form.hobbies) }}</div>
-        <div class="col-md-4">{{ form_row(form.performanceCourse) }}</div>
-        <div class="col-md-4">{{ form_row(form.favoriteSchoolSubjects) }}</div>
+    <div class="row ">
+        <div class="col-md-6">{{ form_row(form.performanceCourse) }}</div>
+        <div class="col-md-6">{{ form_row(form.favoriteSchoolSubjects) }}</div>
     </div>
+
+    {{ form_row(form.hobbies) }}
 
     <div class="h5 mt-3">Akademische Informationen</div>
     <div class="row">
@@ -69,6 +70,10 @@
 
     <button type="submit" class="btn btn-primary">Speichern</button> <a href="{{ path('profile_index') }}" class="btn btn-light ms-2">Abbrechen</a>
     {{ form_end(form) }}
+
+    <script>
+        $('select').select2();
+    </script>
 {% endblock %}
 {% block aside %}
 {% endblock %}

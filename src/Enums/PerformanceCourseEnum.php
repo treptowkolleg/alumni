@@ -4,22 +4,22 @@ namespace App\Enums;
 
 enum PerformanceCourseEnum: string
 {
-    case Informatik = "inf";
-    case Mathematik = "ma";
-    case Chemie = "ch";
-    case Bio = "bi";
-    case Englisch = "en";
-    case French = "fr";
-    case Spanisch = "sp";
-    case Sport = "spo";
-    case Physik = "ph";
-    case Philosophie = "phi";
-    case Kunst = "ku";
-    case Psychologie = "psy";
-    case Theater = "ds";
-    case Latein = "la";
-    case Musik = "mu";
-    case Politik = "pw";
+    case inf = "inf";
+    case ma = "ma";
+    case ch = "ch";
+    case bi = "bi";
+    case en = "en";
+    case fr = "fr";
+    case sp = "sp";
+    case spo = "spo";
+    case ph = "ph";
+    case phi = "phi";
+    case ku = "ku";
+    case psy = "psy";
+    case ds = "ds";
+    case la = "la";
+    case mu = "mu";
+    case pw = "pw";
 
 
 }
