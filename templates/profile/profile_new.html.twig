@@ -72,7 +72,9 @@
     {{ form_end(form) }}
 
     <script>
-        $('select').select2();
+        $('select').select2({
+            theme: 'bootstrap-5'
+        });
     </script>
 {% endblock %}
 {% block aside %}
