@@ -17,6 +17,10 @@ class InboundController extends AbstractController
     public function index(Request $request, EntityManagerInterface $entityManager): Response
     {
 
+        if (!$request->isMethod('POST')) {
+            return new Response('Only POST requests are allowed', Response::HTTP_METHOD_NOT_ALLOWED);
+        }
+
         // Beispiel: Daten auswerten
         $from = $request->request->get('from'); // Absender-E-Mail
         $subject = $request->request->get('subject'); // Betreff
