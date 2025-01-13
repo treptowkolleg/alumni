@@ -73,11 +73,11 @@ class PersonController extends AbstractController
     }
 
     #[Route('/details/{slug}', name: 'show')]
-    public function show(User $user): Response
+    public function show(User $user, UserRepository $userRepository): Response
     {
         $profile = $user->getUserProfiles()->first();
         if($profile != null){
-            if(($this->getUser() and $profile->getNetworkState() == 'registered') or ($profile->getNetworkState() == 'public')){
+            if(($this->getUser() and $profile->getNetworkState() == 'registered') or ($profile->getNetworkState() == 'public') or $profile->getUser()->getSchool() == $userRepository->find($this->getUser()?->getSchool())){
                 return $this->render('people/show.html.twig', [
                     'person' => $profile,
                 ]);
