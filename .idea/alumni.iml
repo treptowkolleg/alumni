@@ -163,5 +163,7 @@
     <orderEntry type="library" name="bootstrap-tagsinput" level="application" />
     <orderEntry type="library" name="select2" level="application" />
     <orderEntry type="library" name="select2-bootstrap-5-theme" level="application" />
+    <orderEntry type="library" name="virtual-select-plugin" level="application" />
+    <orderEntry type="library" name="tom-select" level="application" />
   </component>
 </module>

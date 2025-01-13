@@ -11,7 +11,8 @@ security:
                 property: email
     role_hierarchy:
         ROLE_AUTHOR: 'ROLE_USER'
-        ROLE_ADMIN: 'ROLE_AUTHOR'
+        ROLE_EDITOR: 'ROLE_AUTHOR'
+        ROLE_ADMIN: 'ROLE_EDITOR'
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
