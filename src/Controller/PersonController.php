@@ -12,6 +12,7 @@ use App\Repository\EventRepository;
 use App\Repository\EventTypeRepository;
 use App\Repository\SchoolRepository;
 use App\Repository\UserProfileRepository;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,10 +22,13 @@ use Symfony\Component\Routing\Attribute\Route;
 class PersonController extends AbstractController
 {
 
-    #[Route('', name: 'index')]
-    public function index(Request $request, UserProfileRepository $repository, SchoolRepository $schoolRepository): Response
+    #[Route('/{filter}', name: 'index')]
+    public function index(Request $request, UserRepository $userRepository, UserProfileRepository $repository, SchoolRepository $schoolRepository, string $filter = 'all'): Response
     {
         $search = $request->get('person_search');
+
+
+        $people = null;
 
         $filteredTypesQuery = trim($request->query->get('schools'),',');
         $filteredDatesQuery = trim($request->query->get('dates'),',');
@@ -32,17 +36,32 @@ class PersonController extends AbstractController
         $filteredTypes = array_filter(explode(',', $filteredTypesQuery));
         $filteredDates = array_filter(explode(',', $filteredDatesQuery));
         $filteredCourses = array_filter(explode(',', $filteredCoursesQuery));
-        if (!empty($filteredTypes)) {
-            $people = $repository->findBySchool($filteredTypes,$search);
-        } else {
-            $people = $repository->findBySearchQuery($search);
-        }
 
         $usedDates = $repository->findExamDates();
 
-        shuffle($people);
+        if($filter == 'all') {
+            if (!empty($filteredTypes)) {
+                $people = $repository->findBySchool($filteredTypes,$search);
+            } else {
+                $people = $repository->findBySearchQuery($search);
+            }
+
+        }
+
+
+        if($filter == 'school') {
+            if($this->isGranted('ROLE_USER')) {
+                $user = $userRepository->find($this->getUser());
+                $people = $repository->findBySchool([$user->getSchool()->getTitle()],$search);
+                $filteredTypes = null;
+            } else {
+                return $this->redirectToRoute('people_index');
+            }
+        }
+
 
         return $this->render('people/index.html.twig', [
+            'filter' => $filter,
             'people' => $people,
             'schools' => $schoolRepository->findAll(),
             'dates' => $usedDates,
@@ -53,7 +72,7 @@ class PersonController extends AbstractController
         ]);
     }
 
-    #[Route('/{slug}', name: 'show')]
+    #[Route('/details/{slug}', name: 'show')]
     public function show(User $user): Response
     {
         $profile = $user->getUserProfiles()->first();

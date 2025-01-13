@@ -22,7 +22,7 @@
 
 {% endblock %}
 {% block body %}
-    <form method="post" class="mb-3">
+    <form method="post" class="">
         <div class="input-group">
             <input type="search" id="person_search" name="person_search" class="form-control" placeholder="Personen finden">
             <div class="input-group-btn">
@@ -34,9 +34,26 @@
         <label for="person_search"></label>
     </form>
 
+    <ul class="nav nav-underline mb-4">
+        <li class="nav-item">
+            <a class="nav-link {{ filter == 'all' ? 'active ' : '' }}" href="{{ url('people_index',{'courses':filtered_courses|join(','),'schools': filtered_schools|join(','), 'dates':filtered_dates|join(',')}) }}">Alle Personen</a>
+        </li>
+        {% if app.user %}
+            <li class="nav-item">
+                <a class="nav-link {{ filter == 'school' ? 'active ' : '' }}" href="{{ url('people_index',{'filter':'school','courses':filtered_courses|join(','),'schools': filtered_schools|join(','), 'dates':filtered_dates|join(',')}) }}">Meine Schule</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Meine Bekannten</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Interessen-Matches</a>
+            </li>
+        {% endif %}
+    </ul>
+
     <div class="row row-cols-1 row-cols-lg-2 g-3 align-content-stretch">
         {% for person in people %}
-            {% if (app.user and person.networkState == 'registered') or person.networkState == 'public' %}
+            {% if (app.user and  person.networkState == 'registered') or person.networkState == 'public' or (filter == 'school' and person.networkState == 'private') %}
                 {% if filtered_dates is empty or person.outYear in filtered_dates %}
                     {% if filtered_courses is empty or person.performanceCourse|filter((course) => course in filtered_courses)  %}
                     <div class="col">
@@ -70,7 +87,8 @@
 
 {% block aside %}
     <div class="fs-4 mb-1">Filtern nach ...</div>
-    <a href="{{ url('people_index') }}" class="mb-3 d-block">Alle Personen anzeigen</a>
+    <a href="{{ url('people_index',{'filter':app.request.attributes.get('filter')}) }}" class="mb-3 d-block">Alle Personen anzeigen</a>
+    {% if filter != 'school' %}
     <div class="fs-5 fw-bolder mb-1">Bildungseinrichtung</div>
     <div class="card  border-primary mb-3">
         <div class="list-group list-group-flush">
@@ -89,6 +107,7 @@
             {% endfor %}
         </div>
     </div>
+    {% endif %}
 
     <div class="fs-5 fw-bolder mb-1">Abgangsjahr</div>
     <div class="card  border-primary mb-3">
@@ -100,7 +119,7 @@
                             <span>{{ date.outYear }}</span>
                         </div>
                     {% else %}
-                        <a href="{{ url('people_index',{'courses':filtered_courses|join(','),'schools':filtered_schools|join(','),'dates': date.outYear ~ ',' ~ filtered_dates|join(',')}) }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3">
+                        <a href="{{ url('people_index',{'filter':app.request.attributes.get('filter'),'courses':filtered_courses|join(','),'schools':filtered_schools|join(','),'dates': date.outYear ~ ',' ~ filtered_dates|join(',')}) }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3">
                             <span>{{ date.outYear }}</span>
                         </a>
                     {% endif %}
@@ -118,7 +137,7 @@
                             <span>{{ course.value|trans }}</span>
                         </div>
                     {% else %}
-                        <a href="{{ url('people_index',{'courses':course.value ~ ',' ~ filtered_courses|join(','),'schools':filtered_schools|join(','),'dates': filtered_dates|join(',')}) }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3">
+                        <a href="{{ url('people_index',{'filter':app.request.attributes.get('filter'),'courses':course.value ~ ',' ~ filtered_courses|join(','),'schools':filtered_schools|join(','),'dates': filtered_dates|join(',')}) }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3">
                             <span>{{ course.value|trans }}</span>
                         </a>
                     {% endif %}
