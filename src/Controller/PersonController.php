@@ -77,7 +77,7 @@ class PersonController extends AbstractController
     {
         $profile = $user->getUserProfiles()->first();
         if($profile != null){
-            if(($this->getUser() and $profile->getNetworkState() == 'registered') or ($profile->getNetworkState() == 'public') or $profile->getUser()->getSchool() === $userRepository->find($this->getUser())->getSchool()){
+            if(($this->getUser() and $profile->getNetworkState() == 'registered') or ($profile->getNetworkState() == 'public') or ($profile->getUser()->getSchool()->getTitle() === $userRepository->find($this->getUser())->getSchool()->getTitle())){
                 return $this->render('people/show.html.twig', [
                     'person' => $profile,
                 ]);
