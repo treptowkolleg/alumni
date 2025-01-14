@@ -16,11 +16,11 @@
     <p>Am Ende der Seite kannst du einstellen, wer was von dir sehen darf.</p>
 {% endblock %}
 {% block body %}
-
-    {{ form_errors(form) }}
     {{ form_start(form, { 'attr': {'novalidate':'novalidate'} }) }}
+    {{ form_errors(form) }}
 
-    <div class="h5 mt-3">Über mich</div>
+
+    <div class="h5">Über mich</div>
     <div class="row">
         <div class="col-12">
             <div>{{ form_label(form.tags) }}</div>
@@ -32,13 +32,6 @@
         </div>
     </div>
 
-    <div class="h5 mt-3">Schulbezogene Informationen</div>
-    <div class="h5 fw-normal">Bildungsgang</div>
-    <div class="row">
-        <div class="col-md-3">{{ form_row(form.inYear) }}</div>
-        <div class="col-md-3">{{ form_row(form.outYear) }}</div>
-        <div class="col-md-6">{{ form_row(form.examType, {'attr': {'class': ''}}) }}</div>
-    </div>
 
     <div class="h5 fw-normal">Fächer und Interessen</div>
     <div class="row ">
@@ -61,7 +54,21 @@
 
     {{ form_row(form.interests) }}
 
-    <div class="h5 mt-5 mb-3">Sichtbarkeit</div>
+
+
+
+
+{% endblock %}
+{% block aside %}
+
+    <div class="h5">Bildungsgang</div>
+    <div class="row mb-3">
+        <div class="col-md-6">{{ form_row(form.inYear) }}</div>
+        <div class="col-md-6">{{ form_row(form.outYear) }}</div>
+        <div class="col-md-12">{{ form_row(form.examType, {'attr': {'class': ''}}) }}</div>
+    </div>
+
+    <div class="h5">Sichtbarkeit</div>
     <div class="mb-5">
         {{ form_row(form.networkState) }}
         {{ form_row(form.displayName) }}
@@ -69,13 +76,13 @@
 
 
     <button type="submit" class="btn btn-primary">Speichern</button> <a href="{{ path('profile_index') }}" class="btn btn-light ms-2">Abbrechen</a>
-    {{ form_end(form) }}
 
+    {{ form_end(form) }}
     <script>
         // let settings = {};
         // new TomSelect('#userprofile_form_examType',settings);
         $('select').select2();
     </script>
+
 {% endblock %}
-{% block aside %}
-{% endblock %}
+

@@ -260,3 +260,18 @@ input.form-control.is-invalid ~ trix-editor {
   color: $systemBlue!important;
   font-weight: bolder;
 }
+
+.select2-selection{
+  border-radius: 0!important;
+  border: 1px solid $systemGray5!important;
+  padding: .325rem!important;
+}
+
+.select2-selection--single{
+  height: 2.5rem!important;
+}
+
+.select2-selection__arrow{
+  margin-top: .325rem!important;
+  margin-right: .325rem!important;
+}

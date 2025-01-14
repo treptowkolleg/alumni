@@ -3,6 +3,15 @@
 {% block title %}{{ event }} bearbeiten{% endblock %}
 
 {% block page_header %}
+    <nav class="bg-transparent" style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url('app_index') }}">treptowkolleg.de</a></li>
+            <li class="breadcrumb-item"><a href="{{ url('profile_index') }}">Mein Bereich</a></li>
+            <li class="breadcrumb-item"><a href="{{ url('authoring_event_index') }}">Veranstaltungen</a></li>
+            <li class="breadcrumb-item active fw-bolder" aria-current="page">Bearbeiten</li>
+        </ol>
+    </nav>
+
     <h1 class="h3">{{ event }} bearbeiten</h1>
     <h2 class="h5 text-primary">Aktualisiere diese Veranstaltung</h2>
 {% endblock %}

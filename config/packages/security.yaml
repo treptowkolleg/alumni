@@ -10,8 +10,9 @@ security:
                 class: App\Entity\User
                 property: email
     role_hierarchy:
+        ROLE_PLANNER: 'ROLE_USER'
         ROLE_AUTHOR: 'ROLE_USER'
-        ROLE_EDITOR: 'ROLE_AUTHOR'
+        ROLE_EDITOR: ['ROLE_AUTHOR','ROLE_PLANNER']
         ROLE_ADMIN: 'ROLE_EDITOR'
     firewalls:
         dev:

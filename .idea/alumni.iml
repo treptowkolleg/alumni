@@ -165,5 +165,7 @@
     <orderEntry type="library" name="select2-bootstrap-5-theme" level="application" />
     <orderEntry type="library" name="virtual-select-plugin" level="application" />
     <orderEntry type="library" name="tom-select" level="application" />
+    <orderEntry type="library" name="bootstrap" level="application" />
+    <orderEntry type="library" name="4296ef4c438ce7df4d25b984e2936f1b" level="application" />
   </component>
 </module>
