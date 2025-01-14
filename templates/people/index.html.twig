@@ -61,7 +61,7 @@
                 {% if filtered_dates is empty or person.outYear in filtered_dates %}
                     {% if filtered_courses is empty or person.performanceCourse|filter((course) => course in filtered_courses)  %}
                     <div class="col">
-                        <div class="card bg-body-tertiary border-0 h-100">
+                        <div class="card bg-body-tertiary border-0 align-self-stretch">
                             <div class="row g-0">
                                 <div class="col-md-4">
                                     <img src="{{ asset('images/avatar_no_text.svg') }}" class="img-fluid" alt="...">
