@@ -8,8 +8,12 @@
 import './styles/app.scss';
 
 import * as bootstrap from 'bootstrap';
+import Core from "./app/core.js";
 
 
+
+const App = new Core();
+let linkButtons = document.querySelectorAll('.like-button');
 
 // Loop over them and prevent submission
 document.addEventListener("DOMContentLoaded", (event) => {
@@ -28,5 +32,92 @@ document.addEventListener("DOMContentLoaded", (event) => {
         }, false)
     })
 });
+
+
+createLinkAction(linkButtons,setLike,'href','data-value')
+
+function createLinkAction(elements,customFunction,attribute,id, eventAction = "click"){
+    Array.prototype.slice.call(elements)
+        .forEach(function (element) {
+            console.log("element")
+
+            let link = App.getAttribute(element,attribute);
+            let value = App.getAttribute(element,id);
+
+            element.addEventListener(eventAction,function(e) {
+                    e.preventDefault();
+                    customFunction(link,value);
+                },
+                false)
+        })
+}
+
+function loadPage(link) {
+    const xhttp = new XMLHttpRequest();
+    xhttp.onload = function() {
+        App.findOneBy('#sample_items').innerHTML = this.responseText;
+    }
+    xhttp.open("POST", link);
+    xhttp.send();
+    return null
+}
+
+function setLike(link, value){
+    let likeIcon = App.findOneBy('.like-icon-'+value);
+    let likeLoader = App.findOneBy('.like-loader-'+value);
+    App.setClass(likeIcon,'d-none');
+    App.setClass(likeLoader,'d-none',true);
+    let data = {};
+    data.id = value;
+    let json = JSON.stringify(data);
+    let xhr = new XMLHttpRequest();
+    xhr.open('post', link,true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            let response = JSON.parse(xhr.responseText);
+            App.setClass(likeIcon,'d-none',true);
+            App.setClass(likeLoader,'d-none');
+            if(response.sampleHasLike === true)
+            {
+
+                App.setClass(likeIcon,'fa-solid');
+                App.setClass(likeIcon,'fa-regular',true);
+            } else {
+                App.setClass(likeIcon,'fa-regular');
+                App.setClass(likeIcon,'fa-solid',true);
+            }
+            App.findOneBy('.like-number-'+value).innerHTML = response.likes;
+
+        }
+    };
+    xhr.send(json);
+}
+
+let $formInputFields = document.querySelectorAll('.input-comment');
+
+Array.prototype.slice.call($formInputFields)
+    .forEach(function ($field) {
+        let $i = 0;
+        addMultipleEventListener($field,['keyup','change','cut','click','focus'],validateForm)
+    })
+
+function addMultipleEventListener(element, events, handler) {
+    events.forEach(e => element.addEventListener(e, handler))
+}
+
+function validateForm($i){
+    let submitButton = App.findOneBy('#submit_'+App.getAttribute(this,'name'));
+    if(this.value === "" && this.hasAttribute('required')){
+        $i = 1;
+    }
+    if($i === 1){
+        submitButton.classList.add('disabled');
+    } else {
+        submitButton.classList.remove('disabled');
+        submitButton.removeAttribute('disabled');
+    }
+
+}
 
 

@@ -68,7 +68,10 @@
                                 </div>
                                 <div class="col-md-8">
                                         <div class="card-body d-flex flex-column h-100">
-                                            <h3 class="h4 text-truncate">{{ person }}</h3>
+                                            <div class="d-flex align-items-start justify-content-between">
+                                                <h3 class="h4 mb-0 text-truncate">{{ person }}</h3>
+                                            </div>
+
                                             {% if person.user.hasSchool %}
                                                 <p class="">{{ person.user.school }}</p>
                                             {% endif %}
@@ -76,6 +79,17 @@
                                         </div>
                                 </div>
                             </div>
+                        </div>
+                        <div class="mt-2">
+                            <span class="small me-1 like-number-{{ person.id }}">{{ person.friends.count }}</span>
+                            <div class="spinner-border spinner-border-sm d-none like-loader-{{ person.id }}" role="status"></div>
+                            {% set like_icon = 'fa-regular fa-heart' %}
+                            {% if app.user.userProfiles.0 in person.friends %}
+                                {% set like_icon = 'fa-solid fa-heart' %}
+                            {% endif %}
+                            {% if app.user %}
+                                <a href="{{ path('api_add_like') }}" class="like-button  me-2" data-value="{{ person.id }}"><i class="link-primary like-icon-{{ person.id }} {{ like_icon }}"></i></a>
+                            {% endif %}
                         </div>
                     </div>
                     {% endif %}

@@ -20,47 +20,45 @@
     {{ form_errors(form) }}
 
 
-    <div class="h5">Über mich</div>
-    <div class="row">
-        <div class="col-12">
-            <div>{{ form_label(form.tags) }}</div>
-            {{ form_widget(form.tags) }}
-            <div class="mb-3">{{ form_help(form.tags) }}</div>
+        <div class="h5">Über mich</div>
+        <div class="row">
+            <div class="col-12">
+                <div>{{ form_label(form.tags) }}</div>
+                {{ form_widget(form.tags) }}
+                <div class="mb-3">{{ form_help(form.tags) }}</div>
 
-            {{ form_row(form.about) }}
-            {{ form_row(form.portfolioLink) }}
+                {{ form_row(form.about) }}
+                {{ form_row(form.portfolioLink) }}
+            </div>
         </div>
-    </div>
 
 
-    <div class="h5 fw-normal">Fächer und Interessen</div>
-    <div class="row ">
-        <div class="col-md-6">{{ form_row(form.performanceCourse) }}</div>
-        <div class="col-md-6">{{ form_row(form.favoriteSchoolSubjects) }}</div>
-    </div>
+        <div class="h5 fw-normal">Fächer und Interessen</div>
+        <div class="row ">
+            <div class="col-md-6">{{ form_row(form.performanceCourse) }}</div>
+            <div class="col-md-6">{{ form_row(form.favoriteSchoolSubjects) }}</div>
+        </div>
 
-    {{ form_row(form.hobbies) }}
+        {{ form_row(form.hobbies) }}
 
-    <div class="h5 mt-3">Akademische Informationen</div>
-    <div class="row">
-        <div class="col-md-6">{{ form_row(form.studium) }}</div>
-        <div class="col-md-6">{{ form_row(form.university) }}</div>
-    </div>
-    <div class="h5 mt-3">Berufliche Informationen</div>
-    <div class="row">
-        <div class="col-md-6">{{ form_row(form.currentProfession) }}</div>
-        <div class="col-md-6">{{ form_row(form.currentCompany) }}</div>
-    </div>
+        <div class="h5 mt-3">Akademische Informationen</div>
+        <div class="row">
+            <div class="col-md-6">{{ form_row(form.studium) }}</div>
+            <div class="col-md-6">{{ form_row(form.university) }}</div>
+        </div>
+        <div class="h5 mt-3">Berufliche Informationen</div>
+        <div class="row">
+            <div class="col-md-6">{{ form_row(form.currentProfession) }}</div>
+            <div class="col-md-6">{{ form_row(form.currentCompany) }}</div>
+        </div>
 
-    {{ form_row(form.interests) }}
-
-
-
+        {{ form_row(form.interests) }}
 
 
 {% endblock %}
 {% block aside %}
 
+<div class="card card-body border-primary bg-body-tertiary">
     <div class="h5">Bildungsgang</div>
     <div class="row mb-3">
         <div class="col-md-6">{{ form_row(form.inYear) }}</div>
@@ -75,8 +73,9 @@
     </div>
 
 
-    <button type="submit" class="btn btn-primary">Speichern</button> <a href="{{ path('profile_index') }}" class="btn btn-light ms-2">Abbrechen</a>
-
+    <button type="submit" class="btn btn-primary mb-3">Speichern</button>
+    <a href="{{ path('profile_index') }}" class="btn btn-light ms-2">Abbrechen</a>
+</div>
     {{ form_end(form) }}
     <script>
         // let settings = {};

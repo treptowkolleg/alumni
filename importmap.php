@@ -16,6 +16,12 @@ return [
         'path' => './assets/app.js',
         'entrypoint' => true,
     ],
+    'core' => [
+        'path' => './assets/app/core.js',
+    ],
+    'form' => [
+        'path' => './assets/app/form.js',
+    ],
     '@hotwired/stimulus' => [
         'version' => '3.2.2',
     ],

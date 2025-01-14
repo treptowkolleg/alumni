@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserProfileRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Entity\File as EmbeddedFile;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
@@ -83,9 +85,23 @@ class UserProfile
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $displayName = null;
 
+    /**
+     * @var Collection<int, self>
+     */
+    #[ORM\ManyToMany(targetEntity: self::class, inversedBy: 'userProfiles')]
+    private Collection $friends;
+
+    /**
+     * @var Collection<int, self>
+     */
+    #[ORM\ManyToMany(targetEntity: self::class, mappedBy: 'friends')]
+    private Collection $userProfiles;
+
     public function __construct()
     {
         $this->image = new EmbeddedFile();
+        $this->friends = new ArrayCollection();
+        $this->userProfiles = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -338,6 +354,57 @@ class UserProfile
     public function setDisplayName(?string $displayName): static
     {
         $this->displayName = $displayName;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, self>
+     */
+    public function getFriends(): Collection
+    {
+        return $this->friends;
+    }
+
+    public function addFriend(self $friend): static
+    {
+        if (!$this->friends->contains($friend)) {
+            $this->friends->add($friend);
+        }
+
+        return $this;
+    }
+
+    public function removeFriend(self $friend): static
+    {
+        $this->friends->removeElement($friend);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, self>
+     */
+    public function getUserProfiles(): Collection
+    {
+        return $this->userProfiles;
+    }
+
+    public function addUserProfile(self $userProfile): static
+    {
+        if (!$this->userProfiles->contains($userProfile)) {
+            $this->userProfiles->add($userProfile);
+            $userProfile->addFriend($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserProfile(self $userProfile): static
+    {
+        if ($this->userProfiles->removeElement($userProfile)) {
+            $userProfile->removeFriend($this);
+        }
 
         return $this;
     }
