@@ -30,9 +30,9 @@
                 <div class="list-group list-group-flush">
                     {% for chat in chats|sort((a, b) => a.participant <=> b.participant) %}
                         {% if (chat.owner == app.user) %}
-                            <a href="{{ url('chat_start',{'slug':chat.participant.slug}) }}" class="list-group-item list-group-item-action">{{ chat.participant.userProfiles.first }}</a>
+                            <a href="{{ url('chat_start',{'slug':chat.participant.slug}) }}" class="py-3 list-group-item list-group-item-action">{{ chat.participant.userProfiles.first }}</a>
                         {% else %}
-                            <a href="{{ url('chat_start',{'slug':chat.owner.slug}) }}" class="list-group-item list-group-item-action">{{ chat.owner.userProfiles.first }}</a>
+                            <a href="{{ url('chat_start',{'slug':chat.owner.slug}) }}" class="py-3 list-group-item list-group-item-action">{{ chat.owner.userProfiles.first }}</a>
                         {% endif %}
                     {% else %}
                         <div class="list-group-item">Noch keine Konversationen vorhanden.</div>

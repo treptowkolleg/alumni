@@ -40,10 +40,10 @@
                 {% set active = '' %}
                 {% if (chat.owner == app.user) %}
                 {% if(chat.participant == partner) %}{% set active = 'active' %}{% endif %}
-                    <a href="{{ url('chat_start',{'slug':chat.participant.slug}) }}" class="list-group-item list-group-item-action {{ active }}">{{ chat.participant.userProfiles.first }}</a>
+                    <a href="{{ url('chat_start',{'slug':chat.participant.slug}) }}" class="py-3 list-group-item list-group-item-action {{ active }}">{{ chat.participant.userProfiles.first }}</a>
                 {% else %}
                     {% if(chat.owner == partner) %}{% set active = 'active' %}{% endif %}
-                    <a href="{{ url('chat_start',{'slug':chat.owner.slug}) }}" class="list-group-item list-group-item-action {{ active }}">{{ chat.owner.userProfiles.first }}</a>
+                    <a href="{{ url('chat_start',{'slug':chat.owner.slug}) }}" class="py-3 list-group-item list-group-item-action {{ active }}">{{ chat.owner.userProfiles.first }}</a>
                 {% endif %}
             {% else %}
                 <div class="list-group-item">Noch keine Chats vorhanden.</div>
