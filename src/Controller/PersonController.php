@@ -62,7 +62,7 @@ class PersonController extends AbstractController
         if($filter == 'freunde') {
             if($this->isGranted('ROLE_USER')) {
                 $user = $userRepository->find($this->getUser());
-                $people = $user->getUserProfiles()?->first()->getUserProfiles();
+                $people = $user->getUserProfiles()->first()?->getUserProfiles();
                 $filteredTypes = null;
             } else {
                 return $this->redirectToRoute('people_index');
