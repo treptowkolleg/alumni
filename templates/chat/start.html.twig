@@ -36,7 +36,7 @@
     <div class="fs-5 fw-bolder mb-1">Chats</div>
     <div class="card  border-primary">
         <div class="list-group list-group-flush">
-            {% for chat in chats|sort((a, b) => a.participant <=> b.participant) %}
+            {% for chat in chats|sort %}
                 {% set active = '' %}
                 {% if (chat.owner == app.user) %}
                 {% if(chat.participant == partner) %}{% set active = 'active' %}{% endif %}
