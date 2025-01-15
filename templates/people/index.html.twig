@@ -57,7 +57,7 @@
 
     <div class="row row-cols-1 row-cols-lg-2 g-3 align-content-stretch">
         {% for person in people %}
-            {% if (app.user and  person.networkState == 'registered') or person.networkState == 'public' or (filter == 'school' and person.networkState == 'private') %}
+            {% if (app.user and  person.networkState == 'registered') or person.networkState == 'public' or (filter in ['school','freunde'] and person.networkState == 'private') %}
                 {% if filtered_dates is empty or person.outYear in filtered_dates %}
                     {% if filtered_courses is empty or person.performanceCourse|filter((course) => course in filtered_courses)  %}
                     <div class="col">
