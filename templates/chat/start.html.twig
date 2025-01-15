@@ -21,20 +21,32 @@
 
     <h1 class="h3 mb-3">Chat</h1>
 
-    <a href="{{ url('chat_index') }}" class="btn btn-outline-primary"><i class="fas fa-chevron-left me-2"></i>Zurück zur Übersicht</a>
+    <a href="{{ url('chat_index') }}" class="btn btn-outline-primary mb-3"><i class="fas fa-chevron-left me-2"></i>Zurück zur Übersicht</a>
 {% endblock %}
 {% block body %}
     <div class="row g-3">
-        <div class="col-12">
-            <h2 class="fs-5 fw-bolder mb-1">Konversation mit {{ partner.userprofiles.first }}</h2>
-            <small>Die neueste Nachricht ist immer oben!</small>
+        <div class="col-2 col-md-1">
+            {% if partner.image.name %}
+                <img src="{{ vich_uploader_asset(partner)|imagine_filter('avatar')  }}" class="img-fluid" alt="...">
+            {% else %}
+                <img src="{{ asset('images/avatar_no_text.svg') }}" class="img-fluid" alt="...">
+            {% endif %}
+        </div>
+        <div class="col-8 col-md-7"></div>
+        <div class="col-2 col-md-1">
+            {% if app.user.image.name %}
+                <img src="{{ vich_uploader_asset(app.user)|imagine_filter('avatar')  }}" class="img-fluid" alt="...">
+            {% else %}
+                <img src="{{ asset('images/avatar_no_text.svg') }}" class="img-fluid" alt="...">
+            {% endif %}
         </div>
         <div class="col-9">
-            <input type="text" class="form-control" placeholder="Nachricht senden...">
+            <div class="d-flex justify-content-between">
+                <input type="text" class="form-control" placeholder="Nachricht senden...">
+                <button type="submit" class="btn btn-primary"><i class="fa-solid fa-paper-plane"></i></button>
+            </div>
         </div>
-        <div class="col-3">
-            <button type="submit" class="btn btn-primary"><i class="fa-solid fa-paper-plane"></i></button>
-        </div>
+        <div class="col-3"></div>
         <div class="col-md-9">
             <div class="p-3 border-bottom border-top" style="height: 400px; overflow-y: auto; -ms-overflow-y: auto">
                 <div class="d-flex flex-column h-100">
@@ -47,6 +59,7 @@
             </div>
         </div>
         <div class="col-md-3"></div>
+        <small>Die neueste Nachricht ist immer oben!</small>
     </div>
 {% endblock %}
 
