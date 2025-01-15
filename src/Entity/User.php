@@ -88,10 +88,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
     #[ORM\OneToMany(targetEntity: UserProfile::class, mappedBy: 'user')]
     private Collection $userProfiles;
 
+    /**
+     * @var Collection<int, ChatMessage>
+     */
+    #[ORM\OneToMany(targetEntity: ChatMessage::class, mappedBy: 'sender')]
+    private Collection $chatMessages;
+
+    /**
+     * @var Collection<int, Chat>
+     */
+    #[ORM\OneToMany(targetEntity: Chat::class, mappedBy: 'owner')]
+    private Collection $chats;
+
     public function __construct()
     {
         $this->blogPosts = new ArrayCollection();
         $this->userProfiles = new ArrayCollection();
+        $this->chatMessages = new ArrayCollection();
+        $this->chats = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -427,5 +441,65 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
         $this->hasSchool = $data['hasSchool'];
         $this->image = $data['image'];
         $this->updatedAt = $data['updatedAt'];
+    }
+
+    /**
+     * @return Collection<int, ChatMessage>
+     */
+    public function getChatMessages(): Collection
+    {
+        return $this->chatMessages;
+    }
+
+    public function addChatMessage(ChatMessage $chatMessage): static
+    {
+        if (!$this->chatMessages->contains($chatMessage)) {
+            $this->chatMessages->add($chatMessage);
+            $chatMessage->setSender($this);
+        }
+
+        return $this;
+    }
+
+    public function removeChatMessage(ChatMessage $chatMessage): static
+    {
+        if ($this->chatMessages->removeElement($chatMessage)) {
+            // set the owning side to null (unless already changed)
+            if ($chatMessage->getSender() === $this) {
+                $chatMessage->setSender(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Chat>
+     */
+    public function getChats(): Collection
+    {
+        return $this->chats;
+    }
+
+    public function addChat(Chat $chat): static
+    {
+        if (!$this->chats->contains($chat)) {
+            $this->chats->add($chat);
+            $chat->setOwner($this);
+        }
+
+        return $this;
+    }
+
+    public function removeChat(Chat $chat): static
+    {
+        if ($this->chats->removeElement($chat)) {
+            // set the owning side to null (unless already changed)
+            if ($chat->getOwner() === $this) {
+                $chat->setOwner(null);
+            }
+        }
+
+        return $this;
     }
 }

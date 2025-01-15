@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Chat{% endblock %}
+
+{% block navbar %}
+    <li class="nav-item"><a class="nav-link" href="{{ url('blog_news_all_index') }}">Aktuelles</a></li>
+    <li class="nav-item"><a class="nav-link" href="{{ url('blog_index') }}">Themen</a></li>
+    <li class="nav-item"><a class="nav-link" href="{{ url('event_index') }}">Termine</a></li>
+    <li class="nav-item"><a class="nav-link" href="#">Angebote</a></li>
+    <li class="nav-item"><a class="nav-link active" href="{{ url('people_index') }}">Personen</a></li>
+{% endblock %}
+
+{% block page_header %}
+    <nav class="bg-transparent" style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url('app_index') }}">treptowkolleg.de</a></li>
+            <li class="breadcrumb-item"><a href="{{ url('people_index') }}">Personen</a></li>
+            <li class="breadcrumb-item active fw-bolder" aria-current="page">Chat</li>
+        </ol>
+    </nav>
+
+    <h1 class="h3">Chat</h1>
+    <p class="">Um mit jemandem zu chatten, suche bitte zuerst die entsprechende Person aus dem Personenverzeichnis aus.</p>
+{% endblock %}
+{% block body %}
+    <div class="row g-3">
+        <div class="col-12">
+            <h2 class="fs-5 fw-bolder mb-1">Aktueller Chat</h2>
+        </div>
+    </div>
+{% endblock %}
+
+{% block aside %}
+    <div class="fs-5 fw-bolder mb-1">Personen</div>
+    <div class="card  border-primary">
+        <div class="list-group list-group-flush">
+            {% for chat in chats|sort((a, b) => a.participant <=> b.participant) %}
+                <a href="#" class="list-group-item list-group-item-action">{{ chat.participant }}</a>
+            {% else %}
+                <div class="list-group-item">Noch keine Chats vorhanden.</div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
