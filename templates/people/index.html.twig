@@ -86,7 +86,7 @@
                         </div>
                         {% if app.user %}
                             <div class="mt-2 d-flex align-items-center">
-                                {% if person.user != app.user %}
+                                {% if person.user != app.user and app.user.userProfiles %}
                                     <div>
                                         <span class="d-none small me-1 like-number-{{ person.id }}">{{ person.friends.count }}</span>
                                         <div class="spinner-border spinner-border-sm d-none like-loader-{{ person.id }}" role="status"></div>
