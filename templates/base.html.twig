@@ -66,6 +66,13 @@
                             <li class="nav-item"><a class="nav-link" href="{{ url('people_index') }}">Personen</a></li>
                         {% endblock %}
                     </ul>
+
+                    {% if app.user and app.user.userProfiles.count > 0 %}
+                    <div class="me-2">
+                        <a class="btn btn-primary" href="#"><i class="fa-regular fa-message me-1"></i>Chat</a>
+                    </div>
+                    {% endif %}
+
                     <form method="post" class="">
                         <div class="input-group">
                             <label for="blog_search" class="d-none"></label>
