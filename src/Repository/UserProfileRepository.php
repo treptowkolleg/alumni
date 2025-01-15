@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\UserProfile;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -34,9 +35,32 @@ class UserProfileRepository extends ServiceEntityRepository
             ->setParameter('val', $value)
             ->setParameter('query', "%$query%")
             ->setMaxResults(30)
+            ->orderBy('RAND()')
             ->getQuery()
             ->getResult()
         ;
+    }
+
+    /**
+     * @return UserProfile[] Returns an array of UserProfile objects
+     */
+    public function findByFriends(array $value, ?string $query = ""): array
+    {
+        return $this->createQueryBuilder('up')
+            ->addSelect('s')
+            ->addSelect('u')
+            ->leftJoin('up.user', 'u')
+            ->leftJoin('u.school', 's')
+            ->andWhere('u.firstname LIKE :query')
+            ->orWhere('u.lastname LIKE :query')
+            ->andWhere('s.title IN (:val)')
+            ->setParameter('val', $value)
+            ->setParameter('query', "%$query%")
+            ->setMaxResults(30)
+            ->orderBy('RAND()')
+            ->getQuery()
+            ->getResult()
+            ;
     }
 
     /**
@@ -51,6 +75,7 @@ class UserProfileRepository extends ServiceEntityRepository
             ->orWhere('u.lastname LIKE :query')
             ->setParameter('query', "%$query%")
             ->setMaxResults(30)
+            ->orderBy('RAND()')
             ->getQuery()
             ->getResult()
             ;

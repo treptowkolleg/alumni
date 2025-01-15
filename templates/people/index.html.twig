@@ -43,7 +43,7 @@
                 <a class="nav-link {{ filter == 'school' ? 'active ' : '' }}" href="{{ url('people_index',{'filter':'school','courses':filtered_courses|join(','),'schools': filtered_schools|join(','), 'dates':filtered_dates|join(',')}) }}"><i class="fas fa-university me-2 text-primary"></i>Meine Schule</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#"><i class="fas fa-handshake me-2 text-primary"></i>Meine Bekannten</a>
+                <a class="nav-link {{ filter == 'freunde' ? 'active ' : '' }}" href="{{ url('people_index',{'filter':'freunde','courses':filtered_courses|join(','),'schools': filtered_schools|join(','), 'dates':filtered_dates|join(',')}) }}"><i class="fas fa-handshake me-2 text-primary"></i>Meine Bekannten</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#"><i class="fas fa-bicycle me-2 text-primary"></i>Interessen-Matches</a>
@@ -81,14 +81,36 @@
                             </div>
                         </div>
                         {% if app.user %}
-                            <div class="mt-2">
-                                <span class="small me-1 like-number-{{ person.id }}">{{ person.friends.count }}</span>
-                                <div class="spinner-border spinner-border-sm d-none like-loader-{{ person.id }}" role="status"></div>
-                                {% set like_icon = 'fa-regular fa-heart' %}
-                                {% if app.user.userProfiles.0 in person.friends %}
-                                    {% set like_icon = 'fa-solid fa-heart' %}
+                            <div class="mt-2 d-flex align-items-center">
+                                {% if person.user != app.user %}
+                                    <div>
+                                        <span class="d-none small me-1 like-number-{{ person.id }}">{{ person.friends.count }}</span>
+                                        <div class="spinner-border spinner-border-sm d-none like-loader-{{ person.id }}" role="status"></div>
+                                        {% set like_icon = 'fa-regular fa-heart' %}
+                                        {% if app.user.userProfiles.0 in person.friends %}
+                                            {% set like_icon = 'fa-solid fa-heart' %}
+                                        {% endif %}
+                                        <a href="{{ path('api_add_like') }}" class="like-button  me-2" data-value="{{ person.id }}"><i class="link-primary like-icon-{{ person.id }} {{ like_icon }}"></i></a>
+                                    </div>
+                                    <div class="me-2">
+                                        <small class="text-muted" id="like-match-{{ person.id }}">
+                                            {% if app.user.userProfiles.first in person.userProfiles and person in app.user.userProfiles.first.userProfiles %}
+                                                Ihr kennt euch gegenseitig
+                                            {% endif %}
+                                        </small>
+                                    </div>
+                                    <div class="">
+                                        <a href="#" class="text-decoration-none">
+                                        <i class="link-primary fa-solid fa-envelope me-1"></i>
+                                        <small>Nachricht</small>
+                                        </a>
+                                    </div>
+                                {% else %}
+                                    <div>
+                                        <i class="link-primary fa-solid fa-user me-2"></i>
+                                        <small class="text-muted">Das bist du</small>
+                                    </div>
                                 {% endif %}
-                                <a href="{{ path('api_add_like') }}" class="like-button  me-2" data-value="{{ person.id }}"><i class="link-primary like-icon-{{ person.id }} {{ like_icon }}"></i></a>
                             </div>
                         {% endif %}
                     </div>

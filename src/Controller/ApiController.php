@@ -45,7 +45,15 @@ class ApiController extends AbstractController
                 $sampleHasLike = false;
             }
             $likes = $friendsUserprofile->getFriends()->count();
+            $match = false;
+            if(
+                $friendsUserprofile->getUserProfiles()->contains($ownUserProfile) and
+                $ownUserProfile->getUserProfiles()->contains($friendsUserprofile)
+            ) {
+                $match = true;
+            }
             return new JsonResponse([
+                'match' => $match,
                 'likes' => $likes,
                 'sampleHasLike' => $sampleHasLike
             ]);

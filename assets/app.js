@@ -65,6 +65,7 @@ function loadPage(link) {
 function setLike(link, value){
     let likeIcon = App.findOneBy('.like-icon-'+value);
     let likeLoader = App.findOneBy('.like-loader-'+value);
+    let matchDiv = App.findOneBy('#like-match-'+value);
     App.setClass(likeIcon,'d-none');
     App.setClass(likeLoader,'d-none',true);
     let data = {};
@@ -78,6 +79,11 @@ function setLike(link, value){
             let response = JSON.parse(xhr.responseText);
             App.setClass(likeIcon,'d-none',true);
             App.setClass(likeLoader,'d-none');
+            if(response.match === true) {
+                matchDiv.innerHTML = 'Ihr kennt euch gegenseitig';
+            } else {
+                matchDiv.innerHTML = '';
+            }
             if(response.sampleHasLike === true)
             {
 
