@@ -1,23 +1,24 @@
 const WebSocket = require('ws');
-const wss = new WebSocket.Server({ port: 8080 });  // Hier kannst du den Port anpassen
+const http = require('http');
 
-wss.on('connection', function connection(ws) {
-    console.log('Client connected');
-
-    // Nachricht vom Client empfangen
-    ws.on('message', function incoming(message) {
-        console.log('received: %s', message);
-
-        // Sende die Nachricht an alle Clients
-        wss.clients.forEach(function each(client) {
-            if (client.readyState === WebSocket.OPEN) {
-                client.send(message);
-            }
-        });
-    });
-
-    // Eine Begrüßungsnachricht an den Client senden
-    ws.send('Welcome to the WebSocket server!');
+// Erstelle einen HTTP-Server, um WebSocket zu unterstützen
+const server = http.createServer((req, res) => {
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    res.end('Hello World\n');
 });
 
-console.log('WebSocket server started on ws://localhost:8080');
+// Erstelle einen WebSocket-Server
+const wss = new WebSocket.Server({ server });
+
+wss.on('connection', ws => {
+    ws.on('message', message => {
+        console.log(`received: ${message}`);
+    });
+
+    ws.send('Hallo, WebSocket-Verbindung erfolgreich!');
+});
+
+// Der Server hört auf Port 3000
+server.listen(3000, () => {
+    console.log('Server läuft auf http://localhost:3000');
+});
