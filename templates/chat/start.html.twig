@@ -27,8 +27,26 @@
     <div class="row g-3">
         <div class="col-12">
             <h2 class="fs-5 fw-bolder mb-1">Konversation mit {{ partner.userprofiles.first }}</h2>
-            <p>Hier würde dann der Chatverlauf landen sowie das Formular-Feld zum Absenden einer Nachricht!</p>
+            <small>Die neueste Nachricht ist immer oben!</small>
         </div>
+        <div class="col-9">
+            <input type="text" class="form-control" placeholder="Nachricht senden...">
+        </div>
+        <div class="col-3">
+            <button type="submit" class="btn btn-primary"><i class="fa-solid fa-paper-plane"></i></button>
+        </div>
+        <div class="col-md-9">
+            <div class="p-3 border-bottom border-top" style="height: 400px; overflow-y: auto; -ms-overflow-y: auto">
+                <div class="d-flex flex-column h-100">
+                    <span class="me-auto flex-shrink-1 mb-1" style="font-size: .8rem">23.07.10:22</span>
+                    <span class="bg-light me-auto text-wrap flex-shrink-1 p-2 mb-3" style="max-width: 70%">Hey, wie geht's?<br>Mir geht es soweit ziemlich gut. Ich bin auf jeden Fall auf die nächste Veranstaltung gespannt.</span>
+
+                    <span class="ms-auto flex-shrink-1 mb-1" style="font-size: .8rem">23.07.1998 10:08</span>
+                    <span class="bg-primary-subtle ms-auto text-wrap flex-shrink-1 p-2 mb-3" style="max-width: 70%">Hallo!</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3"></div>
     </div>
 {% endblock %}
 

@@ -20,7 +20,7 @@
     </nav>
 
     <h1 class="h3">Chat</h1>
-    {% if chats.count == 0 %}
+    {% if not chats %}
     <p class="">Um mit jemandem zu chatten, suche bitte zuerst die entsprechende Person aus dem Personenverzeichnis aus.</p>
     {% endif %}
 {% endblock %}
