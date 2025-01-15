@@ -39,9 +39,11 @@
             <a class="nav-link {{ filter == 'all' ? 'active ' : '' }}" href="{{ url('people_index',{'courses':filtered_courses|join(','),'schools': filtered_schools|join(','), 'dates':filtered_dates|join(',')}) }}"><i class="fas fa-user-group me-2 text-primary"></i>Alle Personen</a>
         </li>
         {% if app.user %}
-            <li class="nav-item">
-                <a class="nav-link {{ filter == 'school' ? 'active ' : '' }}" href="{{ url('people_index',{'filter':'school','courses':filtered_courses|join(','),'schools': filtered_schools|join(','), 'dates':filtered_dates|join(',')}) }}"><i class="fas fa-university me-2 text-primary"></i>Meine Schule</a>
-            </li>
+            {% if app.user.hasSchool %}
+                <li class="nav-item">
+                    <a class="nav-link {{ filter == 'school' ? 'active ' : '' }}" href="{{ url('people_index',{'filter':'school','courses':filtered_courses|join(','),'schools': filtered_schools|join(','), 'dates':filtered_dates|join(',')}) }}"><i class="fas fa-university me-2 text-primary"></i>Meine Schule</a>
+                </li>
+            {% endif %}
             <li class="nav-item">
                 <a class="nav-link {{ filter == 'freunde' ? 'active ' : '' }}" href="{{ url('people_index',{'filter':'freunde','courses':filtered_courses|join(','),'schools': filtered_schools|join(','), 'dates':filtered_dates|join(',')}) }}"><i class="fas fa-handshake me-2 text-primary"></i>Meine Bekannten</a>
             </li>
