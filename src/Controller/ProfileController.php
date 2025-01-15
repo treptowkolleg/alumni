@@ -2,9 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Entity\UserProfile;
+use App\Form\UserImageType;
 use App\Form\UserprofileFormType;
 use App\Repository\UserProfileRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -41,6 +44,23 @@ class ProfileController extends AbstractController
             return $this->redirectToRoute('profile_index');
         }
         return $this->render('profile/profile_new.html.twig', [
+            'form' => $form,
+        ]);
+    }
+
+    #[Route('/image/update', name: 'image_new', methods: ['GET', 'POST'])]
+    public function imageUpload(Request $request, UserRepository $userRepository, EntityManagerInterface $entityManager): Response
+    {
+        $user = $userRepository->find($this->getUser());
+        $form = $this->createForm(UserImageType::class, $user);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($user);
+            $entityManager->flush();
+            $this->addFlash('success', 'Dein Profilbild wurde erfolgreich aktualisiert.');
+            return $this->redirectToRoute('profile_index');
+        }
+        return $this->render('profile/image_update.html.twig', [
             'form' => $form,
         ]);
     }

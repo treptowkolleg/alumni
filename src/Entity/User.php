@@ -5,16 +5,21 @@ namespace App\Entity;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Entity\File as EmbeddedFile;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
+#[Vich\Uploadable]
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
-class User implements UserInterface, PasswordAuthenticatedUserInterface
+class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serializable
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -57,6 +62,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(nullable: true)]
     private ?bool $hasSchool = null;
+
+    #[Vich\UploadableField(
+        mapping: 'userimage', # We will remember this value. It will serve as the identifier for the section in the configuration.
+        fileNameProperty: 'image.name',
+        size: 'image.size'
+    )]
+    private ?File $imageFile = null;
+    #[ORM\Embedded(class: EmbeddedFile::class)]
+    private ?EmbeddedFile $image = null;
+
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
+    #[Gedmo\Timestampable]
+    public ?\DateTimeImmutable $updatedAt = null;
 
     /**
      * @var Collection<int, BlogPost>
@@ -247,6 +265,38 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    public function setImageFile(?File $imageFile): static
+    {
+        $this->imageFile = $imageFile;
+        if (null !== $imageFile) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+        return $this;
+    }
+
+    public function getImage(): ?EmbeddedFile
+    {
+        return $this->image;
+    }
+
+    public function setImage(?EmbeddedFile $image): static
+    {
+        $this->image = $image;
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
     /**
      * @return Collection<int, BlogPost>
      */
@@ -305,5 +355,77 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
 
         return $this;
+    }
+
+    public function serialize(): string
+    {
+        // Only serialize properties that should be persisted or transferred
+        return serialize([
+            $this->id,
+            $this->email,
+            $this->roles,
+            $this->password,
+            $this->firstname,
+            $this->lastname,
+            $this->isVerified,
+            $this->school,
+            $this->userType,
+            $this->hasSchool,
+            $this->image, // Serialize only the EmbeddedFile property, not the File property
+            $this->updatedAt,
+        ]);
+    }
+
+    public function unserialize(string $data): void
+    {
+        [
+            $this->email,
+            $this->roles,
+            $this->password,
+            $this->firstname,
+            $this->lastname,
+            $this->isVerified,
+            $this->school,
+            $this->userType,
+            $this->hasSchool,
+            $this->image,
+            $this->updatedAt,
+        ] = unserialize($data, ['allowed_classes' => true]);
+    }
+
+    public function __serialize(): array
+    {
+        // Similar to serialize, but returns an array
+        return [
+            'id' => $this->id,
+            'email' => $this->email,
+            'roles' => $this->roles,
+            'password' => $this->password,
+            'firstname' => $this->firstname,
+            'lastname' => $this->lastname,
+            'isVerified' => $this->isVerified,
+            'school' => $this->school,
+            'userType' => $this->userType,
+            'hasSchool' => $this->hasSchool,
+            'image' => $this->image,
+            'updatedAt' => $this->updatedAt,
+        ];
+    }
+
+    public function __unserialize(array $data): void
+    {
+        // Restore the properties from the array
+        $this->id = $data['id'];
+        $this->email = $data['email'];
+        $this->roles = $data['roles'];
+        $this->password = $data['password'];
+        $this->firstname = $data['firstname'];
+        $this->lastname = $data['lastname'];
+        $this->isVerified = $data['isVerified'];
+        $this->school = $data['school'];
+        $this->userType = $data['userType'];
+        $this->hasSchool = $data['hasSchool'];
+        $this->image = $data['image'];
+        $this->updatedAt = $data['updatedAt'];
     }
 }

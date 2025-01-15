@@ -20,3 +20,9 @@ liip_imagine:
                 thumbnail: { size: [ 1440, 480 ], mode: outbound }
                 scale:
                     dim: [ 1440, 480 ]
+        avatar:
+            quality: 75
+            filters:
+                thumbnail: { size: [ 300, 300 ], mode: outbound }
+                scale:
+                    dim: [ 300, 300 ]

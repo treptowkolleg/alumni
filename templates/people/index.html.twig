@@ -64,7 +64,11 @@
                         <div class="card bg-body-tertiary border-0 align-self-stretch">
                             <div class="row g-0">
                                 <div class="col-md-4">
-                                    <img src="{{ asset('images/avatar_no_text.svg') }}" class="img-fluid" alt="...">
+                                    {% if person.user.image.name %}
+                                        <img src="{{ vich_uploader_asset(person.user)|imagine_filter('avatar')  }}" class="img-fluid" alt="...">
+                                    {% else %}
+                                        <img src="{{ asset('images/avatar_no_text.svg') }}" class="img-fluid" alt="...">
+                                    {% endif %}
                                 </div>
                                 <div class="col-md-8">
                                         <div class="card-body d-flex flex-column h-100">
