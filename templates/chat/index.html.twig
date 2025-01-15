@@ -25,23 +25,24 @@
 {% block body %}
     <div class="row g-3">
         <div class="col-12">
+            <div class="fs-5 fw-bolder mb-1">Eröffnete Konversationen</div>
+            <div class="">
+                <div class="list-group list-group-flush">
+                    {% for chat in chats|sort((a, b) => a.participant <=> b.participant) %}
+                        {% if (chat.owner == app.user) %}
+                            <a href="{{ url('chat_start',{'slug':chat.participant.slug}) }}" class="list-group-item list-group-item-action">{{ chat.participant.userProfiles.first }}</a>
+                        {% else %}
+                            <a href="{{ url('chat_start',{'slug':chat.owner.slug}) }}" class="list-group-item list-group-item-action">{{ chat.owner.userProfiles.first }}</a>
+                        {% endif %}
+                    {% else %}
+                        <div class="list-group-item">Noch keine Konversationen vorhanden.</div>
+                    {% endfor %}
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}
 
 {% block aside %}
-    <div class="fs-5 fw-bolder mb-1">Chats</div>
-    <div class="card  border-primary">
-        <div class="list-group list-group-flush">
-            {% for chat in chats|sort((a, b) => a.participant <=> b.participant) %}
-                {% if (chat.owner == app.user) %}
-                    <a href="{{ url('chat_start',{'slug':chat.participant.slug}) }}" class="list-group-item list-group-item-action">{{ chat.participant.userProfiles.first }}</a>
-                {% else %}
-                    <a href="{{ url('chat_start',{'slug':chat.owner.slug}) }}" class="list-group-item list-group-item-action">{{ chat.owner.userProfiles.first }}</a>
-                {% endif %}
-            {% else %}
-                <div class="list-group-item">Noch keine Chats vorhanden.</div>
-            {% endfor %}
-        </div>
-    </div>
+
 {% endblock %}
