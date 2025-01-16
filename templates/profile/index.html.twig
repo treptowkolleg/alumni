@@ -59,8 +59,9 @@
                         <div class="col-md-8">
                             <div class="card-body h-100 d-flex flex-column justify-content-between">
                                 <h3 class="h4">Profilbild</h3>
+                                <p class="lead">Gesicht zeigen</p>
                                 <div class="card-text mt-auto">
-                                    <a href="{{ url('profile_image_new') }}" class="link-dark text-decoration-none stretched-link d-flex justify-content-between align-items-center">bearbeiten<i class="fas fa-chevron-right"></i></a>
+                                    <a href="{{ url('profile_image_new') }}" class="text-decoration-none stretched-link d-flex justify-content-between align-items-center">bearbeiten<i class="fas fa-chevron-right"></i></a>
                                 </div>
                             </div>
 
@@ -72,10 +73,10 @@
                 <div class="card card-body bg-body-tertiary border-primary h-100">
                     <h3 class="h4">Profil</h3>
                     <p class="lead">
-                        Teile deine Expertise
+                        Erzähle etwas über dich
                     </p>
                     <p class="card-text">
-                        <a href="{{ url('profile_profile_new') }}" class="link-dark text-decoration-none stretched-link d-flex justify-content-between align-items-center">bearbeiten<i class="fas fa-chevron-right"></i></a>
+                        <a href="{{ url('profile_profile_new') }}" class="text-decoration-none stretched-link d-flex justify-content-between align-items-center">bearbeiten<i class="fas fa-chevron-right"></i></a>
                     </p>
                 </div>
             </div>
@@ -86,10 +87,35 @@
                         Biete Lern- und Arbeitsgemeinschaften an
                     </p>
                     <p class="card-text mt-auto">
-                        <a href="#" class="link-dark text-decoration-none stretched-link d-flex justify-content-between align-items-center">bearbeiten<i class="fas fa-chevron-right"></i></a>
+                        <a href="#" class="text-decoration-none stretched-link d-flex justify-content-between align-items-center">bearbeiten<i class="fas fa-chevron-right"></i></a>
                     </p>
                 </div>
             </div>
+
+            <div class="col">
+                {% if has_newsletter %}
+                    <div class="card card-body bg-body-tertiary border-primary h-100">
+                        <h3 class="h5">Newsletter angemeldet <i class="fas fa-check ms-2 text-success"></i></h3>
+                        <p class="card-text mt-auto">
+                            <span class="small">Du erhältst gelegentlich Updates per E-Mail zu Neuigkeiten und Veranstaltungen.</span>
+                        </p>
+                        {{ form_start(form) }}
+                        <button type="submit" class="btn btn-link px-0 pb-0 text-decoration-none stretched-link w-100 d-flex justify-content-between align-items-center">abbestellen<i class="fas fa-chevron-right"></i></button>
+                        {{ form_end(form) }}
+                    </div>
+                {% else %}
+                    <div class="card card-body bg-body-tertiary border-primary h-100">
+                        <h3 class="h5">Newsletter</h3>
+                        <p class="card-text mt-auto">
+                            <span class="small">Erhalte gelegentlich Updates per E-Mail zu Neuigkeiten und Veranstaltungen.</span>
+                        </p>
+                        {{ form_start(form) }}
+                            <button type="submit" class="btn btn-link px-0 pb-0 text-decoration-none stretched-link w-100 d-flex justify-content-between align-items-center">abonnieren<i class="fas fa-chevron-right"></i></button>
+                        {{ form_end(form) }}
+                    </div>
+                {% endif %}
+            </div>
+
             {#
             <div class="col">
                 <div class="card card-body bg-body-tertiary border-primary h-100">

@@ -2,10 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Newsletter;
 use App\Entity\User;
 use App\Entity\UserProfile;
+use App\Form\NewsLetterToggleFormType;
 use App\Form\UserImageType;
 use App\Form\UserprofileFormType;
+use App\Repository\NewsletterRepository;
 use App\Repository\UserProfileRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -18,12 +21,32 @@ use Symfony\Component\Routing\Attribute\Route;
 class ProfileController extends AbstractController
 {
     #[Route('', name: 'index')]
-    public function index(UserProfileRepository $userProfileRepository): Response
+    public function index(Request $request, UserProfileRepository $userProfileRepository, NewsletterRepository $newsletterRepository, EntityManagerInterface $entityManager): Response
     {
         $userProfile = $userProfileRepository->findBy(['user' => $this->getUser()]);
+        $newsletter = $newsletterRepository->findOneBy(['email' => $this->getUser()->getUserIdentifier()]);
+
+        $form = $this->createForm(NewsLetterToggleFormType::class);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()) {
+            if($newsletter) {
+                $entityManager->remove($newsletter);
+                $this->addFlash('success','Newsletter erfolgreich abbestellt.');
+            } else {
+                $newsletter = new Newsletter();
+                $newsletter->setEmail($this->getUser()->getUserIdentifier());
+                $entityManager->persist($newsletter);
+                $this->addFlash('success','Newsletter erfolgreich abonniert.');
+            }
+            $entityManager->flush();
+            return $this->redirectToRoute('profile_index');
+        }
+
         return $this->render('profile/index.html.twig', [
+            'form' => $form,
             'controller_name' => 'ProfileController',
-            'user_profile' => $userProfile
+            'user_profile' => $userProfile,
+            'has_newsletter' => $newsletter,
         ]);
     }
 

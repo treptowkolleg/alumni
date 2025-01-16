@@ -18,6 +18,14 @@
     {{ form_start(form, { 'attr': {'novalidate':'novalidate'} }) }}
     {{ form_errors(form) }}
 
+    <div class="mb-3">
+        {% if app.user.image.name %}
+            <img src="{{ vich_uploader_asset(app.user)|imagine_filter('avatar')  }}" class="img-fluid img-thumbnail" alt="...">
+        {% else %}
+            <img src="{{ asset('images/avatar_no_text.svg') }}" class="img-fluid img-thumbnail" alt="...">
+        {% endif %}
+    </div>
+
     <div class="mb-5">
         {{ form_row(form.imageFile) }}
     </div>
