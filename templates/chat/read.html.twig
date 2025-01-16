@@ -49,7 +49,7 @@
         </ul>
     </div>
 
-    <div class="h4">Nachricht lesen</div>
+
 
 {% endblock %}
 {% block body %}
@@ -57,11 +57,15 @@
     <div class="row g-3">
 
         <div class="col-12">
-            <h1 class="h3">{{ message.subject }}</h1>
+            <div class="bg-white p-3 border border-primary"><span class="me-2 fw-bold">Betreff:</span>{{ message.subject }}</div>
         </div>
 
         <div class="col-12">
-            <div>{{ message.message|striptags|raw }}</div>
+            <div class="bg-white p-3 mb-2 border border-primary">{{ message.message|striptags|nl2br }}</div>
+            <div class="text-end small">{{ message.created|ago }} gesendet</div>
+        </div>
+        <div class="col-12">
+            <a class="btn btn-primary"  href="{{ url('chat_new',{'id':message.chat.id,'subject':message.subject}) }}"><i class="fa-solid fa-reply me-2"></i>Antworten</a>
         </div>
     </div>
 {% endblock %}

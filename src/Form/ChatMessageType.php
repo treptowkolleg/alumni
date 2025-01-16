@@ -23,8 +23,9 @@ class ChatMessageType extends AbstractType
                 'required' => true,
             ])
             ->add('message', TextareaType::class,[
+                'row_attr' => ['class' => 'form-floating mb-3'],
                 'required' => true,
-                'attr' => ['rows' => 6],
+                'attr' => ['style' => 'min-height:250px','placeholder' => 'Message'],
             ])
         ;
     }

@@ -19,7 +19,8 @@
         </ol>
     </nav>
 
-    <h1 class="h3">Chat</h1>
+    <h1 class="h3">Postfach</h1>
+    <h2 class="h5 text-primary">Übersicht aktiver Konversationen</h2>
     {% if not chats %}
     <p class="">Um mit jemandem zu chatten, suche bitte zuerst die entsprechende Person aus dem Personenverzeichnis aus.</p>
     {% endif %}
@@ -27,9 +28,8 @@
 {% block body %}
     <div class="row g-3">
         <div class="col-12">
-            <div class="fs-5 fw-bolder mb-1">Eröffnete Konversationen</div>
             <div class="">
-                <div class="list-group list-group-flush">
+                <div class="list-group border border-primary">
                     {% for chat in chats|sort %}
                         {% if chat.owner == app.user %}
                             <a href="{{ url('chat_start',{'slug':chat.participant.slug}) }}" class="py-3 list-group-item list-group-item-action">{{ chat.participant.userProfiles.first }}</a>
