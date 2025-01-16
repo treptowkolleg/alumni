@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nachricht verfassen{% endblock %}
+
+{% block navbar %}
+    <li class="nav-item"><a class="nav-link" href="{{ url('blog_news_all_index') }}">Aktuelles</a></li>
+    <li class="nav-item"><a class="nav-link" href="{{ url('blog_index') }}">Themen</a></li>
+    <li class="nav-item"><a class="nav-link" href="{{ url('event_index') }}">Termine</a></li>
+    <li class="nav-item"><a class="nav-link" href="#">Angebote</a></li>
+    <li class="nav-item"><a class="nav-link active" href="{{ url('people_index') }}">Personen</a></li>
+{% endblock %}
+
+{% block page_header %}
+    <nav class="bg-transparent" style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url('app_index') }}">treptowkolleg.de</a></li>
+            <li class="breadcrumb-item"><a href="{{ url('people_index') }}">Personen</a></li>
+            <li class="breadcrumb-item"><a href="{{ url('chat_index') }}">Postfach</a></li>
+            <li class="breadcrumb-item"><a href="{{ url('chat_start',{'slug':partner.slug}) }}">{{ partner.userProfiles.first }}</a></li>
+            <li class="breadcrumb-item active fw-bolder" aria-current="page">Nachricht</li>
+        </ol>
+    </nav>
+
+    <div class="d-flex align-items-center mt-3">
+        <div class="me-2" style="width: 40px">
+            {% if partner.image.name %}
+                <img src="{{ vich_uploader_asset(partner)|imagine_filter('avatar')  }}" class="img-fluid" alt="...">
+            {% else %}
+                <img src="{{ asset('images/avatar_no_text.svg') }}" class="img-fluid" alt="...">
+            {% endif %}
+        </div>
+        <div class="h3 mb-0">{{ partner.userProfiles.first }}</div>
+    </div>
+    <hr>
+
+    <div class="d-flex justify-content-between align-items-center flex-wrap mb-3">
+        <ul class="nav nav-underline">
+            <li class="nav-item">
+                <a class="nav-link"  href="{{ url('chat_start',{'slug':partner.slug}) }}"><i class="fas fa-chevron-left me-2 text-primary"></i>Zurück zum Postfach</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link"  href="{{ url('chat_new',{'id':message.chat.id}) }}"><i class="fa-solid fa-envelope me-2 text-primary"></i>Neue Nachricht</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link"  href="{{ url('chat_new',{'id':message.chat.id,'subject':message.subject}) }}"><i class="fa-solid fa-reply me-2 text-primary"></i>Antworten</a>
+            </li>
+        </ul>
+        <ul class="nav nav-underline">
+        </ul>
+    </div>
+
+
+{% endblock %}
+{% block body %}
+
+    <div class="row g-3">
+
+        <div class="col-12">
+            <h1 class="h3">{{ message.subject }}</h1>
+        </div>
+
+        <div class="col-12">
+            <div>{{ message.message|striptags|raw }}</div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block aside %}
+
+{% endblock %}

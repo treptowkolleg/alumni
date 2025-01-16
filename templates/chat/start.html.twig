@@ -15,70 +15,87 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ url('app_index') }}">treptowkolleg.de</a></li>
             <li class="breadcrumb-item"><a href="{{ url('people_index') }}">Personen</a></li>
-            <li class="breadcrumb-item active fw-bolder" aria-current="page">Chat</li>
+            <li class="breadcrumb-item"><a href="{{ url('chat_index') }}">Postfach</a></li>
+            <li class="breadcrumb-item active fw-bolder" aria-current="page">{{ partner.userProfiles.first }}</li>
         </ol>
     </nav>
 
-    <h1 class="h3 mb-3">Chat</h1>
-
-    <a href="{{ url('chat_index') }}" class="btn btn-outline-primary mb-3"><i class="fas fa-chevron-left me-2"></i>Zurück zur Übersicht</a>
-{% endblock %}
-{% block body %}
-    <div class="row g-3">
-        <div class="col-2 col-md-1">
+    <div class="d-flex align-items-center mt-3">
+        <div class="me-2" style="width: 40px">
             {% if partner.image.name %}
                 <img src="{{ vich_uploader_asset(partner)|imagine_filter('avatar')  }}" class="img-fluid" alt="...">
             {% else %}
                 <img src="{{ asset('images/avatar_no_text.svg') }}" class="img-fluid" alt="...">
             {% endif %}
         </div>
-        <div class="col-8 col-md-7"></div>
-        <div class="col-2 col-md-1">
-            {% if app.user.image.name %}
-                <img src="{{ vich_uploader_asset(app.user)|imagine_filter('avatar')  }}" class="img-fluid" alt="...">
-            {% else %}
-                <img src="{{ asset('images/avatar_no_text.svg') }}" class="img-fluid" alt="...">
-            {% endif %}
-        </div>
-        <div class="col-9">
-            <div class="d-flex justify-content-between">
-                <input type="text" class="form-control" placeholder="Nachricht senden...">
-                <button type="submit" class="btn btn-primary"><i class="fa-solid fa-paper-plane"></i></button>
-            </div>
-        </div>
-        <div class="col-3"></div>
-        <div class="col-md-9">
-            <div class="p-3 border-bottom border-top" style="height: 400px; overflow-y: auto; -ms-overflow-y: auto">
-                <div class="d-flex flex-column h-100">
-                    <span class="me-auto flex-shrink-1 mb-1" style="font-size: .8rem">23.07.10:22</span>
-                    <span class="bg-light me-auto text-wrap flex-shrink-1 p-2 mb-3" style="max-width: 70%">Hey, wie geht's?<br>Mir geht es soweit ziemlich gut. Ich bin auf jeden Fall auf die nächste Veranstaltung gespannt.</span>
-
-                    <span class="ms-auto flex-shrink-1 mb-1" style="font-size: .8rem">23.07.1998 10:08</span>
-                    <span class="bg-primary-subtle ms-auto text-wrap flex-shrink-1 p-2 mb-3" style="max-width: 70%">Hallo!</span>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3"></div>
-        <small>Die neueste Nachricht ist immer oben!</small>
+        <div class="h3 mb-0">{{ partner.userProfiles.first }}</div>
     </div>
+    <hr>
+
+    <div class="d-flex justify-content-between align-items-center flex-wrap mb-3">
+        <ul class="nav nav-underline">
+            <li class="nav-item">
+                <a class="nav-link"  href="{{ url('chat_index') }}"><i class="fas fa-chevron-left me-2 text-primary"></i>Zurück zur Übersicht</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link"  href="{{ url('chat_new',{'id':chat.id}) }}"><i class="fa-solid fa-envelope me-2 text-primary"></i>Neue Nachricht</a>
+            </li>
+        </ul>
+        <ul class="nav nav-underline">
+        </ul>
+    </div>
+
+    <div id="emails" class="table-responsive">
+            <table class="table table-hover nowrap" style="width: 100%" id="datatable">
+                <thead>
+                    <tr>
+                        <th>gesendet von</th>
+                        <th>Betreff</th>
+                        <th class="text-end">Datum</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for message in chat.messages %}
+                    {% if app.user != message.sender %}
+                    <tr class="{{ message.isRead ? '' : 'fw-bold' }}" style="cursor: pointer;" data-url="{{ url('chat_read',{'id':message.id}) }}">
+                        <td>{{ message.sender.userProfiles.first }}</td>
+                        <td>{{ message.subject }}</td>
+                        <td class="text-end">{{ message.created|date('d.m.Y H:i') }}</td>
+                    </tr>
+                    {% endif %}
+                {% endfor %}
+                </tbody>
+            </table>
+    </div>
+
+    <script>
+        let tableOptions = {
+            "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
+        }
+
+        let table = new DataTable('#datatable', {
+            fixedHeader: true,
+            responsive: true,
+            searching: false,
+            pageLength: 25,
+            lengthChange: false,
+            order: [[2, 'desc']],
+            "language": tableOptions,
+            columnDefs: [
+                { width: '70%', targets: 1 },
+                { type: 'date-de', targets: 2 }
+            ]
+        });
+
+        $('tbody').on('click', 'tr', function() {
+            window.location.href = $(this).data('url')
+        });
+    </script>
+
+{% endblock %}
+
+{% block body %}
 {% endblock %}
 
 {% block aside %}
-    <div class="fs-5 fw-bolder mb-1">Konversationen</div>
-    <div class="card  border-primary">
-        <div class="list-group list-group-flush">
-            {% for chat in chats|sort %}
-                {% set active = '' %}
-                {% if (chat.owner == app.user) %}
-                {% if(chat.participant == partner) %}{% set active = 'active' %}{% endif %}
-                    <a href="{{ url('chat_start',{'slug':chat.participant.slug}) }}" class="py-3 list-group-item list-group-item-action {{ active }}">{{ chat.participant.userProfiles.first }}</a>
-                {% else %}
-                    {% if(chat.owner == partner) %}{% set active = 'active' %}{% endif %}
-                    <a href="{{ url('chat_start',{'slug':chat.owner.slug}) }}" class="py-3 list-group-item list-group-item-action {{ active }}">{{ chat.owner.userProfiles.first }}</a>
-                {% endif %}
-            {% else %}
-                <div class="list-group-item">Noch keine Chats vorhanden.</div>
-            {% endfor %}
-        </div>
-    </div>
 {% endblock %}

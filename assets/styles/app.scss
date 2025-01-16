@@ -42,9 +42,9 @@ $white:		    rgba(255,255,255,1);
 $body-bg:       lighten($systemGray6,3);
 $body-color:    rgba($black,.9);
 $table-striped-bg: lighten($systemGray6,1.5);
-$list-group-action-hover-bg: lighten($systemGray6,1);
+$list-group-hover-bg: rgb(248,249,250) !important;
 $list-group-action-active-bg: darken($systemGray6,2);
-$table-hover-bg: lighten($systemGray6,2);
+$table-hover-bg: rgb(248,249,250) !important;
 $link-color: $systemGray;
 
 
@@ -275,3 +275,13 @@ input.form-control.is-invalid ~ trix-editor {
   margin-top: .325rem!important;
   margin-right: .325rem!important;
 }
+
+.table > tbody > tr > td {
+  background-color: $white;
+}
+
+.table > thead > tr > th {
+  background-color: rgb(248,249,250) !important;
+  border-bottom: 1px solid $systemBlue!important;
+}
+

@@ -28,6 +28,12 @@ class ChatMessage
     #[Gedmo\Timestampable(on: 'create')]
     private ?\DateTimeImmutable $created = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $isRead = null;
+
+    #[ORM\Column(length: 50, nullable: true)]
+    private ?string $subject = null;
+
     public function __construct()
     {
         $this->id = substr(Uuid::v4()->toBase32(), 0, 12);
@@ -77,5 +83,29 @@ class ChatMessage
     public function getCreated(): ?\DateTimeImmutable
     {
         return $this->created;
+    }
+
+    public function isRead(): ?bool
+    {
+        return $this->isRead;
+    }
+
+    public function setRead(?bool $isRead): static
+    {
+        $this->isRead = $isRead;
+
+        return $this;
+    }
+
+    public function getSubject(): ?string
+    {
+        return $this->subject;
+    }
+
+    public function setSubject(?string $subject): static
+    {
+        $this->subject = $subject;
+
+        return $this;
     }
 }
