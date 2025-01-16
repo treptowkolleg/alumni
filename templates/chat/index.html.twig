@@ -31,10 +31,26 @@
             <div class="">
                 <div class="list-group border border-primary">
                     {% for chat in chats|sort %}
+                        {% set message_unread = 0 %}
+                        {% for message in chat.messages %}
+                            {% if message.sender != app.user and not message.isRead %}
+                                {% set message_unread = message_unread + 1 %}
+                            {% endif %}
+                        {% endfor %}
                         {% if chat.owner == app.user %}
-                            <a href="{{ url('chat_start',{'slug':chat.participant.slug}) }}" class="py-3 list-group-item list-group-item-action">{{ chat.participant.userProfiles.first }}</a>
+                            <a href="{{ url('chat_start',{'slug':chat.participant.slug}) }}" class="py-3 list-group-item list-group-item-action d-flex justify-content-between">
+                                {{ chat.participant.userProfiles.first }}
+                                {% if message_unread > 0 %}
+                                    <div class="badge text-bg-secondary">{{ message_unread }}</div>
+                                {% endif %}
+                            </a>
                         {% else %}
-                            <a href="{{ url('chat_start',{'slug':chat.owner.slug}) }}" class="py-3 list-group-item list-group-item-action">{{ chat.owner.userProfiles.first }}</a>
+                            <a href="{{ url('chat_start',{'slug':chat.owner.slug}) }}" class="py-3 list-group-item list-group-item-action d-flex justify-content-between">
+                                {{ chat.owner.userProfiles.first }}
+                                {% if message_unread > 0 %}
+                                    <span class="badge text-bg-secondary">{{ message_unread }}</span>
+                                {% endif %}
+                            </a>
                         {% endif %}
                     {% else %}
                         <div class="list-group-item">Noch keine Konversationen vorhanden.</div>

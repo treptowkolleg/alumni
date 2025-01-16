@@ -87,7 +87,7 @@
 
                     {% if app.user and app.user.userProfiles.count > 0 %}
                         <div class="ms-2">
-                            <a class="btn btn-primary" href="{{ url('chat_index') }}"><i class="fa-solid fa-envelope me-1"></i>Postfach</a>
+                            <a class="btn btn-primary" href="{{ url('chat_index') }}"><i class="fa-solid fa-envelope me-1"></i>Postfach <div id="unread-count" data-id="{{ app.user.id }}" class="badge text-bg-secondary ms-2" style="display: none">0</div></a>
                         </div>
                     {% endif %}
                 </div>

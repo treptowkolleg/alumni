@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Entity\UserProfile;
+use App\Repository\ChatRepository;
 use App\Repository\UserProfileRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -60,4 +62,21 @@ class ApiController extends AbstractController
         }
         return new JsonResponse('fehler');
     }
+
+    #[Route('/unread-messages', name: 'check_messages', methods: ['POST','GET'])]
+    public function getUnreadMessages(Request $request, ChatRepository $chatRepository, UserRepository $userRepository): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+        $userId = $data['userId'] ?? 19;
+
+        $user = $userRepository->find($userId);
+
+        $initialCount = $chatRepository->countUnreadMessages($user);
+
+        if($initialCount > 0) {
+            return new JsonResponse($initialCount);
+        }
+        return new JsonResponse(false);
+    }
+
 }

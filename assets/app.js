@@ -126,4 +126,44 @@ function validateForm($i){
 
 }
 
+function updateUnreadMessagesUI(count) {
+    const unreadCountDiv = document.getElementById('unread-count');
+    console.error(count);
+    if (unreadCountDiv) {
+        if (count > 0) {
+            unreadCountDiv.textContent = count; // Zeigt die Zahl an
+            unreadCountDiv.style.display = 'inline'; // Stellt sicher, dass es sichtbar ist
+        } else {
+            unreadCountDiv.style.display = 'none'; // Blendet das Div aus, wenn keine ungelesenen Nachrichten vorhanden sind
+        }
+    }
+}
+
+function checkUnreadMessages() {
+    const unreadCountDiv = document.getElementById('unread-count');
+
+    if(unreadCountDiv) {
+        const userId = unreadCountDiv.getAttribute('data-id'); // Benutzer-ID aus dem Div auslesen
+
+        fetch('/api/unread-messages', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ userId: userId }), // Benutzer-ID im Body senden
+        })
+            .then(response => response.json())
+            .then(data => {
+                updateUnreadMessagesUI(data); // Aktualisiere das UI mit der Anzahl oder blende es aus
+            })
+            .catch(error => {
+                console.error('Fehler beim Abrufen der ungelesenen Nachrichten:', error);
+            });
+    }
+
+}
+checkUnreadMessages();
+setInterval(checkUnreadMessages, 10 * 1000); // Ruft alle 5 Sekunden `checkUnreadMessages` auf
+
+
 
