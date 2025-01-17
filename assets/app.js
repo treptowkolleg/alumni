@@ -165,5 +165,13 @@ function checkUnreadMessages() {
 checkUnreadMessages();
 setInterval(checkUnreadMessages, 10 * 1000); // Ruft alle 5 Sekunden `checkUnreadMessages` auf
 
+const toastTrigger = document.getElementById('liveToastBtn')
+const toastLiveExample = document.getElementById('liveToast')
 
+if (toastTrigger) {
+    const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
+    toastTrigger.addEventListener('click', () => {
+        toastBootstrap.show()
+    })
+}
 

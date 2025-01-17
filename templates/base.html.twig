@@ -36,7 +36,21 @@
             <script src="https://cdn.jsdelivr.net/npm/tom-select@2.4.1/dist/js/tom-select.complete.min.js"></script>
         {% endblock %}
     </head>
-    <body>
+    <body class="bg-body-tertiary">
+
+    <div aria-live="polite" aria-atomic="true" class="d-flex justify-content-center align-items-start w-100">
+        <div class="toast-container position-fixed top-0 p-3">
+            <div id="liveToast" class="toast border-primary" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">
+                    <strong class="me-auto">Neue Nachrichten</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                    Du hast neue Nachrichten in deinem Postfach.
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="alert alert-dark py-1 border-start-0 border-end-0 small">
         <div class="container">
@@ -60,7 +74,7 @@
             </ul>
         </div>
     </div>
-    <nav class="navbar navbar-expand bg-body-tertiary d-none d-md-block">
+    <nav class="navbar navbar-expand global-nav d-none d-md-block">
             <div class="container">
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-2 mb-2 mb-lg-0">
@@ -74,15 +88,8 @@
                     </ul>
 
                     <form method="post" class="d-flex flex-grow-1">
-                        <div class="input-group">
                             <label for="blog_search" class="d-none"></label>
-                            <input type="search" id="blog_search" name="blog_search" class="form-control border-end-0" placeholder="Auf Seite suchen">
-                            <div class="input-group-btn">
-                                <button class="btn btn-white border border-start-0" type="submit">
-                                    <i class="fas fa-search"></i>
-                                </button>
-                            </div>
-                        </div>
+                            <input type="search" id="blog_search" name="blog_search" class="form-control" placeholder="Auf Seite suchen">
                     </form>
 
                     {% if app.user and app.user.userProfiles.count > 0 %}
@@ -94,7 +101,7 @@
             </div>
         </nav>
 
-    <main class="pb-5 mt-5">
+    <main class="pb-5">
         <div class="container mb-3">
             {% for message in app.flashes('success') %}
                 <div class="alert alert-success">

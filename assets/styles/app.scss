@@ -285,3 +285,61 @@ input.form-control.is-invalid ~ trix-editor {
   border-bottom: 1px solid $systemBlue!important;
 }
 
+.nav-sidebar > li > a:not(.active):hover {
+  background-color: rgb(238,239,240)!important;
+}
+
+.nav-sidebar > li > .nav-text {
+  padding: var(--bs-nav-link-padding-y) var(--bs-nav-link-padding-x);
+}
+
+.nav-sidebar > .nav-item > .nav-text, .dashboard-title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: start;
+  font-size: 1.25rem!important;
+  border-bottom: 1px solid $systemBlue!important;
+}
+
+.nav-sidebar > .nav-item:not(:first-child) > .nav-text {
+  margin-top: .5rem;
+}
+
+.nav-sidebar > .nav-item, .dashboard-title {
+  margin-bottom: .5rem;
+}
+
+.global-nav {
+background-color: rgb(238,239,240)!important;
+}
+
+label, .label {
+  color: $systemBlue!important;
+  fill: $systemBlue!important;
+  font-weight: bolder;
+}
+
+.toast {
+  background-color: rgb(238,239,240)!important;
+}
+
+.dashboard-title {
+  padding: $nav-link-padding-y 0;
+}
+
+.form-control {
+  border: none;
+  border-bottom: 1px solid $systemGray4!important;
+}
+
+.form-control:disabled {
+  background-color: rgb(243,244,245)!important;
+  border-bottom: 1px solid $systemBlue!important;
+}
+
+.form-control:focus {
+  box-shadow: none!important;
+  border-bottom: 1px solid $systemBlue!important;
+}
+

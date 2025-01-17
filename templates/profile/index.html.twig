@@ -10,32 +10,6 @@
         </ol>
     </nav>
 
-    <h1 class="h3">Mein Mitgliederbereich</h1>
-    <h2 class="h5 mb-5 text-primary">
-        Verwalte dein Profil und deine Vereinsmitgliedschaft bequem online.
-    </h2>
-
-    <div class="d-flex flex-wrap align-items-center mb-5">
-        <div class="rounded rounded-circle border border-primary text-bg-light text-muted fw-bold d-flex justify-content-center align-items-center me-3" style="width: 48px; height: 48px">
-            {{ app.user.avatar }}
-        </div>
-        <div class="me-2">
-            {{ app.user.firstname }} {{ app.user.lastname }}
-        </div>
-        <div class="me-2">
-            {% if app.user.isVerified %}
-                <div class="small badge text-bg-light text-muted"><span class="d-none d-md-inline">verifiziert</span> <i class="fas fa-check text-success"></i></div>
-            {% else %}
-                <div class="small badge text-bg-light text-muted"><span class="d-none d-md-inline">Verifizierung ausstehend</span> <i class="fas fa-circle-exclamation text-danger"></i></div>
-            {% endif %}
-        </div>
-        <div class="">
-            <div class="small badge text-bg-light text-muted"><span class="d-none d-md-inline">offizielles Schulmitglied</span> <i class="fas fa-graduation-cap text-primary"></i></div>
-        </div>
-        <div class="ms-auto d-none d-md-block">{{ app.user.school ?? '' }}</div>
-    </div>
-
-
     {% if not app.user.isVerified %}
         <div class="alert alert-light">
             <h5>E-Mail-Adresse bestätigen!</h5>
@@ -45,133 +19,197 @@
         </div>
 
     {% else %}
-        <div class="row row-cols-1 row-cols-md-3 g-3 mb-5">
-            <div class="col">
-                <div class="card  bg-body-tertiary border-primary h-100">
-                    <div class="row g-0 align-content-stretch h-100">
-                        <div class="col-md-4">
-                            {% if app.user.image.name %}
-                                <img src="{{ vich_uploader_asset(app.user)|imagine_filter('avatar')  }}" class="img-fluid" alt="...">
-                            {% else %}
-                                <img src="{{ asset('images/avatar_no_text.svg') }}" class="img-fluid" alt="...">
-                            {% endif %}
-                        </div>
-                        <div class="col-md-8">
-                            <div class="card-body h-100 d-flex flex-column justify-content-between">
-                                <h3 class="h4">Profilbild</h3>
-                                <p class="lead">Gesicht zeigen</p>
-                                <div class="card-text mt-auto">
-                                    <a href="{{ url('profile_image_new') }}" class="text-decoration-none stretched-link d-flex justify-content-between align-items-center">bearbeiten<i class="fas fa-chevron-right"></i></a>
-                                </div>
+        <div class="row align-content-stretch">
+            <div class="col-lg-3 align-self-stretch">
+                <div class="sticky-lg-top" style="top:40px">
+
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="mb-3 ms-lg-3">
+                                {% if app.user.image.name %}
+                                    <img src="{{ vich_uploader_asset(app.user)|imagine_filter('avatar')  }}" class="img-fluid img-thumbnail" alt="...">
+                                {% else %}
+                                    <img src="{{ asset('images/avatar_no_text.svg') }}" class="img-fluid img-thumbnail" alt="...">
+                                {% endif %}
                             </div>
-
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card card-body bg-body-tertiary border-primary h-100">
-                    <h3 class="h4">Profil</h3>
-                    <p class="lead">
-                        Erzähle etwas über dich
-                    </p>
-                    <p class="card-text">
-                        <a href="{{ url('profile_profile_new') }}" class="text-decoration-none stretched-link d-flex justify-content-between align-items-center">bearbeiten<i class="fas fa-chevron-right"></i></a>
-                    </p>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card card-body bg-body-tertiary border-primary h-100">
-                    <h3 class="h4">Angebote</h3>
-                    <p class="lead">
-                        Biete Lern- und Arbeitsgemeinschaften an
-                    </p>
-                    <p class="card-text mt-auto">
-                        <a href="#" class="text-decoration-none stretched-link d-flex justify-content-between align-items-center">bearbeiten<i class="fas fa-chevron-right"></i></a>
-                    </p>
-                </div>
-            </div>
 
-            <div class="col">
-                {% if has_newsletter %}
-                    <div class="card card-body bg-body-tertiary border-primary h-100">
-                        <h3 class="h5">Newsletter angemeldet <i class="fas fa-check ms-2 text-success"></i></h3>
-                        <p class="card-text mt-auto">
-                            <span class="small">Du erhältst gelegentlich Updates per E-Mail zu Neuigkeiten und Veranstaltungen.</span>
-                        </p>
-                        {{ form_start(form) }}
-                        <button type="submit" class="btn btn-link px-0 pb-0 text-decoration-none stretched-link w-100 d-flex justify-content-between align-items-center">abbestellen<i class="fas fa-chevron-right"></i></button>
-                        {{ form_end(form) }}
+                    <div class="d-flex flex-column flex-shrink-0">
+                        <ul class="nav nav-pills nav-sidebar flex-column mb-auto">
+                            <li class="nav-item">
+                                <div class="nav-text">
+                                    <i class="fa-solid fa-fw fa-gear me-2 text-primary fs-6"></i>
+                                    Einstellungen
+                                </div>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ url('profile_image_new') }}" class="nav-link">
+                                    <i class="fa-solid fa-fw fa-image me-2"></i>
+                                    Profilbild
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ url('profile_profile_new') }}" class="nav-link">
+                                    <i class="fa-solid fa-fw fa-user me-2"></i>
+                                    Profilinformationen
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="fa-solid fa-fw fa-user-lock me-2"></i>
+                                    Konto
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="fa-solid fa-fw fa-envelope-open-text me-2"></i>
+                                    Newsletter
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="fa-solid fa-fw fa-briefcase me-2"></i>
+                                    Angebote
+                                </a>
+                            </li>
+
+                            {% if is_granted('ROLE_AUTHOR') %}
+                                <li class="nav-item">
+                                    <div class="nav-text">
+                                        <i class="fa-solid fa-fw fa-pen me-2 text-primary fs-6"></i>
+                                        Authoring
+                                    </div>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ path('authoring_blogpost_index') }}" class="nav-link">
+                                        <i class="fa-solid fa-fw fa-newspaper me-2"></i>
+                                        Blog-Artikel
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ path('authoring_event_index') }}" class="nav-link">
+                                        <i class="fa-solid fa-fw fa-calendar-days me-2"></i>
+                                        Veranstaltungen
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ path('authoring_event_type_index') }}" class="nav-link">
+                                        <i class="fa-solid fa-fw fa-list me-2"></i>
+                                        Veranstaltungsarten
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <i class="fa-solid fa-fw fa-envelopes-bulk me-2"></i>
+                                        Newsletter
+                                    </a>
+                                </li>
+                            {% endif %}
+
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <li class="nav-item">
+                                    <div class="nav-text">
+                                        <i class="fa-solid fa-fw fa-dashboard me-2 text-primary fs-6"></i>
+                                        Administration
+                                    </div>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ path('admin_user_index') }}" class="nav-link">
+                                        <i class="fa-solid fa-fw fa-users me-2"></i>
+                                        Benutzerrollen
+                                    </a>
+                                </li>
+                            {% endif %}
+                        </ul>
                     </div>
-                {% else %}
-                    <div class="card card-body bg-body-tertiary border-primary h-100">
-                        <h3 class="h5">Newsletter</h3>
-                        <p class="card-text mt-auto">
-                            <span class="small">Erhalte gelegentlich Updates per E-Mail zu Neuigkeiten und Veranstaltungen.</span>
-                        </p>
-                        {{ form_start(form) }}
-                            <button type="submit" class="btn btn-link px-0 pb-0 text-decoration-none stretched-link w-100 d-flex justify-content-between align-items-center">abonnieren<i class="fas fa-chevron-right"></i></button>
-                        {{ form_end(form) }}
-                    </div>
-                {% endif %}
-            </div>
-
-            {#
-            <div class="col">
-                <div class="card card-body bg-body-tertiary border-primary h-100">
-                    <h3 class="h4">Engagement</h3>
-                    <p class="lead">
-                        Unterstütze die Vereinsarbeit
-                    </p>
-                    <p class="card-text mt-auto">
-                        <a href="#" class="link-dark text-decoration-none stretched-link d-flex justify-content-between align-items-center">bearbeiten<i class="fas fa-chevron-right"></i></a>
-                    </p>
                 </div>
             </div>
-            #}
+            <div class="col-lg-9">
+                <h1 class="h3">Mein Mitgliederbereich</h1>
+                <h2 class="h5 text-primary">
+                    Verwalte dein Profil und deine Vereinsmitgliedschaft bequem online.
+                </h2>
 
+                <div class="dashboard-title">Alumni-Profil</div>
+                <div class="row mt-3 mb-5 g-lg-3">
+
+                    <div class="col-lg-4 "><label class="col-form-label" for="alumni-name">Anzeigename</label></div>
+                    <div class="col-lg-8">
+                        <input type="text" id="alumni-name" class="form-control" disabled readonly value="{{ app.user.userProfiles.first }}">
+                    </div>
+
+                    <div class="col-lg-4 "><label class="col-form-label" for="alumni-exam">Abschluss und Abgangsjahr</label></div>
+                    <div class="col-lg-5">
+                        <input type="text" id="alumni-exam" class="form-control" disabled readonly value="{{ app.user.userProfiles.first.examType|trans }}">
+                    </div>
+                    <div class="col-lg-3">
+                        <input type="text" id="alumni-exam" class="form-control" disabled readonly value="{{ app.user.userProfiles.first.outYear }}">
+                    </div>
+
+                    <div class="col-lg-4 "><span class="label">Leistungskurse</span></div>
+                    <div class="col-lg-8">
+                        <ul class="list-inline">
+                            {% for item in app.user.userProfiles.first.performanceCourse|slice(0,2) %}
+                                <li class="list-inline-item"><span class="badge text-bg-primary">{{ item|trans }}</span></li>
+                            {% else %}
+                                <li class="list-inline-item">unbekannt</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="dashboard-title">Konto-Übersicht</div>
+                <div class="row mt-3 mb-5 g-lg-3">
+                    <div class="col-lg-4 "><label class="col-form-label" for="name">Name</label></div>
+                    <div class="col-lg-8">
+                        <input type="text" id="name" class="form-control" disabled readonly value="{{ app.user.fullname }}">
+                    </div>
+
+                    <div class="col-lg-4 "><label class="col-form-label" for="email">E-Mail</label></div>
+                    <div class="col-lg-8">
+                        <input type="email" id="email" class="form-control" disabled readonly value="{{ app.user.email }}">
+                        <small class="form-text text-muted">Deine E-Mail-Adresse wird niemals veröffentlicht.</small>
+                    </div>
+
+                    <div class="col-lg-4 "><span class="label">Verifizierung</span></div>
+                    <div class="col-lg-8">
+                        {% if app.user.isVerified %}
+                            <div class="badge text-bg-light text-muted"><span class="me-2">verifiziert</span><i class="fas fa-check text-success"></i></div>
+                        {% else %}
+                            <div class="badge text-bg-light text-muted"><span class="me-2">Verifizierung ausstehend</span><i class="fas fa-circle-exclamation text-danger"></i></div>
+                        {% endif %}
+                    </div>
+
+                    <div class="col-lg-4 "><span class="label">Verifizierungstyp</span></div>
+                    <div class="col-lg-8">
+                        <div class="badge text-bg-light text-muted"><span class="me-2">offizielles Schulmitglied</span><i class="fas fa-graduation-cap text-primary"></i></div>
+                    </div>
+
+                    <div class="col-lg-4 "><label class="col-form-label" for="school">Bildungseinrichtung</label></div>
+                    <div class="col-lg-8">
+                        <input type="text" id="school" class="form-control" disabled readonly value="{{ app.user.school ?? '' }}">
+                    </div>
+                </div>
+
+                <div class="dashboard-title">Benachrichtigungen</div>
+
+                <div class="row mt-3 mb-5 g-lg-3">
+
+                    <div class="col-lg-4 "><span class="label">Newsletter</span></div>
+                    <div class="col-lg-8">
+                        {{ has_newsletter ? 'abonniert' : 'nicht abonniert' }}
+                    </div>
+                </div>
+
+
+                <button type="button" class="btn btn-primary" id="liveToastBtn">Show live toast</button>
+            </div>
         </div>
+
     {% endif %}
 
-    {% if is_granted('ROLE_AUTHOR') %}
-        <h4 class="mb-3">Authoring</h4>
-        <div class="row row-cols-1 row-cols-md-3 g-3 mb-5">
-            <div class="col">
-                <div class="list-group">
-                    <div  class="list-group-item fw-bold fs-5 text-bg-primary">Blog</div>
-                    <a href="{{ path('authoring_blogpost_new') }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">Artikel schreiben<i class="fa-solid fa-plus"></i></a>
-                    <a href="{{ path('authoring_blogpost_index') }}" class="list-group-item list-group-item-action">Alle Artikel</a>
-                </div>
-            </div>
-            <div class="col">
-                <div class="list-group">
-                    <div  class="list-group-item fw-bold fs-5 text-bg-primary">Veranstaltungen</div>
-                    <a href="{{ path('authoring_event_new') }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">Veranstaltung planen<i class="fa-solid fa-plus"></i></a>
-                    <a href="{{ path('authoring_event_index') }}" class="list-group-item list-group-item-action">Alle Termine</a>
-                    <a href="{{ path('authoring_event_type_index') }}" class="list-group-item list-group-item-action">Kategorien verwalten</a>
-                </div>
-            </div>
-            <div class="col">
-                <div class="list-group">
-                    <div  class="list-group-item fw-bold fs-5 text-bg-primary">Newsletter</div>
-                    <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">Newsletter verfassen<i class="fa-solid fa-plus"></i></a>
-                    <a href="#" class="list-group-item list-group-item-action">Alle Newsletter</a>
-                    <a href="#" class="list-group-item list-group-item-action">Abonnenten verwalten</a>
-                </div>
-            </div>
-        </div>
-        {% endif %}
-        {% if is_granted('ROLE_ADMIN') %}
-            <h4 class="mb-3">Administration</h4>
-            <div class="row row-cols-1 row-cols-md-3 g-3 mb-5">
-                <div class="col">
-                    <div class="list-group">
-                        <div  class="list-group-item fw-bold fs-5 text-bg-primary">Kontenverwaltung</div>
-                        <a href="{{ path('admin_user_index') }}" class="list-group-item list-group-item-action">Alle Benutzer</a>
-                    </div>
-                </div>
-            </div>
-        {% endif %}
+
 
 {% endblock %}
 {% block body %}
