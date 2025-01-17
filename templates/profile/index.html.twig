@@ -128,7 +128,7 @@
             <div class="col-lg-9">
                 <h1 class="h3">Mein Mitgliederbereich</h1>
                 <h2 class="h5 text-primary">
-                    Verwalte dein Profil und deine Vereinsmitgliedschaft bequem online.
+                    Verwalte dein Profil und deine Vereinsmitgliedschaft bequem online
                 </h2>
 
                 <div class="dashboard-title">Alumni-Profil</div>
@@ -170,6 +170,15 @@
                     <div class="col-lg-8">
                         <input type="email" id="email" class="form-control" disabled readonly value="{{ app.user.email }}">
                         <small class="form-text text-muted">Deine E-Mail-Adresse wird niemals veröffentlicht.</small>
+                    </div>
+
+                    <div class="col-lg-4 "><span class="label">Rollen</span></div>
+                    <div class="col-lg-8">
+                        <ul class="list-inline">
+                            {% for item in app.user.roles %}
+                                <li class="list-inline-item"><span class="badge text-bg-primary">{{ item|trans }}</span></li>
+                            {% endfor %}
+                        </ul>
                     </div>
 
                     <div class="col-lg-4 "><span class="label">Verifizierung</span></div>
