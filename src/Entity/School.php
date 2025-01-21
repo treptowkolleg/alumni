@@ -27,6 +27,30 @@ class School
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $city = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $district = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $subDistrict = null;
+
+    #[ORM\Column(length: 5, nullable: true)]
+    private ?string $plz = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $street = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $bsn = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $url = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $lat = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $lon = null;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
@@ -92,6 +116,102 @@ class School
     public function setCity(?string $city): static
     {
         $this->city = $city;
+
+        return $this;
+    }
+
+    public function getDistrict(): ?string
+    {
+        return $this->district;
+    }
+
+    public function setDistrict(?string $district): static
+    {
+        $this->district = $district;
+
+        return $this;
+    }
+
+    public function getSubDistrict(): ?string
+    {
+        return $this->subDistrict;
+    }
+
+    public function setSubDistrict(?string $subDistrict): static
+    {
+        $this->subDistrict = $subDistrict;
+
+        return $this;
+    }
+
+    public function getPlz(): ?string
+    {
+        return $this->plz;
+    }
+
+    public function setPlz(?string $plz): static
+    {
+        $this->plz = $plz;
+
+        return $this;
+    }
+
+    public function getStreet(): ?string
+    {
+        return $this->street;
+    }
+
+    public function setStreet(?string $street): static
+    {
+        $this->street = $street;
+
+        return $this;
+    }
+
+    public function getBsn(): ?string
+    {
+        return $this->bsn;
+    }
+
+    public function setBsn(?string $bsn): static
+    {
+        $this->bsn = $bsn;
+
+        return $this;
+    }
+
+    public function getUrl(): ?string
+    {
+        return $this->url;
+    }
+
+    public function setUrl(?string $url): static
+    {
+        $this->url = $url;
+
+        return $this;
+    }
+
+    public function getLat(): ?string
+    {
+        return $this->lat;
+    }
+
+    public function setLat(?string $lat): static
+    {
+        $this->lat = $lat;
+
+        return $this;
+    }
+
+    public function getLon(): ?string
+    {
+        return $this->lon;
+    }
+
+    public function setLon(?string $lon): static
+    {
+        $this->lon = $lon;
 
         return $this;
     }

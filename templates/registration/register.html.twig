@@ -1,43 +1,73 @@
-{% extends 'base.html.twig' %}
+{% extends '_empty.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% set meta_title = 'Registrieren' %}
 
 {% block body %}
-    {% for flash_error in app.flashes('verify_email_error') %}
-        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
-    {% endfor %}
+    <section class="my-auto py-3">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-4"></div>
+                <div class="col-xl-4">
+                    <div class="d-flex align-items-center justify-content-center mb-3">
+                        <a href="{{ path('app_index') }}"
+                           class="d-flex align-items-center link-body-emphasis text-decoration-none p-2 me-2 ps-0 border-end border-3 border-primary">
+                            <img src="{{ asset('images/logo.svg') }}" height="48" class="" alt="logo">
+                        </a>
+                        <div>
+                            <div class="h5 mb-0">Alumni Portal</div>
+                            <div class="h6 text-primary mb-0">des zweiten Bildungswegs</div>
+                        </div>
+                    </div>
 
-    <h1 class="h3 mb-3">Bleibe Teil der Community</h1>
-    <p>
-        Schließe dich unserem Alumni-Portal an und bleibe mit Lernenden und Lehrkräften in Kontakt. Teile Wissen und Erfahrungen und feiere gemeinsame Erfolge und Jubiläen.
-    </p>
+                    <div class="card bg-white shadow-sm">
+                        <div class="card-body border-bottom">
+                            <h1 class="h4 mb-0 text-center">Erstelle ein neues Konto</h1>
+                            <div class="text-center">Es geht ganz schnell und einfach.</div>
+                        </div>
+                        <div class="card-body">
+                            {% for flash_error in app.flashes('verify_email_error') %}
+                                <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+                            {% endfor %}
 
-    {{ form_errors(registrationForm) }}
+                                    {% form_theme registrationForm 'bootstrap_5_layout.html.twig' %}
+                            {{ form_errors(registrationForm) }}
 
-    {{ form_start(registrationForm, { 'attr': {'novalidate':'novalidate','class':'needs-validation'} }) }}
-    {{ form_row(registrationForm.firstname) }}
-    {{ form_row(registrationForm.lastname) }}
+                            {{ form_start(registrationForm, { 'attr': {'novalidate':'novalidate','class':'needs-validation'} }) }}
+                            <div class="row row-cols-lg-2 g-0">
+                                <div class="col">{{ form_row(registrationForm.firstname) }}</div>
+                                <div class="col">{{ form_row(registrationForm.lastname) }}</div>
+                            </div>
+                            <div style="display: block; height: 48px">
+                                {{ form_row(registrationForm.school) }}
+                            </div>
 
-    {{ form_row(registrationForm.hasSchool) }}
-    <fieldset class="" id="school-fieldset" style="display: none">
-        {{ form_row(registrationForm.school) }}
-        {{ form_row(registrationForm.userType) }}
-    </fieldset>
-    <div class="mb-2">&nbsp;</div>
-    {{ form_row(registrationForm.email) }}
-    {{ form_row(registrationForm.plainPassword, {
-        label: 'Password'
-    }) }}
+                            {{ form_row(registrationForm.userType) }}
+                            {{ form_row(registrationForm.email) }}
+                            {{ form_row(registrationForm.plainPassword, {
+                                label: 'Password'
+                            }) }}
 
-    {{ form_row(registrationForm.captcha) }}
+                            {{ form_row(registrationForm.captcha) }}
 
-    <p>
-        Mit Klick auf Registrieren stimmst du den <a href="{{ url('app_terms') }}" target="_blank">Nutzungsbedingungen</a> zu.
-    </p>
-    <button type="submit" class="btn btn-primary">Registrieren</button>
-    {{ form_end(registrationForm) }}
+                            <p class="small">
+                                Mit Klick auf Registrieren stimmst du den <a href="{{ url('app_terms') }}" target="_blank">Nutzungsbedingungen</a> zu.
+                            </p>
+                            <div class="d-flex justify-content-center mb-3">
+                                <button type="submit" class="btn btn-primary w-100">Registrieren</button>
+                            </div>
+                            <div class="text-center">
+                                <a href="{{ url('app_login') }}">Du hast bereits ein Konto?</a>
+                            </div>
+                            {{ form_end(registrationForm) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4"></div>
+            </div>
+        </div>
+</section>
 
-    <script type="text/javascript">
+    {#<script type="text/javascript">
         (function () {
 
             let $isCompany = document.querySelector('#registration_form_hasSchool_1');
@@ -67,5 +97,5 @@
             });
 
         })()
-    </script>
+    </script>#}
 {% endblock %}

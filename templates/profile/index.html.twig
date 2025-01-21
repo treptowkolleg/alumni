@@ -1,14 +1,102 @@
-{% extends 'base.html.twig' %}
+{% extends '_full.html.twig' %}
 
-{% block title %}Mein Mitgliederbereich{% endblock %}
+{% set meta_title = 'Mein Bereich' %}
+{% set meta_subtitle = 'Übersicht' %}
+{% set sidebar = 'profile-index' %}
 
 {% block page_header %}
-    <nav class="bg-transparent" style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ url('app_index') }}">treptowkolleg.de</a></li>
-            <li class="breadcrumb-item active fw-bolder" aria-current="page">Mein Bereich</li>
-        </ol>
-    </nav>
+<section class=" py-3">
+
+    <div class="container">
+        <div class="mb-3">
+            <div class="nav nav-underline">
+                {% if is_granted('ROLE_USER') %}
+                    <a href="{{ path('profile_index') }}" class="nav-item nav-link active text-nowrap">
+                        <i class="fa-solid fa-dashboard text-primary"></i>
+                        <span class="ms-1 d-none d-lg-inline">Übersicht</span>
+                    </a>
+                    <a href="{{ path('profile_profile_new') }}" class="nav-item nav-link text-nowrap">
+                        <i class="fa-solid fa-user text-primary"></i>
+                        <span class="ms-1 d-none d-lg-inline">Profil</span>
+                    </a>
+                    <a href="{{ path('chat_index') }}" class="nav-item nav-link text-nowrap">
+                        <i class="fa-solid fa-envelope text-primary"></i>
+                        <span class="ms-1 d-none d-lg-inline">Postfach</span>
+                    </a>
+                {% endif %}
+                {% if is_granted('ROLE_AUTHOR') %}
+                    <a href="{{ path('authoring_blogpost_new') }}" class="nav-item nav-link text-nowrap ms-auto">
+                        <i class="fa-solid fa-file-circle-plus text-primary"></i>
+                        <span class="ms-1 d-none d-lg-inline">Artikel</span>
+                    </a>
+                    <a href="{{ path('authoring_event_new') }}" class="nav-item nav-link text-nowrap">
+                        <i class="fa-solid fa-calendar-plus text-primary"></i>
+                        <span class="ms-1 d-none d-lg-inline">Event</span>
+                    </a>
+                {% endif %}
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a href="{{ path('admin_user_index') }}" class="nav-item nav-link text-nowrap">
+                        <i class="fa-solid fa-users text-primary"></i>
+                        <span class="ms-1 d-none d-lg-inline">Rollen</span>
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="row g-1 mb-3 align-content-stretch">
+
+            <div class="col-12 col-lg-4 bg-white">
+                <div class="slim-form mt-4 h-100">
+                    <label class="pt-2" for="opt">Schule</label>
+                    <select class="slim-select-multi-school custom-select" multiple id="opt">
+                        <option>Treptow-Kolleg</option>
+                        <option>Kolleg Schöneberg</option>
+                        <option>Charlotte-Wolff-Kolleg</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-4 bg-white">
+                <div class="slim-form mt-4 h-100">
+                    <label for="opt" class="pt-2">Leistungskurs</label>
+                    <select class="slim-select-multi-school custom-select" multiple id="opt">
+                        <option>Informatik</option>
+                        <option>B</option>
+                        <option>C</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-6 col-lg-2 bg-white">
+                <div class="slim-form mt-4 h-100">
+                    <label for="opt" class="pt-2">Startjahr</label>
+                    <select class="slim-select-single-school custom-select" id="opt">
+                        <option>2024</option>
+                        <option>B</option>
+                        <option>C</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-6 col-lg-2 bg-white">
+                <div class="slim-form mt-4 h-100">
+                    <label for="opt" class="pt-2">Abgangsjahr</label>
+                    <select class="slim-select-single-school custom-select" id="opt">
+                        <option>2024</option>
+                        <option>B</option>
+                        <option>C</option>
+                    </select>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+
+    <div class="container">
+
+
 
     {% if not app.user.isVerified %}
         <div class="alert alert-light">
@@ -19,211 +107,147 @@
         </div>
 
     {% else %}
-        <div class="row align-content-stretch">
-            <div class="col-lg-3 align-self-stretch">
-                <div class="sticky-lg-top" style="top:40px">
+        <div class="row g-3 align-content-stretch">
 
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div class="mb-3 ms-lg-3">
-                                {% if app.user.image.name %}
-                                    <img src="{{ vich_uploader_asset(app.user)|imagine_filter('avatar')  }}" class="img-fluid img-thumbnail" alt="...">
-                                {% else %}
-                                    <img src="{{ asset('images/avatar_no_text.svg') }}" class="img-fluid img-thumbnail" alt="...">
-                                {% endif %}
+            <div class="col-12">
+                <div class="card bg-white">
+                    <div class="card-body  border-bottom border-primary">
+                        <h3 class="h5 text-center text-lg-start">Erste Schritte</h3>
+                        <p class="card-text">Bitte richte deinen Account vollständig ein, um alle Bereiche des Alumni-Portals nutzen zu können.</p>
+                    </div>
+                    <div class="list-group list-group-flush">
+                        <a href="#" class="list-group-item list-group-item-action link-primary fw-bold d-flex  align-items-center justify-content-between">
+                            <div><i class="fa-solid fa-fw fa-1 me-2"></i>E-Mail-Adresse verifizieren</div>
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action text-muted disabled d-flex align-items-center justify-content-between">
+                            <div><i class="fa-solid fa-fw fa-2 me-2"></i>Alumni-Profil einrichten</div>
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </a>
+                    </div>
+                </div>
+                <small class="ms-3 text-muted">Wird angezeigt, falls E-Mail-Adresse und/oder Profil noch nicht aktiviert sind.</small>
+            </div>
+
+            <div class="col-lg-4 order-3 order-lg-0">
+                <div class="card bg-white h-100">
+                    <div class="card-body  border-bottom border-primary">
+                        <h3 class="h5 mb-0 text-center text-lg-start">Kontakte</h3>
+                    </div>
+                    <div class="list-group list-group-flush border-bottom-0">
+                        {% for person in app.user.userprofiles.first.friends %}
+                            <div class="list-group-item list-group-item-action d-flex align-items-center justify-content-between">
+                                <div><a href="#" class="text-decoration-none fw-bold">{{ person }}</a></div>
+                                <div class="d-flex justify-content-end align-items-center flex-wrap">
+                                    <a href="#" class="btn btn-link pe-0"><i class="fa-solid fa-star text-secondary"></i></a>
+                                    <a href="#" class="btn btn-link pe-0"><i class="fa-regular fa-paper-plane"></i></a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                        <div class="list-group-item list-group-item-action d-flex align-items-center justify-content-between">
+                            <div><a href="#" class="text-decoration-none fw-bold">Peter</a></div>
+                            <div class="d-flex justify-content-end align-items-center flex-wrap">
+                                <a href="#" class="btn btn-link pe-0"><i class="fa-regular fa-star"></i></a>
+                                <a href="#" class="btn btn-link pe-0"><i class="fa-regular fa-paper-plane"></i></a>
                             </div>
                         </div>
                     </div>
-
-                    <div class="d-flex flex-column flex-shrink-0">
-                        <ul class="nav nav-pills nav-sidebar flex-column mb-auto">
-                            <li class="nav-item">
-                                <div class="nav-text">
-                                    <i class="fa-solid fa-fw fa-gear me-2 text-primary fs-6"></i>
-                                    Einstellungen
-                                </div>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ url('profile_image_new') }}" class="nav-link">
-                                    <i class="fa-solid fa-fw fa-image me-2"></i>
-                                    Profilbild
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ url('profile_profile_new') }}" class="nav-link">
-                                    <i class="fa-solid fa-fw fa-user me-2"></i>
-                                    Profilinformationen
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="fa-solid fa-fw fa-user-lock me-2"></i>
-                                    Konto
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="fa-solid fa-fw fa-envelope-open-text me-2"></i>
-                                    Newsletter
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="fa-solid fa-fw fa-briefcase me-2"></i>
-                                    Angebote
-                                </a>
-                            </li>
-
-                            {% if is_granted('ROLE_AUTHOR') %}
-                                <li class="nav-item">
-                                    <div class="nav-text">
-                                        <i class="fa-solid fa-fw fa-pen me-2 text-primary fs-6"></i>
-                                        Authoring
-                                    </div>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ path('authoring_blogpost_index') }}" class="nav-link">
-                                        <i class="fa-solid fa-fw fa-newspaper me-2"></i>
-                                        Blog-Artikel
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ path('authoring_event_index') }}" class="nav-link">
-                                        <i class="fa-solid fa-fw fa-calendar-days me-2"></i>
-                                        Veranstaltungen
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ path('authoring_event_type_index') }}" class="nav-link">
-                                        <i class="fa-solid fa-fw fa-list me-2"></i>
-                                        Veranstaltungsarten
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="fa-solid fa-fw fa-envelopes-bulk me-2"></i>
-                                        Newsletter
-                                    </a>
-                                </li>
-                            {% endif %}
-
-                            {% if is_granted('ROLE_ADMIN') %}
-                                <li class="nav-item">
-                                    <div class="nav-text">
-                                        <i class="fa-solid fa-fw fa-dashboard me-2 text-primary fs-6"></i>
-                                        Administration
-                                    </div>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ path('admin_user_index') }}" class="nav-link">
-                                        <i class="fa-solid fa-fw fa-users me-2"></i>
-                                        Benutzerrollen
-                                    </a>
-                                </li>
-                            {% endif %}
-                        </ul>
+                    <div class="h-100"></div>
+                    <div class="list-group list-group-flush">
+                        <a href="#" class="list-group-item list-group-item-action link-primary fw-bold d-flex align-items-center justify-content-between">
+                            <div>weitere Personen finden</div>
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </a>
                     </div>
                 </div>
+                <small class="ms-3 text-muted">Als Bekannte markierte Personen</small>
             </div>
-            <div class="col-lg-9">
-                <h1 class="h3">Mein Mitgliederbereich</h1>
-                <h2 class="h5 text-primary">
-                    Verwalte dein Profil und deine Vereinsmitgliedschaft bequem online
-                </h2>
 
-                <div class="dashboard-title">Alumni-Profil</div>
-                <div class="row mt-3 mb-5 g-lg-3">
-
-                    <div class="col-lg-4 "><label class="col-form-label" for="alumni-name">Anzeigename</label></div>
-                    <div class="col-lg-8">
-                        <input type="text" id="alumni-name" class="form-control" disabled readonly value="{{ app.user.userProfiles.first }}">
+            <div class="col-lg-8 order-0 order-lg-3">
+                <div class="card bg-white">
+                    <div class="card-body border-bottom border-primary">
+                        <h3 class="h5 mb-0 text-center text-lg-start">Veranstaltungen</h3>
                     </div>
+                    <div class="list-group list-group-flush border-bottom-0">
 
-                    <div class="col-lg-4 "><label class="col-form-label" for="alumni-exam">Abschluss und Abgangsjahr</label></div>
-                    <div class="col-lg-5">
-                        <input type="text" id="alumni-exam" class="form-control" disabled readonly value="{{ app.user.userProfiles.first.examType|trans }}">
-                    </div>
-                    <div class="col-lg-3">
-                        <input type="text" id="alumni-exam" class="form-control" disabled readonly value="{{ app.user.userProfiles.first.outYear }}">
-                    </div>
+                        <div class="list-group-item list-group-item-action d-flex align-items-center justify-content-between">
+                            <div class="d-flex flex-wrap align-items-center">
+                                <div class="me-2" style="min-width: 100px">23.07.2025</div>
+                                <div><a href="#" class="text-decoration-none">{{ 'Name der Veranstaltung'}}</a></div>
+                            </div>
+                            <div class="d-flex justify-content-end align-items-center flex-wrap">
+                                <a href="#" class="btn btn-link pe-0" data-bs-toggle="tooltip" data-bs-title="nicht von dir abonniert"><i class="fa-regular fa-fw fa-star"></i></a>
+                                <a href="#" class="btn btn-link pe-0" data-bs-toggle="tooltip"  data-bs-title="von Bekannten abonniert"><i class="fa-solid fa-fw fa-user"></i></a>
+                            </div>
+                        </div>
 
-                    <div class="col-lg-4 "><span class="label">Leistungskurse</span></div>
-                    <div class="col-lg-8">
-                        <ul class="list-inline">
-                            {% for item in app.user.userProfiles.first.performanceCourse|slice(0,2) %}
-                                <li class="list-inline-item"><span class="badge text-bg-primary">{{ item|trans }}</span></li>
-                            {% else %}
-                                <li class="list-inline-item">unbekannt</li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-                </div>
+                        <div class="list-group-item list-group-item-action d-flex align-items-center justify-content-between">
+                            <div class="d-flex flex-wrap align-items--center">
+                                <div class="me-2" style="min-width: 100px">23.07.2025</div>
+                                <div><a href="#" class="text-decoration-none">{{ 'Name der Veranstaltung'}}</a></div>
+                            </div>
+                            <div class="d-flex justify-content-end align-items-center flex-wrap">
+                                <a href="#" class="btn btn-link pe-0" data-bs-toggle="tooltip" data-bs-title="von dir abonniert"><i class="fa-solid fa-fw fa-star text-secondary"></i></a>
+                                <a href="#" class="btn btn-link pe-0" data-bs-toggle="tooltip"  data-bs-title="von Bekannten abonniert"><i class="fa-solid fa-fw fa-user"></i></a>
+                            </div>
+                        </div>
 
-                <div class="dashboard-title">Konto-Übersicht</div>
-                <div class="row mt-3 mb-5 g-lg-3">
-                    <div class="col-lg-4 "><label class="col-form-label" for="name">Name</label></div>
-                    <div class="col-lg-8">
-                        <input type="text" id="name" class="form-control" disabled readonly value="{{ app.user.fullname }}">
-                    </div>
+                        <div class="list-group-item list-group-item-action d-flex align-items-center justify-content-between">
+                            <div class="d-flex flex-wrap align-items--center">
+                                <div class="me-2" style="min-width: 100px">23.07.2025</div>
+                                <div><a href="#" class="text-decoration-none">{{ 'Name der Veranstaltung'}}</a></div>
+                            </div>
+                            <div class="d-flex justify-content-end align-items-center flex-wrap">
+                                <a href="#" class="btn btn-link pe-0" data-bs-toggle="tooltip" data-bs-title="von dir abonniert"><i class="fa-solid fa-fw fa-star text-secondary"></i></a>
+                                <a href="#" class="btn btn-link pe-0" data-bs-toggle="tooltip"  data-bs-title="nicht von Bekannten abonniert"><i class="fa-regular fa-fw fa-user"></i></a>
+                            </div>
+                        </div>
 
-                    <div class="col-lg-4 "><label class="col-form-label" for="email">E-Mail</label></div>
-                    <div class="col-lg-8">
-                        <input type="email" id="email" class="form-control" disabled readonly value="{{ app.user.email }}">
-                        <small class="form-text text-muted">Deine E-Mail-Adresse wird niemals veröffentlicht.</small>
-                    </div>
+                        <div class="list-group-item list-group-item-action d-flex align-items-center justify-content-between">
+                            <div class="d-flex flex-wrap align-items--center">
+                                <div class="me-2" style="min-width: 100px">23.07.2025</div>
+                                <div><a href="#" class="text-decoration-none">{{ 'Name der Veranstaltung'}}</a></div>
+                            </div>
+                            <div class="d-flex justify-content-end align-items-center flex-wrap">
+                                <a href="#" class="btn btn-link pe-0" data-bs-toggle="tooltip" data-bs-title="von dir abonniert"><i class="fa-solid fa-fw fa-star text-secondary"></i></a>
+                                <a href="#" class="btn btn-link pe-0" data-bs-toggle="tooltip"  data-bs-title="nicht von Bekannten abonniert"><i class="fa-regular fa-fw fa-user"></i></a>
+                            </div>
+                        </div>
 
-                    <div class="col-lg-4 "><span class="label">Rollen</span></div>
-                    <div class="col-lg-8">
-                        <ul class="list-inline">
-                            {% for item in app.user.roles %}
-                                <li class="list-inline-item"><span class="badge text-bg-primary">{{ item|trans }}</span></li>
-                            {% endfor %}
-                        </ul>
-                    </div>
+                        <div class="list-group-item list-group-item-action d-flex align-items-center justify-content-between">
+                            <div class="d-flex flex-wrap align-items--center">
+                                <div class="me-2" style="min-width: 100px">23.07.2025</div>
+                                <div><a href="#" class="text-decoration-none">{{ 'Name der Veranstaltung'}}</a></div>
+                            </div>
+                            <div class="d-flex justify-content-end align-items-center flex-wrap">
+                                <a href="#" class="btn btn-link pe-0" data-bs-toggle="tooltip" data-bs-title="von dir abonniert"><i class="fa-solid fa-fw fa-star text-secondary"></i></a>
+                                <a href="#" class="btn btn-link pe-0" data-bs-toggle="tooltip"  data-bs-title="nicht von Bekannten abonniert"><i class="fa-regular fa-fw fa-user"></i></a>
+                            </div>
+                        </div>
 
-                    <div class="col-lg-4 "><span class="label">Verifizierung</span></div>
-                    <div class="col-lg-8">
-                        {% if app.user.isVerified %}
-                            <div class="badge text-bg-light text-muted"><span class="me-2">verifiziert</span><i class="fas fa-check text-success"></i></div>
-                        {% else %}
-                            <div class="badge text-bg-light text-muted"><span class="me-2">Verifizierung ausstehend</span><i class="fas fa-circle-exclamation text-danger"></i></div>
-                        {% endif %}
                     </div>
-
-                    <div class="col-lg-4 "><span class="label">Verifizierungstyp</span></div>
-                    <div class="col-lg-8">
-                        <div class="badge text-bg-light text-muted"><span class="me-2">offizielles Schulmitglied</span><i class="fas fa-graduation-cap text-primary"></i></div>
-                    </div>
-
-                    <div class="col-lg-4 "><label class="col-form-label" for="school">Bildungseinrichtung</label></div>
-                    <div class="col-lg-8">
-                        <input type="text" id="school" class="form-control" disabled readonly value="{{ app.user.school ?? '' }}">
+                    <div class="h-100"></div>
+                    <div class="list-group list-group-flush">
+                        <a href="#" class="list-group-item list-group-item-action link-primary fw-bold d-flex align-items-center justify-content-between">
+                            <div>weitere Termine finden</div>
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </a>
                     </div>
                 </div>
-
-                <div class="dashboard-title">Benachrichtigungen</div>
-
-                <div class="row mt-3 mb-5 g-lg-3">
-
-                    <div class="col-lg-4 "><span class="label">Newsletter</span></div>
-                    <div class="col-lg-8">
-                        {{ has_newsletter ? 'abonniert' : 'nicht abonniert' }}
-                    </div>
-                </div>
-
-
-                <button type="button" class="btn btn-primary" id="liveToastBtn">Show live toast</button>
+                <small class="ms-3 text-muted mb-3">Termine, die ich oder meine Bekannte abonniert haben.</small>
             </div>
+
         </div>
 
+        </div>
+
+
+
+        </section>
     {% endif %}
 
-
-
 {% endblock %}
-{% block body %}
 
-{% endblock %}
-{% block aside %}
+{% block body %}{% endblock %}
 
-{% endblock %}
+{% block aside %}{% endblock %}

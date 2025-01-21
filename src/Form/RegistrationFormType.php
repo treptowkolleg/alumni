@@ -37,7 +37,7 @@ class RegistrationFormType extends AbstractType
                 ],
             ])
             ->add('lastname', TextType::class, [
-                'row_attr' => ['class' => 'form-floating mb-5'],
+                'row_attr' => ['class' => 'form-floating mb-3'],
                 'attr' => ['placeholder' => 'Lastname'],
                 'constraints' => [
                     new NotBlank([
@@ -45,20 +45,10 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('hasSchool', ChoiceType::class, [
-                'choices' => [
-                    'Nein, ich war oder bin NICHT Teil einer Einrichtung des Zweiten Bildungswegs' => '0',
-                    'Ja, ich war oder bin Teil einer Einrichtung des Zweiten Bildungswegs' => '1'
-                ],
-                'expanded' => true,
-                'multiple' => false,
-                'row_attr' => ['class' => 'mb-3'],
-                'required' => true,
-            ])
             ->add('school', EntityType::class, [
                 'class' => School::class,
-                'row_attr' => ['class' => 'form-floating mb-3'],
-                'attr' => ['placeholder' => 'School'],
+                'row_attr' => ['class' => 'slim-form mb-3'],
+                'attr' => ['placeholder' => 'School', 'class' => 'slim-select-single-school'],
                 'query_builder' => function (EntityRepository $er): QueryBuilder {
                     return $er->createQueryBuilder('u')
                         ->orderBy('u.city', 'ASC')
@@ -75,8 +65,8 @@ class RegistrationFormType extends AbstractType
             ])
             ->add('userType', ChoiceType::class, [
                 'choices' => ['student' => 'Student', 'teacher' => 'Teacher','employer' => 'Employer'],
-                'row_attr' => ['class' => 'form-floating mb-3'],
-                'attr' => ['placeholder' => 'User type'],
+                'row_attr' => ['class' => 'slim-form mb-3'],
+                'attr' => ['placeholder' => 'User type', 'class' => 'slim-select-single-school-type'],
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Please enter your user type',
@@ -97,7 +87,7 @@ class RegistrationFormType extends AbstractType
                 // this is read and encoded in the controller
                 'mapped' => false,
                 'row_attr' => ['class' => 'form-floating mb-3'],
-                'attr' => ['autocomplete' => 'new-password', 'placeholder' => 'Password'],
+                'attr' => ['autocomplete' => 'new-password', 'placeholder' => 'Password', 'class' => ''],
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Please enter a password',

@@ -63,7 +63,7 @@ class ProfileController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($profile);
             $entityManager->flush();
-            $this->addFlash('success', 'Your profile was successfully updated.');
+            $this->addFlash('success', 'Dein Alumni-Profil wurde erfolgreich gespeichert.');
             return $this->redirectToRoute('profile_index');
         }
         return $this->render('profile/profile_new.html.twig', [

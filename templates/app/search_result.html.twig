@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Almuni Portal{% endblock %}
+
+
+{% block page_header %}
+    {% for result in results %}
+        <div>{{ dump(result) }}</div>
+    {% else %}
+        <div>Keine Ergebnisse gefunden</div>
+    {% endfor %}
+{% endblock %}
+{% block body %}
+
+{% endblock %}
+
+{% block aside %}
+
+{% endblock %}

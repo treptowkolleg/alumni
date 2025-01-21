@@ -101,29 +101,43 @@ class UserprofileFormType extends AbstractType
         ];
 
         $builder
-            ->add('inYear',NumberType::class)
-            ->add('outYear',NumberType::class)
+            ->add('inYear',NumberType::class,[
+                'row_attr' => ['class' => 'form-floating mb-3'],
+            ])
+            ->add('outYear',NumberType::class,[
+                'row_attr' => ['class' => 'form-floating mb-3'],
+            ])
             ->add('examType',ChoiceType::class, [
+                'row_attr' => ['class' => 'slim-form mb-3'],
+                'attr' => ['class' => 'slim-select-single-exam-type'],
                 'choices' => ['abitur' => 'abitur', 'fachabitur' => 'fachabitur', 'msa' => 'msa'],
             ])
             ->add('displayName', ChoiceType::class, [
+                'row_attr' => ['class' => 'slim-form mb-3'],
+                'attr' => ['class' => 'slim-select-single-display-name'],
                 'choices' => ['fullnameEx' => 'fullnameEx', 'firstnameEx' => 'firstnameEx', 'lastnameEx' => 'lastnameEx'],
                 'multiple' => false,
                 'expanded' => false,
             ])
             ->add('favoriteSchoolSubjects', EnumType::class, [
+                'row_attr' => ['class' => 'slim-form mb-3'],
+                'attr' => ['class' => 'slim-select-multi-favorite-school-subjects'],
                 'class' => PerformanceCourseEnum::class,
                 'choices' => PerformanceCourseEnum::cases(),
                 'multiple' => true,
-                'expanded' => true,
+                'expanded' => false,
             ])
             ->add('performanceCourse', EnumType::class, [
+                'row_attr' => ['class' => 'slim-form mb-3'],
+                'attr' => ['class' => 'slim-select-multi-performance-course', 'data-max' => 2],
                 'class' => PerformanceCourseEnum::class,
                 'choices' => PerformanceCourseEnum::cases(),
                 'multiple' => true,
-                'expanded' => true,
+                'expanded' => false,
             ])
             ->add('hobbies', ChoiceType::class, [
+                'row_attr' => ['class' => 'slim-form'],
+                'attr' => ['class' => 'slim-select-multi-exam-type'],
                 'choices' => $interests,
                 'multiple' => true,  // Mehrfachauswahl moeglich
                 'expanded' => false,  // Checkboxen statt Dropdown
@@ -138,23 +152,34 @@ class UserprofileFormType extends AbstractType
                 },
             ])
             ->add('about', TextareaType::class, [
-                'attr' => ['rows' => 6],
+                'row_attr' => ['class' => 'form-floating mb-3'],
+                'attr' => ['style' => 'min-height: 200px'],
             ])
-            ->add('tags', TextType::class, [
-                'attr' => [ 'data-role' => "tagsinput"],
-                'help' => "Kommaseparierte Liste mit Stichwörten"
+            ->add('portfolioLink', TextType::class, [
+                'row_attr' => ['class' => 'form-floating mb-3'],
             ])
-            ->add('portfolioLink', TextType::class, [])
-            ->add('studium', TextType::class, [])
-            ->add('university', TextType::class, [])
-            ->add('currentProfession', TextType::class, [])
-            ->add('currentCompany', TextType::class, [])
+            ->add('studium', TextType::class, [
+                'row_attr' => ['class' => 'form-floating mb-3'],
+            ])
+            ->add('university', TextType::class, [
+                'row_attr' => ['class' => 'form-floating mb-3'],
+            ])
+            ->add('currentProfession', TextType::class, [
+                'row_attr' => ['class' => 'form-floating mb-3'],
+            ])
+            ->add('currentCompany', TextType::class, [
+                'row_attr' => ['class' => 'form-floating mb-3'],
+            ])
             ->add('networkState', ChoiceType::class, [
+                'row_attr' => ['class' => 'slim-form mb-3'],
+                'attr' => ['class' => 'slim-select-single-network-state'],
                 'choices' => ['public' => 'public', 'registered' => 'registered', 'private' => 'private'],
                 'multiple' => false,
                 'expanded' => false,
             ])
             ->add('interests', ChoiceType::class, [
+                'row_attr' => ['class' => 'slim-form mb-3'],
+                'attr' => ['class' => 'slim-select-multi-favorite-school-subjects'],
                 'choices' => [
                     'Berufsbereiche' => [
                         'IT und Softwareentwicklung' => 'it_softwareentwicklung',
@@ -193,21 +218,6 @@ class UserprofileFormType extends AbstractType
 
         $builder->get('favoriteSchoolSubjects')->addModelTransformer(new CourseTransformer());
         $builder->get('performanceCourse')->addModelTransformer(new CourseTransformer());
-        $builder->get('tags')
-            ->addModelTransformer(new CallbackTransformer(
-                function ($tagsAsArray): string {
-                    // transform the array to a string
-                    if(is_array($tagsAsArray))
-                        return implode(', ', $tagsAsArray);
-                    else
-                        return "";
-                },
-                function ($tagsAsString): array {
-                    // transform the string back to an array
-                    return explode(', ', $tagsAsString);
-                }
-            ))
-        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

@@ -33,6 +33,9 @@ document.addEventListener("DOMContentLoaded", (event) => {
     })
 });
 
+const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+
 
 createLinkAction(linkButtons,setLike,'href','data-value')
 
@@ -174,4 +177,57 @@ if (toastTrigger) {
         toastBootstrap.show()
     })
 }
+
+function initSingleSlimSelect(element, settings) {
+    App.setClass(element, 'form-select',true);
+    App.setClass(element, 'custom-select');
+
+    new SlimSelect({
+        select: element,
+        settings: settings
+    })
+}
+
+function initMultiSlimSelect(element, settings) {
+    App.setClass(element, 'form-select',true);
+    App.setClass(element, 'custom-select');
+
+    new SlimSelect({
+        select: element,
+        settings: settings
+    })
+}
+
+const selectSingleElements = document.querySelectorAll('[class^="slim-select-single-"]');
+const selectMultiElements = document.querySelectorAll('[class^="slim-select-multi-"]');
+
+let singleSettings = {
+    showSearch: false,
+    hideSelected: true,
+}
+
+Array.prototype.slice.call(selectSingleElements)
+    .forEach(function (element) {
+        initSingleSlimSelect(element,singleSettings);
+    })
+
+Array.prototype.slice.call(selectMultiElements)
+    .forEach(function (element) {
+        let multiSettings = {
+            allowDeselect: true,
+            maxSelected: element.getAttribute('data-max') ?? 5,
+            showSearch: true, // used in example
+            focusSearch: true, // used in example
+            searchText: 'nichts gefunden', // used in example
+            searchPlaceholder: 'Suchen ...', // used in example
+            searchHighlight: true,
+            maxValuesShown: 1,
+            maxValuesMessage: '{number} ausgewählt',
+            closeOnSelect: false,
+            placeholderText: 'auswählen'
+        }
+        initMultiSlimSelect(element,multiSettings);
+    })
+
+
 

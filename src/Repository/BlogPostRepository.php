@@ -88,4 +88,9 @@ class BlogPostRepository extends ServiceEntityRepository
             ;
     }
 
+    public function findByQuery(): array
+    {
+        return [];
+    }
+
 }

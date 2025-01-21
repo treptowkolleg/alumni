@@ -24,7 +24,7 @@ User type: Personenkreis
 School: Schule
 employer: Angestellte
 Employer: Angestellte
-Has school: Zugehörigkeit zur Bildungseinrichtung als Lernende, Lehrkräfte oder Angestellte
+Has school: Zugehörigkeit zur Bildungseinrichtung
 No: Nein
 Publish: Veröffentlichen
 Content: Artikeltext
@@ -102,7 +102,7 @@ Englisch: 'Englisch'
 French: 'Französisch'
 Spanisch: 'Spanisch'
 Sport: 'Sport'
-About: Was mich antreibt und wie es anderen zugutekommt
+About: Kurzvita
 Portfolio link: Meine Website
 Current profession: Ich arbeite zurzeit als
 Current company: Mein Arbeitgeber
@@ -162,3 +162,7 @@ ds: Darstellendes Spiel
 la: Latein
 psy: Psychologie
 pw: Politikwissenschaft
+
+success: Hinweis
+warning: Warnung
+danger: Fehler

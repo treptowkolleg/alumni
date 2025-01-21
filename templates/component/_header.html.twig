@@ -1,0 +1,57 @@
+<div class="py-0 bg-white border-bottom border-primary shadow-sm sticky-top">
+    <div class="container d-flex justify-content-between align-items-center">
+        <div class="d-flex align-items-center">
+            <a href="{{ path('app_index') }}"
+               class="d-flex align-items-center link-body-emphasis text-decoration-none p-2 me-2 ps-0 border-end border-3 border-primary">
+                <img src="{{ asset('images/logo.svg') }}" height="24" class="" alt="logo">
+            </a>
+            <div>
+                <div class="h5 mb-0 user-select-none">{{ meta_title|default('Alumni Portal') }}</div>
+                <div class="h6 user-select-none text-primary mb-0">{{ meta_subtitle|default() }}</div>
+            </div>
+        </div>
+
+        <div class="ms-auto me-5 d-none d-lg-block" style="min-width: 300px">
+            {{ render(controller('App\\Controller\\AppController::searchForm')) }}
+        </div>
+        <ul class="nav">
+            {% if app.user %}
+                <li class="nav-item">
+                    <div class="py-3 btn-group" role="group">
+                        <a type="button" class="btn btn-link text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa-solid fa-user fa-fw"></i>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{{ url('profile_index') }}"><i class="fa-solid fa-fw fa-dashboard me-2"></i>Mein Portal</a></li>
+                            <li><a class="dropdown-item" href="{{ url('profile_profile_new') }}"><i class="fa-solid fa-fw fa-user me-2"></i>Alumni-Profil</a></li>
+                            <li class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="{{ url('profile_index') }}"><i class="fa-solid fa-fw fa-user-lock me-2"></i>Konto</a></li>
+                            <li class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="{{ url('app_logout') }}"><i class="fa-solid fa-fw fa-right-from-bracket me-2"></i>Abmelden</a></li>
+                        </ul>
+                    </div>
+                </li>
+                {% if app.user.userProfiles.count > 0 %}
+
+                {% endif %}
+            {% else %}
+                <li class="nav-item d-none d-md-block py-3"><a href="{{ url('profile_index') }}" class="btn btn-link"><i class="fa-solid fa-right-to-bracket fa-fw"></i></a></li>
+                <li class="nav-item d-none d-md-block py-3"><a href="{{ url('app_register') }}" class="btn btn-link"><i class="fa-solid fa-user-plus fa-fw"></i></a></li>
+            {% endif %}
+            <li class="nav-item py-3"><a href="#" class="btn btn-link" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><i class="fas fa-bars"></i></a></li>
+        </ul>
+    </div>
+</div>
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasRightLabel">Navigation</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <div class="mb-3 d-block d-lg-none">
+            {{ render(controller('App\\Controller\\AppController::searchForm')) }}
+        </div>
+        {{ include('component/_profile_sidebar.html.twig',{'selected':sidebar|default('main')}) }}
+    </div>
+</div>

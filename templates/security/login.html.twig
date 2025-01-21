@@ -1,50 +1,75 @@
-{% extends 'base.html.twig' %}
+{% extends '_empty.html.twig' %}
 
-{% block title %}Anmelden{% endblock %}
+{% set meta_title = 'Anmelden' %}
 
 {% block body %}
-    <div class="mb-5">
-        <form method="post" class="needs-validation" novalidate>
-                        <h1 class="h3 mb-3 font-weight-normal">Dein Zugang zum Mitgliederbereich</h1>
-                        <p>
-                            Im Mitgliederbereich haben Sie Zugang zu zahlreichen Vorteilen und Vergünstigungen. Außerdem können Sie Ihre Mitgliedsdaten einsehen, sich ein persönliches Profil anlegen, eine Spendenquittung anfordern und Ihre Mitgliedschaften in Fach- oder Regionalgruppen verwalten.
-                        </p>
-
-                        {% if error %}
-                            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-                        {% endif %}
-
-                        <div class="form-floating mb-3">
-                            <input type="email" value="{{ last_username }}" placeholder="{{ "Email"|trans }}" name="_username" id="username" class="form-control" autocomplete="email" required autofocus>
-                            <label for="username">{{ "Email"|trans }}</label>
+    <section class="my-auto py-3">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-4"></div>
+                <div class="col-xl-4">
+                    <div class="d-flex align-items-center justify-content-center mb-3">
+                        <a href="{{ path('app_index') }}"
+                           class="d-flex align-items-center link-body-emphasis text-decoration-none p-2 me-2 ps-0 border-end border-3 border-primary">
+                            <img src="{{ asset('images/logo.svg') }}" height="48" class="" alt="logo">
+                        </a>
+                        <div>
+                            <div class="h5 mb-0">Alumni Portal</div>
+                            <div class="h6 text-primary mb-0">des zweiten Bildungswegs</div>
                         </div>
+                    </div>
 
-                        <div class="form-floating mb-3">
-                            <input type="password" placeholder="{{ "Password"|trans }}" name="_password" id="password" class="form-control" autocomplete="current-password" required>
-                            <label for="password">{{ "Password"|trans }}</label>
+                    <div class="card bg-white shadow-sm">
+                        <div class="card-body border-bottom">
+                            <h1 class="h4 mb-0 text-center">Anmelden</h1>
                         </div>
+                        <div class="card-body">
+                            <form method="post" class="needs-validation" novalidate>
 
-                        <input type="hidden" name="_csrf_token"
-                               value="{{ csrf_token('authenticate') }}"
-                        >
+                                {% if error %}
+                                    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                                {% endif %}
 
-                        {#
-                        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-                        See https://symfony.com/doc/current/security/remember_me.html
+                                <div class="form-floating mb-3">
+                                    <input type="email" value="{{ last_username }}" placeholder="{{ "Email"|trans }}" name="_username" id="username" class="form-control" autocomplete="email" required autofocus>
+                                    <label for="username">{{ "Email"|trans }}</label>
+                                </div>
 
-                        <div class="checkbox mb-3">
-                            <input type="checkbox" name="_remember_me" id="_remember_me">
-                            <label for="_remember_me">Remember me</label>
+                                <div class="form-floating mb-1">
+                                    <input type="password" placeholder="{{ "Password"|trans }}" name="_password" id="password" class="form-control" autocomplete="current-password" required>
+                                    <label for="password">{{ "Password"|trans }}</label>
+                                </div>
+
+                                <p class="small text-end">
+                                    Passwort <a href="{{ url('app_terms') }}" target="_blank">vergessen</a>?
+                                </p>
+
+                                <input type="hidden" name="_csrf_token"
+                                       value="{{ csrf_token('authenticate') }}"
+                                >
+
+                                {#
+                                Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+                                See https://symfony.com/doc/current/security/remember_me.html
+
+                                <div class="checkbox mb-3">
+                                    <input type="checkbox" name="_remember_me" id="_remember_me">
+                                    <label for="_remember_me">Remember me</label>
+                                </div>
+                                #}
+
+                                <button class="btn btn-primary mb-3 w-100" type="submit">
+                                    {{ "Login"|trans }}
+                                </button>
+                                <div class="text-center">
+                                    <a href="{{ url('app_register') }}">Du hast noch kein Konto?</a>
+                                </div>
+                            </form>
                         </div>
-                        #}
-
-                        <button class="btn btn-primary" type="submit">
-                            {{ "Login"|trans }}
-                        </button>
-                    </form>
-    </div>
-
-    <div class="mb-5">
-        <a href="#" class="btn btn-secondary">Mitgliedschaft kündigen</a>
-    </div>
+                    </div>
+                </div>
+                <div class="col-xl-4"></div>
+            </div>
+        </div>
+    </section>
 {% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}{{ include('component/_header.html.twig') }}{% endblock %}
+
+{% block page %}
+    {% block page_header %}{% endblock %}
+    {% block body %}{% endblock %}
+    {% block aside %}{% endblock %}
+{% endblock %}
+
+{% block footer %}{{ include('component/_footer.html.twig') }}{% endblock %}

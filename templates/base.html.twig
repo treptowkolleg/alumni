@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="de" class=" h-100">
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,7 +12,7 @@
         <meta name="msapplication-TileColor" content="#2b5797">
         <meta name="theme-color" content="#ffffff">
         <meta name="description" content="Portal für Alumni, Lernende und Lehrkräfte des Treptow-Kollegs Berlin">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}{{ meta_title ? meta_title ~ ' | Alumni Portal' : 'Alumni Portal' }}{% endblock %}</title>
 
         {% block stylesheets %}
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput-typeahead.css" integrity="sha512-wu4jn1tktzX0SHl5qNLDtx1uRPSj+pm9dDgqsrYUS16AqwzfdEmh1JR8IQL7h+phL/EAHpbBkISl5HXiZqxBlQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -20,10 +20,8 @@
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
             <link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.8/dist/trix.css">
             <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.min.css">
-            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" />
+            <link href="https://unpkg.com/slim-select@latest/dist/slimselect.css" rel="stylesheet" />
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
-            <link href="https://cdn.jsdelivr.net/npm/virtual-select-plugin@1.0.47/dist/virtual-select.min.css" rel="stylesheet">
-            <link href="https://cdn.jsdelivr.net/npm/tom-select@2.4.1/dist/css/tom-select.css" rel="stylesheet">
         {% endblock %}
 
         {% block javascripts %}
@@ -31,146 +29,17 @@
             <script type="text/javascript" src="https://unpkg.com/trix@2.0.8/dist/trix.umd.min.js"></script>
             <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
             <script type="text/javascript" src="https://cdn.datatables.net/2.1.8/js/dataTables.min.js"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.min.js" integrity="sha512-9UR1ynHntZdqHnwXKTaOm1s6V9fExqejKvg5XMawEMToW4sSw+3jtLrYfZPijvnwnnE8Uol1O9BcAskoxgec+g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-            <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.full.min.js"></script>
-            <script src="https://cdn.jsdelivr.net/npm/tom-select@2.4.1/dist/js/tom-select.complete.min.js"></script>
+            <script src="https://unpkg.com/slim-select@latest/dist/slimselect.min.js"></script>
         {% endblock %}
     </head>
-    <body class="bg-body-tertiary">
+    <body class="bg-body-tertiary d-flex flex-column" style="min-height: 100%">
 
-    <div aria-live="polite" aria-atomic="true" class="d-flex justify-content-center align-items-start w-100">
-        <div class="toast-container position-fixed top-0 p-3">
-            <div id="liveToast" class="toast border-primary" role="alert" aria-live="assertive" aria-atomic="true">
-                <div class="toast-header">
-                    <strong class="me-auto">Neue Nachrichten</strong>
-                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-                </div>
-                <div class="toast-body">
-                    Du hast neue Nachrichten in deinem Postfach.
-                </div>
-            </div>
-        </div>
-    </div>
+    {{ include('component/_toast.html.twig') }}
 
-    <div class="alert alert-dark py-1 border-start-0 border-end-0 small">
-        <div class="container">
-            Diese Website befindet sich in der Entwicklung. Alle Inhalte sind rein fiktiv.
-        </div>
-    </div>
+    {% block header %}{% endblock %}
 
-    <div class="py-3 bg-transparent">
-        <div class="container d-flex justify-content-between align-items-center">
-            <a href="{{ path('app_index') }}" class="d-flex align-items-center link-body-emphasis text-decoration-none">
-                <img src="{{ asset('images/logo.svg') }}" height="56" class="" alt="logo">
-            </a>
-            <ul class="nav">
-                <li class="nav-item d-block d-md-none"><a href="#" class="nav-link p-3 text-uppercase link-dark me-2"><i class="fas fa-bars me-2"></i></a></li>
-                {% if app.user %}
-                    <li class="nav-item d-none d-md-block"><a href="{{ url('app_logout') }}" class="btn btn-outline-primary py-3 px-5 text-uppercase me-2">Abmelden</a></li>
-                {% else %}
-                    <li class="nav-item d-none d-md-block"><a href="{{ url('app_register') }}" class="btn btn-outline-primary py-3 px-5 text-uppercase me-2">Mitglied werden</a></li>
-                {% endif %}
-                <li class="nav-item d-none d-md-block"><a href="{{ url('profile_index') }}" class="btn btn-primary py-3 px-5 text-uppercase">Mein Bereich</a></li>
-            </ul>
-        </div>
-    </div>
-    <nav class="navbar navbar-expand global-nav d-none d-md-block">
-            <div class="container">
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-2 mb-2 mb-lg-0">
-                        {% block navbar %}
-                            <li class="nav-item"><a class="nav-link" href="{{ url('blog_news_all_index') }}">Aktuelles</a></li>
-                            <li class="nav-item"><a class="nav-link" href="{{ url('blog_index') }}">Themen</a></li>
-                            <li class="nav-item"><a class="nav-link" href="{{ url('event_index') }}">Termine</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#">Angebote</a></li>
-                            <li class="nav-item"><a class="nav-link" href="{{ url('people_index') }}">Personen</a></li>
-                        {% endblock %}
-                    </ul>
+    <main class="d-flex flex-column flex-fill">{% block page %}{% endblock %}</main>
 
-                    <form method="post" class="d-flex flex-grow-1">
-                            <label for="blog_search" class="d-none"></label>
-                            <input type="search" id="blog_search" name="blog_search" class="form-control" placeholder="Auf Seite suchen">
-                    </form>
-
-                    {% if app.user and app.user.userProfiles.count > 0 %}
-                        <div class="ms-2">
-                            <a class="btn btn-primary" href="{{ url('chat_index') }}"><i class="fa-solid fa-envelope me-1"></i>Postfach <div id="unread-count" data-id="{{ app.user.id }}" class="badge text-bg-secondary ms-2" style="display: none">0</div></a>
-                        </div>
-                    {% endif %}
-                </div>
-            </div>
-        </nav>
-
-    <main class="pb-5">
-        <div class="container mb-3">
-            {% for message in app.flashes('success') %}
-                <div class="alert alert-success">
-                    {{ message }}
-                </div>
-            {% endfor %}
-            {% for message in app.flashes('warning') %}
-                <div class="alert alert-warning">
-                    {{ message }}
-                </div>
-            {% endfor %}
-            {% for message in app.flashes('danger') %}
-                <div class="alert alert-danger">
-                    {{ message }}
-                </div>
-            {% endfor %}
-        </div>
-        {% block page %}
-            <div class="container">
-                <div class="row mb-3">
-                    <div class="col-12">
-                        {% block page_header %}{% endblock %}
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-12 col-md-8 mb-5 mb-md-0">
-                        {% block body %}{% endblock %}
-                    </div>
-                    <div class="col-12 col-md-4">
-                        <div class="sticky-md-top" style="top:40px">
-                            {% block aside %}
-                            {% endblock %}
-                        </div>
-
-                    </div>
-                </div>
-                <div class="d-flex justify-content-end mt-5">
-                    <img src="{{ asset('images/eco.svg') }}" alt="Öko-Logo" height="48px" class="">
-                </div>
-            </div>
-        {% endblock %}
-
-
-
-    </main>
-    <div class="bg-light py-3 mt-5">
-        <div class="container">
-            <div class="d-flex flex-wrap">
-                <a class="btn btn-sm btn-light" href="#"><i class="fa-brands fa-instagram me-2"></i>Instagram</a>
-                <a class="btn btn-sm btn-light" href="#"><i class="fa-brands fa-youtube me-2"></i>YouTube</a>
-                <a class="btn btn-sm btn-light" href="#"><i class="fa-brands fa-linkedin me-2"></i>LinkedIn</a>
-            </div>
-        </div>
-    </div>
-    <footer class="text-bg-primary py-3">
-        <div class="container">
-            <div class="d-flex justify-content-between align-items-center">
-                <div>
-                    &copy;2024 Alumni am Treptow-Kolleg Berlin
-                </div>
-                <div>
-                    <ul class="nav">
-                        <li class="nav-item"><a href="{{ url('app_imprint') }}" class="nav-link link-white">Impressum</a></li>
-                        <li class="nav-item"><a href="{{ url('app_privacy') }}" class="nav-link link-white">Datenschutz</a></li>
-                        <li class="nav-item"><a href="{{ url('app_terms') }}" class="nav-link link-white">Nutzungsbedingungen</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </footer>
+    {% block footer %}{% endblock %}
     </body>
 </html>

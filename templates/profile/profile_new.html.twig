@@ -1,87 +1,150 @@
-{% extends 'base.html.twig' %}
+{% extends '_full.html.twig' %}
 
-{% block title %}Mein Mitgliederbereich{% endblock %}
+{% set meta_title = 'Mein Bereich' %}
+{% set meta_subtitle = 'Alumni-Profil' %}
+{% set sidebar = 'profile-info' %}
 
 {% block page_header %}
-    <nav class="bg-transparent" style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ url('app_index') }}">treptowkolleg.de</a></li>
-            <li class="breadcrumb-item"><a href="{{ url('profile_index') }}">Mein Bereich</a></li>
-            <li class="breadcrumb-item active fw-bolder" aria-current="page">Mein Profil</li>
-        </ol>
-    </nav>
+<section class=" py-3">
+    <div class="container">
 
-    <h1 class="h3">Profil bearbeiten</h1>
-    <h2 class="h5 text-primary mb-3">Passe deine Informationen an</h2>
-    <p>Am Ende der Seite kannst du einstellen, wer was von dir sehen darf.</p>
-{% endblock %}
-{% block body %}
-    {{ form_start(form, { 'attr': {'novalidate':'novalidate'} }) }}
-    {{ form_errors(form) }}
+        <div class="">
+            <div class="nav nav-underline">
+                    <a href="{{ path('profile_index') }}" class="nav-item nav-link text-nowrap">
+                        <i class="fa-solid fa-chevron-left text-primary"></i>
+                        <span class="ms-1">Zur Übersicht</span>
+                    </a>
+            </div>
+        </div>
 
+        {{ form_start(form, { 'attr': {'novalidate':'novalidate'} }) }}
 
-        <div class="h5">Über mich</div>
         <div class="row">
-            <div class="col-12">
-                <div>{{ form_label(form.tags) }}</div>
-                {{ form_widget(form.tags) }}
-                <div class="mb-3">{{ form_help(form.tags) }}</div>
+            <div class="col-lg-2 pt-lg-3">
+                <ul class="list-unstyled sticky-top d-none d-lg-block" style="top: 128px">
+                    <li class="">
+                        <strong class="fw-semibold">
+                            <i class="fa-solid fa-fw text-primary fa-newspaper me-1"></i>Abschnitte
+                        </strong>
+                        <ul class="list-unstyled fw-normal pb-2">
+                            <li><a href="#section-school" class="bd-links-link d-inline-block rounded">Schule</a></li>
+                            <li><a href="#section-vita" class="bd-links-link d-inline-block rounded">Kurzvita</a></li>
+                            <li><a href="#section-uni" class="bd-links-link d-inline-block rounded">Studium</a></li>
+                            <li><a href="#section-work" class="bd-links-link d-inline-block rounded">Beruf</a></li>
+                            <li><a href="#section-security" class="bd-links-link d-inline-block rounded">Privatsphäre</a></li>
+                        </ul>
+                    </li>
+                </ul>
 
-                {{ form_row(form.about) }}
-                {{ form_row(form.portfolioLink) }}
+            </div>
+            <div class="col-lg-10">
+                <div class="row g-3 align-content-stretch">
+
+
+
+                    <div class="col-lg-12" id="section-school">
+                        {{ form_errors(form) }}
+                    </div>
+
+                    <div class="col-lg-12">
+                        <div class="card bg-white">
+                            <div class="card-body  border-bottom border-primary">
+                                <h3 class="h5 mb-0 text-center text-lg-start">Schule</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="row row-cols-2 g-3 mb-3">
+                                    <div class="col">{{ form_row(form.inYear) }}</div>
+                                    <div class="col">{{ form_row(form.outYear) }}</div>
+                                </div>
+                                <div class="row row-cols-1 g-3 mb-3">
+                                    {{ form_row(form.examType) }}
+                                </div>
+                                <div class="row row-cols-1 row-cols-lg-2 g-3">
+                                    {{ form_row(form.performanceCourse) }}
+                                    {{ form_row(form.favoriteSchoolSubjects) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12" id="section-vita">
+                        <div class="card bg-white">
+                            <div class="card-body  border-bottom border-primary">
+                                <h3 class="h5 mb-0 text-center text-lg-start">Kurzvita</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="row row-cols-1 g-3 mb-3">
+                                    {{ form_row(form.about) }}
+                                    {{ form_row(form.hobbies) }}
+                                    {{ form_row(form.portfolioLink) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12" id="section-uni">
+                        <div class="card bg-white">
+                            <div class="card-body  border-bottom border-primary">
+                                <h3 class="h5 mb-0 text-center text-lg-start">Studium</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="row row-cols-1 row-cols-lg-2 g-3">
+                                    {{ form_row(form.studium) }}
+                                    {{ form_row(form.university) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12" id="section-work">
+                        <div class="card bg-white">
+                            <div class="card-body  border-bottom border-primary">
+                                <h3 class="h5 mb-0 text-center text-lg-start">Beruf</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="row row-cols-1 row-cols-lg-2 g-3 mb-3">
+                                    {{ form_row(form.currentProfession) }}
+                                    {{ form_row(form.currentCompany) }}
+                                </div>
+                                {{ form_row(form.interests) }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12" id="section-security">
+                        <div class="card bg-white">
+                            <div class="card-body  border-bottom border-primary">
+                                <h3 class="h5 mb-0 text-center text-lg-start">Sichtbarkeit</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="row row-cols-1 row-cols-lg-2 g-3 mb-5">
+                                    {{ form_row(form.networkState) }}
+                                    {{ form_row(form.displayName) }}
+                                </div>
+                                <div class="">
+                                    <div class="row g-3">
+                                        <div class="col-lg-6"><button type="submit" class="btn btn-primary w-100">Speichern</button></div>
+                                        <div class="col-lg-6"><a href="{{ path('profile_index') }}" class="btn btn-light w-100">Abbrechen</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
             </div>
         </div>
 
 
-        <div class="h5 fw-normal">Fächer und Interessen</div>
-        <div class="row ">
-            <div class="col-md-6">{{ form_row(form.performanceCourse) }}</div>
-            <div class="col-md-6">{{ form_row(form.favoriteSchoolSubjects) }}</div>
-        </div>
-
-        {{ form_row(form.hobbies) }}
-
-        <div class="h5 mt-3">Akademische Informationen</div>
-        <div class="row">
-            <div class="col-md-6">{{ form_row(form.studium) }}</div>
-            <div class="col-md-6">{{ form_row(form.university) }}</div>
-        </div>
-        <div class="h5 mt-3">Berufliche Informationen</div>
-        <div class="row">
-            <div class="col-md-6">{{ form_row(form.currentProfession) }}</div>
-            <div class="col-md-6">{{ form_row(form.currentCompany) }}</div>
-        </div>
-
-        {{ form_row(form.interests) }}
+        {{ form_end(form) }}
+    </div>
+</section>
 
 
 {% endblock %}
-{% block aside %}
 
-<div class="card card-body border-primary bg-body-tertiary">
-    <div class="h5">Bildungsgang</div>
-    <div class="row mb-3">
-        <div class="col-md-6">{{ form_row(form.inYear) }}</div>
-        <div class="col-md-6">{{ form_row(form.outYear) }}</div>
-        <div class="col-md-12">{{ form_row(form.examType, {'attr': {'class': ''}}) }}</div>
-    </div>
-
-    <div class="h5">Sichtbarkeit</div>
-    <div class="mb-5">
-        {{ form_row(form.networkState) }}
-        {{ form_row(form.displayName) }}
-    </div>
-
-
-    <button type="submit" class="btn btn-primary mb-3">Speichern</button>
-    <a href="{{ path('profile_index') }}" class="btn btn-light ms-2">Abbrechen</a>
-</div>
-    {{ form_end(form) }}
-    <script>
-        // let settings = {};
-        // new TomSelect('#userprofile_form_examType',settings);
-        $('select').select2();
-    </script>
-
-{% endblock %}
+{% block body %}{% endblock %}
+{% block aside %}{% endblock %}
 

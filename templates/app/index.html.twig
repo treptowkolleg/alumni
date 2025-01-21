@@ -1,59 +1,61 @@
-{% extends 'base.html.twig' %}
+{% extends '_full.html.twig' %}
 
 {% block title %}Almuni Portal{% endblock %}
 
 
 {% block page_header %}
+
+{% endblock %}
+{% block body %}
+    <div class="container my-5">
         <div class="row mb-5">
             {% if lead %}
-            <div class="col">
-                <div class="card text-white shadow-sm h-100">
-                    <img class="card-img d-none d-md-block" src="{{ vich_uploader_asset(lead)|imagine_filter('lead_thumbnail')  }}" alt="{{ lead }}" style="filter: brightness(80%);">
-                    <img class="card-img d-block d-md-none" src="{{ vich_uploader_asset(lead)|imagine_filter('post_thumbnail')  }}" alt="{{ lead }}" style="filter: brightness(80%);">
-                    <div class="card-img-overlay h-100 align-content-end">
-                        <div class="text-uppercase small card-text">{{ lead.type }}</div>
-                        <h3 class="fw-normal h2 mb-0">{{ lead.title }}</h3>
-                        <p class="card-text lead d-none d-md-block fw-bolder">{{ lead.subtitle }}</p>
-                        <a href="{{ path('blog_show',{'slug':lead.slug}) }}" class="card-link stretched-link text-decoration-none link-white fs-5">mehr erfahren <i class="fas fa-chevron-right"></i></a>
+                <div class="col">
+                    <div class="card text-white shadow-sm h-100">
+                        <img class="card-img d-none d-md-block" src="{{ vich_uploader_asset(lead)|imagine_filter('lead_thumbnail')  }}" alt="{{ lead }}" style="filter: brightness(80%);">
+                        <img class="card-img d-block d-md-none" src="{{ vich_uploader_asset(lead)|imagine_filter('post_thumbnail')  }}" alt="{{ lead }}" style="filter: brightness(80%);">
+                        <div class="card-img-overlay h-100 align-content-end">
+                            <div class="text-uppercase small card-text">{{ lead.type }}</div>
+                            <h3 class="fw-normal h2 mb-0">{{ lead.title }}</h3>
+                            <p class="card-text lead d-none d-md-block fw-bolder">{{ lead.subtitle }}</p>
+                            <a href="{{ path('blog_show',{'slug':lead.slug}) }}" class="card-link stretched-link text-decoration-none link-white fs-5">mehr erfahren <i class="fas fa-chevron-right"></i></a>
+                        </div>
                     </div>
                 </div>
-            </div>
             {% endif %}
         </div>
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3 align-content-stretch">
             {% if podcast %}
-            <div class="col">
-                <div class="card card-body shadow-sm bg-white border-primary h-100">
-                    <div class="text-uppercase small">{{ podcast.type }}</div>
-                    <h3 class="h4 text-primary fw-normal">{{ podcast.title }}</h3>
-                    <p>Neuer Podcast online</p>
-                    <a href="{{ path('blog_show',{'slug':podcast.slug}) }}" class="card-link stretched-link text-decoration-none link-black mt-auto fs-5">anhören <i class="fas fa-chevron-right"></i></a>
+                <div class="col">
+                    <div class="card card-body shadow-sm bg-white border-primary h-100">
+                        <div class="text-uppercase small">{{ podcast.type }}</div>
+                        <h3 class="h4 text-primary fw-normal">{{ podcast.title }}</h3>
+                        <p>Neuer Podcast online</p>
+                        <a href="{{ path('blog_show',{'slug':podcast.slug}) }}" class="card-link stretched-link text-decoration-none link-black mt-auto fs-5">anhören <i class="fas fa-chevron-right"></i></a>
+                    </div>
                 </div>
-            </div>
             {% endif %}
             {% if interview %}
-            <div class="col">
-                <div class="card card-body shadow-sm bg-white border-primary h-100">
-                    <div class="text-uppercase small">{{ interview.type }}</div>
-                    <h3 class="h4 text-primary fw-normal">{{ interview.title }}</h3>
-                    <p>{{ interview.title }}</p>
-                    <a href="{{ path('blog_show',{'slug':interview.slug}) }}" class="card-link stretched-link text-decoration-none link-black mt-auto fs-5">lesen <i class="fas fa-chevron-right"></i></a>
+                <div class="col">
+                    <div class="card card-body shadow-sm bg-white border-primary h-100">
+                        <div class="text-uppercase small">{{ interview.type }}</div>
+                        <h3 class="h4 text-primary fw-normal">{{ interview.title }}</h3>
+                        <p>{{ interview.title }}</p>
+                        <a href="{{ path('blog_show',{'slug':interview.slug}) }}" class="card-link stretched-link text-decoration-none link-black mt-auto fs-5">lesen <i class="fas fa-chevron-right"></i></a>
+                    </div>
                 </div>
-            </div>
             {% endif %}
             {% if blog_post %}
-            <div class="col">
-                <div class="card card-body shadow-sm text-bg-primary border-0 h-100">
-                    <div class="text-uppercase small">{{ blog_post.type }}</div>
-                    <h3 class="h4 text-light fw-normal">{{ blog_post.title }}</h3>
-                    <p>Aktueller Themenbeitrag</p>
-                    <a href="{{ path('blog_show',{'slug':blog_post.slug}) }}" class="card-link stretched-link text-decoration-none link-white mt-auto fs-5">lesen <i class="fas fa-chevron-right"></i></a>
+                <div class="col">
+                    <div class="card card-body shadow-sm text-bg-primary border-0 h-100">
+                        <div class="text-uppercase small">{{ blog_post.type }}</div>
+                        <h3 class="h4 text-light fw-normal">{{ blog_post.title }}</h3>
+                        <p>Aktueller Themenbeitrag</p>
+                        <a href="{{ path('blog_show',{'slug':blog_post.slug}) }}" class="card-link stretched-link text-decoration-none link-white mt-auto fs-5">lesen <i class="fas fa-chevron-right"></i></a>
+                    </div>
                 </div>
-            </div>
             {% endif %}
         </div>
-{% endblock %}
-{% block body %}
         <div class="row">
             <div class="col">
                 <h2 class="mb-5 mt-5 fs-3 fw-light text-muted">Aktuelle Meldungen</h2>
@@ -83,9 +85,6 @@
                 <a href="{{ url('blog_news_index') }}" class="btn btn-outline-primary btn-lg mt-5">Weitere Meldungen</a>
             </div>
         </div>
-{% endblock %}
-
-{% block aside %}
     <h2 class="mb-5 mt-5 fs-3 fw-light text-muted">Nächste Veranstaltungen</h2>
     <div class="d-flex flex-column">
         {% for event in events|sort((a, b) => a.startDate <=> b.startDate) %}
@@ -103,4 +102,5 @@
         {% endfor %}
     </div>
     <a href="{{ url('event_index') }}" class="btn btn-outline-primary btn-lg mt-5">Weitere Termine</a>
+    </div>
 {% endblock %}

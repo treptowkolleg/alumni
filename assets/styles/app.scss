@@ -16,6 +16,7 @@ $enable-gradients: false;
 $enable-rounded: false;
 
 $systemBlue: #294a70;
+$systemBlue2: #294a7055;
 $systemGreen:	rgba( 52,199, 89,1);
 $systemIndigo:	rgba( 88, 86,214,1);
 $systemOrange:	rgba(255,149,  0,1);
@@ -26,12 +27,14 @@ $systemTeal:	rgba( 90,200,250,1);
 $systemYellow: #eea943;
 
 
+
+
 $systemGray:	rgba(142,142,147,1);
 $systemGray2:	rgba(174,174,178,1);
 $systemGray3:	rgba(199,199,204,1);
 $systemGray4:	rgba(209,209,214,1);
 $systemGray5:	rgba(229,229,234,1);
-$systemGray6:	rgba(242,242,247,1);
+$systemGray6:	#F3F4F5;
 
 $clear: 		rgba(  0,  0,  0,0);
 $full-black:	rgba( 8, 8, 12,1);
@@ -73,12 +76,13 @@ $input-focus-border-color:          $systemBlue;
 
 $theme-colors: (
         "primary":    $systemBlue,
+        "global":     $systemBlue2,
         "secondary":  $systemYellow,
         "success":    $systemGreen,
         "warning":    $systemOrange,
         "danger":     $systemRed,
         "info":       $systemTeal,
-        "light":      $systemGray6,
+        "light":      rgb(248,249,250),
         "dark":       $black,
         "black":       $full-black,
         "white":      $white,
@@ -139,7 +143,6 @@ trix-editor:focus{
 }
 
 nav,.offcanvas,.modal-header,.modal-footer, .toast{
-  background-color: map-get($theme-colors, 'light');
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -311,8 +314,11 @@ input.form-control.is-invalid ~ trix-editor {
 }
 
 .global-nav {
-background-color: rgb(238,239,240)!important;
+  background-color: rgba(243,244,245,.8)!important;
+  z-index: 1000!important;
 }
+
+
 
 label, .label {
   color: $systemBlue!important;
@@ -321,16 +327,61 @@ label, .label {
 }
 
 .toast {
-  background-color: rgb(238,239,240)!important;
+
 }
+
+
 
 .dashboard-title {
   padding: $nav-link-padding-y 0;
+  margin-bottom: 1.75rem;
 }
 
 .form-control {
   border: none;
   border-bottom: 1px solid $systemGray4!important;
+}
+
+.ss-content{
+  z-index: 900!important;
+}
+
+
+.custom-select, .ss-search > input{
+  border: none!important;
+  border-bottom: 1px solid $systemGray4!important;
+  border-radius: 0!important;
+  box-shadow: none!important;
+  padding: 0.375rem 0.5rem!important;
+  font-size: 1rem!important;
+  font-weight: 300!important;
+  line-height: 1.5!important;
+  color: rgba(32, 32, 32, 0.9);
+  min-height: 37px!important;
+}
+
+.ss-value {
+  background-color: $systemBlue!important;
+}
+
+.ss-values {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ss-search {
+  padding: 0!important;
+}
+
+.ss-content .ss-list .ss-option.ss-highlighted, .ss-content .ss-list .ss-option:not(.ss-disabled).ss-selected, .ss-max {
+  color: $white!important;
+  background-color: $systemBlue!important;
+}
+
+.ss-content .ss-list .ss-option:hover {
+  color: $systemBlue!important;
+  background-color: rgb(238,239,240)!important;
 }
 
 .form-control:disabled {
@@ -343,3 +394,48 @@ label, .label {
   border-bottom: 1px solid $systemBlue!important;
 }
 
+.dropdown-item, .dropdown-item:focus {
+  color: $systemGray;
+}
+
+.dropdown-item:hover {
+  color: $systemBlue;
+}
+
+.dropdown-item:active {
+  color: $white!important;
+}
+
+.slim-form{
+  margin-top: 1.5rem;
+  position: relative;
+}
+
+.slim-form > label {
+  transform-origin: 0 0;
+  transform: scale(0.85) translateY(-0.5rem) translateX(0.15rem);
+  position: absolute;
+  top: 0;
+  left: -.125rem;
+  z-index: 2;
+  height: 100%;
+  padding: 1rem 0.75rem;
+  overflow: hidden;
+  text-align: start;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  pointer-events: none;
+  margin-top: -1.25rem;
+}
+
+.bd-links-link {
+  padding: .1875rem .5rem;
+  margin-top: .125rem;
+  margin-left: 1rem;
+  color: var(--bs-body-color);
+  text-decoration: none;
+}
+
+.bd-links-link:hover, .bd-links-link:focus, .bd-links-link:active {
+  background-color: rgb(238,239,240);
+}
