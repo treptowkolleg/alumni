@@ -1,75 +1,73 @@
-{% extends 'base.html.twig' %}
+{% extends '_full.html.twig' %}
 
-{% block title %}Chat{% endblock %}
-
-{% block navbar %}
-    <li class="nav-item"><a class="nav-link" href="{{ url('blog_news_all_index') }}">Aktuelles</a></li>
-    <li class="nav-item"><a class="nav-link" href="{{ url('blog_index') }}">Themen</a></li>
-    <li class="nav-item"><a class="nav-link" href="{{ url('event_index') }}">Termine</a></li>
-    <li class="nav-item"><a class="nav-link" href="#">Angebote</a></li>
-    <li class="nav-item"><a class="nav-link active" href="{{ url('people_index') }}">Personen</a></li>
-{% endblock %}
+{% set meta_title = 'Mein Portal' %}
+{% set meta_subtitle = 'Postfach' %}
+{% set sidebar = 'profile-chat' %}
 
 {% block page_header %}
-    <nav class="bg-transparent" style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ url('app_index') }}">treptowkolleg.de</a></li>
-            <li class="breadcrumb-item"><a href="{{ url('people_index') }}">Personen</a></li>
-            <li class="breadcrumb-item"><a href="{{ url('chat_index') }}">Postfach</a></li>
-            <li class="breadcrumb-item active fw-bolder" aria-current="page">{{ partner.userProfiles.first }}</li>
-        </ol>
-    </nav>
+    <section class="py-3">
+        <div class="container">
+            {{ include('component/profile_subbar.html.twig',{'selected':'chat'}) }}
 
-    <div class="d-flex align-items-center mt-3">
-        <div class="me-2" style="width: 40px">
-            {% if partner.image.name %}
-                <img src="{{ vich_uploader_asset(partner)|imagine_filter('avatar')  }}" class="img-fluid" alt="...">
-            {% else %}
-                <img src="{{ asset('images/avatar_no_text.svg') }}" class="img-fluid" alt="...">
-            {% endif %}
+            <div class="row g-3">
+
+                <div class="col-lg-12">
+                    <div class="">
+                        <div class="d-flex flex-column flex-lg-row">
+                            <a href="{{ url('chat_new',{'id':chat.id}) }}" class="btn btn-primary flex-grow-1 flex-lg-grow-0"><i class="fa-regular fa-paper-plane me-2"></i>Neue Nachricht</a>
+                            <div class="ms-lg-3 mt-3 mt-lg-0 flex-grow-1 flex-lg-grow-1">
+                                <label for="table-search" class="visually-hidden" hidden="hidden">Filtern</label>
+                                <input type="search" class="form-control h-100" id="table-search" placeholder="Nachrichten filtern" aria-controls="datatable" style="height: 38px!important;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="col-lg-12">
+                    <div class="card bg-white">
+                        <div class="card-body  border-bottom border-primary">
+                            <h3 class="h5 mb-0 text-center text-lg-start">Nachrichten</h3>
+                            <div class="text-center fw-bolder text-lg-start text-primary text-truncate">{{ partner.userprofiles.first }}</div>
+                        </div>
+                        <div id="emails" class="table-responsive">
+                            <table class="table table-hover nowrap" style="width: 100%" id="datatable">
+                                <thead>
+                                <tr>
+                                    <th>Betreff</th>
+                                    <th class="text-end">Datum</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for message in chat.messages %}
+                                    {% if app.user != message.sender %}
+                                        <tr class="{{ message.isRead ? '' : 'fw-bold' }}" style="cursor: pointer;" data-url="{{ url('chat_read',{'id':message.id}) }}">
+                                            <td>{{ message.subject }}</td>
+                                            <td class="text-end">{{ message.created|date('d.m.Y H:i') }}</td>
+                                        </tr>
+                                    {% endif %}
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
-        <div class="h3 mb-0">{{ partner.userProfiles.first }}</div>
-    </div>
-    <hr>
+    </section>
 
-    <div class="d-flex justify-content-between align-items-center flex-wrap mb-3">
-        <ul class="nav nav-underline">
-            <li class="nav-item">
-                <a class="nav-link"  href="{{ url('chat_index') }}"><i class="fas fa-chevron-left me-2 text-primary"></i>Zurück zur Übersicht</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link"  href="{{ url('chat_new',{'id':chat.id}) }}"><i class="fa-solid fa-envelope me-2 text-primary"></i>Neue Nachricht</a>
-            </li>
-        </ul>
-        <ul class="nav nav-underline">
-        </ul>
-    </div>
 
-    <div class="h4">Posteingang</div>
 
-    <div id="emails" class="table-responsive">
-            <table class="table table-hover nowrap" style="width: 100%" id="datatable">
-                <thead>
-                    <tr>
-                        <th>gesendet von</th>
-                        <th>Betreff</th>
-                        <th class="text-end">Datum</th>
-                    </tr>
-                </thead>
-                <tbody>
-                {% for message in chat.messages %}
-                    {% if app.user != message.sender %}
-                    <tr class="{{ message.isRead ? '' : 'fw-bold' }}" style="cursor: pointer;" data-url="{{ url('chat_read',{'id':message.id}) }}">
-                        <td>{{ message.sender.userProfiles.first }}</td>
-                        <td>{{ message.subject }}</td>
-                        <td class="text-end">{{ message.created|date('d.m.Y H:i') }}</td>
-                    </tr>
-                    {% endif %}
-                {% endfor %}
-                </tbody>
-            </table>
-    </div>
 
+
+{% endblock %}
+
+{% block body %}
+{% endblock %}
+
+{% block aside %}
     <script>
         let tableOptions = {
             "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
@@ -78,26 +76,26 @@
         let table = new DataTable('#datatable', {
             fixedHeader: true,
             responsive: true,
-            searching: false,
+            searching: true,
+            dom: '<"top"l><"datatable-wrapper"t><"bottom"p><"clear">',
             pageLength: 25,
             lengthChange: false,
-            order: [[2, 'desc']],
+            order: [[1, 'desc']],
             "language": tableOptions,
             columnDefs: [
-                { width: '70%', targets: 1 },
-                { type: 'date-de', targets: 2 }
+                { width: '70%', targets: 0 },
+                { type: 'date-de', targets: 1 }
             ]
         });
+
+        table.on('init', function () {
+                $("#table-search").keyup(function() {
+                    table.search($(this).val()).draw();
+                });
+            } )
 
         $('tbody').on('click', 'tr', function() {
             window.location.href = $(this).data('url')
         });
     </script>
-
-{% endblock %}
-
-{% block body %}
-{% endblock %}
-
-{% block aside %}
 {% endblock %}

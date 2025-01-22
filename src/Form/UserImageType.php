@@ -14,7 +14,7 @@ class UserImageType extends AbstractType
     {
         $builder
             ->add('imageFile', VichFileType::class, [
-                'label' => 'Profile image',
+                'label' => false,
                 'required'     => false,
                 'allow_delete' => true,
                 'download_uri' => true,

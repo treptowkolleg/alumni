@@ -337,7 +337,7 @@ label, .label {
   margin-bottom: 1.75rem;
 }
 
-.form-control {
+.form-control, .dt-input {
   border: none;
   border-bottom: 1px solid $systemGray4!important;
 }
@@ -347,7 +347,7 @@ label, .label {
 }
 
 
-.custom-select, .ss-search > input{
+.custom-select, .ss-search > input, .dt-input, .dt-input:focus, .dt-input:active{
   border: none!important;
   border-bottom: 1px solid $systemGray4!important;
   border-radius: 0!important;
@@ -374,6 +374,10 @@ label, .label {
   padding: 0!important;
 }
 
+.dt-search {
+  display: none!important;
+}
+
 .ss-content .ss-list .ss-option.ss-highlighted, .ss-content .ss-list .ss-option:not(.ss-disabled).ss-selected, .ss-max {
   color: $white!important;
   background-color: $systemBlue!important;
@@ -389,9 +393,16 @@ label, .label {
   border-bottom: 1px solid $systemBlue!important;
 }
 
-.form-control:focus {
+.form-control:focus, .dt-input:focus, .dt-input:active {
+  outline: none;
   box-shadow: none!important;
   border-bottom: 1px solid $systemBlue!important;
+}
+
+.dt-container > .bottom {
+  padding: .5rem !important;
+  display: flex;
+  justify-content: center;
 }
 
 .dropdown-item, .dropdown-item:focus {
@@ -438,4 +449,22 @@ label, .label {
 
 .bd-links-link:hover, .bd-links-link:focus, .bd-links-link:active {
   background-color: rgb(238,239,240);
+}
+
+.dt-search, .dt-info, .dt-paging {
+  padding-left: .75rem;
+  padding-right: .75rem;
+}
+
+tbody > tr > td {
+  font-size: .9rem!important;
+}
+
+.dt-column-title {
+  font-size: .9rem;
+  font-weight: normal;
+}
+
+.list-group-item-group a:hover {
+  background-color: $list-group-hover-bg;
 }

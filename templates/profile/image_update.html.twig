@@ -1,37 +1,57 @@
-{% extends 'base.html.twig' %}
+{% extends '_full.html.twig' %}
 
-{% block title %}Profilbild aktualisieren{% endblock %}
+{% set meta_title = 'Mein Portal' %}
+{% set meta_subtitle = 'Avatar' %}
+{% set sidebar = 'profile-image' %}
 
 {% block page_header %}
-    <nav class="bg-transparent" style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ url('app_index') }}">treptowkolleg.de</a></li>
-            <li class="breadcrumb-item"><a href="{{ url('profile_index') }}">Mein Bereich</a></li>
-            <li class="breadcrumb-item active fw-bolder" aria-current="page">Mein Profilbild</li>
-        </ol>
-    </nav>
+<section class=" py-3">
+    <div class="container">
 
-    <h1 class="h3">Profil bearbeiten</h1>
-    <h2 class="h5 text-primary mb-3">Profilbild aktualisieren</h2>
+        {{ include('component/profile_subbar.html.twig',{'selected':'image'}) }}
+
+        {{ form_start(form, { 'attr': {'novalidate':'novalidate'} }) }}
+        {{ form_errors(form) }}
+
+        <div class="row g-3">
+            <div class="col-lg-4">
+                {% if app.user.image.name %}
+                    <img src="{{ vich_uploader_asset(app.user)|imagine_filter('avatar')  }}" class="img-fluid w-100 img-thumbnail" alt="...">
+                {% else %}
+                    <img src="{{ asset('images/avatar_no_text.svg') }}" class="img-fluid img-thumbnail" alt="...">
+                {% endif %}
+            </div>
+            <div class="col-lg-8">
+                <div class="col-lg-12" id="section-school">
+                    <div class="card bg-white">
+                        <div class="card-body  border-bottom border-primary">
+                            <h3 class="h5 mb-0 text-center text-lg-start">Avatar</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="row row-cols-1 g-3 mb-3">
+                                {{ form_row(form.imageFile) }}
+                            </div>
+                            <div class="">
+                                <div class="row g-3">
+                                    <div class="col-lg-6"><button type="submit" class="btn btn-primary w-100">Speichern</button></div>
+                                    <div class="col-lg-6"><a href="{{ path('profile_index') }}" class="btn btn-light w-100">Abbrechen</a></div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        {{ form_end(form) }}
+
+    </div>
+</section>
 {% endblock %}
 {% block body %}
-    {{ form_start(form, { 'attr': {'novalidate':'novalidate'} }) }}
-    {{ form_errors(form) }}
 
-    <div class="mb-3">
-        {% if app.user.image.name %}
-            <img src="{{ vich_uploader_asset(app.user)|imagine_filter('avatar')  }}" class="img-fluid img-thumbnail" alt="...">
-        {% else %}
-            <img src="{{ asset('images/avatar_no_text.svg') }}" class="img-fluid img-thumbnail" alt="...">
-        {% endif %}
-    </div>
-
-    <div class="mb-5">
-        {{ form_row(form.imageFile) }}
-    </div>
-
-    <button type="submit" class="btn btn-primary">Speichern</button> <a href="{{ path('profile_index') }}" class="btn btn-light ms-2">Abbrechen</a>
-    {{ form_end(form) }}
 {% endblock %}
 {% block aside %}
 

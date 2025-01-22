@@ -1,0 +1,26 @@
+<div class="mb-3">
+    <div class="nav nav-underline">
+        {% if is_granted('ROLE_USER') %}
+            <a href="{{ path('profile_index') }}" class="nav-item nav-link {{ selected|default() == 'index' ? 'active' : '' }} text-nowrap">
+                <i class="fa-solid fa-dashboard text-primary"></i>
+                <span class="ms-1 d-none d-lg-inline">Übersicht</span>
+            </a>
+            <a href="{{ path('profile_profile_new') }}" class="nav-item nav-link {{ selected|default() == 'profile' ? 'active' : '' }} text-nowrap">
+                <i class="fa-solid fa-user text-primary"></i>
+                <span class="ms-1 d-none d-lg-inline">Profil</span>
+            </a>
+            <a href="{{ path('profile_image_new') }}" class="nav-item nav-link {{ selected|default() == 'image' ? 'active' : '' }} text-nowrap">
+                <i class="fa-solid fa-image text-primary"></i>
+                <span class="ms-1 d-none d-lg-inline">Avatar</span>
+            </a>
+            <a href="{{ path('chat_index') }}" class="nav-item nav-link {{ selected|default() == 'chat' ? 'active' : '' }} text-nowrap">
+                <i class="fa-solid fa-envelope text-primary"></i>
+                <span class="ms-1 d-none d-lg-inline">Postfach</span>
+            </a>
+            <a href="#" class="nav-item nav-link {{ selected|default() == 'account' ? 'active' : '' }} text-nowrap ms-auto">
+                <i class="fa-solid fa-gear text-primary"></i>
+                <span class="ms-1 d-none d-lg-inline">{{ app.user.fullname }}</span>
+            </a>
+        {% endif %}
+    </div>
+</div>
