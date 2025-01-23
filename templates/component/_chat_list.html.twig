@@ -1,9 +1,9 @@
 <div class="list-group-item list-group-item-group d-flex align-items-center p-0">
     <a href="{{ url('chat_start',{'slug':user.slug}) }}" class="w-100 d-flex align-items-center justify-content-between p-3 text-decoration-none">
         <span class="fw-bolder">{{ user.userProfiles.first }}</span>
-        <div>
+        <div class="d-flex align-items-center">
             {% if message > 0 %}
-                <div class="badge text-bg-light me-2">{{ message }}</div>
+                <div class="badge text-bg-primary rounded-pill fw-normal me-2">{{ message }}</div>
             {% endif %}
             <i class="fa-solid fa-chevron-right"></i>
         </div>

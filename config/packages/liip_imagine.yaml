@@ -20,6 +20,12 @@ liip_imagine:
                 thumbnail: { size: [ 1440, 480 ], mode: outbound }
                 scale:
                     dim: [ 1440, 480 ]
+        lead_mobile_thumbnail:
+            quality: 75
+            filters:
+                thumbnail: { size: [ 800, 600 ], mode: outbound }
+                scale:
+                    dim: [ 800, 600 ]
         avatar:
             quality: 50
             filters:

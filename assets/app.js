@@ -134,10 +134,13 @@ function updateUnreadMessagesUI(count) {
     console.error(count);
     if (unreadCountDiv) {
         if (count > 0) {
-            unreadCountDiv.textContent = count; // Zeigt die Zahl an
-            unreadCountDiv.style.display = 'inline'; // Stellt sicher, dass es sichtbar ist
+            if(!unreadCountDiv.classList.contains('show')) {
+                unreadCountDiv.classList.add('show');
+            }
         } else {
-            unreadCountDiv.style.display = 'none'; // Blendet das Div aus, wenn keine ungelesenen Nachrichten vorhanden sind
+            if(unreadCountDiv.classList.contains('show')) {
+                unreadCountDiv.classList.remove('show');
+            }
         }
     }
 }

@@ -1,62 +1,92 @@
-{% extends 'base.html.twig' %}
+{% extends '_full.html.twig' %}
 
-{% block title %}Aktuelle Meldungen{% endblock %}
+{% set meta_title = 'Nachrichten' %}
+{% set meta_subtitle = 'Beitragsübersicht' %}
 
-{% block navbar %}
-    <li class="nav-item"><a class="nav-link active" href="{{ url('blog_news_all_index') }}">Aktuelles</a></li>
-    <li class="nav-item"><a class="nav-link" href="{{ url('blog_index') }}">Themen</a></li>
-    <li class="nav-item"><a class="nav-link" href="{{ url('event_index') }}">Termine</a></li>
-    <li class="nav-item"><a class="nav-link" href="#">Angebote</a></li>
-    <li class="nav-item"><a class="nav-link" href="{{ url('people_index') }}">Personen</a></li>
-{% endblock %}
+{% set sidebar = 'news' %}
 
 {% block page_header %}
-    <nav class="bg-transparent" style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ url('app_index') }}">treptowkolleg.de</a></li>
-            <li class="breadcrumb-item"><a href="{{ url('blog_news_all_index') }}">Aktuelles</a></li>
-            <li class="breadcrumb-item active fw-bolder" aria-current="page">Meldungen</li>
-        </ol>
-    </nav>
+<section class="py-3">
+    <div class="container">
 
-    <h1 class="h3">Aktuelle Meldungen</h1>
+        {{ include('component/news_subbar.html.twig',{'selected':'index'}) }}
+
+        <div class="row g-3">
+
+            <div class="col-lg-9">
+                {% for post in posts %}
+                    {% if post.isPublished %}
+                        <div class="col">
+                            <div class="card border-0 mb-3 border-bottom h-100">
+                                <div class="row g-1">
+                                    {% if post.image.name %}
+                                        <div class="col-12 col-lg-4 order-1 order-lg-0">
+                                            <img src="{{ vich_uploader_asset(post)|imagine_filter('post_thumbnail')  }}" alt="{{ post }}" class="img-fluid">
+                                        </div>
+                                        <div class="col-12 col-lg-8 order-0 order-lg-2">
+                                            <div class="card-body">
+                                                <div class="mb-0"><span>{{ post.updatedAt|date('d.m.Y') }}</span> | <span class="text-uppercase">{{ post.type }}</span></div>
+                                                <a href="{{ path('blog_news_show',{'slug':post.slug}) }}" class="fs-4 card-link stretched-link text-decoration-none">{{ post }}</a>
+                                                <div class="d-none d-lg-block">
+                                                    <div class="d-block text-truncate fs-6 text-wrap">{{ post.content|striptags|u.truncate(200) }}...</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 d-block d-lg-none order-2">
+                                            <div class="card-body">
+                                                <div class="d-block text-truncate fs-6 text-wrap">{{ post.content|striptags|u.truncate(200) }}...</div>
+                                            </div>
+                                        </div>
+
+                                    {% else %}
+                                        <div class="col-12">
+                                            <div class="card-body">
+                                                <div class="mb-0"><span>{{ post.updatedAt|date('d.m.Y') }}</span> | <span class="text-uppercase">{{ post.type }}</span></div>
+                                                <a href="{{ path('blog_news_show',{'slug':post.slug}) }}" class="fs-4 card-link stretched-link text-decoration-none">{{ post }}</a>
+                                                <div class="d-block text-truncate fs-6 text-wrap">{{ post.content|striptags|u.truncate(200) }}...</div>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                </div>
+
+                            </div>
+                        </div>
+                    {% endif %}
+                {% else %}
+                    <div class="col">
+                        Aktuell sind keine Meldungen vorhanden
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="col-lg-3"></div>
+        </div>
+
+        <div class="row g-3 py-3">
+            <div class="col-12">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
 {% endblock %}
 {% block body %}
-    <div class="row row-cols-1 g-3 align-content-stretch">
-        {% for post in posts %}
-            {% if post.isPublished %}
-                <div class="col">
-                    <div class="card border-0 bg-transparent mb-2 pb-2 border-bottom h-100">
-                        <div class="row">
-                            <div class="col-12 mb-2">
-                                <div class="mb-0"><span>{{ post.updatedAt|date('d.m.Y') }}</span> | <span class="text-uppercase">{{ post.type }}</span></div>
-                                <a href="{{ path('blog_news_show',{'slug':post.slug}) }}" class="fs-4 card-link stretched-link text-decoration-none">{{ post }}</a>
-                            </div>
-                            {% if post.image.name %}
-                                <div class="col-12 col-md-4">
-                                    <img src="{{ vich_uploader_asset(post)|imagine_filter('post_thumbnail')  }}" alt="{{ post }}" class="img-fluid mb-2">
-                                </div>
-                                <div class="col-12 col-md-8">
-                                    <div class="d-block text-truncate fs-6 mb-3 text-wrap">{{ post.content|striptags|u.truncate(200) }}...</div>
-                                    <a href="{{ path('blog_news_show',{'slug':post.slug}) }}" class="btn btn-outline-primary">weiterlesen</a>
-                                </div>
-                            {% else %}
-                                <div class="col-12">
-                                    <div class="d-block text-truncate fs-6 mb-3 text-wrap">{{ post.content|striptags|u.truncate(200) }}...</div>
-                                    <a href="{{ path('blog_news_show',{'slug':post.slug}) }}" class="btn btn-outline-primary">weiterlesen</a>
-                                </div>
-                            {% endif %}
-                        </div>
 
-                    </div>
-                </div>
-            {% endif %}
-        {% else %}
-            <div class="col">
-                Aktuell sind keine Meldungen vorhanden
-            </div>
-        {% endfor %}
-    </div>
 {% endblock %}
 
 {% block aside %}

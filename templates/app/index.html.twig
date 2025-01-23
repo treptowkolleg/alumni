@@ -7,24 +7,31 @@
 
 {% endblock %}
 {% block body %}
-    <div class="container my-5">
-        <div class="row mb-5">
+    <div class="">
             {% if lead %}
-                <div class="col">
-                    <div class="card text-white shadow-sm h-100">
+                    <div class="card text-white border-0 h-100">
                         <img class="card-img d-none d-md-block" src="{{ vich_uploader_asset(lead)|imagine_filter('lead_thumbnail')  }}" alt="{{ lead }}" style="filter: brightness(80%);">
-                        <img class="card-img d-block d-md-none" src="{{ vich_uploader_asset(lead)|imagine_filter('post_thumbnail')  }}" alt="{{ lead }}" style="filter: brightness(80%);">
-                        <div class="card-img-overlay h-100 align-content-end">
-                            <div class="text-uppercase small card-text">{{ lead.type }}</div>
-                            <h3 class="fw-normal h2 mb-0">{{ lead.title }}</h3>
-                            <p class="card-text lead d-none d-md-block fw-bolder">{{ lead.subtitle }}</p>
-                            <a href="{{ path('blog_show',{'slug':lead.slug}) }}" class="card-link stretched-link text-decoration-none link-white fs-5">mehr erfahren <i class="fas fa-chevron-right"></i></a>
+                        <img class="card-img d-block d-md-none" src="{{ vich_uploader_asset(lead)|imagine_filter('lead_mobile_thumbnail')  }}" alt="{{ lead }}" style="filter: brightness(80%);">
+                        <div class="card-img-overlay h-100 align-content-end px-0 pb-0">
+                            <div class="text-bg-primary">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-12 px-4 py-3">
+                                            <div class="text-uppercase small card-text">{{ lead.type }}</div>
+                                            <h3 class="fw-normal h2 mb-0">{{ lead.title }}</h3>
+                                            <p class="card-text lead d-none d-md-block fw-bolder">{{ lead.subtitle }}</p>
+                                            <a href="{{ path('blog_show',{'slug':lead.slug}) }}" class="card-link stretched-link text-decoration-none link-white fs-5">mehr erfahren <i class="fas fa-chevron-right"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
             {% endif %}
-        </div>
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3 align-content-stretch">
+    </div>
+
+    <div class="container my-5">
+        <div class="row row-cols-1 row-cols-lg-3 g-3 align-content-stretch">
             {% if podcast %}
                 <div class="col">
                     <div class="card card-body shadow-sm bg-white border-primary h-100">
@@ -56,22 +63,27 @@
                 </div>
             {% endif %}
         </div>
+
         <div class="row">
-            <div class="col">
-                <h2 class="mb-5 mt-5 fs-3 fw-light text-muted">Aktuelle Meldungen</h2>
+            <div class="col-lg-8">
+                <h2 class="mb-3 mt-5 fs-4 fw-light text-muted">Aktuelle Meldungen</h2>
                 <div class="row row-cols-1 row-cols-lg-2 g-3 align-content-stretch">
                     {% for post in posts %}
                         {% if post.isPublished %}
                         <div class="col">
-                            <div class="card border-0 bg-transparent mb-2 pb-2 border-bottom h-100">
+                            <div class="card bg-transparent h-100">
                                 {% if post.image %}
-                                    <img src="{{ vich_uploader_asset(post)|imagine_filter('post_thumbnail')  }}" alt="{{ post }}" class="img-fluid mb-2">
-                                    <div class="mb-0"><span class="fw-bold">{{ post.updatedAt|date('d.m.Y') }}</span> <span class="text-uppercase">{{ post.type }}</span></div>
-                                    <a href="{{ path('blog_news_show',{'slug':post.slug}) }}" class="fs-5 card-link stretched-link text-decoration-none">{{ post }}</a>
+                                    <img src="{{ vich_uploader_asset(post)|imagine_filter('post_thumbnail')  }}" alt="{{ post }}" class="img-fluid">
+                                    <div class="px-3 py-2 bg-white h-100">
+                                        <div class="mb-0"><span class="fw-bold">{{ post.updatedAt|date('d.m.Y') }}</span> <span class="text-uppercase">{{ post.type }}</span></div>
+                                        <a href="{{ path('blog_news_show',{'slug':post.slug}) }}" class="fs-5 card-link stretched-link text-decoration-none">{{ post }}</a>
+                                    </div>
                                 {% else %}
-                                    <a href="{{ path('blog_news_show',{'slug':post.slug}) }}" class="fs-3 card-link link-primary stretched-link text-decoration-none">{{ post }}</a>
-                                    <div class="mb-0"><span class="fw-bold">{{ post.updatedAt|date('d.m.Y') }}</span> {{ post.type }}</div>
-                                    <div class="d-block text-truncate text-wrap">{{ post.content|striptags|u.truncate(150) }} ...</div>
+                                    <div class="px-3 py-2 bg-white h-100">
+                                        <a href="{{ path('blog_news_show',{'slug':post.slug}) }}" class="fs-3 card-link link-primary stretched-link text-decoration-none">{{ post }}</a>
+                                        <div class="mb-0"><span class="fw-bold">{{ post.updatedAt|date('d.m.Y') }}</span> {{ post.type }}</div>
+                                        <div class="d-block text-truncate text-wrap">{{ post.content|striptags|u.truncate(150) }} ...</div>
+                                    </div>
                                 {% endif %}
                             </div>
                         </div>
@@ -82,25 +94,27 @@
                         </div>
                     {% endfor %}
                 </div>
-                <a href="{{ url('blog_news_index') }}" class="btn btn-outline-primary btn-lg mt-5">Weitere Meldungen</a>
+                <a href="{{ url('blog_news_index') }}" class="btn btn-outline-primary mt-5">Weitere Meldungen</a>
             </div>
-        </div>
-    <h2 class="mb-5 mt-5 fs-3 fw-light text-muted">Nächste Veranstaltungen</h2>
-    <div class="d-flex flex-column">
-        {% for event in events|sort((a, b) => a.startDate <=> b.startDate) %}
-            {% if event.endDate|date('Ymd') >= date('now')|date('Ymd')%}
-            <div class="mb-2 pb-2 border-bottom d-flex flex-column card border-0">
-                <div class="fw-bold">{{ event.startDate|date('d.m.Y') }}</div>
-                <a href="{{ url('event_show',{'slug':event.slug}) }}" class="fs-5 stretched-link text-decoration-none">{{ event.title }}</a>
-                <small>{{ event.location|split(',').0 }}</small>
+            <div class="col-lg-4">
+                <h2 class="mb-3 mt-5 fs-4 fw-light text-muted">Nächste Veranstaltungen</h2>
+                <div class="d-flex flex-column border border-bottom-0">
+                    {% for event in events|sort((a, b) => a.startDate <=> b.startDate) %}
+                        {% if event.endDate|date('Ymd') >= date('now')|date('Ymd')%}
+                        <div class="border-bottom d-flex flex-column card card-body border-0">
+                            <div class="">{{ event.startDate|date('d.m.Y') }}</div>
+                            <a href="{{ url('event_show',{'slug':event.slug}) }}" class="fs-5 stretched-link text-decoration-none">{{ event.title }}</a>
+                            <small>{{ event.location|split(',').0 }}</small>
+                        </div>
+                        {% endif %}
+                    {% else %}
+                        <div class="mb-2 pb-2 border-bottom">
+                            Aktuell sind keine Veranstaltungen geplant
+                        </div>
+                    {% endfor %}
+                </div>
+                <a href="{{ url('event_index') }}" class="btn btn-outline-primary mt-5">Weitere Termine</a>
             </div>
-            {% endif %}
-        {% else %}
-            <div class="mb-2 pb-2 border-bottom">
-                Aktuell sind keine Veranstaltungen geplant
-            </div>
-        {% endfor %}
-    </div>
-    <a href="{{ url('event_index') }}" class="btn btn-outline-primary btn-lg mt-5">Weitere Termine</a>
+         </div>
     </div>
 {% endblock %}

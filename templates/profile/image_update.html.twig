@@ -16,9 +16,9 @@
         <div class="row g-3">
             <div class="col-lg-4">
                 {% if app.user.image.name %}
-                    <img src="{{ vich_uploader_asset(app.user)|imagine_filter('avatar')  }}" class="img-fluid w-100 img-thumbnail" alt="...">
+                    <img src="{{ vich_uploader_asset(app.user)|imagine_filter('avatar')  }}" class="img-fluid w-100 img-thumbnail" alt="{{ app.user.lastname }}-avatar">
                 {% else %}
-                    <img src="{{ asset('images/avatar_no_text.svg') }}" class="img-fluid img-thumbnail" alt="...">
+                    <img src="{{ asset('images/avatar_no_text.svg') }}" class="img-fluid w-100 img-thumbnail" alt="{{ app.user.lastname }}-avatar">
                 {% endif %}
             </div>
             <div class="col-lg-8">

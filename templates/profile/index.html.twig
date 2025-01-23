@@ -9,7 +9,7 @@
     <div class="container">
         {{ include('component/profile_subbar.html.twig',{'selected':'index'}) }}
         <div class="row g-3 align-content-stretch">
-            {% if not app.user.isVerified or not app.user.userProfiles %}
+            {% if not app.user.isVerified or not app.user.userProfiles.count > 0 %}
                 <div class="col-12">
                     <div class="card bg-white">
                         <div class="card-body  border-bottom border-primary">
