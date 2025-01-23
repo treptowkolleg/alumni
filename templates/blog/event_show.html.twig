@@ -12,42 +12,54 @@
         {{ include('component/event_subbar.html.twig',{'selected':'show'}) }}
 
         <div class="row g-3">
-            <div class="col-12">
-                <div class="mb-3">
-                    <h1 class="h3">{{ post }}</h1>
-                    {% if post.website %}
-                        <a href="{{ post.website }}" target="_blank"><i class="fa fa-link me-2"></i>Website der Veranstaltung</a>
-                    {% endif %}
+
+            <div class="col-lg-12">
+                <div class="d-flex flex-column flex-lg-row">
+                    <a class="btn btn-primary" href="#"><i class="fa-regular fa-star me-2"></i>Teilnehmen</a>
                 </div>
-                <div class="row row-cols-1 row-cols-lg-3 g-3 align-content-stretch mb-3">
-                    <div class="col">
-                        <div class="card card-body h-100">
-                            <div class="h5 text-primary"><i class="fa fa-calendar fa-fw me-1 text-black"></i>Datum und Uhrzeit</div>
-                            <div>{{ post.startDate|date('d.m.Y, H:i') }} - {{ post.endDate|date('d.m.Y, H:i') }}</div>
+            </div>
+
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body bg-white border-0 border-bottom border-primary">
+                        <h3 class="h5 mb-0 text-center text-lg-start">Details</h3>
+                        <div class="text-center text-lg-start fw-bolder text-primary text-truncate">{{ post }}</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row row-cols-1 row-cols-lg-3 g-3 align-content-stretch mb-3">
+                            <div class="col">
+                                    <div class="h6 text-primary">Datum und Uhrzeit</div>
+                                    <div>{{ post.startDate|date('d.m.Y, H:i') }} - {{ post.endDate|date('d.m.Y, H:i') }}</div>
+                            </div>
+                            {% if post.location %}
+                                <div class="col">
+                                    <div class="h6 text-primary">Veranstaltungsort</div>
+                                    {% for line in post.location|split(',') %}
+                                        <div>{{ line }}</div>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                            {% if post.contactPerson %}
+                                <div class="col">
+                                        <div class="h6 text-primary">Kontakt</div>
+                                        <div>
+                                            {% if post.website %}
+                                                <div>
+                                                    <a href="{{ post.website }}" target="_blank"><i class="fa fa-link me-2"></i>Website der Veranstaltung</a>
+                                                </div>
+                                            {% endif %}
+                                            {% if post.contactEmail %}
+                                                <a href="mailto:{{ post.contactEmail }}"><i class="fa fa-person fa-fw me-2"></i>{{ post.contactPerson }}</a>
+                                            {% else %}
+                                                <i class="fa fa-person fa-fw me-2"></i>{{ post.contactPerson }}
+                                            {% endif %}
+                                        </div>
+                                </div>
+                            {% endif %}
                         </div>
                     </div>
-                    {% if post.location %}
-                        <div class="col">
-                            <div class="card card-body h-100">
-                                <div class="h5 text-primary"><i class="fa fa-location-dot fa-fw me-1 text-black"></i>Veranstaltungsort</div>
-                                {% for line in post.location|split(',') %}
-                                    <div>{{ line }}</div>
-                                {% endfor %}
-                            </div>
-                        </div>
-                    {% endif %}
-                    {% if post.contactPerson %}
-                        <div class="col">
-                            <div class="card card-body h-100">
-                                <div class="h5 text-primary"><i class="fa fa-address-book fa-fw me-1 text-black"></i>Kontakt</div>
-                                <div>{{ post.contactPerson }}</div>
-                                {% if post.contactEmail %}
-                                    <a href="mailto:{{ post.contactEmail }}">E-Mail schreiben</a>
-                                {% endif %}
-                            </div>
-                        </div>
-                    {% endif %}
                 </div>
+
             </div>
             <div class="col-lg-8">
                 {{ post.description|raw }}

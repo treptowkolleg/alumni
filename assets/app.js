@@ -37,7 +37,7 @@ const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]
 const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 
 
-createLinkAction(linkButtons,setLike,'href','data-value')
+createLinkAction(linkButtons,setLike,'data-url','data-value')
 
 function createLinkAction(elements,customFunction,attribute,id, eventAction = "click"){
     Array.prototype.slice.call(elements)
@@ -75,7 +75,7 @@ function setLike(link, value){
     data.id = value;
     let json = JSON.stringify(data);
     let xhr = new XMLHttpRequest();
-    xhr.open('post', link,true);
+    xhr.open('POST', link,true);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.onload = function() {
         if (xhr.status === 200) {
@@ -131,7 +131,6 @@ function validateForm($i){
 
 function updateUnreadMessagesUI(count) {
     const unreadCountDiv = document.getElementById('unread-count');
-    console.error(count);
     if (unreadCountDiv) {
         if (count > 0) {
             if(!unreadCountDiv.classList.contains('show')) {

@@ -1,147 +1,122 @@
-{% extends 'base.html.twig' %}
+{% extends '_full.html.twig' %}
 
-{% block title %}Personen{% endblock %}
+{% set meta_title = 'Personen' %}
+{% set meta_subtitle = 'Alumni finden' %}
 
-{% block navbar %}
-    <li class="nav-item"><a class="nav-link" href="{{ url('blog_news_all_index') }}">Aktuelles</a></li>
-    <li class="nav-item"><a class="nav-link" href="{{ url('blog_index') }}">Themen</a></li>
-    <li class="nav-item"><a class="nav-link" href="{{ url('event_index') }}">Termine</a></li>
-    <li class="nav-item"><a class="nav-link" href="#">Angebote</a></li>
-    <li class="nav-item"><a class="nav-link active" href="{{ url('people_index') }}">Personen</a></li>
-{% endblock %}
+{% set sidebar = 'people' %}
 
 {% block page_header %}
-    <nav class="bg-transparent" style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ url('app_index') }}">treptowkolleg.de</a></li>
-            <li class="breadcrumb-item active fw-bolder" aria-current="page">Personen</li>
-        </ol>
-    </nav>
+<section class="py-3">
+    <div class="container">
 
-    <h1 class="h3">Personen</h1>
+        {{ include('component/person_subbar.html.twig') }}
 
-{% endblock %}
-{% block body %}
-    <form method="post" class="">
-        <div class="input-group">
-            <input type="search" id="person_search" name="person_search" class="form-control" placeholder="Personen finden">
-            <div class="input-group-btn">
-                <button class="btn btn-primary" type="submit">
-                    <i class="fas fa-search"></i>
-                </button>
-            </div>
+        <div class="mb-3">{{ include('component/_person_filter.html.twig') }}</div>
+
+        <div class="mb-3">
+            <form method="post" class="">
+                <div class="input-group">
+                    <input type="search" id="person_search" name="person_search" class="form-control" placeholder="Vor- oder Nachname filtern">
+                    <div class="input-group-btn">
+                        <button class="btn btn-primary" type="submit">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+                <label for="person_search"></label>
+            </form>
         </div>
-        <label for="person_search"></label>
-    </form>
 
-    <ul class="nav nav-underline mb-4">
-        <li class="nav-item">
-            <a class="nav-link {{ filter == 'all' ? 'active ' : '' }}" href="{{ url('people_index',{'courses':filtered_courses|join(','),'schools': filtered_schools|join(','), 'dates':filtered_dates|join(',')}) }}"><i class="fas fa-user-group me-2 text-primary"></i>Alle Personen</a>
-        </li>
-        {% if app.user %}
-            {% if app.user.hasSchool %}
-                <li class="nav-item">
-                    <a class="nav-link {{ filter == 'school' ? 'active ' : '' }}" href="{{ url('people_index',{'filter':'school','courses':filtered_courses|join(','),'schools': filtered_schools|join(','), 'dates':filtered_dates|join(',')}) }}"><i class="fas fa-university me-2 text-primary"></i>Schule</a>
-                </li>
-            {% endif %}
-            <li class="nav-item">
-                <a class="nav-link {{ filter == 'freunde' ? 'active ' : '' }}" href="{{ url('people_index',{'filter':'freunde','courses':filtered_courses|join(','),'schools': filtered_schools|join(','), 'dates':filtered_dates|join(',')}) }}"><i class="fas fa-handshake me-2 text-primary"></i>Bekannten</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#"><i class="fas fa-bicycle me-2 text-primary"></i>Interessen-Matches</a>
-            </li>
-        {% else %}
-            <li class="nav-item">
-                <a class="nav-link" href="{{ url('app_register') }}">Registriere dich für weitere Ergebnisse</a>
-            </li>
-        {% endif %}
-    </ul>
-
-    <div class="row row-cols-1 row-cols-lg-2 g-3 align-content-stretch">
-        {% for person in people %}
-            {% if (app.user and  person.networkState == 'registered') or person.networkState == 'public' or (filter in ['school','freunde'] and person.networkState == 'private') %}
-                {% if filtered_dates is empty or person.outYear in filtered_dates %}
-                    {% if filtered_courses is empty or person.performanceCourse|filter((course) => course in filtered_courses)  %}
-                    <div class="col mb-2 mb-md-0">
-                        <div class="card bg-body-tertiary border-0 align-self-stretch">
-                            <div class="row g-0">
-                                <div class="col-md-4">
-                                    {% if person.user.image.name %}
-                                        <img src="{{ vich_uploader_asset(person.user)|imagine_filter('avatar')  }}" class="img-fluid w-100" alt="...">
-                                    {% else %}
-                                        <img src="{{ asset('images/avatar_no_text.svg') }}" class="img-fluid w-100" alt="...">
-                                    {% endif %}
-                                </div>
-                                <div class="col-md-8">
-                                        <div class="card-body d-flex flex-column h-100">
-                                            <div class="d-flex align-items-start justify-content-between">
-                                                <h3 class="h4 mb-0 text-truncate">{{ person }}</h3>
-                                            </div>
-
-                                            {% if person.user.hasSchool %}
-                                                <p class="">{{ person.user.school }}</p>
+        <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3 g-3 align-content-stretch">
+            {% for person in people %}
+                {% if (app.user and  person.networkState == 'registered') or person.networkState == 'public' or (filter in ['school','freunde'] and person.networkState == 'private') %}
+                    {% if filtered_dates is empty or person.outYear in filtered_dates %}
+                        {% if filtered_courses is empty or person.performanceCourse|filter((course) => course in filtered_courses)  %}
+                            <div class="col mb-2 mb-md-0">
+                                <div class="card text-bg-white align-self-stretch">
+                                    <div class="row g-0">
+                                        <div class="col-md-4">
+                                            {% if person.user.image.name %}
+                                                <img src="{{ vich_uploader_asset(person.user)|imagine_filter('avatar')  }}" class="img-fluid w-100" alt="...">
+                                            {% else %}
+                                                <img src="{{ asset('images/avatar_no_text.svg') }}" class="img-fluid w-100" alt="...">
                                             {% endif %}
-                                            <a href="{{ url('people_show',{'slug':person.user.slug }) }}" class="card-link stretched-link text-decoration-none mt-auto">mehr erfahren <i class="fas fa-chevron-right"></i></a>
                                         </div>
+                                        <div class="col-md-8">
+                                            <div class="card-body d-flex flex-column h-100">
+                                                <div class="d-flex align-items-start justify-content-between">
+                                                    <h3 class="h4 mb-0 text-truncate">{{ person }}</h3>
+                                                </div>
+
+                                                {% if person.user.hasSchool %}
+                                                    <p class="">{{ person.user.school }}</p>
+                                                {% endif %}
+                                                <a href="{{ url('people_show',{'slug':person.user.slug }) }}" class="card-link stretched-link text-decoration-none mt-auto">mehr erfahren <i class="fas fa-chevron-right"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                        {% if app.user %}
-                            <div class="ps-3 ps-md-0 mt-2 pb-2 border-bottom d-flex align-items-center">
-                                {% if app.user.userProfiles.count > 0 %}
-                                {% if person.user != app.user %}
-                                    <div>
-                                        <span class="d-none small me-1 like-number-{{ person.id }}">{{ person.friends.count }}</span>
-                                        <div class="spinner-border spinner-border-sm d-none like-loader-{{ person.id }}" role="status"></div>
-                                        {% set like_icon = 'fa-regular fa-user-graduate' %}
-                                        {% if app.user.userProfiles.0 in person.friends %}
-                                            {% set like_icon = 'fa-solid fa-user-graduate' %}
-                                        {% endif %}
-                                        <a href="{{ path('api_add_like') }}" class="me-2" data-value="{{ person.id }}"><i class="fa-regular fa-star"></i></a>
-                                        <a href="{{ path('api_add_like') }}" class="like-button  me-2" data-value="{{ person.id }}"><i class="link-primary like-icon-{{ person.id }} {{ like_icon }}"></i></a>
-                                    </div>
-                                    <div class="me-2">
-                                        <small class="text-muted" id="like-match-{{ person.id }}">
-                                            {% if app.user.userProfiles.first in person.userProfiles and person in app.user.userProfiles.first.userProfiles %}
-                                                Ihr kennt euch gegenseitig
+                                {% if app.user %}
+                                    <div class="ps-2 pt-2 pb-2 border border-top-0 d-flex bg-light-subtle align-items-center">
+                                        {% if app.user.userProfiles.count > 0 %}
+                                            {% if person.user != app.user %}
+                                                <div>
+                                                    <span class="d-none small me-1 like-number-{{ person.id }}">{{ person.friends.count }}</span>
+                                                    <div class="spinner-border spinner-border-sm d-none like-loader-{{ person.id }}" role="status"></div>
+                                                    {% set like_icon = 'fa-regular fa-star' %}
+                                                    {% if app.user.userProfiles.0 in person.friends %}
+                                                        {% set like_icon = 'fa-solid fa-star' %}
+                                                    {% endif %}
+                                                    <a href="#" class="like-button  me-2" data-url="{{ path('api_add_like') }}" data-value="{{ person.id }}"><i class="link-primary like-icon-{{ person.id }} {{ like_icon }}"></i></a>
+                                                </div>
+                                                <div class="me-2">
+                                                    <small class="text-muted" id="like-match-{{ person.id }}">
+                                                        {% if app.user.userProfiles.first in person.userProfiles and person in app.user.userProfiles.first.userProfiles %}
+                                                            Ihr kennt euch gegenseitig
+                                                        {% endif %}
+                                                    </small>
+                                                </div>
+                                                <div class="">
+                                                    <a href="{{ url('chat_start',{'slug':person.user.slug}) }}" class="text-decoration-none">
+                                                        <i class="link-primary fa-solid fa-envelope me-1"></i>
+                                                        <small>Nachricht</small>
+                                                    </a>
+                                                </div>
+                                            {% else %}
+                                                <div>
+                                                    <i class="link-primary fa-solid fa-user me-2"></i>
+                                                    <small class="text-muted">Das bist du</small>
+                                                </div>
                                             {% endif %}
-                                        </small>
-                                    </div>
-                                    <div class="">
-                                        <a href="{{ url('chat_start',{'slug':person.user.slug}) }}" class="text-decoration-none">
-                                        <i class="link-primary fa-solid fa-envelope me-1"></i>
-                                        <small>Nachricht</small>
-                                        </a>
-                                    </div>
-                                {% else %}
-                                    <div>
-                                        <i class="link-primary fa-solid fa-user me-2"></i>
-                                        <small class="text-muted">Das bist du</small>
-                                    </div>
-                                {% endif %}
-                                {% else %}
-                                    <div>
-                                        <i class="link-primary fa-solid fa-user-plus me-2"></i>
-                                        <a href="{{ url('profile_profile_new') }}" class="text-decoration-none small">Profil anlegen, um Freunde hinzuzufügen</a>
+                                        {% else %}
+                                            <div>
+                                                <i class="link-primary fa-solid fa-user-plus me-2"></i>
+                                                <a href="{{ url('profile_profile_new') }}" class="text-decoration-none small">Profil anlegen, um Freunde hinzuzufügen</a>
+                                            </div>
+                                        {% endif %}
                                     </div>
                                 {% endif %}
                             </div>
                         {% endif %}
-                    </div>
                     {% endif %}
                 {% endif %}
-            {% endif %}
-        {% else %}
-            <div class="col">
-                Keine Personen gefunden
-            </div>
-        {% endfor %}
+            {% else %}
+                <div class="col">
+                    Keine Personen gefunden
+                </div>
+            {% endfor %}
+        </div>
+
     </div>
+</section>
+
 {% endblock %}
 
+{% block body %}{% endblock %}
+
 {% block aside %}
-    <div class="fs-4 mb-1">Filtern nach ...</div>
-    <a href="{{ url('people_index',{'filter':app.request.attributes.get('filter')}) }}" class="mb-3 d-block">Alle Personen anzeigen</a>
+
+   {# <a href="{{ url('people_index',{'filter':app.request.attributes.get('filter')}) }}" class="mb-3 d-block">Alle Personen anzeigen</a>
     {% if filter != 'school' %}
     <div class="fs-5 fw-bolder mb-1">Bildungseinrichtung</div>
     <div class="card  border-primary mb-3">
@@ -197,5 +172,5 @@
                     {% endif %}
             {% endfor %}
         </div>
-    </div>
+    </div>#}
 {% endblock %}
