@@ -25,7 +25,8 @@ class PersonController extends AbstractController
     #[Route('/{filter}', name: 'index')]
     public function index(Request $request, UserRepository $userRepository, UserProfileRepository $repository, SchoolRepository $schoolRepository, string $filter = 'all'): Response
     {
-        $search = $request->get('person_search');
+        $filterValues = $request->request->all();
+        $search = $request->request->get('person');
 
 
         $people = null;
@@ -79,6 +80,7 @@ class PersonController extends AbstractController
 
 
         return $this->render('people/index.html.twig', [
+            'filterValues' => $filterValues,
             'filter' => $filter,
             'people' => $people,
             'schools' => $schoolRepository->findAll(),

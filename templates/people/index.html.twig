@@ -13,20 +13,6 @@
 
         <div class="mb-3">{{ include('component/_person_filter.html.twig') }}</div>
 
-        <div class="mb-3">
-            <form method="post" class="">
-                <div class="input-group">
-                    <input type="search" id="person_search" name="person_search" class="form-control" placeholder="Vor- oder Nachname filtern">
-                    <div class="input-group-btn">
-                        <button class="btn btn-primary" type="submit">
-                            <i class="fas fa-search"></i>
-                        </button>
-                    </div>
-                </div>
-                <label for="person_search"></label>
-            </form>
-        </div>
-
         <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3 g-3 align-content-stretch">
             {% for person in people %}
                 {% if (app.user and  person.networkState == 'registered') or person.networkState == 'public' or (filter in ['school','freunde'] and person.networkState == 'private') %}
@@ -62,12 +48,12 @@
                                             {% if person.user != app.user %}
                                                 <div>
                                                     <span class="d-none small me-1 like-number-{{ person.id }}">{{ person.friends.count }}</span>
-                                                    <div class="spinner-border spinner-border-sm d-none like-loader-{{ person.id }}" role="status"></div>
+                                                    <div class="spinner-border spinner-border-sm d-none like-loader-{{ person.id }}" role="status" style="margin-right: 2px"></div>
                                                     {% set like_icon = 'fa-regular fa-star' %}
                                                     {% if app.user.userProfiles.0 in person.friends %}
                                                         {% set like_icon = 'fa-solid fa-star' %}
                                                     {% endif %}
-                                                    <a href="#" class="like-button  me-2" data-url="{{ path('api_add_like') }}" data-value="{{ person.id }}"><i class="link-primary like-icon-{{ person.id }} {{ like_icon }}"></i></a>
+                                                    <a href="#" class="like-button  me-2" data-url="{{ path('api_add_like') }}" data-value="{{ person.id }}"><i class="link-secondary like-icon-{{ person.id }} {{ like_icon }}"></i></a>
                                                 </div>
                                                 <div class="me-2">
                                                     <small class="text-muted" id="like-match-{{ person.id }}">
@@ -105,6 +91,28 @@
                     Keine Personen gefunden
                 </div>
             {% endfor %}
+        </div>
+
+        <div class="row g-3 py-3">
+            <div class="col-12">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <li class="page-item">
+                            <a class="page-link disabled" href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item"><a class="page-link active" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
         </div>
 
     </div>

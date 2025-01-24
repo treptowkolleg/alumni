@@ -1,42 +1,71 @@
-<div class="row g-1 mb-3 align-content-stretch">
-    <div class="col-12 col-lg-4 bg-white">
-        <div class="slim-form mt-4 h-100">
-            <label class="pt-2" for="opt">Schule</label>
-            <select class="slim-select-multi-school custom-select" multiple id="opt">
-                <option>Treptow-Kolleg</option>
-                <option>Kolleg Schöneberg</option>
-                <option>Charlotte-Wolff-Kolleg</option>
-            </select>
+<form method="post" id="filter_form">
+    <div class="row g-1 mb-3 align-content-stretch">
+        <div class="col-12 col-lg-4 bg-white">
+            <div class="slim-form mt-4 h-100">
+                <label class="pt-2" for="opt">Schule</label>
+                <select name="school[]" class="slim-select-multi-school custom-select" multiple id="opt">
+                    {% for school in schools|sort((a, b) => a.title <=> b.title) %}
+                        {% if school.users.count > 0 %}
+                            <option {{ school.id in filterValues.school|default() ? 'selected' : '' }} value="{{ school.id }}">
+                                {{ school.title }}
+                            </option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
         </div>
-    </div>
-    <div class="col-12 col-lg-4 bg-white">
-        <div class="slim-form mt-4 h-100">
-            <label for="opt" class="pt-2">Leistungskurs</label>
-            <select class="slim-select-multi-school custom-select" multiple id="opt">
-                <option>Informatik</option>
-                <option>B</option>
-                <option>C</option>
-            </select>
+        <div class="col-12 col-lg-4 bg-white">
+            <div class="slim-form mt-4 h-100">
+                <label for="opt" class="pt-2">Leistungskurs</label>
+                <select name="course[]" class="slim-select-multi-school custom-select" multiple id="opt">
+                    {% for course in courses|sort((a, b) => a.value <=> b.value) %}
+                        <option {{ course.value in filterValues.course|default() ? 'selected' : '' }} value="{{ course.value }}">
+                            {{ course.value|trans }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
         </div>
-    </div>
-    <div class="col-6 col-lg-2 bg-white">
-        <div class="slim-form mt-4 h-100">
-            <label for="opt" class="pt-2">Startjahr</label>
-            <select class="slim-select-single-school custom-select" id="opt">
-                <option>2024</option>
-                <option>B</option>
-                <option>C</option>
-            </select>
+        <div class="col-6 col-lg-2 bg-white">
+            <div class="slim-form mt-4 h-100">
+                <label for="opt" class="pt-2">Eintrittsjahr</label>
+                <select name="start_date" class="slim-select-single-school custom-select" id="opt">
+                    <option value="">-</option>
+                    {% for date in (1991..date('now')|date('Y'))|sort|reverse  %}
+                        <option {{ date == filterValues.start_date|default() ? 'selected' : '' }} value="{{ date }}">
+                            {{ date }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
         </div>
-    </div>
-    <div class="col-6 col-lg-2 bg-white">
-        <div class="slim-form mt-4 h-100">
-            <label for="opt" class="pt-2">Abgangsjahr</label>
-            <select class="slim-select-single-school custom-select" id="opt">
-                <option>2024</option>
-                <option>B</option>
-                <option>C</option>
-            </select>
+        <div class="col-6 col-lg-2 bg-white">
+            <div class="slim-form mt-4 h-100">
+                <label for="opt" class="pt-2">Abgangsjahr</label>
+                <select name="end_date" class="slim-select-single-school custom-select" id="opt">
+                    <option value="">-</option>
+                    {% for date in (1991..date('now + 3 years')|date('Y'))|sort|reverse %}
+                        <option {{ date == filterValues.end_date|default() ? 'selected' : '' }} value="{{ date }}">
+                            {{ date }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
         </div>
+
+        <div class="col-lg-9 mt-lg-3 mt-2">
+            <div class="me-lg-2">
+                <input type="search" id="person_search" name="person" value="{{ filterValues.person|default() }}" class="form-control" placeholder="Anna Maria Müller">
+                <label for="person_search" class="d-none"></label>
+            </div>
+        </div>
+
+        <div class="col-lg-3 mt-lg-3 mt-2">
+            <button class="btn btn-primary w-100" form="filter_form" type="submit">
+                <i class="fas fa-filter me-2"></i>
+                <span>Filtern</span>
+            </button>
+        </div>
+
     </div>
-</div>
+</form>
