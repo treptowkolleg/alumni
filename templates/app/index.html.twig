@@ -72,8 +72,8 @@
                         {% if post.isPublished %}
                         <div class="col">
                             <div class="card bg-transparent h-100">
-                                {% if post.image %}
-                                    <img src="{{ vich_uploader_asset(post)|imagine_filter('post_thumbnail')  }}" alt="{{ post }}" class="img-fluid">
+                                {% if post.blogPostImageUrl %}
+                                    <img src="{{ asset(post.blogPostImageUrl)|imagine_filter('post_thumbnail')  }}" alt="{{ post }}" class="img-fluid">
                                     <div class="px-3 py-2 bg-white h-100">
                                         <div class="mb-0"><span class="fw-bold">{{ post.updatedAt|date('d.m.Y') }}</span> <span class="text-uppercase">{{ post.type }}</span></div>
                                         <a href="{{ path('blog_news_show',{'slug':post.slug}) }}" class="fs-5 card-link stretched-link text-decoration-none">{{ post }}</a>
