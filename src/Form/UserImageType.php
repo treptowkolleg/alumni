@@ -17,7 +17,7 @@ class UserImageType extends AbstractType
                 'label' => false,
                 'required'     => false,
                 'allow_delete' => true,
-                'download_uri' => true,
+                'download_uri' => false,
                 'help' => 'Lade ein Profilbild hoch, um dich besser vernetzen zu können.',
         ])
         ;
