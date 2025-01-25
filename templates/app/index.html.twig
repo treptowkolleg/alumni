@@ -82,7 +82,7 @@
                                     <div class="px-3 py-2 bg-white h-100">
                                         <a href="{{ path('blog_news_show',{'slug':post.slug}) }}" class="fs-5 card-link stretched-link text-decoration-none">{{ post }}</a>
                                         <div class="mb-0"><span class="fw-bold">{{ post.updatedAt|date('d.m.Y') }}</span> {{ post.type }}</div>
-                                        <div class="d-block text-truncate text-wrap">{{ post.content|striptags|u.truncate(150) }} ...</div>
+                                        <div class="d-block text-truncate text-wrap">{{ post.subtitle }}</div>
                                     </div>
                                 {% endif %}
                             </div>
