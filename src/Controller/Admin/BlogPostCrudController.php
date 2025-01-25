@@ -11,6 +11,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use Symfony\Component\Validator\Constraints\File;
 
 class BlogPostCrudController extends AbstractCrudController
 {
@@ -56,7 +57,8 @@ class BlogPostCrudController extends AbstractCrudController
             ImageField::new('blogPostAudio')->onlyOnForms()
                 ->setBasePath('audio/podcast')
                 ->setUploadDir('public/audio/podcast')
-                ->setUploadedFileNamePattern('[slug]-[timestamp].[extension]'),
+                ->setUploadedFileNamePattern('[slug]-[timestamp].[extension]')
+                ->setFileConstraints(new File(maxSize: '4098k')),
             TextField::new('imageCite')->setColumns(6)->onlyOnForms(),
             TextField::new('imageCityUrl')->setColumns(6)->onlyOnForms(),
 
