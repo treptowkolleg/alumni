@@ -6,6 +6,10 @@
                 <span class="ms-1 d-none d-lg-inline">Übersicht</span>
             </a>
             <a href="{{ path('profile_profile_new') }}" class="nav-item nav-link {{ selected|default() == 'profile' ? 'active' : '' }} text-nowrap">
+                <i class="fa-solid fa-university text-primary"></i>
+                <span class="ms-1 d-none d-lg-inline">Meine Schule</span>
+            </a>
+            <a href="{{ path('profile_profile_new') }}" class="nav-item nav-link {{ selected|default() == 'profile' ? 'active' : '' }} text-nowrap">
                 <i class="fa-solid fa-user text-primary"></i>
                 <span class="ms-1 d-none d-lg-inline">Profil</span>
             </a>
