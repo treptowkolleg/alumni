@@ -31,6 +31,9 @@ class Inbound
     #[Gedmo\Timestampable(on: 'create')]
     private ?\DateTimeImmutable $created = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $departement = null;
+
     public function __toString(): string
     {
         return $this->subject;
@@ -92,6 +95,18 @@ class Inbound
     public function getCreated(): ?\DateTimeImmutable
     {
         return $this->created;
+    }
+
+    public function getDepartement(): ?string
+    {
+        return $this->departement;
+    }
+
+    public function setDepartement(?string $departement): static
+    {
+        $this->departement = $departement;
+
+        return $this;
     }
 
 }

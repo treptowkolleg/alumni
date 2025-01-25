@@ -66,19 +66,29 @@ class UserProfileRepository extends ServiceEntityRepository
     /**
      * @return UserProfile[] Returns an array of UserProfile objects
      */
-    public function findBySearchQuery(?string $query = ""): array
+    public function findBySearchQuery(bool|string $name = false, bool|string $firstname = false): array
     {
-        return $this->createQueryBuilder('up')
-            ->addSelect('u')
-            ->leftJoin('up.user', 'u')
-            ->andWhere('u.firstname LIKE :query')
-            ->orWhere('u.lastname LIKE :query')
-            ->setParameter('query', "%$query%")
-            ->setMaxResults(30)
-            ->orderBy('RAND()')
-            ->getQuery()
-            ->getResult()
-            ;
+        $query = $this->createQueryBuilder('up')->addSelect('u')->leftJoin('up.user', 'u');
+
+        // TODO: Kombinieren mit Score aus normalem Wort. Erst hier splitten nach SoundEx
+
+        if ($name and $firstname) {
+            $query->andWhere('LEVENSHTEIN(u.firstnameSoundEx, :firstname,3) <= 3');
+            $query->andWhere('LEVENSHTEIN(u.lastnameSoundEx, :name,4) <= 4');
+            $query->setParameter('firstname', $firstname);
+            $query->setParameter('name', $name);
+            $query->orderBy('LEVENSHTEIN(u.firstnameSoundEx, :name,3)', 'DESC');
+        } elseif ($name) {
+            $query->andWhere('LEVENSHTEIN(u.firstnameSoundEx, :name,2) <= 2');
+            $query->setParameter('name', $name);
+            $query->orderBy('LEVENSHTEIN(u.firstnameSoundEx, :name,2)', 'DESC');
+        } else {
+            $query->orderBy('RAND()');
+        }
+
+
+
+        return $query->getQuery()->setMaxResults(9)->getResult();
     }
 
     /**

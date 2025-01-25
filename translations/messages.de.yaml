@@ -6,6 +6,11 @@ Login: Anmelden
 Roles: Rollen
 ROLE_USER: Standardbenutzer
 ROLE_AUTHOR: Autor
+ROLE_PLANNER: Veranstalter
+ROLE_EDITOR: Redakteur
+ROLE_SUPER_PLANNER: Chef-Veranstalter
+ROLE_SUPER_AUTHOR: Chef-Autor
+ROLE_SUPER_EDITOR: Chef-Redakteur
 ROLE_ADMIN: Administrator
 Start date: Von
 End date: Bis

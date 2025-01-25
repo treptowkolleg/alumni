@@ -1,0 +1,333 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1723pt" height="1274pt" viewBox="0.00 0.00 1723.29 1274.40">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 1270.4)">
+<title>blog_post</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-1270.4 1719.29,-1270.4 1719.29,4 -4,4"/>
+<!-- blog_post -->
+<g id="node1" class="node">
+<title>blog_post</title>
+<polygon fill="none" stroke="black" points="0,-660.1 0,-1036.9 355.79,-1036.9 355.79,-660.1 0,-660.1"/>
+<text text-anchor="middle" x="177.9" y="-1020.3" font-family="Times,serif" font-size="14.00">blog_post</text>
+<polyline fill="none" stroke="black" points="0,-1012.1 355.79,-1012.1"/>
+<text text-anchor="start" x="8" y="-995.5" font-family="Times,serif" font-size="14.00">type_id : int(11)</text>
+<text text-anchor="start" x="8" y="-978.7" font-family="Times,serif" font-size="14.00"> title : varchar(255)</text>
+<text text-anchor="start" x="8" y="-961.9" font-family="Times,serif" font-size="14.00"> content : longtext</text>
+<text text-anchor="start" x="8" y="-945.1" font-family="Times,serif" font-size="14.00"> is_published : tinyint(1)</text>
+<text text-anchor="start" x="8" y="-928.3" font-family="Times,serif" font-size="14.00"> image_name : varchar(255)</text>
+<text text-anchor="start" x="8" y="-911.5" font-family="Times,serif" font-size="14.00"> image_original_name : varchar(255)</text>
+<text text-anchor="start" x="8" y="-894.7" font-family="Times,serif" font-size="14.00"> image_mime_type : varchar(255)</text>
+<text text-anchor="start" x="8" y="-877.9" font-family="Times,serif" font-size="14.00"> image_size : int(11)</text>
+<text text-anchor="start" x="8" y="-861.1" font-family="Times,serif" font-size="14.00"> image_dimensions /* (DC2Type:simple_array) */ : longtext</text>
+<text text-anchor="start" x="8" y="-844.3" font-family="Times,serif" font-size="14.00"> updated_at /* (DC2Type:datetime_immutable) */ : datetime</text>
+<text text-anchor="start" x="8" y="-827.5" font-family="Times,serif" font-size="14.00"> is_lead_post : tinyint(1)</text>
+<text text-anchor="start" x="8" y="-810.7" font-family="Times,serif" font-size="14.00"> subtitle : varchar(255)</text>
+<text text-anchor="start" x="8" y="-793.9" font-family="Times,serif" font-size="14.00"> author_id : int(11)</text>
+<text text-anchor="start" x="8" y="-777.1" font-family="Times,serif" font-size="14.00"> slug : varchar(128)</text>
+<text text-anchor="start" x="8" y="-760.3" font-family="Times,serif" font-size="14.00"> audio_name : varchar(255)</text>
+<text text-anchor="start" x="8" y="-743.5" font-family="Times,serif" font-size="14.00"> audio_original_name : varchar(255)</text>
+<text text-anchor="start" x="8" y="-726.7" font-family="Times,serif" font-size="14.00"> audio_mime_type : varchar(255)</text>
+<text text-anchor="start" x="8" y="-709.9" font-family="Times,serif" font-size="14.00"> audio_size : int(11)</text>
+<text text-anchor="start" x="8" y="-693.1" font-family="Times,serif" font-size="14.00"> audio_dimensions /* (DC2Type:simple_array) */ : longtext</text>
+<polyline fill="none" stroke="black" points="0,-684.9 355.79,-684.9"/>
+<text text-anchor="start" x="8" y="-668.3" font-family="Times,serif" font-size="14.00">id : int(11)</text>
+</g>
+<!-- blog_type -->
+<g id="node2" class="node">
+<title>blog_type</title>
+<polygon fill="none" stroke="black" points="95.45,-380.7 95.45,-471.9 260.34,-471.9 260.34,-380.7 95.45,-380.7"/>
+<text text-anchor="middle" x="177.9" y="-455.3" font-family="Times,serif" font-size="14.00">blog_type</text>
+<polyline fill="none" stroke="black" points="95.45,-447.1 260.34,-447.1"/>
+<text text-anchor="start" x="103.45" y="-430.5" font-family="Times,serif" font-size="14.00">title : varchar(255)</text>
+<text text-anchor="start" x="103.45" y="-413.7" font-family="Times,serif" font-size="14.00"> description : varchar(255)</text>
+<polyline fill="none" stroke="black" points="95.45,-405.5 260.34,-405.5"/>
+<text text-anchor="start" x="103.45" y="-388.9" font-family="Times,serif" font-size="14.00">id : int(11)</text>
+</g>
+<!-- blog_post&#45;&gt;blog_type -->
+<g id="edge1" class="edge">
+<title>blog_post-&gt;blog_type</title>
+<path fill="none" stroke="#595959" d="M177.9,-659.63C177.9,-659.63 177.9,-483.71 177.9,-483.71"/>
+<polygon fill="#595959" stroke="#595959" points="181.4,-483.71 177.9,-473.71 174.4,-483.71 181.4,-483.71"/>
+</g>
+<!-- user -->
+<g id="node12" class="node">
+<title>user</title>
+<polygon fill="none" stroke="black" points="681,-263.1 681,-589.5 1036.79,-589.5 1036.79,-263.1 681,-263.1"/>
+<text text-anchor="middle" x="858.9" y="-572.9" font-family="Times,serif" font-size="14.00">user</text>
+<polyline fill="none" stroke="black" points="681,-564.7 1036.79,-564.7"/>
+<text text-anchor="start" x="689" y="-548.1" font-family="Times,serif" font-size="14.00">email : varchar(180)</text>
+<text text-anchor="start" x="689" y="-531.3" font-family="Times,serif" font-size="14.00"> roles /* (DC2Type:json) */ : longtext</text>
+<text text-anchor="start" x="689" y="-514.5" font-family="Times,serif" font-size="14.00"> password : varchar(255)</text>
+<text text-anchor="start" x="689" y="-497.7" font-family="Times,serif" font-size="14.00"> firstname : varchar(255)</text>
+<text text-anchor="start" x="689" y="-480.9" font-family="Times,serif" font-size="14.00"> lastname : varchar(255)</text>
+<text text-anchor="start" x="689" y="-464.1" font-family="Times,serif" font-size="14.00"> is_verified : tinyint(1)</text>
+<text text-anchor="start" x="689" y="-447.3" font-family="Times,serif" font-size="14.00"> school_id : int(11)</text>
+<text text-anchor="start" x="689" y="-430.5" font-family="Times,serif" font-size="14.00"> user_type : varchar(255)</text>
+<text text-anchor="start" x="689" y="-413.7" font-family="Times,serif" font-size="14.00"> has_school : tinyint(1)</text>
+<text text-anchor="start" x="689" y="-396.9" font-family="Times,serif" font-size="14.00"> slug : varchar(128)</text>
+<text text-anchor="start" x="689" y="-380.1" font-family="Times,serif" font-size="14.00"> updated_at /* (DC2Type:datetime_immutable) */ : datetime</text>
+<text text-anchor="start" x="689" y="-363.3" font-family="Times,serif" font-size="14.00"> image_name : varchar(255)</text>
+<text text-anchor="start" x="689" y="-346.5" font-family="Times,serif" font-size="14.00"> image_original_name : varchar(255)</text>
+<text text-anchor="start" x="689" y="-329.7" font-family="Times,serif" font-size="14.00"> image_mime_type : varchar(255)</text>
+<text text-anchor="start" x="689" y="-312.9" font-family="Times,serif" font-size="14.00"> image_size : int(11)</text>
+<text text-anchor="start" x="689" y="-296.1" font-family="Times,serif" font-size="14.00"> image_dimensions /* (DC2Type:simple_array) */ : longtext</text>
+<polyline fill="none" stroke="black" points="681,-287.9 1036.79,-287.9"/>
+<text text-anchor="start" x="689" y="-271.3" font-family="Times,serif" font-size="14.00">id : int(11)</text>
+</g>
+<!-- blog_post&#45;&gt;user -->
+<g id="edge2" class="edge">
+<title>blog_post-&gt;user</title>
+<path fill="none" stroke="#595959" d="M308.07,-659.8C308.07,-591.66 308.07,-531.2 308.07,-531.2 308.07,-531.2 669.31,-531.2 669.31,-531.2"/>
+<polygon fill="#595959" stroke="#595959" points="669.31,-534.7 679.31,-531.2 669.31,-527.7 669.31,-534.7"/>
+</g>
+<!-- chat -->
+<g id="node3" class="node">
+<title>chat</title>
+<polygon fill="none" stroke="black" points="785.77,-802.9 785.77,-894.1 932.02,-894.1 932.02,-802.9 785.77,-802.9"/>
+<text text-anchor="middle" x="858.9" y="-877.5" font-family="Times,serif" font-size="14.00">chat</text>
+<polyline fill="none" stroke="black" points="785.77,-869.3 932.02,-869.3"/>
+<text text-anchor="start" x="793.77" y="-852.7" font-family="Times,serif" font-size="14.00">owner_id : int(11)</text>
+<text text-anchor="start" x="793.77" y="-835.9" font-family="Times,serif" font-size="14.00"> participant_id : int(11)</text>
+<polyline fill="none" stroke="black" points="785.77,-827.7 932.02,-827.7"/>
+<text text-anchor="start" x="793.77" y="-811.1" font-family="Times,serif" font-size="14.00">id : varchar(12)</text>
+</g>
+<!-- chat&#45;&gt;user -->
+<g id="edge3" class="edge">
+<title>chat-&gt;user</title>
+<path fill="none" stroke="#595959" d="M883.27,-802.51C883.27,-802.51 883.27,-601.06 883.27,-601.06"/>
+<polygon fill="#595959" stroke="#595959" points="886.77,-601.06 883.27,-591.06 879.77,-601.06 886.77,-601.06"/>
+</g>
+<!-- chat&#45;&gt;user -->
+<g id="edge4" class="edge">
+<title>chat-&gt;user</title>
+<path fill="none" stroke="#595959" d="M834.52,-802.51C834.52,-802.51 834.52,-601.06 834.52,-601.06"/>
+<polygon fill="#595959" stroke="#595959" points="838.02,-601.06 834.52,-591.06 831.02,-601.06 838.02,-601.06"/>
+</g>
+<!-- chat_message -->
+<g id="node4" class="node">
+<title>chat_message</title>
+<polygon fill="none" stroke="black" points="670.51,-1107.5 670.51,-1265.9 1005.29,-1265.9 1005.29,-1107.5 670.51,-1107.5"/>
+<text text-anchor="middle" x="837.9" y="-1249.3" font-family="Times,serif" font-size="14.00">chat_message</text>
+<polyline fill="none" stroke="black" points="670.51,-1241.1 1005.29,-1241.1"/>
+<text text-anchor="start" x="678.51" y="-1224.5" font-family="Times,serif" font-size="14.00">sender_id : int(11)</text>
+<text text-anchor="start" x="678.51" y="-1207.7" font-family="Times,serif" font-size="14.00"> chat_id : varchar(12)</text>
+<text text-anchor="start" x="678.51" y="-1190.9" font-family="Times,serif" font-size="14.00"> message : longtext</text>
+<text text-anchor="start" x="678.51" y="-1174.1" font-family="Times,serif" font-size="14.00"> created /* (DC2Type:datetime_immutable) */ : datetime</text>
+<text text-anchor="start" x="678.51" y="-1157.3" font-family="Times,serif" font-size="14.00"> is_read : tinyint(1)</text>
+<text text-anchor="start" x="678.51" y="-1140.5" font-family="Times,serif" font-size="14.00"> subject : varchar(50)</text>
+<polyline fill="none" stroke="black" points="670.51,-1132.3 1005.29,-1132.3"/>
+<text text-anchor="start" x="678.51" y="-1115.7" font-family="Times,serif" font-size="14.00">id : varchar(12)</text>
+</g>
+<!-- chat_message&#45;&gt;chat -->
+<g id="edge5" class="edge">
+<title>chat_message-&gt;chat</title>
+<path fill="none" stroke="#595959" d="M858.9,-1107.41C858.9,-1107.41 858.9,-906.05 858.9,-906.05"/>
+<polygon fill="#595959" stroke="#595959" points="862.4,-906.05 858.9,-896.05 855.4,-906.05 862.4,-906.05"/>
+</g>
+<!-- chat_message&#45;&gt;user -->
+<g id="edge6" class="edge">
+<title>chat_message-&gt;user</title>
+<path fill="none" stroke="#595959" d="M757.78,-1107.12C757.78,-1107.12 757.78,-601.44 757.78,-601.44"/>
+<polygon fill="#595959" stroke="#595959" points="761.28,-601.44 757.78,-591.44 754.28,-601.44 761.28,-601.44"/>
+</g>
+<!-- event -->
+<g id="node5" class="node">
+<title>event</title>
+<polygon fill="none" stroke="black" points="1136.18,-727.3 1136.18,-969.7 1323.61,-969.7 1323.61,-727.3 1136.18,-727.3"/>
+<text text-anchor="middle" x="1229.9" y="-953.1" font-family="Times,serif" font-size="14.00">event</text>
+<polyline fill="none" stroke="black" points="1136.18,-944.9 1323.61,-944.9"/>
+<text text-anchor="start" x="1144.18" y="-928.3" font-family="Times,serif" font-size="14.00">title : varchar(255)</text>
+<text text-anchor="start" x="1144.18" y="-911.5" font-family="Times,serif" font-size="14.00"> description : longtext</text>
+<text text-anchor="start" x="1144.18" y="-894.7" font-family="Times,serif" font-size="14.00"> website : varchar(255)</text>
+<text text-anchor="start" x="1144.18" y="-877.9" font-family="Times,serif" font-size="14.00"> location : varchar(255)</text>
+<text text-anchor="start" x="1144.18" y="-861.1" font-family="Times,serif" font-size="14.00"> start_date : datetime</text>
+<text text-anchor="start" x="1144.18" y="-844.3" font-family="Times,serif" font-size="14.00"> end_date : datetime</text>
+<text text-anchor="start" x="1144.18" y="-827.5" font-family="Times,serif" font-size="14.00"> contact_person : varchar(255)</text>
+<text text-anchor="start" x="1144.18" y="-810.7" font-family="Times,serif" font-size="14.00"> contact_email : varchar(255)</text>
+<text text-anchor="start" x="1144.18" y="-793.9" font-family="Times,serif" font-size="14.00"> type_id : int(11)</text>
+<text text-anchor="start" x="1144.18" y="-777.1" font-family="Times,serif" font-size="14.00"> slug : varchar(128)</text>
+<text text-anchor="start" x="1144.18" y="-760.3" font-family="Times,serif" font-size="14.00"> user_id : int(11)</text>
+<polyline fill="none" stroke="black" points="1136.18,-752.1 1323.61,-752.1"/>
+<text text-anchor="start" x="1144.18" y="-735.5" font-family="Times,serif" font-size="14.00">id : int(11)</text>
+</g>
+<!-- event_type -->
+<g id="node7" class="node">
+<title>event_type</title>
+<polygon fill="none" stroke="black" points="1147.45,-380.7 1147.45,-471.9 1312.34,-471.9 1312.34,-380.7 1147.45,-380.7"/>
+<text text-anchor="middle" x="1229.9" y="-455.3" font-family="Times,serif" font-size="14.00">event_type</text>
+<polyline fill="none" stroke="black" points="1147.45,-447.1 1312.34,-447.1"/>
+<text text-anchor="start" x="1155.45" y="-430.5" font-family="Times,serif" font-size="14.00">title : varchar(255)</text>
+<text text-anchor="start" x="1155.45" y="-413.7" font-family="Times,serif" font-size="14.00"> description : varchar(255)</text>
+<polyline fill="none" stroke="black" points="1147.45,-405.5 1312.34,-405.5"/>
+<text text-anchor="start" x="1155.45" y="-388.9" font-family="Times,serif" font-size="14.00">id : int(11)</text>
+</g>
+<!-- event&#45;&gt;event_type -->
+<g id="edge7" class="edge">
+<title>event-&gt;event_type</title>
+<path fill="none" stroke="#595959" d="M1229.9,-726.95C1229.9,-726.95 1229.9,-483.72 1229.9,-483.72"/>
+<polygon fill="#595959" stroke="#595959" points="1233.4,-483.72 1229.9,-473.72 1226.4,-483.72 1233.4,-483.72"/>
+</g>
+<!-- event&#45;&gt;user -->
+<g id="edge8" class="edge">
+<title>event-&gt;user</title>
+<path fill="none" stroke="#595959" d="M1141.82,-727.18C1141.82,-637.61 1141.82,-531.2 1141.82,-531.2 1141.82,-531.2 1048.79,-531.2 1048.79,-531.2"/>
+<polygon fill="#595959" stroke="#595959" points="1048.79,-527.7 1038.79,-531.2 1048.79,-534.7 1048.79,-527.7"/>
+</g>
+<!-- event_school -->
+<g id="node6" class="node">
+<title>event_school</title>
+<polygon fill="none" stroke="black" points="1239.43,-1153.5 1239.43,-1219.9 1362.36,-1219.9 1362.36,-1153.5 1239.43,-1153.5"/>
+<text text-anchor="middle" x="1300.9" y="-1203.3" font-family="Times,serif" font-size="14.00">event_school</text>
+<polyline fill="none" stroke="black" points="1239.43,-1195.1 1362.36,-1195.1"/>
+<text text-anchor="start" x="1247.43" y="-1178.5" font-family="Times,serif" font-size="14.00">event_id : int(11)</text>
+<text text-anchor="start" x="1247.43" y="-1161.7" font-family="Times,serif" font-size="14.00"> school_id : int(11)</text>
+</g>
+<!-- event_school&#45;&gt;event -->
+<g id="edge9" class="edge">
+<title>event_school-&gt;event</title>
+<path fill="none" stroke="#595959" d="M1281.52,-1153.04C1281.52,-1153.04 1281.52,-981.35 1281.52,-981.35"/>
+<polygon fill="#595959" stroke="#595959" points="1285.02,-981.35 1281.52,-971.35 1278.02,-981.35 1285.02,-981.35"/>
+</g>
+<!-- school -->
+<g id="node11" class="node">
+<title>school</title>
+<polygon fill="none" stroke="black" points="1023.89,-0.5 1023.89,-226.1 1191.9,-226.1 1191.9,-0.5 1023.89,-0.5"/>
+<text text-anchor="middle" x="1107.9" y="-209.5" font-family="Times,serif" font-size="14.00">school</text>
+<polyline fill="none" stroke="black" points="1023.89,-201.3 1191.9,-201.3"/>
+<text text-anchor="start" x="1031.89" y="-184.7" font-family="Times,serif" font-size="14.00">title : varchar(255)</text>
+<text text-anchor="start" x="1031.89" y="-167.9" font-family="Times,serif" font-size="14.00"> city : varchar(255)</text>
+<text text-anchor="start" x="1031.89" y="-151.1" font-family="Times,serif" font-size="14.00"> district : varchar(255)</text>
+<text text-anchor="start" x="1031.89" y="-134.3" font-family="Times,serif" font-size="14.00"> sub_district : varchar(255)</text>
+<text text-anchor="start" x="1031.89" y="-117.5" font-family="Times,serif" font-size="14.00"> plz : varchar(5)</text>
+<text text-anchor="start" x="1031.89" y="-100.7" font-family="Times,serif" font-size="14.00"> street : varchar(255)</text>
+<text text-anchor="start" x="1031.89" y="-83.9" font-family="Times,serif" font-size="14.00"> bsn : varchar(255)</text>
+<text text-anchor="start" x="1031.89" y="-67.1" font-family="Times,serif" font-size="14.00"> url : varchar(255)</text>
+<text text-anchor="start" x="1031.89" y="-50.3" font-family="Times,serif" font-size="14.00"> lat : varchar(255)</text>
+<text text-anchor="start" x="1031.89" y="-33.5" font-family="Times,serif" font-size="14.00"> lon : varchar(255)</text>
+<polyline fill="none" stroke="black" points="1023.89,-25.3 1191.9,-25.3"/>
+<text text-anchor="start" x="1031.89" y="-8.7" font-family="Times,serif" font-size="14.00">id : int(11)</text>
+</g>
+<!-- event_school&#45;&gt;school -->
+<g id="edge10" class="edge">
+<title>event_school-&gt;school</title>
+<path fill="none" stroke="#595959" d="M1342.99,-1153.1C1342.99,-971.28 1342.99,-113.3 1342.99,-113.3 1342.99,-113.3 1342.99,-101.79 1342.99,-101.79"/>
+<polygon fill="#595959" stroke="#595959" points="1203.32,-108.93 1193.61,-113.18 1203.85,-115.91 1203.32,-108.93"/>
+</g>
+<!-- inbound -->
+<g id="node8" class="node">
+<title>inbound</title>
+<polygon fill="none" stroke="black" points="1380.51,-1107.5 1380.51,-1265.9 1715.29,-1265.9 1715.29,-1107.5 1380.51,-1107.5"/>
+<text text-anchor="middle" x="1547.9" y="-1249.3" font-family="Times,serif" font-size="14.00">inbound</text>
+<polyline fill="none" stroke="black" points="1380.51,-1241.1 1715.29,-1241.1"/>
+<text text-anchor="start" x="1388.51" y="-1224.5" font-family="Times,serif" font-size="14.00">sender : varchar(255)</text>
+<text text-anchor="start" x="1388.51" y="-1207.7" font-family="Times,serif" font-size="14.00"> text : longtext</text>
+<text text-anchor="start" x="1388.51" y="-1190.9" font-family="Times,serif" font-size="14.00"> html : longtext</text>
+<text text-anchor="start" x="1388.51" y="-1174.1" font-family="Times,serif" font-size="14.00"> subject : varchar(255)</text>
+<text text-anchor="start" x="1388.51" y="-1157.3" font-family="Times,serif" font-size="14.00"> created /* (DC2Type:datetime_immutable) */ : datetime</text>
+<text text-anchor="start" x="1388.51" y="-1140.5" font-family="Times,serif" font-size="14.00"> departement : varchar(255)</text>
+<polyline fill="none" stroke="black" points="1380.51,-1132.3 1715.29,-1132.3"/>
+<text text-anchor="start" x="1388.51" y="-1115.7" font-family="Times,serif" font-size="14.00">id : int(11)</text>
+</g>
+<!-- newsletter -->
+<g id="node9" class="node">
+<title>newsletter</title>
+<polygon fill="none" stroke="black" points="949.76,-802.9 949.76,-894.1 1080.04,-894.1 1080.04,-802.9 949.76,-802.9"/>
+<text text-anchor="middle" x="1014.9" y="-877.5" font-family="Times,serif" font-size="14.00">newsletter</text>
+<polyline fill="none" stroke="black" points="949.76,-869.3 1080.04,-869.3"/>
+<text text-anchor="start" x="957.76" y="-852.7" font-family="Times,serif" font-size="14.00">email : varchar(255)</text>
+<text text-anchor="start" x="957.76" y="-835.9" font-family="Times,serif" font-size="14.00"> user_id : int(11)</text>
+<polyline fill="none" stroke="black" points="949.76,-827.7 1080.04,-827.7"/>
+<text text-anchor="start" x="957.76" y="-811.1" font-family="Times,serif" font-size="14.00">id : int(11)</text>
+</g>
+<!-- newsletter&#45;&gt;user -->
+<g id="edge11" class="edge">
+<title>newsletter-&gt;user</title>
+<path fill="none" stroke="#595959" d="M993.28,-802.51C993.28,-802.51 993.28,-601.06 993.28,-601.06"/>
+<polygon fill="#595959" stroke="#595959" points="996.78,-601.06 993.28,-591.06 989.78,-601.06 996.78,-601.06"/>
+</g>
+<!-- newsletter_school -->
+<g id="node10" class="node">
+<title>newsletter_school</title>
+<polygon fill="none" stroke="black" points="1030.69,-1153.5 1030.69,-1219.9 1171.1,-1219.9 1171.1,-1153.5 1030.69,-1153.5"/>
+<text text-anchor="middle" x="1100.9" y="-1203.3" font-family="Times,serif" font-size="14.00">newsletter_school</text>
+<polyline fill="none" stroke="black" points="1030.69,-1195.1 1171.1,-1195.1"/>
+<text text-anchor="start" x="1038.69" y="-1178.5" font-family="Times,serif" font-size="14.00">newsletter_id : int(11)</text>
+<text text-anchor="start" x="1038.69" y="-1161.7" font-family="Times,serif" font-size="14.00"> school_id : int(11)</text>
+</g>
+<!-- newsletter_school&#45;&gt;newsletter -->
+<g id="edge12" class="edge">
+<title>newsletter_school-&gt;newsletter</title>
+<path fill="none" stroke="#595959" d="M1055.36,-1153.04C1055.36,-1153.04 1055.36,-906.11 1055.36,-906.11"/>
+<polygon fill="#595959" stroke="#595959" points="1058.86,-906.11 1055.36,-896.11 1051.86,-906.11 1058.86,-906.11"/>
+</g>
+<!-- newsletter_school&#45;&gt;school -->
+<g id="edge13" class="edge">
+<title>newsletter_school-&gt;school</title>
+<path fill="none" stroke="#595959" d="M1108.11,-1153.1C1108.11,-1153.1 1108.11,-237.74 1108.11,-237.74"/>
+<polygon fill="#595959" stroke="#595959" points="1111.61,-237.74 1108.11,-227.74 1104.61,-237.74 1111.61,-237.74"/>
+</g>
+<!-- user&#45;&gt;school -->
+<g id="edge14" class="edge">
+<title>user-&gt;school</title>
+<path fill="none" stroke="#595959" d="M1030.34,-262.92C1030.34,-262.92 1030.34,-238 1030.34,-238"/>
+<polygon fill="#595959" stroke="#595959" points="1033.84,-238 1030.34,-228 1026.84,-238 1033.84,-238"/>
+</g>
+<!-- user_profile -->
+<g id="node13" class="node">
+<title>user_profile</title>
+<polygon fill="none" stroke="black" points="374,-626.5 374,-1070.5 729.79,-1070.5 729.79,-626.5 374,-626.5"/>
+<text text-anchor="middle" x="551.9" y="-1053.9" font-family="Times,serif" font-size="14.00">user_profile</text>
+<polyline fill="none" stroke="black" points="374,-1045.7 729.79,-1045.7"/>
+<text text-anchor="start" x="382" y="-1029.1" font-family="Times,serif" font-size="14.00">user_id : int(11)</text>
+<text text-anchor="start" x="382" y="-1012.3" font-family="Times,serif" font-size="14.00"> in_year : varchar(4)</text>
+<text text-anchor="start" x="382" y="-995.5" font-family="Times,serif" font-size="14.00"> out_year : varchar(4)</text>
+<text text-anchor="start" x="382" y="-978.7" font-family="Times,serif" font-size="14.00"> current_profession : varchar(255)</text>
+<text text-anchor="start" x="382" y="-961.9" font-family="Times,serif" font-size="14.00"> current_company : varchar(255)</text>
+<text text-anchor="start" x="382" y="-945.1" font-family="Times,serif" font-size="14.00"> studium : varchar(255)</text>
+<text text-anchor="start" x="382" y="-928.3" font-family="Times,serif" font-size="14.00"> university : varchar(255)</text>
+<text text-anchor="start" x="382" y="-911.5" font-family="Times,serif" font-size="14.00"> portfolio_link : varchar(255)</text>
+<text text-anchor="start" x="382" y="-894.7" font-family="Times,serif" font-size="14.00"> network_state : varchar(255)</text>
+<text text-anchor="start" x="382" y="-877.9" font-family="Times,serif" font-size="14.00"> hobbies /* (DC2Type:json) */ : longtext</text>
+<text text-anchor="start" x="382" y="-861.1" font-family="Times,serif" font-size="14.00"> favorite_school_subjects /* (DC2Type:json) */ : longtext</text>
+<text text-anchor="start" x="382" y="-844.3" font-family="Times,serif" font-size="14.00"> interests /* (DC2Type:json) */ : longtext</text>
+<text text-anchor="start" x="382" y="-827.5" font-family="Times,serif" font-size="14.00"> about : longtext</text>
+<text text-anchor="start" x="382" y="-810.7" font-family="Times,serif" font-size="14.00"> performance_course /* (DC2Type:json) */ : longtext</text>
+<text text-anchor="start" x="382" y="-793.9" font-family="Times,serif" font-size="14.00"> exam_type : varchar(255)</text>
+<text text-anchor="start" x="382" y="-777.1" font-family="Times,serif" font-size="14.00"> tags /* (DC2Type:json) */ : longtext</text>
+<text text-anchor="start" x="382" y="-760.3" font-family="Times,serif" font-size="14.00"> display_name : varchar(255)</text>
+<text text-anchor="start" x="382" y="-743.5" font-family="Times,serif" font-size="14.00"> updated_at /* (DC2Type:datetime_immutable) */ : datetime</text>
+<text text-anchor="start" x="382" y="-726.7" font-family="Times,serif" font-size="14.00"> image_name : varchar(255)</text>
+<text text-anchor="start" x="382" y="-709.9" font-family="Times,serif" font-size="14.00"> image_original_name : varchar(255)</text>
+<text text-anchor="start" x="382" y="-693.1" font-family="Times,serif" font-size="14.00"> image_mime_type : varchar(255)</text>
+<text text-anchor="start" x="382" y="-676.3" font-family="Times,serif" font-size="14.00"> image_size : int(11)</text>
+<text text-anchor="start" x="382" y="-659.5" font-family="Times,serif" font-size="14.00"> image_dimensions /* (DC2Type:simple_array) */ : longtext</text>
+<polyline fill="none" stroke="black" points="374,-651.3 729.79,-651.3"/>
+<text text-anchor="start" x="382" y="-634.7" font-family="Times,serif" font-size="14.00">id : int(11)</text>
+</g>
+<!-- user_profile&#45;&gt;user -->
+<g id="edge15" class="edge">
+<title>user_profile-&gt;user</title>
+<path fill="none" stroke="#595959" d="M705.4,-626.27C705.4,-626.27 705.4,-601.45 705.4,-601.45"/>
+<polygon fill="#595959" stroke="#595959" points="708.9,-601.45 705.4,-591.45 701.9,-601.45 708.9,-601.45"/>
+</g>
+<!-- user_profile_user_profile -->
+<g id="node14" class="node">
+<title>user_profile_user_profile</title>
+<polygon fill="none" stroke="black" points="463.81,-1153.5 463.81,-1219.9 639.98,-1219.9 639.98,-1153.5 463.81,-1153.5"/>
+<text text-anchor="middle" x="551.9" y="-1203.3" font-family="Times,serif" font-size="14.00">user_profile_user_profile</text>
+<polyline fill="none" stroke="black" points="463.81,-1195.1 639.98,-1195.1"/>
+<text text-anchor="start" x="471.81" y="-1178.5" font-family="Times,serif" font-size="14.00">user_profile_source : int(11)</text>
+<text text-anchor="start" x="471.81" y="-1161.7" font-family="Times,serif" font-size="14.00"> user_profile_target : int(11)</text>
+</g>
+<!-- user_profile_user_profile&#45;&gt;user_profile -->
+<g id="edge16" class="edge">
+<title>user_profile_user_profile-&gt;user_profile</title>
+<path fill="none" stroke="#595959" d="M581.26,-1153.04C581.26,-1153.04 581.26,-1082.4 581.26,-1082.4"/>
+<polygon fill="#595959" stroke="#595959" points="584.76,-1082.4 581.26,-1072.4 577.76,-1082.4 584.76,-1082.4"/>
+</g>
+<!-- user_profile_user_profile&#45;&gt;user_profile -->
+<g id="edge17" class="edge">
+<title>user_profile_user_profile-&gt;user_profile</title>
+<path fill="none" stroke="#595959" d="M522.53,-1153.04C522.53,-1153.04 522.53,-1082.4 522.53,-1082.4"/>
+<polygon fill="#595959" stroke="#595959" points="526.03,-1082.4 522.53,-1072.4 519.03,-1082.4 526.03,-1082.4"/>
+</g>
+</g>
+</svg>

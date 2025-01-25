@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\RegistrationFormType;
+use App\Operator\SoundExpression;
 use App\Repository\UserRepository;
 use App\Security\EmailVerifier;
 use Doctrine\ORM\EntityManagerInterface;
@@ -34,6 +35,10 @@ class RegistrationController extends AbstractController
             /** @var string $plainPassword */
             $plainPassword = $form->get('plainPassword')->getData();
             if(!$user->hasSchool()) $user->setSchool(null);
+
+            // Phonetik generieren und speichern
+            $user->setFirstnameSoundEx(SoundExpression::generate($user->getFirstname()));
+            $user->setLastnameSoundEx(SoundExpression::generate($user->getLastname()));
 
             // encode the plain password
             $user->setPassword($userPasswordHasher->hashPassword($user, $plainPassword));

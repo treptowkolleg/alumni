@@ -51,9 +51,26 @@ class School
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $lon = null;
 
+    /**
+     * @var Collection<int, Event>
+     */
+    #[ORM\ManyToMany(targetEntity: Event::class, mappedBy: 'school')]
+    private Collection $events;
+
+    /**
+     * @var Collection<int, Newsletter>
+     */
+    #[ORM\ManyToMany(targetEntity: Newsletter::class, mappedBy: 'school')]
+    private Collection $newsletters;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $titleSoundEx = null;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
+        $this->events = new ArrayCollection();
+        $this->newsletters = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -212,6 +229,72 @@ class School
     public function setLon(?string $lon): static
     {
         $this->lon = $lon;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Event>
+     */
+    public function getEvents(): Collection
+    {
+        return $this->events;
+    }
+
+    public function addEvent(Event $event): static
+    {
+        if (!$this->events->contains($event)) {
+            $this->events->add($event);
+            $event->addSchool($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEvent(Event $event): static
+    {
+        if ($this->events->removeElement($event)) {
+            $event->removeSchool($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Newsletter>
+     */
+    public function getNewsletters(): Collection
+    {
+        return $this->newsletters;
+    }
+
+    public function addNewsletter(Newsletter $newsletter): static
+    {
+        if (!$this->newsletters->contains($newsletter)) {
+            $this->newsletters->add($newsletter);
+            $newsletter->addSchool($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNewsletter(Newsletter $newsletter): static
+    {
+        if ($this->newsletters->removeElement($newsletter)) {
+            $newsletter->removeSchool($this);
+        }
+
+        return $this;
+    }
+
+    public function getTitleSoundEx(): ?string
+    {
+        return $this->titleSoundEx;
+    }
+
+    public function setTitleSoundEx(?string $titleSoundEx): static
+    {
+        $this->titleSoundEx = $titleSoundEx;
 
         return $this;
     }

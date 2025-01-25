@@ -7,6 +7,7 @@ use App\Entity\Event;
 use App\Entity\User;
 use App\Entity\UserProfile;
 use App\Enums\PerformanceCourseEnum;
+use App\Operator\SoundExpression;
 use App\Repository\BlogPostRepository;
 use App\Repository\EventRepository;
 use App\Repository\EventTypeRepository;
@@ -26,7 +27,18 @@ class PersonController extends AbstractController
     public function index(Request $request, UserRepository $userRepository, UserProfileRepository $repository, SchoolRepository $schoolRepository, string $filter = 'all'): Response
     {
         $filterValues = $request->request->all();
+
         $search = $request->request->get('person');
+
+        // TODO: SoundEx lieber erst während der DB-Query
+        $searchArray = explode(' ', $search);
+        if(count($searchArray) > 1){
+            $name = SoundExpression::generate(array_pop($searchArray));
+            $firstname = SoundExpression::generate(implode(' ', $searchArray));
+        } else {
+            $firstname = false;
+            $name = SoundExpression::generate(array_pop($searchArray));
+        }
 
 
         $people = null;
@@ -44,9 +56,30 @@ class PersonController extends AbstractController
             if (!empty($filteredTypes)) {
                 $people = $repository->findBySchool($filteredTypes,$search);
             } else {
-                $people = $repository->findBySearchQuery($search);
+                $people = $repository->findBySearchQuery($name, $firstname);
             }
 
+        }
+
+        if($search) {
+            $people = array_filter($people, function($person) use ($firstname, $name) {
+                if($firstname) {
+                    if(
+                        levenshtein($firstname,$person->getUser()->getFirstnameSoundEx()) <= 2 and
+                        levenshtein($name, $person->getUser()->getLastnameSoundEx()) <= 2
+                    ) {
+                        return $person;
+                    }
+                } else {
+                    if(
+                        levenshtein($name,$person->getUser()->getFirstnameSoundEx()) <= 2 or
+                        levenshtein($name, $person->getUser()->getLastnameSoundEx()) <= 2
+                    ) {
+                        return $person;
+                    }
+                }
+                return null;
+            });
         }
 
 
@@ -80,6 +113,7 @@ class PersonController extends AbstractController
 
 
         return $this->render('people/index.html.twig', [
+            'sx' => $firstname . " " . $name,
             'filterValues' => $filterValues,
             'filter' => $filter,
             'people' => $people,

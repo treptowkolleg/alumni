@@ -18,6 +18,8 @@ doctrine:
         dql:
             numeric_functions:
                 rand: DoctrineExtensions\Query\Mysql\Rand
+            string_functions:
+                LEVENSHTEIN: App\Doctrine\Query\AST\LevenshteinFunction
         mappings:
             App:
                 type: attribute

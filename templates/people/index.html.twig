@@ -120,7 +120,13 @@
 
 {% endblock %}
 
-{% block body %}{% endblock %}
+{% block body %}
+    <div class="container">
+        <h3>SoundEx für Name/Nachname</h3>
+        <h4>{{ sx|default('null') }}</h4>
+    </div>
+
+{% endblock %}
 
 {% block aside %}
 

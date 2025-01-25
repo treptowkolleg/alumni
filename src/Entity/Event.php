@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\EventRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -45,6 +47,20 @@ class Event
 
     #[ORM\ManyToOne(inversedBy: 'events')]
     private ?EventType $type = null;
+
+    #[ORM\ManyToOne(inversedBy: 'events')]
+    private ?User $user = null;
+
+    /**
+     * @var Collection<int, School>
+     */
+    #[ORM\ManyToMany(targetEntity: School::class, inversedBy: 'events')]
+    private Collection $school;
+
+    public function __construct()
+    {
+        $this->school = new ArrayCollection();
+    }
 
     public function __toString(): string
     {
@@ -166,6 +182,42 @@ class Event
     public function setType(?EventType $type): static
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, School>
+     */
+    public function getSchool(): Collection
+    {
+        return $this->school;
+    }
+
+    public function addSchool(School $school): static
+    {
+        if (!$this->school->contains($school)) {
+            $this->school->add($school);
+        }
+
+        return $this;
+    }
+
+    public function removeSchool(School $school): static
+    {
+        $this->school->removeElement($school);
 
         return $this;
     }

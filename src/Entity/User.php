@@ -100,12 +100,32 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
     #[ORM\OneToMany(targetEntity: Chat::class, mappedBy: 'owner')]
     private Collection $chats;
 
+    /**
+     * @var Collection<int, Event>
+     */
+    #[ORM\OneToMany(targetEntity: Event::class, mappedBy: 'user')]
+    private Collection $events;
+
+    /**
+     * @var Collection<int, Newsletter>
+     */
+    #[ORM\OneToMany(targetEntity: Newsletter::class, mappedBy: 'user')]
+    private Collection $newsletters;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $firstnameSoundEx = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $lastnameSoundEx = null;
+
     public function __construct()
     {
         $this->blogPosts = new ArrayCollection();
         $this->userProfiles = new ArrayCollection();
         $this->chatMessages = new ArrayCollection();
         $this->chats = new ArrayCollection();
+        $this->events = new ArrayCollection();
+        $this->newsletters = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -499,6 +519,90 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
                 $chat->setOwner(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Event>
+     */
+    public function getEvents(): Collection
+    {
+        return $this->events;
+    }
+
+    public function addEvent(Event $event): static
+    {
+        if (!$this->events->contains($event)) {
+            $this->events->add($event);
+            $event->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEvent(Event $event): static
+    {
+        if ($this->events->removeElement($event)) {
+            // set the owning side to null (unless already changed)
+            if ($event->getUser() === $this) {
+                $event->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Newsletter>
+     */
+    public function getNewsletters(): Collection
+    {
+        return $this->newsletters;
+    }
+
+    public function addNewsletter(Newsletter $newsletter): static
+    {
+        if (!$this->newsletters->contains($newsletter)) {
+            $this->newsletters->add($newsletter);
+            $newsletter->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNewsletter(Newsletter $newsletter): static
+    {
+        if ($this->newsletters->removeElement($newsletter)) {
+            // set the owning side to null (unless already changed)
+            if ($newsletter->getUser() === $this) {
+                $newsletter->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getFirstnameSoundEx(): ?string
+    {
+        return $this->firstnameSoundEx;
+    }
+
+    public function setFirstnameSoundEx(?string $firstnameSoundEx): static
+    {
+        $this->firstnameSoundEx = $firstnameSoundEx;
+
+        return $this;
+    }
+
+    public function getLastnameSoundEx(): ?string
+    {
+        return $this->lastnameSoundEx;
+    }
+
+    public function setLastnameSoundEx(?string $lastnameSoundEx): static
+    {
+        $this->lastnameSoundEx = $lastnameSoundEx;
 
         return $this;
     }
