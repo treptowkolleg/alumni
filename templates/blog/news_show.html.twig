@@ -16,8 +16,8 @@
             <div class="col-lg-8">
             <h1 class="h3">{{ post }}</h1>
             <h2 class="h5 text-primary">{{ post.subtitle }}</h2>
-            {% if post.image.name %}
-                <img src="{{ vich_uploader_asset(post)|imagine_filter('lead_thumbnail')  }}" alt="{{ post }}" class="img-fluid mb-1">
+            {% if post.blogPostImageUrl %}
+                <img src="{{ asset(post.blogPostImageUrl)|imagine_filter('lead_thumbnail')  }}" alt="{{ post }}" class="img-fluid mb-1">
                 <small class="d-block mb-3 fst-italic">Bildunterschrift und Quelle</small>
             {% endif %}
             <div class="fs-6">

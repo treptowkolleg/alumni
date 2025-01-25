@@ -19,9 +19,9 @@
                         <div class="col">
                             <div class="card border-0 mb-3 border-bottom h-100">
                                 <div class="row g-1">
-                                    {% if post.image.name %}
+                                    {% if post.blogPostImageUrl %}
                                         <div class="col-12 col-lg-4 order-1 order-lg-0">
-                                            <img src="{{ vich_uploader_asset(post)|imagine_filter('post_thumbnail')  }}" alt="{{ post }}" class="img-fluid">
+                                            <img src="{{ asset(post.blogPostImageUrl)|imagine_filter('post_thumbnail')  }}" alt="{{ post }}" class="img-fluid">
                                         </div>
                                         <div class="col-12 col-lg-8 order-0 order-lg-2">
                                             <div class="card-body">
