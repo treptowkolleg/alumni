@@ -21,8 +21,8 @@
                         {% if post.isPublished %}
                             <div class="col">
                                 <div class="card text-white bg-white border-primary h-100">
-                                    {% if post.image.name %}
-                                        <img class="card-img" src="{{ vich_uploader_asset(post)|imagine_filter('post_thumbnail')  }}" alt="{{ post }}" style="filter: brightness(80%);">
+                                    {% if post.blogPostImageUrl %}
+                                        <img class="card-img" src="{{ asset(post.blogPostImageUrl)|imagine_filter('post_thumbnail')  }}" alt="{{ post }}" style="filter: brightness(80%);">
                                     {% else %}
                                         <img class="card-img" src="https://dummyimage.com/800x480/294a70/294a70&text=Preview" alt="{{ post }}" style="filter: brightness(80%);">
                                     {% endif %}

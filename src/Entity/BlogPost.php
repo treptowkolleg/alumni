@@ -66,6 +66,15 @@ class BlogPost
     #[ORM\ManyToOne(inversedBy: 'blogPosts')]
     private ?User $author = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $blogPostImage = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $imageCite = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $imageCityUrl = null;
+
     public function __construct()
     {
         $this->image = new EmbeddedFile();
@@ -218,6 +227,7 @@ class BlogPost
         return $this;
     }
 
+
     public function getAuthor(): ?User
     {
         return $this->author;
@@ -226,6 +236,53 @@ class BlogPost
     public function setAuthor(?User $author): static
     {
         $this->author = $author;
+
+        return $this;
+    }
+
+    public function getBlogPostImage(): ?string
+    {
+        return $this->blogPostImage;
+    }
+
+    public function setBlogPostImage(?string $blogPostImage): static
+    {
+        $this->blogPostImage = $blogPostImage;
+
+        return $this;
+    }
+
+    public function getBlogPostImageUrl(): ?string
+    {
+        if (!$this->blogPostImage) {
+            return null;
+        }
+        if (strpos($this->blogPostImage, '/') !== false) {
+            return $this->blogPostImage;
+        }
+        return sprintf('/images/blogpost/%s', $this->blogPostImage);
+    }
+
+    public function getImageCite(): ?string
+    {
+        return $this->imageCite;
+    }
+
+    public function setImageCite(?string $imageCite): static
+    {
+        $this->imageCite = $imageCite;
+
+        return $this;
+    }
+
+    public function getImageCityUrl(): ?string
+    {
+        return $this->imageCityUrl;
+    }
+
+    public function setImageCityUrl(?string $imageCityUrl): static
+    {
+        $this->imageCityUrl = $imageCityUrl;
 
         return $this;
     }

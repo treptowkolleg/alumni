@@ -10,8 +10,8 @@
     <div class="">
             {% if lead %}
                     <div class="card text-white border-0 h-100">
-                        <img class="card-img d-none d-md-block" src="{{ vich_uploader_asset(lead)|imagine_filter('lead_thumbnail')  }}" alt="{{ lead }}" style="filter: brightness(80%);">
-                        <img class="card-img d-block d-md-none" src="{{ vich_uploader_asset(lead)|imagine_filter('lead_mobile_thumbnail')  }}" alt="{{ lead }}" style="filter: brightness(80%);">
+                        <img class="card-img d-none d-md-block" src="{{ asset(lead.blogPostImageUrl)|imagine_filter('lead_thumbnail')  }}" alt="{{ lead }}" style="filter: brightness(80%);">
+                        <img class="card-img d-block d-md-none" src="{{ asset(lead.blogPostImageUrl)|imagine_filter('lead_mobile_thumbnail')  }}" alt="{{ lead }}" style="filter: brightness(80%);">
                         <div class="card-img-overlay h-100 align-content-end px-0 pb-0">
                             <div class="text-bg-primary">
                                 <div class="container">
