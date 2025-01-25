@@ -357,16 +357,16 @@ class AppFixtures extends Fixture
 
         foreach ($schools as $school) {
             $schoolObject = new School();
-            $schoolObject->setTitle($school[0]);
-            $schoolObject->setCity($school[1]);
-            $schoolObject->setDistrict($school[2]);
-            $schoolObject->setSubDistrict($school[3]);
-            $schoolObject->setPlz($school[4]);
-            $schoolObject->setStreet($school[5]);
-            $schoolObject->setBsn($school[6]);
-            $schoolObject->setUrl($school[7]);
-            $schoolObject->setLat($school[8]);
-            $schoolObject->setLon($school[9]);
+            $schoolObject->setTitle($school['title']);
+            $schoolObject->setCity($school['city']);
+            $schoolObject->setDistrict($school['district']);
+            $schoolObject->setSubDistrict($school['sub_district']);
+            $schoolObject->setPlz($school['plz']);
+            $schoolObject->setStreet($school['street']);
+            $schoolObject->setBsn($school['bsn']);
+            $schoolObject->setUrl($school['url']);
+            $schoolObject->setLat($school['lat']);
+            $schoolObject->setLon($school['lon']);
             $schoolObject->setTitleSoundEx(SoundExpression::generate($schoolObject->getTitle()));
             $manager->persist($schoolObject);
         }
