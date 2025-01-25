@@ -17,11 +17,11 @@
                             <p class="card-text">Bitte richte deinen Account vollständig ein, um alle Bereiche des Alumni-Portals nutzen zu können.</p>
                         </div>
                         <div class="list-group list-group-flush">
-                            <a href="{{ url('app_confirm') }}" class="list-group-item list-group-item-action {{ app.user.isVerified ? 'disabled  text-muted' : 'link-primary' }} fw-bold d-flex  align-items-center justify-content-between">
+                            <a href="{{ url('app_confirm') }}" class="list-group-item list-group-item-action {{ app.user.isVerified ? 'disabled  text-muted' : 'link-primary fw-bold' }}  d-flex  align-items-center justify-content-between">
                                 <div><i class="fa-solid fa-fw fa-1 me-2"></i>E-Mail-Adresse verifizieren</div>
                                 <i class="fa-solid fa-{{ app.user.isVerified ? 'check text-success' : 'chevron-right' }}"></i>
                             </a>
-                            <a href="{{ url('profile_profile_new') }}" class="list-group-item list-group-item-action  {{ app.user.isVerified ? 'link-primary' : 'disabled text-muted' }} d-flex align-items-center justify-content-between">
+                            <a href="{{ url('profile_profile_new') }}" class="list-group-item list-group-item-action  {{ app.user.isVerified ? 'link-primary fw-bold' : 'disabled text-muted' }} d-flex align-items-center justify-content-between">
                                 <div><i class="fa-solid fa-fw fa-2 me-2"></i>Alumni-Profil einrichten</div>
                                 <i class="fa-solid fa-chevron-right"></i>
                             </a>
