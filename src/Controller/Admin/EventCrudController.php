@@ -41,7 +41,7 @@ class EventCrudController extends AbstractCrudController
             TextField::new('title'),
             TextEditorField::new('description')->onlyOnForms(),
             TextField::new('website')->onlyOnForms(),
-            TextField::new('location')->onlyOnForms()->setRequired(false),
+            TextField::new('location')->onlyOnForms(),
             TextField::new('contactPerson')->onlyOnForms(),
             EmailField::new('contactEmail')->onlyOnForms(),
             DateTimeField::new('startDate')->onlyOnForms(),
