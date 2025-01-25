@@ -14,9 +14,9 @@
 
         <div class="row">
             <div class="col-12">
-                {% if form.file.vars.errors is not empty %}
+                {% if form.imageFile.vars.errors is not empty %}
                     <div class="form-errors">
-                        {% for error in form.file.vars.errors %}
+                        {% for error in form.imageFile.vars.errors %}
                             <p class="error">{{ error.message }}</p>
                         {% endfor %}
                     </div>
