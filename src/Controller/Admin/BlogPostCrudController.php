@@ -59,16 +59,14 @@ class BlogPostCrudController extends AbstractCrudController
                 ->setBasePath('audio/podcast')
                 ->setUploadDir('public/audio/podcast')
                 ->setUploadedFileNamePattern('[slug]-[timestamp].[extension]')
-                ->setFormTypeOption('constraints', [
-                    new File([
-                        'maxSize' => '4096k',
-                        'mimeTypes' => [
-                            'audio/mpeg',
-                            'audio/mp3',
-                        ],
-                        'mimeTypesMessage' => 'Please upload a valid mp3 file',
-                    ])
-                ]),
+                ->setFileConstraints(new File([
+                    'maxSize' => '4096k',
+                    'mimeTypes' => [
+                        'audio/mpeg',
+                        'audio/mp3',
+                    ],
+                    'mimeTypesMessage' => 'Please upload a valid mp3 file',
+                ])),
             TextField::new('imageCite')->setColumns(6)->onlyOnForms(),
             TextField::new('imageCityUrl')->setColumns(6)->onlyOnForms(),
 
