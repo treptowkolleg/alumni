@@ -81,7 +81,7 @@ class ProfileController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
             $this->addFlash('success', 'Dein Profilbild wurde erfolgreich aktualisiert.');
-            return $this->redirectToRoute('profile_index');
+            return $this->redirectToRoute('profile_image_new');
         }
         return $this->render('profile/image_update.html.twig', [
             'form' => $form,
