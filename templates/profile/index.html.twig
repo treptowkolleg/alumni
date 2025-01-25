@@ -29,7 +29,7 @@
                     </div>
                 </div>
             {% endif %}
-            {% if app.user.isVerified and app.user.userProfiles %}
+            {% if app.user.isVerified and app.user.userProfiles.count > 0 %}
                 <div class="col-lg-4 order-3 order-lg-0">
                     <div class="card bg-white h-100">
                         <div class="card-body  border-bottom border-primary">
