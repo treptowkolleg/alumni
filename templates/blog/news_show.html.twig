@@ -17,8 +17,17 @@
             <h1 class="h3">{{ post }}</h1>
             <h2 class="h5 text-primary">{{ post.subtitle }}</h2>
             {% if post.blogPostImageUrl %}
-                <img src="{{ asset(post.blogPostImageUrl)|imagine_filter('lead_thumbnail')  }}" alt="{{ post }}" class="img-fluid mb-1">
-                <small class="d-block mb-3 fst-italic">Bildunterschrift und Quelle</small>
+                <img src="{{ asset(post.blogPostImageUrl)|imagine_filter('lead_thumbnail')  }}" alt="{{ post }}" class="img-fluid mb-1 d-none d-lg-block">
+                <img src="{{ asset(post.blogPostImageUrl)|imagine_filter('post_thumbnail')  }}" alt="{{ post }}" class="img-fluid mb-1 d-block d-lg-none">
+                {% if post.imageCite %}
+                    <div class="d-block mb-3 small">Foto:
+                        {% if post.imageCityUrl %}
+                            <span class=" fst-italic"><strong><a href="{{ post.imageCityUrl }}" target="_blank">{{ post.imageCite ? post.imageCite : '' }}</a></strong></span>
+                        {% else %}
+                            <span class="fst-italic"><strong>{{ post.imageCite ? 'Foto: ' ~ post.imageCite : '' }}</strong></span>
+                        {% endif %}
+                    </div>
+                {% endif %}
             {% endif %}
             <div class="fs-6">
                 {{ post.content|raw }}
