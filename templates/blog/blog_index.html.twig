@@ -22,9 +22,9 @@
                             <div class="col">
                                 <div class="card text-white bg-white border-primary h-100">
                                     {% if post.blogPostImageUrl %}
-                                        <img class="card-img" src="{{ asset(post.blogPostImageUrl)|imagine_filter('post_thumbnail')  }}" alt="{{ post }}" style="filter: brightness(80%);">
+                                        <img class="card-img" src="{{ asset(post.blogPostImageUrl)|imagine_filter('post_thumbnail')  }}" alt="{{ post }}" style="filter: brightness(60%);">
                                     {% else %}
-                                        <img class="card-img" src="https://dummyimage.com/800x480/294a70/294a70&text=Preview" alt="{{ post }}" style="filter: brightness(80%);">
+                                        <img class="card-img" src="https://dummyimage.com/800x480/294a70/294a70&text=Preview" alt="{{ post }}" style="filter: brightness(60%);">
                                     {% endif %}
                                     <div class="card-img-overlay d-flex flex-column h-100">
                                         <div class="text-uppercase small card-text">{{ post.type }}</div>
