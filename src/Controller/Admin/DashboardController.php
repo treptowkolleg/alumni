@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\BlogPost;
 use App\Entity\BlogType;
+use App\Entity\Event;
 use App\Entity\User;
 use App\Entity\UserProfile;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
@@ -60,7 +61,7 @@ class DashboardController extends AbstractDashboardController
 
         yield MenuItem::section('Content Management');
         yield MenuItem::linkToCrud('Beiträge', 'fa fa-file',BlogPost::class);
-        yield MenuItem::linkToCrud('Beitragsarten', 'fa fa-users',BlogType::class);
+        yield MenuItem::linkToCrud('Events', 'fa fa-list',Event::class);
 
         yield MenuItem::section('Benutzerverwaltung');
         yield MenuItem::linkToCrud('Benutzer', 'fa fa-users',User::class);
