@@ -30,17 +30,17 @@
                     {% endif %}
 
                 {% endif %}
-                <div class="fs-6">
-                    {{ post.content|raw }}
-                </div>
-                {% if post.audio.name %}
+                {% if post.blogPostAudioUrl %}
                     <figure class="d-block mt-5">
                         <audio controls class="w-100">
-                            <source src="{{ vich_uploader_asset(post, 'audioFile')  }}" type="audio/mpeg">
+                            <source src="{{ asset(post.blogPostAudioUrl)  }}" type="audio/mpeg">
                             Your browser does not support the audio element.
                         </audio>
                     </figure>
                 {% endif %}
+                <div>
+                    {{ post.content|raw }}
+                </div>
                 <div class="mt-5 mb-0 small"><span>{{ post.updatedAt|date('d.m.Y') }}</span> | <span class="text-uppercase">{{ post.type }}</span></div>
                 <div class="fst-italic">Verfasst von: {{ post.author ? post.author.shortName : 'none' }}</div>
             </div>
