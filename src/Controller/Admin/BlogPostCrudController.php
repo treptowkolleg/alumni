@@ -53,6 +53,10 @@ class BlogPostCrudController extends AbstractCrudController
                 ->setBasePath('images/blogpost')
                 ->setUploadDir('public/images/blogpost')
                 ->setUploadedFileNamePattern('[slug]-[timestamp].[extension]'),
+            ImageField::new('blogPostAudio')->onlyOnForms()
+                ->setBasePath('audio/podcast')
+                ->setUploadDir('public/audio/podcast')
+                ->setUploadedFileNamePattern('[slug]-[timestamp].[extension]'),
             TextField::new('imageCite')->setColumns(6)->onlyOnForms(),
             TextField::new('imageCityUrl')->setColumns(6)->onlyOnForms(),
 

@@ -70,6 +70,9 @@ class BlogPost
     private ?string $blogPostImage = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    private ?string $blogPostAudio = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $imageCite = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -261,6 +264,29 @@ class BlogPost
             return $this->blogPostImage;
         }
         return sprintf('/images/blogpost/%s', $this->blogPostImage);
+    }
+
+    public function getBlogPostAudio(): ?string
+    {
+        return $this->blogPostAudio;
+    }
+
+    public function setBlogPostAudio(?string $blogPostAudio): static
+    {
+        $this->blogPostAudio = $blogPostAudio;
+
+        return $this;
+    }
+
+    public function getBlogPostAudioUrl(): ?string
+    {
+        if (!$this->blogPostAudio) {
+            return null;
+        }
+        if (strpos($this->blogPostAudio, '/') !== false) {
+            return $this->blogPostAudio;
+        }
+        return sprintf('/audio/podcast/%s', $this->blogPostAudio);
     }
 
     public function getImageCite(): ?string
