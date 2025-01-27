@@ -25,11 +25,15 @@
                             {% endif %}
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{{ url('profile_index') }}"><i class="fa-solid fa-fw fa-dashboard me-2"></i>Mein Portal</a></li>
+                            <li><h6 class="dropdown-header">Alumni-Portal</h6></li>
+                            <li><a class="dropdown-item" href="{{ url('profile_index') }}"><i class="fa-solid fa-fw fa-user me-2"></i>Mein Portal</a></li>
                             <li><a class="dropdown-item" href="{{ url('people_index',{'filter':'school'}) }}"><i class="fa-solid fa-fw fa-university me-2"></i>Meine Schule</a></li>
-                            <li><a class="dropdown-item" href="{{ url('chat_index') }}"><i class="fa-solid fa-fw fa-users me-2"></i>Kontakte</a></li>
+                            <li><a class="dropdown-item" href="{{ url('chat_index') }}"><i class="fa-solid fa-fw fa-users me-2"></i><span class="">Kontakte</span><span class="ms-4 badge text-bg-secondary fw-normal rounded-circle">1</span></a></li>
                             <li class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="{{ url('profile_index') }}"><i class="fa-solid fa-fw fa-user-lock me-2"></i>Konto</a></li>
+                            <li><h6 class="dropdown-header">Einstellungen</h6></li>
+                            <li><a class="dropdown-item" href="{{ path('profile_profile_new') }}"><i class="fa-solid fa-fw fa-user me-2"></i>Profil</a></li>
+                            <li><a class="dropdown-item" href="{{ url('profile_image_new') }}"><i class="fa-solid fa-fw fa-image me-2"></i>Profilbild</a></li>
+                            <li><a class="dropdown-item" href="{{ url('profile_index') }}"><i class="fa-solid fa-fw fa-gear me-2"></i>Konto</a></li>
                             <li class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="{{ url('app_logout') }}"><i class="fa-solid fa-fw fa-right-from-bracket me-2"></i>Abmelden</a></li>
                         </ul>
