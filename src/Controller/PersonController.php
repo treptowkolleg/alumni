@@ -55,12 +55,12 @@ class PersonController extends AbstractController
             if($this->isGranted('ROLE_USER')) {
                 $user = $userRepository->find($this->getUser());
                 if($school = $user->getSchool()) {
-                    $people = $repository->findBySchool([$school->getTitle()],$search);
+                    $people = $repository->findBySearchQuery($name, $firstname, [$school->getId()], $courses, $startDate, $endDate);
+                    $filterValues['school'] = [$school->getId()];
                 } else {
                     $this->addFlash('warning','Du hast dich keiner Bildungseinrichtung zugeordnet!');
                     return $this->redirectToRoute('people_index');
                 }
-                $filteredTypes = null;
             } else {
                 return $this->redirectToRoute('people_index');
             }

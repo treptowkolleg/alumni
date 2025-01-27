@@ -16,6 +16,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class UserprofileFormType extends AbstractType
@@ -103,14 +104,26 @@ class UserprofileFormType extends AbstractType
         $builder
             ->add('inYear',NumberType::class,[
                 'row_attr' => ['class' => 'form-floating mb-3'],
+                'required' => true,
+                'constraints' => [
+                    new NotBlank()
+                ]
             ])
             ->add('outYear',NumberType::class,[
                 'row_attr' => ['class' => 'form-floating mb-3'],
+                'required' => true,
+                'constraints' => [
+                    new NotBlank()
+                ]
             ])
             ->add('examType',ChoiceType::class, [
                 'row_attr' => ['class' => 'slim-form mb-3'],
                 'attr' => ['class' => 'slim-select-single-exam-type'],
                 'choices' => ['abitur' => 'abitur', 'fachabitur' => 'fachabitur', 'msa' => 'msa'],
+                'required' => true,
+                'constraints' => [
+                    new NotBlank()
+                ]
             ])
             ->add('displayName', ChoiceType::class, [
                 'row_attr' => ['class' => 'slim-form mb-3'],

@@ -1,14 +1,12 @@
 <div class="mb-3">
     <div class="nav nav-underline">
-        {% if is_granted('ROLE_USER') %}
-            <a href="{{ path('blog_index') }}" class="nav-item nav-link {{ selected|default() == 'index' ? 'active' : '' }} text-nowrap">
-                <i class="fa-solid fa-list text-primary"></i>
-                <span class="ms-1 d-none d-lg-inline">Übersicht</span>
-            </a>
-            <a href="#" class="nav-item nav-link {{ selected|default() == 'show' ? 'active' : 'disabled' }} text-nowrap">
-                <i class="fa-solid fa-magnifying-glass"></i>
-                <span class="ms-1 d-none d-lg-inline">Details</span>
-            </a>
-        {% endif %}
+        <a href="{{ path('blog_index') }}" class="nav-item nav-link {{ selected|default() == 'index' ? 'active' : '' }} text-nowrap">
+            <i class="fa-solid fa-list text-primary"></i>
+            <span class="ms-1 d-none d-lg-inline">Übersicht</span>
+        </a>
+        <a href="#" class="nav-item nav-link {{ selected|default() == 'show' ? 'active' : 'disabled' }} text-nowrap">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <span class="ms-1 d-none d-lg-inline">Details</span>
+        </a>
     </div>
 </div>
