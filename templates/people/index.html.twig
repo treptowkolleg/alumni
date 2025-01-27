@@ -35,7 +35,7 @@
                                                 </div>
 
                                                 {% if person.user.hasSchool %}
-                                                    <p class="">{{ person.user.school }}</p>
+                                                    <p class="text-truncate">{{ person.user.school }}</p>
                                                 {% endif %}
                                                 <a href="{{ url('people_show',{'slug':person.user.slug }) }}" class="card-link stretched-link text-decoration-none mt-auto">mehr erfahren <i class="fas fa-chevron-right"></i></a>
                                             </div>
