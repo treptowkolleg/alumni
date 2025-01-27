@@ -1,7 +1,7 @@
 {% extends '_full.html.twig' %}
 
-{% set meta_title = 'Personen' %}
-{% set meta_subtitle = 'Alumni finden' %}
+{% set meta_title = 'Alumni' %}
+{% set meta_subtitle = 'Personen finden' %}
 
 {% set sidebar = 'people' %}
 
@@ -58,7 +58,7 @@
                                                 <div class="me-2">
                                                     <small class="text-muted" id="like-match-{{ person.id }}">
                                                         {% if app.user.userProfiles.first in person.userProfiles and person in app.user.userProfiles.first.userProfiles %}
-                                                            Ihr kennt euch gegenseitig
+                                                            Ihr kennt euch
                                                         {% endif %}
                                                     </small>
                                                 </div>
