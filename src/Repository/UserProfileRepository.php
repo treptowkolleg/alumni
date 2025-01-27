@@ -135,7 +135,9 @@ class UserProfileRepository extends ServiceEntityRepository
         }
 
         if(!empty($schools)) {
-            $query->andWhere('u.school IN (:schools)');
+            $query->addSelect('s');
+            $query->join('u.school', 's');
+            $query->andWhere('s.id IN (:schools)');
             $query->setParameter('schools', $schools);
         }
 
