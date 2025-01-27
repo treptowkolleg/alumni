@@ -115,27 +115,15 @@
                                 <h3 class="h5 mb-0 text-center text-lg-start">Nimmt teil</h3>
                             </div>
                             <div class="list-group list-group-flush border-bottom-0">
-
-                                <div class="list-group-item list-group-item-action d-flex align-items-center justify-content-between">
-                                    <div class="d-flex flex-wrap align-items--center">
-                                        <div class="me-2" style="min-width: 100px">23.07.2025</div>
-                                        <div><a href="#" class="text-decoration-none">{{ 'Name der Veranstaltung'}}</a></div>
+                                {% for post in person.user.events|sort((a, b) => a.startDate <=> b.startDate) %}
+                                    {% if post.endDate|date('Ymd') >= date('now')|date('Ymd')%}
+                                        {{ include('component/_event_list.html.twig') }}
+                                    {% endif %}
+                                {% else %}
+                                    <div class="list-group-item">
+                                        Aktuell keine Einträge vorhanden
                                     </div>
-                                    <div class="d-flex justify-content-end align-items-center flex-wrap">
-                                        <a href="#" class="btn btn-link pe-0"><i class="fa-solid fa-fw fa-star text-secondary"></i></a>
-                                    </div>
-                                </div>
-
-                                <div class="list-group-item list-group-item-action d-flex align-items-center justify-content-between">
-                                    <div class="d-flex flex-wrap align-items--center">
-                                        <div class="me-2" style="min-width: 100px">23.07.2025</div>
-                                        <div><a href="#" class="text-decoration-none">{{ 'Name der Veranstaltung'}}</a></div>
-                                    </div>
-                                    <div class="d-flex justify-content-end align-items-center flex-wrap">
-                                        <a href="#" class="btn btn-link pe-0"><i class="fa-regular fa-fw fa-star text-secondary"></i></a>
-                                    </div>
-                                </div>
-
+                                {% endfor %}
                             </div>
                             <div class="h-100"></div>
                             <div class="list-group list-group-flush">
