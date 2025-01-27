@@ -84,10 +84,6 @@
                                 {% endif %}
                             </div>
                 {% endif %}
-            {% else %}
-                <div class="col">
-                    Keine Personen gefunden
-                </div>
                 {% endif %}
             {% endfor %}
         </div>
@@ -98,7 +94,7 @@
                     <ul class="pagination">
                         {% set page = 1 %}
                         {% for person in people %}
-                            {% if loop.first or loop.index0 is divisible by(3) %}
+                            {% if loop.first or loop.index0 is divisible by(9) %}
                                 <li class="page-item">
                                     <a class="page-link {{ page == current_page|default(1) ? 'active' : '' }}" href="#">
                                         {{ page }}

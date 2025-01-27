@@ -4,11 +4,12 @@ namespace App\DataFixtures;
 
 use App\Entity\EventType;
 use App\Entity\School;
+use App\Entity\User;
 use App\Operator\SoundExpression;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
-class AppFixtures extends Fixture
+class AppFixtures
 {
     public function load(ObjectManager $manager): void
     {
