@@ -17,16 +17,15 @@
             {% for person in people %}
                 {% if loop.index <= 9 %}
                 {% if (app.user and  person.networkState == 'registered') or person.networkState == 'public' or (filter in ['school','freunde'] and person.networkState == 'private') %}
-
-
                             <div class="col mb-2 mb-md-0">
                                 <div class="card text-bg-white align-self-stretch">
                                     <div class="row g-0">
                                         <div class="col-md-4">
                                             {% if person.user.image.name %}
-                                                <img src="{{ vich_uploader_asset(person.user)|imagine_filter('avatar')  }}" class="img-fluid w-100" alt="...">
+                                                <img src="{{ vich_uploader_asset(person.user)|imagine_filter('avatar')  }}" class="img-fluid d-none d-lg-block w-100" alt="...">
+                                                <img src="{{ vich_uploader_asset(person.user)|imagine_filter('avatar_sm')  }}" class="img-fluid d-lg-none d-block w-100" alt="...">
                                             {% else %}
-                                                <img src="{{ asset('images/avatar_no_text.svg') }}" class="img-fluid w-100" alt="...">
+                                                <img src="{{ asset('images/avatar_no_text.svg') }}" class=" d-none d-lg-block img-fluid w-100" alt="...">
                                             {% endif %}
                                         </div>
                                         <div class="col-md-8">

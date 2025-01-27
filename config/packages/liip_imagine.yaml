@@ -32,3 +32,9 @@ liip_imagine:
                 thumbnail: { size: [ 600, 600 ], mode: outbound }
                 scale:
                     dim: [ 600, 600 ]
+        avatar_sm:
+            quality: 50
+            filters:
+                thumbnail: { size: [ 600, 450 ], mode: outbound }
+                scale:
+                    dim: [ 600, 450 ]
