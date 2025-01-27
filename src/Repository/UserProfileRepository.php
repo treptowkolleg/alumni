@@ -130,8 +130,6 @@ class UserProfileRepository extends ServiceEntityRepository
             $query->setParameter('nameEx', $nameSX);
 
             $query->orderBy('LEVENSHTEIN(u.firstnameSoundEx, :nameEx,3)', 'DESC');
-        } else {
-            $query->orderBy('RAND()');
         }
 
         if(!empty($schools)) {
@@ -157,7 +155,7 @@ class UserProfileRepository extends ServiceEntityRepository
             $query->andWhere('up.inYear <= :endYear ');
             $query->setParameter('endYear', $endYear);
         }
-
+        $query->orderBy('u.lastname', 'ASC');
         return $query->getQuery()->setFirstResult(9*($offset-1))->getResult();
     }
 
