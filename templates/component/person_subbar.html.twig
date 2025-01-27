@@ -1,16 +1,16 @@
 <div class="mb-3">
     <ul class="nav nav-underline mb-4">
         <li class="nav-item">
-            <a class="nav-link {{ filter == 'all' ? 'active ' : '' }}" href="{{ url('people_index',{'courses':filtered_courses|join(','),'schools': filtered_schools|join(','), 'dates':filtered_dates|join(',')}) }}"><i class="fas fa-user-group me-2 text-primary"></i>Alle</a>
+            <a class="nav-link {{ filter == 'all' ? 'active ' : '' }}" href="{{ url('people_index',{'filter':'all'}) }}"><i class="fas fa-user-group me-2 text-primary"></i>Alle</a>
         </li>
         {% if app.user %}
             {% if app.user.hasSchool %}
                 <li class="nav-item">
-                    <a class="nav-link {{ filter == 'school' ? 'active ' : '' }}" href="{{ url('people_index',{'filter':'school','courses':filtered_courses|join(','),'schools': filtered_schools|join(','), 'dates':filtered_dates|join(',')}) }}"><i class="fas fa-university me-2 text-primary"></i>Meine Schule</a>
+                    <a class="nav-link {{ filter == 'school' ? 'active ' : '' }}" href="{{ url('people_index',{'filter':'school'}) }}"><i class="fas fa-university me-2 text-primary"></i>Meine Schule</a>
                 </li>
             {% endif %}
             <li class="nav-item">
-                <a class="nav-link {{ filter == 'freunde' ? 'active ' : '' }}" href="{{ url('people_index',{'filter':'freunde','courses':filtered_courses|join(','),'schools': filtered_schools|join(','), 'dates':filtered_dates|join(',')}) }}"><i class="fa-solid fa-star me-2 text-primary"></i>Bekannte</a>
+                <a class="nav-link {{ filter == 'freunde' ? 'active ' : '' }}" href="{{ url('people_index',{'filter':'freunde'}) }}"><i class="fa-solid fa-star me-2 text-primary"></i>Bekannte</a>
             </li>
         {% else %}
             <li class="nav-item">

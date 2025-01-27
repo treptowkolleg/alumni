@@ -20,12 +20,14 @@
                     <div class="py-3 btn-group" role="group">
                         <a type="button" class="btn btn-link text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fa-solid fa-user fa-fw"></i>
+                            {% if is_granted('ROLE_USER') and app.user.isVerified and app.user.userProfiles.count > 0 %}
+                                <span id="unread-count" data-id="{{ app.user.id }}" class="d-none badge text-bg-secondary fw-normal rounded-circle ms-1"></span>
+                            {% endif %}
                         </a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="{{ url('profile_index') }}"><i class="fa-solid fa-fw fa-dashboard me-2"></i>Mein Portal</a></li>
-                            <li><a class="dropdown-item" href="{{ url('profile_profile_new') }}"><i class="fa-solid fa-fw fa-user me-2"></i>Alumni-Profil</a></li>
-                            <li><a class="dropdown-item" href="{{ url('profile_index') }}"><i class="fa-solid fa-fw fa-university me-2"></i>Meine Schule</a></li>
-                            <li><a class="dropdown-item" href="{{ url('chat_index') }}"><i class="fa-solid fa-fw fa-envelope me-2"></i>Kontakte</a></li>
+                            <li><a class="dropdown-item" href="{{ url('people_index',{'filter':'school'}) }}"><i class="fa-solid fa-fw fa-university me-2"></i>Meine Schule</a></li>
+                            <li><a class="dropdown-item" href="{{ url('chat_index') }}"><i class="fa-solid fa-fw fa-users me-2"></i>Kontakte</a></li>
                             <li class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="{{ url('profile_index') }}"><i class="fa-solid fa-fw fa-user-lock me-2"></i>Konto</a></li>
                             <li class="dropdown-divider"></li>
@@ -37,8 +39,8 @@
 
                 {% endif %}
             {% else %}
-                <li class="nav-item d-none d-md-block py-3"><a href="{{ url('profile_index') }}" class="btn btn-link"><i class="fa-solid fa-right-to-bracket fa-fw"></i></a></li>
-                <li class="nav-item d-none d-md-block py-3"><a href="{{ url('app_register') }}" class="btn btn-link"><i class="fa-solid fa-user-plus fa-fw"></i></a></li>
+                <li class="nav-item py-3"><a href="{{ url('app_register') }}" class="btn btn-link"><i class="fa-solid fa-plus fa-fw"></i></a></li>
+                <li class="nav-item py-3"><a href="{{ url('profile_index') }}" class="btn btn-link"><i class="fa-solid fa-user fa-fw"></i></a></li>
             {% endif %}
             <li class="nav-item py-3"><a href="#" class="btn btn-link" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><i class="fas fa-bars"></i></a></li>
         </ul>

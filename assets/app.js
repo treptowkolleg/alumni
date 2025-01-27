@@ -133,12 +133,14 @@ function updateUnreadMessagesUI(count) {
     const unreadCountDiv = document.getElementById('unread-count');
     if (unreadCountDiv) {
         if (count > 0) {
-            if(!unreadCountDiv.classList.contains('show')) {
-                unreadCountDiv.classList.add('show');
+            if(unreadCountDiv.classList.contains('d-none')) {
+                unreadCountDiv.classList.remove('d-none');
+                unreadCountDiv.innerText = count;
             }
         } else {
-            if(unreadCountDiv.classList.contains('show')) {
-                unreadCountDiv.classList.remove('show');
+            if(!unreadCountDiv.classList.contains('d-none')) {
+                unreadCountDiv.classList.remove('d-none');
+                unreadCountDiv.innerText = "";
             }
         }
     }

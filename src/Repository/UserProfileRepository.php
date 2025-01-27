@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\UserProfile;
+use App\Operator\SoundExpression;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\Persistence\ManagerRegistry;
@@ -66,29 +67,101 @@ class UserProfileRepository extends ServiceEntityRepository
     /**
      * @return UserProfile[] Returns an array of UserProfile objects
      */
-    public function findBySearchQuery(bool|string $name = false, bool|string $firstname = false): array
+    public function findBySearchQuery(
+        bool|string $name = false,
+        bool|string $firstname = false,
+        ?array $schools = [],
+        ?array $performanceCourses = [],
+        ?string $startYear = null,
+        ?string $endYear = null,
+        int $offset = 1
+    ): array
     {
         $query = $this->createQueryBuilder('up')->addSelect('u')->leftJoin('up.user', 'u');
 
-        // TODO: Kombinieren mit Score aus normalem Wort. Erst hier splitten nach SoundEx
-
         if ($name and $firstname) {
-            $query->andWhere('LEVENSHTEIN(u.firstnameSoundEx, :firstname,3) <= 3');
-            $query->andWhere('LEVENSHTEIN(u.lastnameSoundEx, :name,4) <= 4');
+            $nameSX = SoundExpression::generate($name);
+            $firstnameSX = SoundExpression::generate($firstname);
+
+            $query->where(
+                $query->expr()->andX(
+                    $query->expr()->orX(
+                        $query->expr()->eq('u.firstname', ':firstname'),
+                        $query->expr()->lt('LEVENSHTEIN(:firstname, u.firstname,3)', 3)
+                    ),
+                    $query->expr()->lt('LEVENSHTEIN(:firstnameEx, u.firstnameSoundEx,3)', 1),
+
+                    $query->expr()->orX(
+                        $query->expr()->eq('u.lastname', ':name'),
+                        $query->expr()->lt('LEVENSHTEIN(:name, u.lastname,3)', 3)
+                    ),
+                    $query->expr()->lt('LEVENSHTEIN(:nameEx, u.lastnameSoundEx,3)', 1)
+                )
+            );
+
             $query->setParameter('firstname', $firstname);
+            $query->setParameter('firstnameEx', $firstnameSX);
             $query->setParameter('name', $name);
-            $query->orderBy('LEVENSHTEIN(u.firstnameSoundEx, :name,3)', 'DESC');
+            $query->setParameter('nameEx', $nameSX);
+
+            $query->orderBy('LEVENSHTEIN(u.firstnameSoundEx, :nameEx,3)', 'DESC');
         } elseif ($name) {
-            $query->andWhere('LEVENSHTEIN(u.firstnameSoundEx, :name,2) <= 2');
+            $nameSX = SoundExpression::generate($name);
+
+            $query->where(
+                $query->expr()->orX(
+                    $query->expr()->andX(
+                        $query->expr()->orX(
+                            $query->expr()->eq('u.firstname', ':name'),
+                            $query->expr()->lt('LEVENSHTEIN(:name, u.firstname,3)', 3)
+                        ),
+                        $query->expr()->lt('LEVENSHTEIN(:nameEx, u.firstnameSoundEx,3)', 1)
+                    ),
+                    $query->expr()->andX(
+                        $query->expr()->orX(
+                            $query->expr()->eq('u.lastname', ':name'),
+                            $query->expr()->lt('LEVENSHTEIN(:name, u.lastname,3)', 3)
+                        ),
+                        $query->expr()->lt('LEVENSHTEIN(:nameEx, u.lastnameSoundEx,3)', 1)
+                    ),
+                )
+            );
             $query->setParameter('name', $name);
-            $query->orderBy('LEVENSHTEIN(u.firstnameSoundEx, :name,2)', 'DESC');
+            $query->setParameter('nameEx', $nameSX);
+
+            $query->orderBy('LEVENSHTEIN(u.firstnameSoundEx, :nameEx,3)', 'DESC');
         } else {
             $query->orderBy('RAND()');
         }
 
+        if(!empty($schools)) {
+            $query->andWhere('u.school IN (:schools)');
+            $query->setParameter('schools', $schools);
+        }
 
+        if(!empty($performanceCourses)) {
+            foreach ($performanceCourses as $key => $course) {
+                if($key == 0) {
+                    $query->andWhere("up.performanceCourse LIKE :course$key");
+                } else {
+                    $query->orWhere("up.performanceCourse LIKE :course$key");
+                }
 
-        return $query->getQuery()->setMaxResults(9)->getResult();
+                $query->setParameter("course$key", '%"'.$course.'"%');
+            }
+        }
+
+        if($startYear) {
+            $query->andWhere('up.outYear >= :startYear ');
+            $query->setParameter('startYear', $startYear);
+        }
+
+        if($endYear) {
+            $query->andWhere('up.inYear <= :endYear ');
+            $query->setParameter('endYear', $endYear);
+        }
+
+        return $query->getQuery()->setFirstResult(9*($offset-1))->getResult();
     }
 
     /**
@@ -103,13 +176,4 @@ class UserProfileRepository extends ServiceEntityRepository
         return $query->groupBy('up.outYear')->getQuery()->getResult();
     }
 
-//    public function findOneBySomeField($value): ?UserProfile
-//    {
-//        return $this->createQueryBuilder('u')
-//            ->andWhere('u.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
 }

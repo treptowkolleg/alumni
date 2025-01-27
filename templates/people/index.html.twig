@@ -15,9 +15,10 @@
 
         <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3 g-3 align-content-stretch">
             {% for person in people %}
+                {% if loop.index <= 9 %}
                 {% if (app.user and  person.networkState == 'registered') or person.networkState == 'public' or (filter in ['school','freunde'] and person.networkState == 'private') %}
-                    {% if filtered_dates is empty or person.outYear in filtered_dates %}
-                        {% if filtered_courses is empty or person.performanceCourse|filter((course) => course in filtered_courses)  %}
+
+
                             <div class="col mb-2 mb-md-0">
                                 <div class="card text-bg-white align-self-stretch">
                                     <div class="row g-0">
@@ -83,33 +84,30 @@
                                     </div>
                                 {% endif %}
                             </div>
-                        {% endif %}
-                    {% endif %}
                 {% endif %}
             {% else %}
                 <div class="col">
                     Keine Personen gefunden
                 </div>
+                {% endif %}
             {% endfor %}
         </div>
 
         <div class="row g-3 py-3">
             <div class="col-12">
-                <nav aria-label="Page navigation example">
+                <nav aria-label="Page Navigation">
                     <ul class="pagination">
-                        <li class="page-item">
-                            <a class="page-link disabled" href="#" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                            </a>
-                        </li>
-                        <li class="page-item"><a class="page-link active" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                            </a>
-                        </li>
+                        {% set page = 1 %}
+                        {% for person in people %}
+                            {% if loop.first or loop.index0 is divisible by(3) %}
+                                <li class="page-item">
+                                    <a class="page-link {{ page == current_page|default(1) ? 'active' : '' }}" href="#">
+                                        {{ page }}
+                                    </a>
+                                </li>
+                                {% set page = page + 1 %}
+                            {% endif %}
+                        {% endfor %}
                     </ul>
                 </nav>
             </div>
@@ -120,13 +118,7 @@
 
 {% endblock %}
 
-{% block body %}
-    <div class="container">
-        <h3>SoundEx für Name/Nachname</h3>
-        <h4>{{ sx|default('null') }}</h4>
-    </div>
-
-{% endblock %}
+{% block body %}{% endblock %}
 
 {% block aside %}
 

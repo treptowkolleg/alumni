@@ -1,15 +1,5 @@
 <div aria-live="polite" aria-atomic="true" class="d-flex justify-content-center align-items-start w-100">
     <div class="toast-container position-fixed p-3" style="top: 30px">
-        {% if is_granted('ROLE_USER') and app.user.isVerified and app.user.userProfiles.count > 0 and  app.request.attributes.get('_route') not in ['chat_index', 'chat_start','chat_read','chat_new'] %}
-            <div id="unread-count" data-id="{{ app.user.id }}" class="toast border-primary" role="alert" aria-live="assertive" aria-atomic="true">
-                <div class="d-flex">
-                    <div class="toast-body">
-                        Du hast neue Nachrichten in deinem <a href="{{ url('chat_index') }}">Postfach</a>.
-                    </div>
-                    <button type="button" class="m-auto me-2 btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-                </div>
-            </div>
-        {% endif %}
         {% for label, messages in app.flashes %}
             {% for message in messages %}
                 <div class="toast w-100 text-bg-{{ label }} text-white border-0 fade show" role="alert" aria-live="assertive" aria-atomic="true">

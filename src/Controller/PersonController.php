@@ -29,57 +29,25 @@ class PersonController extends AbstractController
         $filterValues = $request->request->all();
 
         $search = $request->request->get('person');
+        $schools = $request->request->all('school');
+        $courses = $request->request->all('course');
+        $startDate = $request->request->get('start_date');
+        $endDate = $request->request->get('end_date');
 
-        // TODO: SoundEx lieber erst während der DB-Query
         $searchArray = explode(' ', $search);
         if(count($searchArray) > 1){
-            $name = SoundExpression::generate(array_pop($searchArray));
-            $firstname = SoundExpression::generate(implode(' ', $searchArray));
+            $name = array_pop($searchArray);
+            $firstname = implode(' ', $searchArray);
         } else {
             $firstname = false;
-            $name = SoundExpression::generate(array_pop($searchArray));
+            $name = array_pop($searchArray);
         }
-
-
         $people = null;
-
-        $filteredTypesQuery = trim($request->query->get('schools'),',');
-        $filteredDatesQuery = trim($request->query->get('dates'),',');
-        $filteredCoursesQuery = trim($request->query->get('courses'),',');
-        $filteredTypes = array_filter(explode(',', $filteredTypesQuery));
-        $filteredDates = array_filter(explode(',', $filteredDatesQuery));
-        $filteredCourses = array_filter(explode(',', $filteredCoursesQuery));
 
         $usedDates = $repository->findExamDates();
 
         if($filter == 'all') {
-            if (!empty($filteredTypes)) {
-                $people = $repository->findBySchool($filteredTypes,$search);
-            } else {
-                $people = $repository->findBySearchQuery($name, $firstname);
-            }
-
-        }
-
-        if($search) {
-            $people = array_filter($people, function($person) use ($firstname, $name) {
-                if($firstname) {
-                    if(
-                        levenshtein($firstname,$person->getUser()->getFirstnameSoundEx()) <= 2 and
-                        levenshtein($name, $person->getUser()->getLastnameSoundEx()) <= 2
-                    ) {
-                        return $person;
-                    }
-                } else {
-                    if(
-                        levenshtein($name,$person->getUser()->getFirstnameSoundEx()) <= 2 or
-                        levenshtein($name, $person->getUser()->getLastnameSoundEx()) <= 2
-                    ) {
-                        return $person;
-                    }
-                }
-                return null;
-            });
+            $people = $repository->findBySearchQuery($name, $firstname, $schools, $courses, $startDate, $endDate);
         }
 
 
@@ -113,16 +81,12 @@ class PersonController extends AbstractController
 
 
         return $this->render('people/index.html.twig', [
-            'sx' => $firstname . " " . $name,
             'filterValues' => $filterValues,
             'filter' => $filter,
             'people' => $people,
             'schools' => $schoolRepository->findAll(),
             'dates' => $usedDates,
             'courses' => PerformanceCourseEnum::cases(),
-            'filtered_schools' => $filteredTypes,
-            'filtered_dates' => $filteredDates,
-            'filtered_courses' => $filteredCourses,
         ]);
     }
 

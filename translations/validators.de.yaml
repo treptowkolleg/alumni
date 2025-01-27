@@ -11,3 +11,8 @@ Please enter a start date: Bitte Beginn angeben
 Please enter an end date: Bitte Ende angeben
 Please enter some content: Bitte Inhalt angeben
 Please enter a subtitle: Bitte Untertitel angeben
+
+
+The image width must be at least {{ min_width }} pixels.: "Das Bild muss mindestens {{ min_width }} Pixel breit sein."
+The image height must be at least {{ min_height }} pixels.: "Das Bild muss mindestens {{ min_height }} Pixel hoch sein."
+Please upload a valid JPEG or PNG image.: "Bitte laden Sie ein gültiges Bild im Format JPEG oder PNG hoch."
