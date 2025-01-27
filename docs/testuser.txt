@@ -1,0 +1,8 @@
+Testuser:
+
+last0@local.domain
+last1@local.domain
+...
+last29@local.domain
+
+Passwort jeweils:	testPassword

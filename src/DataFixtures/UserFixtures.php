@@ -44,11 +44,45 @@ class UserFixtures extends Fixture
             ];
         }
 
+        $names = [
+            ['John', 'Smith'],
+            ['Jane', 'Doe'],
+            ['Michael', 'Johnson'],
+            ['Emily', 'Davis'],
+            ['Chris', 'Brown'],
+            ['Sarah', 'Miller'],
+            ['David', 'Wilson'],
+            ['Laura', 'Moore'],
+            ['James', 'Taylor'],
+            ['Jessica', 'Anderson'],
+            ['Daniel', 'Thomas'],
+            ['Sophia', 'Jackson'],
+            ['Matthew', 'White'],
+            ['Olivia', 'Harris'],
+            ['Andrew', 'Martin'],
+            ['Emma', 'Thompson'],
+            ['Joshua', 'Garcia'],
+            ['Mia', 'Martinez'],
+            ['Ryan', 'Robinson'],
+            ['Isabella', 'Clark'],
+            ['Tyler', 'Rodriguez'],
+            ['Ava', 'Lewis'],
+            ['Nathan', 'Lee'],
+            ['Amelia', 'Walker'],
+            ['Ethan', 'Hall'],
+            ['Lily', 'Allen'],
+            ['Jacob', 'Young'],
+            ['Ella', 'King'],
+            ['Samuel', 'Wright'],
+            ['Zoe', 'Scott']
+        ];
+
 
         foreach ($testUsers as $testUser) {
             $user = new User();
-            $user->setFirstName($testUser['firstname']);
-            $user->setLastName($testUser['lastname']);
+            $name = array_shift($names);
+            $user->setFirstName($name[0]);
+            $user->setLastName($name[1]);
             $user->setEmail($testUser['email']);
             $user->setPassword($this->passwordHasher->hashPassword($user, $testUser['password']));
             $schoolNr = rand(0, count($schools)-1);
