@@ -143,12 +143,7 @@ class UserProfileRepository extends ServiceEntityRepository
 
         if(!empty($performanceCourses)) {
             foreach ($performanceCourses as $key => $course) {
-                if($key == 0) {
-                    $query->andWhere("up.performanceCourse LIKE :course$key");
-                } else {
-                    $query->orWhere("up.performanceCourse LIKE :course$key");
-                }
-
+                $query->andWhere("up.performanceCourse LIKE :course$key");
                 $query->setParameter("course$key", '%"'.$course.'"%');
             }
         }
