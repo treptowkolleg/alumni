@@ -73,7 +73,7 @@ class PersonController extends AbstractController
                 $user = $userRepository->find($this->getUser());
                 if ($result = $user->getUserProfiles()->first()) {
                     $people = $repository->findBySearchQuery($name, $firstname, $schools, $courses, $startDate, $endDate, $result, offset: $page);
-                    $peopleCount = count($repository->findBySearchQuery($name, $firstname, $schools, $courses, $startDate, $endDate));
+                    $peopleCount = count($repository->findBySearchQuery($name, $firstname, $schools, $courses, $startDate, $endDate, $result));
                 }
                 else {
                     $people = [];
