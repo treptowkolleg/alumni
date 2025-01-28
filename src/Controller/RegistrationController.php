@@ -34,7 +34,7 @@ class RegistrationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var string $plainPassword */
             $plainPassword = $form->get('plainPassword')->getData();
-            if(!$user->hasSchool()) $user->setSchool(null);
+            $user->setHasSchool(true);
 
             // Phonetik generieren und speichern
             $user->setFirstnameSoundEx(SoundExpression::generate($user->getFirstname()));
