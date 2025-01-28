@@ -21,17 +21,13 @@
                     <span class="ms-1 d-none d-lg-inline">Bekannte</span>
                 </a>
             </li>
-            {% if people_count|default(null) %}
-                <li class="nav-item ms-auto">
-                    <a class="nav-link disabled" href="#">
-                        <span class="me-1 text-primary fw-bolder">{{ people_count }}</span>
-                        <i class="fa-solid fa-user-group text-primary"></i>
-                    </a>
-                </li>
-            {% endif %}
-        {% else %}
-            <li class="nav-item">
-                <a class="nav-link" href="{{ url('app_register') }}">Registriere dich für weitere Ergebnisse</a>
+        {% endif %}
+        {% if people_count|default(null) %}
+            <li class="nav-item ms-auto">
+                <a class="nav-link disabled" href="#">
+                    <span class="me-1 text-primary fw-bolder">{{ people_count }}</span>
+                    <i class="fa-solid fa-user-group text-primary"></i>
+                </a>
             </li>
         {% endif %}
     </ul>
