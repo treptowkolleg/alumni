@@ -96,7 +96,7 @@ class PersonController extends AbstractController
         ]);
     }
 
-    #[Route('/details/{slug}', name: 'show')]
+    #[Route('/alumni/details/{slug}', name: 'show')]
     public function show(User $user, UserRepository $userRepository): Response
     {
         $profile = $user->getUserProfiles()->first();
