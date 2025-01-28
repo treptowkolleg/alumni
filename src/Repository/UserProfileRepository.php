@@ -74,6 +74,7 @@ class UserProfileRepository extends ServiceEntityRepository
         ?array $performanceCourses = [],
         ?string $startYear = null,
         ?string $endYear = null,
+        ?UserProfile $userProfile = null,
         int $offset = 1
     ): array
     {
@@ -155,6 +156,12 @@ class UserProfileRepository extends ServiceEntityRepository
             $query->andWhere('up.inYear <= :endYear ');
             $query->setParameter('endYear', $endYear);
         }
+
+        if($userProfile) {
+            $query->andWhere("up.id IN (:userProfiles)");
+            $query->setParameter("userProfiles", $userProfile->getUserProfiles());
+        }
+
         $query->orderBy('u.lastname', 'ASC');
         return $query->getQuery()->setFirstResult(9*($offset-1))->getResult();
     }

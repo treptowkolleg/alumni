@@ -23,11 +23,11 @@ use Symfony\Component\Routing\Attribute\Route;
 class PersonController extends AbstractController
 {
 
-    #[Route('/{filter}', name: 'index')]
-    public function index(Request $request, UserRepository $userRepository, UserProfileRepository $repository, SchoolRepository $schoolRepository, string $filter = 'all'): Response
+    #[Route('/{filter}/{page}', name: 'index')]
+    public function index(Request $request, UserRepository $userRepository, UserProfileRepository $repository, SchoolRepository $schoolRepository, string $filter = 'all', int $page = 1): Response
     {
         $filterValues = $request->request->all();
-
+        $peopleCount = 0;
         $search = $request->request->get('person');
         $schools = $request->request->all('school');
         $courses = $request->request->all('course');
@@ -47,7 +47,8 @@ class PersonController extends AbstractController
         $usedDates = $repository->findExamDates();
 
         if($filter == 'all') {
-            $people = $repository->findBySearchQuery($name, $firstname, $schools, $courses, $startDate, $endDate);
+            $people = $repository->findBySearchQuery($name, $firstname, $schools, $courses, $startDate, $endDate, offset: $page);
+            $peopleCount = count($repository->findBySearchQuery($name, $firstname, $schools, $courses, $startDate, $endDate));
         }
 
 
@@ -55,7 +56,8 @@ class PersonController extends AbstractController
             if($this->isGranted('ROLE_USER')) {
                 $user = $userRepository->find($this->getUser());
                 if($school = $user->getSchool()) {
-                    $people = $repository->findBySearchQuery($name, $firstname, [$school->getId()], $courses, $startDate, $endDate);
+                    $people = $repository->findBySearchQuery($name, $firstname, [$school->getId()], $courses, $startDate, $endDate, offset: $page);
+                    $peopleCount = count($repository->findBySearchQuery($name, $firstname, [$school->getId()], $courses, $startDate, $endDate));
                     $filterValues['school'] = [$school->getId()];
                 } else {
                     $this->addFlash('warning','Du hast dich keiner Bildungseinrichtung zugeordnet!');
@@ -69,11 +71,13 @@ class PersonController extends AbstractController
         if($filter == 'freunde') {
             if($this->isGranted('ROLE_USER')) {
                 $user = $userRepository->find($this->getUser());
-                if($result = $user->getUserProfiles()->first())
-                    $people = $result->getUserProfiles();
-                else
+                if ($result = $user->getUserProfiles()->first()) {
+                    $people = $repository->findBySearchQuery($name, $firstname, $schools, $courses, $startDate, $endDate, $result, offset: $page);
+                    $peopleCount = count($repository->findBySearchQuery($name, $firstname, $schools, $courses, $startDate, $endDate));
+                }
+                else {
                     $people = [];
-                $filteredTypes = null;
+                }
             } else {
                 return $this->redirectToRoute('people_index');
             }
@@ -83,7 +87,9 @@ class PersonController extends AbstractController
         return $this->render('people/index.html.twig', [
             'filterValues' => $filterValues,
             'filter' => $filter,
+            'page' => $page,
             'people' => $people,
+            'people_count' => $peopleCount,
             'schools' => $schoolRepository->findAll(),
             'dates' => $usedDates,
             'courses' => PerformanceCourseEnum::cases(),

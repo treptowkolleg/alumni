@@ -92,15 +92,15 @@
             <div class="col-12">
                 <nav aria-label="Page Navigation">
                     <ul class="pagination">
-                        {% set page = 1 %}
-                        {% for person in people %}
+                        {% set page_nr = 1 %}
+                        {% for person in 1..people_count %}
                             {% if loop.first or loop.index0 is divisible by(9) %}
                                 <li class="page-item">
-                                    <a class="page-link {{ page == current_page|default(1) ? 'active' : '' }}" href="#">
-                                        {{ page }}
+                                    <a class="page-link {{ page == page_nr ? 'active' : '' }}" href="{{ url('people_index',{'filter':filter,'page':page_nr}) }}">
+                                        {{ page_nr }}
                                     </a>
                                 </li>
-                                {% set page = page + 1 %}
+                                {% set page_nr = page_nr + 1 %}
                             {% endif %}
                         {% endfor %}
                     </ul>
