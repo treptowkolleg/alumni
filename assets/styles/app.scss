@@ -468,3 +468,20 @@ tbody > tr > td {
 .list-group-item-group a:hover {
   background-color: $list-group-hover-bg;
 }
+
+.marker-secondary {
+  position: relative;
+}
+
+.marker-secondary:after {
+  position: absolute;
+  top: 50%;
+  margin-top: -3px;
+  left: -11px;
+  content: " ";
+  border-radius: 1rem;
+  border: 3px solid $systemYellow;
+  background-color: $systemYellow;
+  width: 4px;
+  height: 4px;
+}

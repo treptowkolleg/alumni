@@ -131,15 +131,19 @@ function validateForm($i){
 
 function updateUnreadMessagesUI(count) {
     const unreadCountDiv = document.getElementById('unread-count');
-    if (unreadCountDiv) {
+    const mailboxHeaderIcon = document.getElementById('mail-marker');
+    if (unreadCountDiv && mailboxHeaderIcon) {
         if (count > 0) {
             if(unreadCountDiv.classList.contains('d-none')) {
                 unreadCountDiv.classList.remove('d-none');
+                mailboxHeaderIcon.classList.add('marker-secondary');
                 unreadCountDiv.innerText = count;
+
             }
         } else {
             if(!unreadCountDiv.classList.contains('d-none')) {
-                unreadCountDiv.classList.remove('d-none');
+                unreadCountDiv.classList.add('d-none');
+                mailboxHeaderIcon.classList.remove('marker-secondary');
                 unreadCountDiv.innerText = "";
             }
         }
@@ -148,6 +152,7 @@ function updateUnreadMessagesUI(count) {
 
 function checkUnreadMessages() {
     const unreadCountDiv = document.getElementById('unread-count');
+
 
     if(unreadCountDiv) {
         const userId = unreadCountDiv.getAttribute('data-id'); // Benutzer-ID aus dem Div auslesen
