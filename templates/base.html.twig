@@ -39,7 +39,54 @@
     {% block header %}{% endblock %}
 
     <main class="d-flex flex-column flex-fill">{% block page %}{% endblock %}</main>
+    <div id="cookie-banner" class="fixed-bottom bg-dark text-white py-3">
+        <div class="container d-flex flex-column flex-md-row align-items-center justify-content-between">
+            <p class="mb-2 mb-md-0">
+                Wir verwenden Cookies, um unsere Website und unseren Service zu optimieren.
+                Mehr Informationen findest du in unserer <a href="/datenschutz" class="text-info text-decoration-underline">Datenschutzerklärung</a>.
+            </p>
+            <div class="d-flex">
+                <button id="accept-all" class="btn text-nowrap btn-primary me-2">
+                    Alle akzeptieren
+                </button>
+                <button id="customize" class="btn btn-white" data-bs-toggle="modal" data-bs-target="#cookie-modal">
+                    Einstellungen
+                </button>
+            </div>
+        </div>
+    </div>
 
+    <div id="cookie-modal" class="modal fade" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Cookie-Einstellungen</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Wähle aus, welche Cookies du erlauben möchtest:</p>
+                    <form id="cookie-settings-form">
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" id="necessary-cookies" value="necessary" checked disabled>
+                            <label class="form-check-label" for="necessary-cookies">
+                                Notwendige Cookies (immer aktiv)
+                            </label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" id="preferences-cookies" name="cookie-category" value="preferences">
+                            <label class="form-check-label" for="preferences-cookies">
+                                Präferenz-Cookies
+                            </label>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="save-cookie-settings" class="btn btn-primary">Speichern</button>
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Abbrechen</button>
+                </div>
+            </div>
+        </div>
+    </div>
     {% block footer %}{% endblock %}
     </body>
 </html>
