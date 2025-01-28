@@ -13,6 +13,26 @@
 
         <div class="mb-3">{{ include('component/_person_filter.html.twig') }}</div>
 
+        <div class="row g-3 my-3 d-block d-lg-none">
+            <div class="col-12">
+                <nav aria-label="Page Navigation" class="card d-flex justify-content-center">
+                    <ul class="pagination mx-auto mb-0">
+                        {% set page_nr = 1 %}
+                        {% for person in 1..people_count %}
+                            {% if loop.first or loop.index0 is divisible by(9) %}
+                                <li class="page-item">
+                                    <a class="page-link border-top-0 border-bottom-0 {{ page == page_nr ? 'active' : '' }}" href="{{ url('people_index',{'filter':filter,'page':page_nr}) }}">
+                                        {{ page_nr }}
+                                    </a>
+                                </li>
+                                {% set page_nr = page_nr + 1 %}
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
         <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3 g-3 align-content-stretch">
             {% for person in people %}
                 {% if loop.index <= 9 %}
@@ -90,13 +110,13 @@
 
         <div class="row g-3 py-3">
             <div class="col-12">
-                <nav aria-label="Page Navigation">
-                    <ul class="pagination">
+                <nav aria-label="Page Navigation" class="card d-flex justify-content-center">
+                    <ul class="pagination mx-auto mb-0">
                         {% set page_nr = 1 %}
                         {% for person in 1..people_count %}
                             {% if loop.first or loop.index0 is divisible by(9) %}
                                 <li class="page-item">
-                                    <a class="page-link {{ page == page_nr ? 'active' : '' }}" href="{{ url('people_index',{'filter':filter,'page':page_nr}) }}">
+                                    <a class="page-link border-top-0 border-bottom-0 {{ page == page_nr ? 'active' : '' }}" href="{{ url('people_index',{'filter':filter,'page':page_nr}) }}">
                                         {{ page_nr }}
                                     </a>
                                 </li>
