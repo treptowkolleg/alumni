@@ -41,9 +41,9 @@
     <main class="d-flex flex-column flex-fill">{% block page %}{% endblock %}</main>
     <div id="cookie-banner" class="fixed-bottom bg-dark text-white py-3">
         <div class="container d-flex flex-column flex-md-row align-items-center justify-content-between">
-            <p class="mb-2 mb-md-0">
-                Wir verwenden Cookies, um unsere Website und unseren Service zu optimieren.
-                Mehr Informationen findest du in unserer <a href="/datenschutz" class="text-info text-decoration-underline">Datenschutzerklärung</a>.
+            <p class="mb-3 mb-lg-0 me-lg-2">
+                Wir verwenden ausschließlich funktionale Cookies, um das Alumni-System umzusetzen. Cookies von Drittanbietern werden nicht genutzt.
+                Mehr Informationen findest du in unserer <a href="/datenschutz" class="text-info text-decoration-underline text-nowrap">Datenschutzerklärung</a> und der <a href="/datenschutz" class="text-info text-decoration-underline text-nowrap">Green-Data-Richtlinie</a>.
             </p>
             <div class="d-flex">
                 <button id="accept-all" class="btn text-nowrap btn-primary me-2">
@@ -71,12 +71,26 @@
                             <label class="form-check-label" for="necessary-cookies">
                                 Notwendige Cookies (immer aktiv)
                             </label>
+                            <p class="small">
+                                Diese Cookies sind essenziell, um das Login-System des Alumni-Portals zu ermöglichen. Es handelt sich um sogenannte Session-Cookies, die automatisch gelöscht werden, sobald du den Browser schließt.
+                            </p>
                         </div>
                         <div class="form-check mb-2">
                             <input class="form-check-input" type="checkbox" id="preferences-cookies" name="cookie-category" value="preferences">
                             <label class="form-check-label" for="preferences-cookies">
                                 Präferenz-Cookies
                             </label>
+                            <p class="small">
+                                Diese Cookies speichern lediglich Sortierungen und Einstellungen von Tabellen, z. B. im Postfach, lokal auf deinem Gerät.
+                            </p>
+                        </div>
+                        <div class="">
+                            <p class="small">
+                                Wenn du auf Speichern klickst, wird zusätzlich ein Cookie angelegt, das deine Auswahl speichert und festhält, welche Cookies erlaubt sind und welche nicht.
+                            </p>
+                            <p class="small mb-0">
+                                Weitere Informationen, einschließlich einer Anleitung zum Löschen von Cookies, findest du in unserer <a href="#">Green-Data-Richtlinie</a>.
+                            </p>
                         </div>
                     </form>
                 </div>

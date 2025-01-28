@@ -28,7 +28,7 @@
         </div>
         <div class="col-6 col-lg-2 bg-white">
             <div class="slim-form mt-4 h-100">
-                <label for="opt" class="pt-2">Eintrittsjahr</label>
+                <label for="opt" class="pt-2">Von</label>
                 <select name="start_date" class="slim-select-single-school custom-select" id="opt">
                     <option value="">-</option>
                     {% for date in (1991..date('now')|date('Y'))|sort|reverse  %}
@@ -41,7 +41,7 @@
         </div>
         <div class="col-6 col-lg-2 bg-white">
             <div class="slim-form mt-4 h-100">
-                <label for="opt" class="pt-2">Abgangsjahr</label>
+                <label for="opt" class="pt-2">Bis</label>
                 <select name="end_date" class="slim-select-single-school custom-select" id="opt">
                     <option value="">-</option>
                     {% for date in (1991..date('now + 3 years')|date('Y'))|sort|reverse %}
