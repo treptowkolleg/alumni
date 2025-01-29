@@ -28,13 +28,13 @@ liip_imagine:
                 scale:
                     dim: [ 800, 600 ]
         avatar:
-            quality: 50
+            quality: 25
             filters:
                 thumbnail: { size: [ 600, 600 ], mode: outbound }
                 scale:
                     dim: [ 600, 600 ]
         avatar_sm:
-            quality: 50
+            quality: 25
             filters:
                 thumbnail: { size: [ 600, 450 ], mode: outbound }
                 scale:
