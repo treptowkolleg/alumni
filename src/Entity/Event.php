@@ -57,9 +57,16 @@ class Event
     #[ORM\ManyToMany(targetEntity: School::class, inversedBy: 'events')]
     private Collection $school;
 
+    /**
+     * @var Collection<int, User>
+     */
+    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'followedEvents')]
+    private Collection $followers;
+
     public function __construct()
     {
         $this->school = new ArrayCollection();
+        $this->followers = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -218,6 +225,30 @@ class Event
     public function removeSchool(School $school): static
     {
         $this->school->removeElement($school);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getFollowers(): Collection
+    {
+        return $this->followers;
+    }
+
+    public function addFollower(User $follower): static
+    {
+        if (!$this->followers->contains($follower)) {
+            $this->followers->add($follower);
+        }
+
+        return $this;
+    }
+
+    public function removeFollower(User $follower): static
+    {
+        $this->followers->removeElement($follower);
 
         return $this;
     }

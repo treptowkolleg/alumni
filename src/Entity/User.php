@@ -118,6 +118,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $lastnameSoundEx = null;
 
+    /**
+     * @var Collection<int, Event>
+     */
+    #[ORM\ManyToMany(targetEntity: Event::class, mappedBy: 'followers')]
+    private Collection $followedEvents;
+
     public function __construct()
     {
         $this->blogPosts = new ArrayCollection();
@@ -126,6 +132,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
         $this->chats = new ArrayCollection();
         $this->events = new ArrayCollection();
         $this->newsletters = new ArrayCollection();
+        $this->followedEvents = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -603,6 +610,33 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
     public function setLastnameSoundEx(?string $lastnameSoundEx): static
     {
         $this->lastnameSoundEx = $lastnameSoundEx;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Event>
+     */
+    public function getFollowedEvents(): Collection
+    {
+        return $this->followedEvents;
+    }
+
+    public function addFollowedEvent(Event $followedEvent): static
+    {
+        if (!$this->followedEvents->contains($followedEvent)) {
+            $this->followedEvents->add($followedEvent);
+            $followedEvent->addFollower($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFollowedEvent(Event $followedEvent): static
+    {
+        if ($this->followedEvents->removeElement($followedEvent)) {
+            $followedEvent->removeFollower($this);
+        }
 
         return $this;
     }
