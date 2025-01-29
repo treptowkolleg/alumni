@@ -115,13 +115,13 @@
                                 <h3 class="h5 mb-0 text-center text-lg-start">Nimmt teil</h3>
                             </div>
                             <div class="list-group list-group-flush border-bottom-0">
-                                {% for post in person.user.events|sort((a, b) => a.startDate <=> b.startDate) %}
+                                {% for post in person.user.followedEvents|sort((a, b) => a.startDate <=> b.startDate) %}
                                     {% if post.endDate|date('Ymd') >= date('now')|date('Ymd')%}
                                         {{ include('component/_event_list.html.twig') }}
                                     {% endif %}
                                 {% else %}
                                     <div class="list-group-item">
-                                        Aktuell keine Einträge vorhanden
+                                        folgt keinen Veranstaltungen
                                     </div>
                                 {% endfor %}
                             </div>

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Entity\UserProfile;
 use App\Repository\ChatRepository;
+use App\Repository\EventRepository;
 use App\Repository\UserProfileRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -61,6 +62,37 @@ class ApiController extends AbstractController
         );
 
         return $response;
+    }
+
+    #[Route('/event/follow/toggle', name: 'event_follow_toggle', methods: ['POST'])]
+    public function eventFollowToggle(Request $request, EventRepository $eventRepository, UserRepository $userRepository, EntityManagerInterface $entityManager): JsonResponse
+    {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
+        $data = json_decode($request->getContent(),true);
+        $id = $data['id'];
+
+        if ($request->isMethod('post')) {
+            $user = $userRepository->find($this->getUser());
+            $event = $eventRepository->find($id);
+
+            if(!$user->getFollowedEvents()->contains($event)) {
+                $user->addFollowedEvent($event);
+                $entityManager->persist($event);
+                $entityManager->flush();
+                $sampleHasLike = true;
+            } else {
+                $user->removeFollowedEvent($event);
+                $entityManager->persist($event);
+                $entityManager->flush();
+                $sampleHasLike = false;
+            }
+
+            return new JsonResponse([
+                'sampleHasLike' => $sampleHasLike
+            ]);
+        }
+        return new JsonResponse('fehler');
     }
 
     #[Route('/like/toggle', name: 'add_like', methods: ['POST'])]

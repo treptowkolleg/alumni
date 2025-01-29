@@ -11,9 +11,12 @@
             <i class="fa-solid fa-chevron-right"></i>
         </div>
     </a>
-    <a href="#" class="text-decoration-none text-secondary align-self-stretch">
-        <div class="p-3 d-flex align-items-center h-100">
-            <i class="fa-regular fa-star"></i>
-        </div>
-    </a>
+    {% if app.user %}
+        <a href="#" class="text-decoration-none text-secondary align-self-stretch event-follow-btn"  data-url="{{ url('api_event_follow_toggle') }}" data-id="{{ post.id }}">
+            <div class="p-3 d-flex align-items-center h-100">
+                <div class="spinner-border spinner-border-sm d-none loader-{{ post.id }}" role="status" style="margin-right: 2px"></div>
+                <i class="fa-{{ app.user.followedEvents.contains(post) == true ? 'solid' : 'regular' }} fa-star event-follow-icon-{{ post.id }}"></i>
+            </div>
+        </a>
+    {% endif %}
 </div>

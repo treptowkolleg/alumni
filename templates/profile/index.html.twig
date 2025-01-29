@@ -68,16 +68,14 @@
                             <h3 class="h5 mb-0 text-center text-lg-start">Veranstaltungen</h3>
                         </div>
                         <div class="list-group list-group-flush border-bottom-0">
-                            {% for friend in app.user.userProfiles.first.friends %}
-                                {% for post in friend.user.events|sort((a, b) => a.startDate <=> b.startDate) %}
-                                    {% if post.endDate|date('Ymd') >= date('now')|date('Ymd')%}
-                                        {{ include('component/_event_list.html.twig') }}
-                                    {% endif %}
-                                {% else %}
-                                    <div class="list-group-item">
-                                        Aktuell keine Einträge vorhanden
-                                    </div>
-                                {% endfor %}
+                            {% for post in app.user.followedEvents|sort((a, b) => a.startDate <=> b.startDate) %}
+                                {% if post.endDate|date('Ymd') >= date('now')|date('Ymd')%}
+                                    {{ include('component/_event_list.html.twig') }}
+                                {% endif %}
+                            {% else %}
+                                <div class="list-group-item p-3 d-flex align-items-center justify-content-center text-muted">
+                                    Du nimmst aktuell an keiner Veranstaltung teil.
+                                </div>
                             {% endfor %}
                         </div>
                         <div class="h-100"></div>
