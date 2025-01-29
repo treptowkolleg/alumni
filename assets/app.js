@@ -247,74 +247,50 @@ document.addEventListener('DOMContentLoaded', () => {
     const saveSettingsButton = document.getElementById('save-cookie-settings');
 
     // Bootstrap-Modal-Instanz
-    const cookieModal = new bootstrap.Modal(cookieModalElement);
+    if(cookieModalElement) {
+        const cookieModal = new bootstrap.Modal(cookieModalElement);
 
-    // Alle Cookies akzeptieren
-    acceptAllButton.addEventListener('click', () => {
-        fetch('/api/cookie-consent', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ categories: ['necessary', 'preferences'] })
-        }).then(response => {
-            if (response.ok) {
-                cookieBanner.style.display = 'none';
-            }
+        acceptAllButton.addEventListener('click', () => {
+            fetch('/api/cookie-consent', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ categories: ['necessary', 'preferences'] })
+            }).then(response => {
+                if (response.ok) {
+                    cookieBanner.style.display = 'none';
+                }
+            });
         });
-    });
 
-    // Einstellungen anpassen
-    customizeButton.addEventListener('click', () => {
-        cookieModal.show();
-    });
-
-    // Cookie-Einstellungen speichern
-    saveSettingsButton.addEventListener('click', () => {
-        const categories = Array.from(document.querySelectorAll('input[name="cookie-category"]:checked'))
-            .map(input => input.value);
-
-        fetch('/api/cookie-consent', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ categories })
-        }).then(response => {
-            if (response.ok) {
-                cookieModal.hide();
-                cookieBanner.style.display = 'none';
-            }
+        // Einstellungen anpassen
+        customizeButton.addEventListener('click', () => {
+            cookieModal.show();
         });
-    });
-});
 
-document.addEventListener('DOMContentLoaded', function () {
-    // Hole die Zustimmung aus dem Cookie
-    const cookieConsent = getCookie('cookie_consent') || [];
-    const cookieBanner = document.getElementById('cookie-banner');
+        // Cookie-Einstellungen speichern
+        saveSettingsButton.addEventListener('click', () => {
+            const categories = Array.from(document.querySelectorAll('input[name="cookie-category"]:checked'))
+                .map(input => input.value);
 
-    console.log(cookieConsent);
-    if(cookieConsent.length > 0) {
+            fetch('/api/cookie-consent', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ categories })
+            }).then(response => {
+                if (response.ok) {
+                    cookieModal.hide();
+                    cookieBanner.style.display = 'none';
+                }
+            });
+        });
 
-        // Prüfen, ob "preferences" zugelassen ist
-        if (!cookieConsent.includes('preferences')) {
-            // Entferne die Datatable-Cookies
-        }
-        cookieBanner.style.display = 'none';
-    } else {
-        console.log('Cookie not found.');
-        cookieBanner.style.display = 'block';
     }
 
+
+    // Alle Cookies akzeptieren
+
 });
-
-// Hilfsfunktion: Cookie auslesen
-function getCookie(name) {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop().split(';').shift();
-    return null;
-}
-
-

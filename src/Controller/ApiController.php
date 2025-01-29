@@ -21,6 +21,16 @@ use Symfony\Component\Routing\Attribute\Route;
 class ApiController extends AbstractController
 {
 
+    #[Route('/get-cookie', name: 'cookie_get', methods: ['GET'])]
+    public function get(Request $request): Response
+    {
+        if($request->cookies->has('cookie_consent')) {
+            return $this->render('component/cookies.html.twig', []);
+        } else {
+            return $this->render('component/empty.html.twig', []);
+        }
+    }
+
     #[Route('/cookie-consent', name: 'cookie_consent', methods: ['POST'])]
     public function consent(Request $request, SessionInterface $session): JsonResponse
     {
@@ -29,7 +39,6 @@ class ApiController extends AbstractController
         // Erwarte, dass die Kategorien als Array gesendet werden
         $categories = $data['categories'] ?? [];
 
-        // Speichere die Zustimmung in der Session
         $session->set('cookie_consent', $categories);
 
         // Serialisiere die Kategorien, um sie im Cookie zu speichern
