@@ -1,4 +1,5 @@
 liip_imagine:
+    cache: ~
     driver: "gd"
     webp:
         generate: true

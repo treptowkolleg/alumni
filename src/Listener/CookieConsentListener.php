@@ -12,6 +12,11 @@ class CookieConsentListener
         $request = $event->getRequest();
         $response = $event->getResponse();
 
+        if (str_starts_with($request->getPathInfo(), '/media/cache/')) {
+            $response = $event->getResponse();
+            $response->headers->set('Cache-Control', 'public, max-age=31536000, immutable');
+        }
+
         // Cookie aus der Anfrage lesen (Fallback auf leeres Array, falls Cookie nicht gesetzt)
         $cookieConsent = $request->cookies->get('cookie_consent');
 
