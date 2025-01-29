@@ -1,8 +1,6 @@
 liip_imagine:
     cache: ~
     driver: "gd"
-    webp:
-        generate: true
     resolvers:
         default:
             web_path: ~
