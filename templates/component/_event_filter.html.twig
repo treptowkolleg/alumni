@@ -1,22 +1,56 @@
-<div class="row g-1 mb-3 align-content-stretch">
-    <div class="col-12 col-lg-4 bg-white">
-        <div class="slim-form mt-4 h-100">
-            <label class="pt-2" for="opt">Veranstaltungsart</label>
-            <select class="slim-select-multi-school custom-select" multiple id="opt">
-                <option>Treptow-Kolleg</option>
-                <option>Kolleg Schöneberg</option>
-                <option>Charlotte-Wolff-Kolleg</option>
-            </select>
+
+<form method="post">
+    <div class="row g-1 mb-3 align-content-stretch">
+        <div class="col-12 col-lg-4 bg-white">
+            <div class="slim-form mt-4 h-100">
+                <label class="pt-2" for="opt">Veranstaltungsart</label>
+                <select name="type[]" class="slim-select-multi-school custom-select" multiple id="opt">
+                    {% for type in types|sort((a, b) => a.title <=> b.title) %}
+                        {% if type.events.count > 0 %}
+                            <option {{ type.id in filterValues.type|default() ? 'selected' : '' }} value="{{ type.id }}">
+                                {{ type.title }}
+                            </option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="col-12 col-lg-4 bg-white">
+            <div class="slim-form mt-4 h-100">
+                <label for="opt" class="pt-2">Bezugsschule</label>
+                <select name="school[]" class="slim-select-multi-school custom-select" multiple id="opt">
+                    {% for school in schools|sort((a, b) => a.title <=> b.title) %}
+                        {% if school.events.count > 0 %}
+                            <option {{ school.id in filterValues.school|default() ? 'selected' : '' }} value="{{ school.id }}">
+                                {{ school.title }}
+                            </option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div class="col-12 col-lg-4 bg-white">
+            <div class="slim-form mt-4 h-100">
+                <label for="opt" class="pt-2">Zeitraum</label>
+                <select name="period" class="slim-select-single-school custom-select" id="opt">
+                    {% for value in 3..0 %}
+                        <option {{ "+" ~ (value * 3 + 3) in filterValues.period|default() ? 'selected' : '' }} value="+{{ value * 3 + 3 }}">nächsten {{ value * 3 + 3}} Monate</option>
+                    {% endfor %}
+                    <option {{ 'all' == filterValues.period|default('all') ? 'selected' : '' }} value="">alle</option>
+                    {% for value in 0..3 %}
+                        <option {{ "-" ~ (value * 3 + 3) in filterValues.period|default() ? 'selected' : '' }} value="-{{ value * 3 + 3 }}">letzten {{ value * 3 + 3}} Monate</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div class="col-lg-12 mt-3">
+            <button class="btn btn-primary w-100"  type="submit">
+                <i class="fas fa-filter me-2"></i>
+                <span>Filtern</span>
+            </button>
         </div>
     </div>
-    <div class="col-12 col-lg-4 bg-white">
-        <div class="slim-form mt-4 h-100">
-            <label for="opt" class="pt-2">Bezugsschule</label>
-            <select class="slim-select-multi-school custom-select" multiple id="opt">
-                <option>Informatik</option>
-                <option>B</option>
-                <option>C</option>
-            </select>
-        </div>
-    </div>
-</div>
+</form>
+

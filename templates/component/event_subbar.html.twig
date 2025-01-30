@@ -8,5 +8,11 @@
             <i class="fa-solid fa-magnifying-glass text-muted"></i>
             <span class="ms-1 d-none d-lg-inline">Details</span>
         </a>
+        {% if event_count|default(null) %}
+                <a class="nav-item ms-auto nav-link disabled" href="#">
+                    <span class="me-1 text-primary fw-bolder">{{ event_count }}</span>
+                    <i class="fa-solid fa-calendar-day text-primary"></i>
+                </a>
+        {% endif %}
     </div>
 </div>

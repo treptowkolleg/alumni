@@ -56,4 +56,46 @@ class EventRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+    /**
+     * @return Event[] Returns an array of Event objects
+     */
+    public function findBySearchQuery(?array $filterValues = [],int $results = 6,  int $offset = 1): array
+    {
+        $query = $this->createQueryBuilder('e');
+
+
+        if(isset($filterValues['type'])){
+            $types = $filterValues['type'];
+            $query->andWhere('e.type IN (:types)');
+            $query->setParameter('types', $types);
+        }
+
+        if(isset($filterValues['school'])){
+            $schools = $filterValues['school'];
+            $query->addSelect('s');
+            $query->leftJoin('e.school', 's');
+            $query->andWhere('s.id IN (:schools)');
+            $query->setParameter('schools', $schools);
+        }
+
+        if(isset($filterValues['period']) and $filterValues['period'] != ""){
+            $period = $filterValues['period'];
+            $date = new \DateTime("$period months");
+
+            if($period > 0) {
+                $now = new \DateTime();
+                $query->andWhere('e.endDate BETWEEN :now AND :period');
+                $query->setParameter('now', $now);
+            } else {
+                $yesterday = new \DateTime("-1 days");
+                $query->andWhere('e.endDate BETWEEN :period AND :yesterday');
+                $query->setParameter('yesterday', $yesterday);
+            }
+            $query->setParameter('period', $date);
+
+        }
+
+        return $query->getQuery()->setMaxResults($results)->setFirstResult($results*($offset-1))->getResult();
+    }
 }

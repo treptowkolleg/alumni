@@ -7,6 +7,12 @@
             </a>
         </li>
         {% if app.user %}
+            <li class="nav-item">
+                <a class="nav-link {{ filter == 'freunde' ? 'active ' : '' }}" href="{{ url('people_index',{'filter':'freunde'}) }}">
+                    <i class="fa-solid fa-star text-primary"></i>
+                    <span class="ms-1 d-none d-lg-inline">Bekannte</span>
+                </a>
+            </li>
             {% if app.user.hasSchool %}
                 <li class="nav-item">
                     <a class="nav-link {{ filter == 'school' ? 'active ' : '' }}" href="{{ url('people_index',{'filter':'school'}) }}">
@@ -15,12 +21,6 @@
                     </a>
                 </li>
             {% endif %}
-            <li class="nav-item">
-                <a class="nav-link {{ filter == 'freunde' ? 'active ' : '' }}" href="{{ url('people_index',{'filter':'freunde'}) }}">
-                    <i class="fa-solid fa-star text-primary"></i>
-                    <span class="ms-1 d-none d-lg-inline">Bekannte</span>
-                </a>
-            </li>
         {% endif %}
         {% if people_count|default(null) %}
             <li class="nav-item ms-auto">

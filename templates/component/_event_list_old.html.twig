@@ -1,0 +1,21 @@
+<div class="list-group-item list-group-item-group d-flex align-items-center bg-light-subtle p-0">
+    <a href="{{ path('event_show',{'slug':post.slug}) }}" class="w-100 d-flex align-items-center justify-content-between p-3 text-decoration-none">
+        <div class="d-flex flex-column">
+            <div class="d-inline-block text-wrap fst-italic">{{ post }}</div>
+            <div class="me-2 d-block d-lg-none">{{ post.startDate|date('d.m.Y') }}{% if post.endDate|date('d.m.Y') != post.startDate|date('d.m.Y') %} - {{ post.endDate|date('d.m.Y') }}{% endif %}</div>
+            <div class="small text-muted text-truncate fst-italic" style="max-width: 220px">{{ post.location|split(',').0 }}</div>
+
+        </div>
+        <div class="d-flex align-items-center">
+            <div class="d-none d-lg-block badge text-bg-light rounded-pill fw-normal me-2">{{ post.startDate|date('d.m.Y') }}{% if post.endDate|date('d.m.Y') != post.startDate|date('d.m.Y') %} - {{ post.endDate|date('d.m.Y') }}{% endif %}</div>
+            <i class="fa-solid fa-chevron-right"></i>
+        </div>
+    </a>
+    {% if app.user %}
+        <div class="text-decoration-none text-secondary align-self-stretch">
+            <div class="p-3 d-flex align-items-center h-100">
+                <i class="fa-{{ app.user.followedEvents.contains(post) == true ? 'solid' : 'regular' }} fa-star"></i>
+            </div>
+        </div>
+    {% endif %}
+</div>

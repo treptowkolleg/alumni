@@ -26,13 +26,17 @@ class PersonController extends AbstractController
     #[Route('/{filter}/{page}', name: 'index')]
     public function index(Request $request, UserRepository $userRepository, UserProfileRepository $repository, SchoolRepository $schoolRepository, string $filter = 'all', int $page = 1): Response
     {
-        $filterValues = $request->request->all();
+        if($request->isMethod('POST')) {
+            $filterValues = $request->request->all();
+            $request->getSession()->set('filter_people', $filterValues);
+        }
+
         $peopleCount = 0;
-        $search = $request->request->get('person');
-        $schools = $request->request->all('school');
-        $courses = $request->request->all('course');
-        $startDate = $request->request->get('start_date');
-        $endDate = $request->request->get('end_date');
+        $search = $request->getSession()->get('filter_people')['person'] ?? null;
+        $schools = $request->getSession()->get('filter_people')['school'] ?? null;
+        $courses = $request->getSession()->get('filter_people')['course'] ?? null;
+        $startDate = $request->getSession()->get('filter_people')['start_date'] ?? null;
+        $endDate = $request->getSession()->get('filter_people')['end_date'] ?? null;
 
         $searchArray = explode(' ', $search);
         if(count($searchArray) > 1){
@@ -56,9 +60,11 @@ class PersonController extends AbstractController
             if($this->isGranted('ROLE_USER')) {
                 $user = $userRepository->find($this->getUser());
                 if($school = $user->getSchool()) {
+                    $filtered = $request->getSession()->get('filter_people');
+                    $filtered['school'] = [$school->getId()];
+                    $request->getSession()->set('filter_people',$filtered);
                     $people = $repository->findBySearchQuery($name, $firstname, [$school->getId()], $courses, $startDate, $endDate, offset: $page);
                     $peopleCount = count($repository->findBySearchQuery($name, $firstname, [$school->getId()], $courses, $startDate, $endDate));
-                    $filterValues['school'] = [$school->getId()];
                 } else {
                     $this->addFlash('warning','Du hast dich keiner Bildungseinrichtung zugeordnet!');
                     return $this->redirectToRoute('people_index');
@@ -83,9 +89,8 @@ class PersonController extends AbstractController
             }
         }
 
-
         return $this->render('people/index.html.twig', [
-            'filterValues' => $filterValues,
+            'filterValues' => $request->getSession()->get('filter_people'),
             'filter' => $filter,
             'page' => $page,
             'people' => $people,

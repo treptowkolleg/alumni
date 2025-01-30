@@ -89,5 +89,48 @@
 
 {% endblock %}
 
-{% block body %}{% endblock %}
+{% block body %}
+    {#
+        <script type="application/ld+json">
+            {
+            "@context": "https://schema.org",
+            "@type": "Event",
+            "name": "{{ event_name }}",
+            "startDate": "{{ event_start_date|date('c') }}",
+            "endDate": "{{ event_end_date|date('c') }}",
+            "location": {
+            "@type": "Place",
+            "name": "{{ event_location }}",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "{{ event_address.street }}",
+              "addressLocality": "{{ event_address.city }}",
+              "postalCode": "{{ event_address.zip }}",
+              "addressCountry": "{{ event_address.country }}"
+            }
+            },
+            "description": "{{ event_description }}",
+            "image": "{{ event_image }}",
+            "offers": {
+            "@type": "Offer",
+            "url": "{{ event_url }}",
+            "priceCurrency": "EUR",
+            "price": "{{ event_price }}",
+            "priceValidUntil": "{{ event_start_date|date('c') }}",
+            "availability": "https://schema.org/InStock",
+            "validFrom": "{{ event_start_date|date('c') }}"
+            },
+            "organizer": {
+            "@type": "Organization",
+            "name": "{{ event_organizer_name }}",
+            "url": "{{ event_organizer_url }}"
+            },
+            "eventStatus": "https://schema.org/EventScheduled",
+            "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+            "mainEntityOfPage": "{{ event_url }}"
+            }
+        </script>
+    #}
+{% endblock %}
+
 {% block aside %}{% endblock %}
