@@ -21,9 +21,10 @@ class EventController extends AbstractController
     public function index(Request $request, SchoolRepository $schoolRepository, EventRepository $repository, EventTypeRepository $typeRepository, int $page = 1): Response
     {
         if($request->isMethod('POST')) {
-            $filterValues = $request->request->all();
-            $request->getSession()->set('filter_event', $filterValues);
+            $request->getSession()->set('filter_event', $request->request->all());
         }
+
+        $filterValues = $request->getSession()->get('filter_event');
 
         $posts = $repository->findBySearchQuery($filterValues ?? null, offset: $page);
         $eventCount = count($repository->findBySearchQuery($filterValues ?? null));
