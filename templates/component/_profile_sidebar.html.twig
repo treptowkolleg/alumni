@@ -4,7 +4,7 @@
             <a href="{{ url('app_index') }}" class="nav-link {{ selected == 'main' ? 'active' : '' }}">Magazin</a>
         </li>
         <li class="nav-item">
-            <a href="{{ url('app_index') }}" class="nav-link {{ selected == 'about' ? 'active' : '' }}">Über uns</a>
+            <a href="{{ url('app_index') }}" class="nav-link disabled {{ selected == 'about' ? 'active' : '' }}">Über uns</a>
         </li>
         <li class="nav-item">
             <a href="{{ url('blog_news_index') }}" class="nav-link {{ selected == 'news' ? 'active' : '' }}">Aktuelles</a>

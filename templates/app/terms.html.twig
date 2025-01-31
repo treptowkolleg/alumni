@@ -1,97 +1,91 @@
-{% extends 'base.html.twig' %}
+{% extends '_full.html.twig' %}
 
-{% block title %}Nutzungsbedingungen{% endblock %}
+{% set meta_title = 'Rechtliches' %}
+{% set meta_subtitle = 'Datenschutz' %}
 
-{% block navbar %}
-    <li class="nav-item"><a class="nav-link" href="{{ url('blog_news_all_index') }}">Aktuelles</a></li>
-    <li class="nav-item"><a class="nav-link" href="{{ url('blog_index') }}">Themen</a></li>
-    <li class="nav-item"><a class="nav-link" href="{{ url('event_index') }}">Termine</a></li>
-    <li class="nav-item"><a class="nav-link" href="#">Angebote</a></li>
-    <li class="nav-item"><a class="nav-link active" href="{{ url('people_index') }}">Personen</a></li>
-{% endblock %}
+{% set sidebar = 'events' %}
 
 {% block page_header %}
-    <nav class="bg-transparent" style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ url('app_index') }}">treptowkolleg.de</a></li>
-            <li class="breadcrumb-item active">Nutzungsbedingungen</li>
-        </ol>
-    </nav>
+    <section class="py-3">
+        <div class="container">
+            <h1>Nutzungsbedingungen</h1>
+            <p>Gültig ab: [Einfügedatum]</p>
+
+            <h2>1. Einleitung</h2>
+            <p>
+                Willkommen im Alumni-Portal von [Name des Alumni-Portals]! Diese Nutzungsbedingungen regeln die Nutzung der Dienste, die wir Ihnen zur Verfügung stellen, um den Kontakt zu ehemaligen Schülern, Lehrkräften und dem Förderverein zu pflegen, Informationen zu Klassentreffen, Festen und Bildungsangeboten auszutauschen sowie den Förderverein zu unterstützen.
+            </p>
+            <p>
+                Mit der Nutzung unseres Alumni-Portals erklären Sie sich mit diesen Nutzungsbedingungen einverstanden. Wenn Sie mit einem Teil dieser Bedingungen nicht einverstanden sind, dürfen Sie die Dienste nicht nutzen.
+            </p>
+
+            <h2>2. Nutzung der Dienste</h2>
+            <p>
+                Die Dienste des Alumni-Portals dienen der Pflege von Kontakten zu ehemaligen Schülerinnen und Schülern sowie Lehrkräften. Sie können an Klassentreffen, Festen und Bildungsangeboten teilnehmen und den Förderverein unterstützen.
+            </p>
+            <p>
+                Um die Dienste zu nutzen, müssen Sie ein Online-Konto erstellen. Sie sind verpflichtet, wahrheitsgemäße und vollständige Angaben zu machen, insbesondere Vorname, Nachname und eine gültige E-Mail-Adresse. Weitere Informationen (z. B. Adresse, Geburtsdatum) sind optional und können von Ihnen freiwillig angegeben werden.
+            </p>
+
+            <h2>3. Benutzerkonten</h2>
+            <p>
+                Um auf bestimmte Funktionen des Alumni-Portals zuzugreifen, müssen Sie ein Benutzerkonto erstellen. Die Pflichtangaben hierfür sind:
+            <ul>
+                <li>Vorname</li>
+                <li>Nachname</li>
+                <li>E-Mail-Adresse</li>
+            </ul>
+            Weitere Informationen sind freiwillig und können nach Belieben angegeben werden.
+            </p>
+            <p>
+                Sie sind dafür verantwortlich, die Vertraulichkeit Ihrer Anmeldedaten zu wahren und Ihr Konto vor unbefugtem Zugriff zu schützen. Falls Sie den Verdacht haben, dass Ihr Konto unbefugt genutzt wird, sind Sie verpflichtet, uns umgehend zu benachrichtigen.
+            </p>
+
+            <h2>4. Datenschutz</h2>
+            <p>
+                Der Schutz Ihrer personenbezogenen Daten ist uns sehr wichtig. Wir erheben, speichern und verwenden Ihre Daten nur in Übereinstimmung mit den geltenden Datenschutzgesetzen (insbesondere der Datenschutz-Grundverordnung - DSGVO). Weitere Informationen zum Datenschutz finden Sie in unserer Datenschutzerklärung.
+            </p>
+
+            <h2>5. Geistiges Eigentum</h2>
+            <p>
+                Alle Inhalte und Materialien auf diesem Portal, einschließlich, aber nicht beschränkt auf Texte, Grafiken, Logos und Bilder, sind Eigentum von [Name des Alumni-Portals] oder seinen Lizenzgebern und sind durch das Urheberrecht geschützt. Sie dürfen diese Inhalte nur für den vorgesehenen Zweck im Rahmen der Nutzung des Alumni-Portals verwenden.
+            </p>
+
+            <h2>6. Haftungsbeschränkung</h2>
+            <p>
+                [Name des Alumni-Portals] übernimmt keine Haftung für Schäden, die durch die Nutzung oder die Unmöglichkeit der Nutzung der Dienste entstehen. Wir garantieren nicht, dass die Dienste zu jeder Zeit fehlerfrei oder verfügbar sind. Die Nutzung der Dienste erfolgt auf eigene Gefahr.
+            </p>
+
+            <h2>7. Änderungen der Nutzungsbedingungen</h2>
+            <p>
+                Wir behalten uns das Recht vor, diese Nutzungsbedingungen jederzeit zu ändern. Änderungen werden mit der Veröffentlichung auf dieser Seite wirksam. Wir empfehlen Ihnen, die Nutzungsbedingungen regelmäßig zu überprüfen.
+            </p>
+
+            <h2>8. Beendigung der Nutzung</h2>
+            <p>
+                Sie können Ihr Konto jederzeit löschen, indem Sie uns eine Anfrage an [Kontakt-E-Mail] senden. Wir behalten uns jedoch das Recht vor, den Zugriff auf das Portal zu sperren oder zu beenden, wenn gegen diese Nutzungsbedingungen verstoßen wird.
+            </p>
+
+            <h2>9. Anwendbares Recht</h2>
+            <p>
+                Diese Nutzungsbedingungen unterliegen dem Recht der Bundesrepublik Deutschland. Alle Streitigkeiten aus oder im Zusammenhang mit diesen Nutzungsbedingungen werden vor den zuständigen Gerichten in [Ort] verhandelt.
+            </p>
+
+            <h2>10. Kontakt</h2>
+            <p>
+                Wenn Sie Fragen zu diesen Nutzungsbedingungen haben, können Sie uns unter folgenden Kontaktmöglichkeiten erreichen:
+            </p>
+            <p>
+                E-Mail: <a href="mailto:support@example.com">support@example.com</a><br>
+                Adresse: [Ihre Adresse]
+            </p>
+        </div>
+    </section>
 
 
 {% endblock %}
 {% block body %}
-    <h1>Nutzungsbedingungen</h1>
-    <p>Gültig ab: [Einfügedatum]</p>
 
-    <h2>1. Einleitung</h2>
-    <p>
-        Willkommen im Alumni-Portal von [Name des Alumni-Portals]! Diese Nutzungsbedingungen regeln die Nutzung der Dienste, die wir Ihnen zur Verfügung stellen, um den Kontakt zu ehemaligen Schülern, Lehrkräften und dem Förderverein zu pflegen, Informationen zu Klassentreffen, Festen und Bildungsangeboten auszutauschen sowie den Förderverein zu unterstützen.
-    </p>
-    <p>
-        Mit der Nutzung unseres Alumni-Portals erklären Sie sich mit diesen Nutzungsbedingungen einverstanden. Wenn Sie mit einem Teil dieser Bedingungen nicht einverstanden sind, dürfen Sie die Dienste nicht nutzen.
-    </p>
-
-    <h2>2. Nutzung der Dienste</h2>
-    <p>
-        Die Dienste des Alumni-Portals dienen der Pflege von Kontakten zu ehemaligen Schülerinnen und Schülern sowie Lehrkräften. Sie können an Klassentreffen, Festen und Bildungsangeboten teilnehmen und den Förderverein unterstützen.
-    </p>
-    <p>
-        Um die Dienste zu nutzen, müssen Sie ein Online-Konto erstellen. Sie sind verpflichtet, wahrheitsgemäße und vollständige Angaben zu machen, insbesondere Vorname, Nachname und eine gültige E-Mail-Adresse. Weitere Informationen (z. B. Adresse, Geburtsdatum) sind optional und können von Ihnen freiwillig angegeben werden.
-    </p>
-
-    <h2>3. Benutzerkonten</h2>
-    <p>
-        Um auf bestimmte Funktionen des Alumni-Portals zuzugreifen, müssen Sie ein Benutzerkonto erstellen. Die Pflichtangaben hierfür sind:
-    <ul>
-        <li>Vorname</li>
-        <li>Nachname</li>
-        <li>E-Mail-Adresse</li>
-    </ul>
-    Weitere Informationen sind freiwillig und können nach Belieben angegeben werden.
-    </p>
-    <p>
-        Sie sind dafür verantwortlich, die Vertraulichkeit Ihrer Anmeldedaten zu wahren und Ihr Konto vor unbefugtem Zugriff zu schützen. Falls Sie den Verdacht haben, dass Ihr Konto unbefugt genutzt wird, sind Sie verpflichtet, uns umgehend zu benachrichtigen.
-    </p>
-
-    <h2>4. Datenschutz</h2>
-    <p>
-        Der Schutz Ihrer personenbezogenen Daten ist uns sehr wichtig. Wir erheben, speichern und verwenden Ihre Daten nur in Übereinstimmung mit den geltenden Datenschutzgesetzen (insbesondere der Datenschutz-Grundverordnung - DSGVO). Weitere Informationen zum Datenschutz finden Sie in unserer Datenschutzerklärung.
-    </p>
-
-    <h2>5. Geistiges Eigentum</h2>
-    <p>
-        Alle Inhalte und Materialien auf diesem Portal, einschließlich, aber nicht beschränkt auf Texte, Grafiken, Logos und Bilder, sind Eigentum von [Name des Alumni-Portals] oder seinen Lizenzgebern und sind durch das Urheberrecht geschützt. Sie dürfen diese Inhalte nur für den vorgesehenen Zweck im Rahmen der Nutzung des Alumni-Portals verwenden.
-    </p>
-
-    <h2>6. Haftungsbeschränkung</h2>
-    <p>
-        [Name des Alumni-Portals] übernimmt keine Haftung für Schäden, die durch die Nutzung oder die Unmöglichkeit der Nutzung der Dienste entstehen. Wir garantieren nicht, dass die Dienste zu jeder Zeit fehlerfrei oder verfügbar sind. Die Nutzung der Dienste erfolgt auf eigene Gefahr.
-    </p>
-
-    <h2>7. Änderungen der Nutzungsbedingungen</h2>
-    <p>
-        Wir behalten uns das Recht vor, diese Nutzungsbedingungen jederzeit zu ändern. Änderungen werden mit der Veröffentlichung auf dieser Seite wirksam. Wir empfehlen Ihnen, die Nutzungsbedingungen regelmäßig zu überprüfen.
-    </p>
-
-    <h2>8. Beendigung der Nutzung</h2>
-    <p>
-        Sie können Ihr Konto jederzeit löschen, indem Sie uns eine Anfrage an [Kontakt-E-Mail] senden. Wir behalten uns jedoch das Recht vor, den Zugriff auf das Portal zu sperren oder zu beenden, wenn gegen diese Nutzungsbedingungen verstoßen wird.
-    </p>
-
-    <h2>9. Anwendbares Recht</h2>
-    <p>
-        Diese Nutzungsbedingungen unterliegen dem Recht der Bundesrepublik Deutschland. Alle Streitigkeiten aus oder im Zusammenhang mit diesen Nutzungsbedingungen werden vor den zuständigen Gerichten in [Ort] verhandelt.
-    </p>
-
-    <h2>10. Kontakt</h2>
-    <p>
-        Wenn Sie Fragen zu diesen Nutzungsbedingungen haben, können Sie uns unter folgenden Kontaktmöglichkeiten erreichen:
-    </p>
-    <p>
-        E-Mail: <a href="mailto:support@example.com">support@example.com</a><br>
-        Adresse: [Ihre Adresse]
-    </p>
 {% endblock %}
 
 {% block aside %}

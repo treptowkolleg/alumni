@@ -1,0 +1,10 @@
+<div class="list-group-item list-group-item-group d-flex align-items-center p-0">
+    <a href="{{ path('event_show',{'slug':post.slug}) }}" class="w-100 d-flex align-items-center justify-content-between p-3 text-decoration-none">
+        <div class="d-flex flex-column">
+            <div class="text-dark small">{{ post.startDate|date('d.m.Y') }}</div>
+            <div class="d-inline-block fw-bold text-wrap">{{ post }}</div>
+            <div class="me-2 d-block d-lg-none">{{ post.startDate|date('d.m.Y') }}{% if post.endDate|date('d.m.Y') != post.startDate|date('d.m.Y') %} - {{ post.endDate|date('d.m.Y') }}{% endif %}</div>
+            <div class="small text-muted text-truncate" style="max-width: 220px">{{ post.location|split(',').0 }}</div>
+        </div>
+    </a>
+</div>

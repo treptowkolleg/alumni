@@ -94,26 +94,18 @@
                         </div>
                     {% endfor %}
                 </div>
-                <a href="{{ url('blog_news_index') }}" class="btn btn-outline-primary mt-5">Weitere Meldungen</a>
+                <a href="{{ url('blog_news_index') }}" class="btn btn-outline-primary mt-3">Weitere Meldungen</a>
             </div>
             <div class="col-lg-4">
                 <h2 class="mb-3 mt-5 fs-4 fw-light text-muted">Nächste Veranstaltungen</h2>
-                <div class="d-flex flex-column border border-bottom-0">
-                    {% for event in events|sort((a, b) => a.startDate <=> b.startDate) %}
-                        {% if event.endDate|date('Ymd') >= date('now')|date('Ymd')%}
-                        <div class="border-bottom d-flex flex-column card card-body border-0">
-                            <div class="">{{ event.startDate|date('d.m.Y') }}</div>
-                            <a href="{{ url('event_show',{'slug':event.slug}) }}" class="fs-5 stretched-link text-decoration-none">{{ event.title }}</a>
-                            <small>{{ event.location|split(',').0 }}</small>
-                        </div>
+                <div class="list-group">
+                    {% for post in events|sort((a, b) => a.startDate <=> b.startDate) %}
+                        {% if post.endDate|date('Ymd') >= date('now')|date('Ymd')%}
+                            {{ include('component/_event_list_next.html.twig') }}
                         {% endif %}
-                    {% else %}
-                        <div class="mb-2 pb-2 border-bottom">
-                            Aktuell sind keine Veranstaltungen geplant
-                        </div>
                     {% endfor %}
                 </div>
-                <a href="{{ url('event_index') }}" class="btn btn-outline-primary mt-5">Weitere Termine</a>
+                <a href="{{ url('event_index') }}" class="btn btn-outline-primary mt-3">Weitere Termine</a>
             </div>
          </div>
     </div>

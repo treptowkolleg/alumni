@@ -1,52 +1,46 @@
-{% extends 'base.html.twig' %}
+{% extends '_full.html.twig' %}
 
-{% block title %}Impressum{% endblock %}
+{% set meta_title = 'Rechtliches' %}
+{% set meta_subtitle = 'Datenschutz' %}
 
-{% block navbar %}
-    <li class="nav-item"><a class="nav-link" href="{{ url('blog_news_all_index') }}">Aktuelles</a></li>
-    <li class="nav-item"><a class="nav-link" href="{{ url('blog_index') }}">Themen</a></li>
-    <li class="nav-item"><a class="nav-link" href="{{ url('event_index') }}">Termine</a></li>
-    <li class="nav-item"><a class="nav-link" href="#">Angebote</a></li>
-    <li class="nav-item"><a class="nav-link active" href="{{ url('people_index') }}">Personen</a></li>
-{% endblock %}
+{% set sidebar = 'events' %}
 
 {% block page_header %}
-    <nav class="bg-transparent" style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ url('app_index') }}">treptowkolleg.de</a></li>
-            <li class="breadcrumb-item active">Impressum</li>
-        </ol>
-    </nav>
+<section class="py-3">
+    <div class="container">
+        <h1>Impressum</h1>
+        <p>Angaben gemäß § 5 TMG:</p>
+        <p>
+            Benjamin Wagner<br>
+            Gülzower Str. 92<br>
+            12619 Berlin<br>
+        </p>
+        <p>
+            <strong>Kontakt:</strong><br>
+            Telefon: +4930 5771400<br>
+            E-Mail: <a href="mailto:alumniportal@treptowkolleg.de">alumniportal@treptowkolleg.de</a><br>
+        </p>
+        <p>
+            <strong>Vertreten durch:</strong><br>
+            (Nur bei Unternehmen: Name des Geschäftsführers/Inhabers)<br>
+        </p>
+        <p>
+            <strong>Umsatzsteuer-ID:</strong><br>
+            (Falls zutreffend, gemäß §27a Umsatzsteuergesetz): DE123456789<br>
+        </p>
+        <p>
+            <strong>Aufsichtsbehörde:</strong><br>
+            (Falls zutreffend, z. B. bei reglementierten Berufen)<br>
+            Name der Aufsichtsbehörde<br>
+            Adresse der Aufsichtsbehörde<br>
+        </p>
+    </div>
+</section>
 
 
 {% endblock %}
 {% block body %}
-    <h1>Impressum</h1>
-    <p>Angaben gemäß § 5 TMG:</p>
-    <p>
-        Benjamin Wagner<br>
-        Gülzower Str. 92<br>
-        12619 Berlin<br>
-    </p>
-    <p>
-        <strong>Kontakt:</strong><br>
-        Telefon: +4930 5771400<br>
-        E-Mail: <a href="mailto:alumniportal@treptowkolleg.de">alumniportal@treptowkolleg.de</a><br>
-    </p>
-    <p>
-        <strong>Vertreten durch:</strong><br>
-        (Nur bei Unternehmen: Name des Geschäftsführers/Inhabers)<br>
-    </p>
-    <p>
-        <strong>Umsatzsteuer-ID:</strong><br>
-        (Falls zutreffend, gemäß §27a Umsatzsteuergesetz): DE123456789<br>
-    </p>
-    <p>
-        <strong>Aufsichtsbehörde:</strong><br>
-        (Falls zutreffend, z. B. bei reglementierten Berufen)<br>
-        Name der Aufsichtsbehörde<br>
-        Adresse der Aufsichtsbehörde<br>
-    </p>
+
 {% endblock %}
 
 {% block aside %}
