@@ -11,58 +11,35 @@
 
         {{ include('component/blog_subbar.html.twig',{'selected':'index'}) }}
 
-        <div class="mb-3">{{ include('component/_blog_filter.html.twig') }}</div>
-
         <div class="row g-3">
 
             <div class="col-lg-9">
                 <div class="row row-cols-1 row-cols-lg-2 g-3 align-content-stretch">
                     {% for post in posts %}
-                        {% if post.isPublished %}
-                            <div class="col">
-                                <div class="card text-white bg-white border-primary h-100">
-                                    {% if post.blogPostImageUrl %}
-                                        <img class="card-img" src="{{ asset(post.blogPostImageUrl)|imagine_filter('post_thumbnail')  }}" alt="{{ post }}" style="filter: brightness(60%);">
-                                    {% else %}
-                                        <img class="card-img" src="https://dummyimage.com/800x480/294a70/294a70&text=Preview" alt="{{ post }}" style="filter: brightness(60%);">
-                                    {% endif %}
-                                    <div class="card-img-overlay d-flex flex-column h-100">
-                                        <div class="text-uppercase small card-text">{{ post.type }}</div>
-                                        <h3 class="fw-normal h2">{{ post.title }}</h3>
+                        {% if loop.index <= 6 %}
+                            {% if post.isPublished %}
+                                <div class="col">
+                                    <div class="card text-white bg-white border-primary h-100">
+                                        {% if post.blogPostImageUrl %}
+                                            <img class="card-img" src="{{ asset(post.blogPostImageUrl)|imagine_filter('post_thumbnail')  }}" alt="{{ post }}" style="filter: brightness(60%);">
+                                        {% else %}
+                                            <img class="card-img" src="https://dummyimage.com/800x480/294a70/294a70&text=Preview" alt="{{ post }}" style="filter: brightness(60%);">
+                                        {% endif %}
+                                        <div class="card-img-overlay d-flex flex-column h-100">
+                                            <div class="text-uppercase small card-text">{{ post.type }}</div>
+                                            <h3 class="fw-normal h2">{{ post.title }}</h3>
 
-                                        <a href="{{ path('blog_show',{'slug':post.slug}) }}" class="card-link stretched-link text-decoration-none link-white mt-auto fs-5">weiterlesen <i class="fas fa-chevron-right"></i></a>
+                                            <a href="{{ path('blog_show',{'slug':post.slug}) }}" class="card-link stretched-link text-decoration-none link-white mt-auto fs-5">weiterlesen <i class="fas fa-chevron-right"></i></a>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            {% endif %}
                         {% endif %}
-                    {% else %}
-                        <div class="col">
-                            Aktuell sind keine Meldungen vorhanden
-                        </div>
                     {% endfor %}
                 </div>
 
-                <div class="row g-3 py-3">
-                    <div class="col-12">
-                        <nav aria-label="Page navigation example">
-                            <ul class="pagination">
-                                <li class="page-item">
-                                    <a class="page-link" href="#" aria-label="Previous">
-                                        <span aria-hidden="true">&laquo;</span>
-                                    </a>
-                                </li>
-                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#" aria-label="Next">
-                                        <span aria-hidden="true">&raquo;</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
-                </div>
+                {{ include('component/_pagination.html.twig',{'route_url':'blog_index', 'post_count':post_count, 'cut': 6}) }}
+
 
             </div>
 
@@ -89,32 +66,7 @@
                 </div>
             </div>
 
-            <div class="col-lg-3 d-none">
-                <div class="">
-                    <div class="fs-5 fw-bolder mb-1">Beitragsart</div>
-                    <div class="card  border-primary mb-3">
-                        <div class="list-group list-group-flush">
-                            {% for type in types|sort((a, b) => b.blogposts.count <=> a.blogposts.count) %}
-                                {% if type.blogposts.count > 0 %}
-                                    {% if type.title in filtered_types %}
-                                        <div class="list-group-item d-flex justify-content-between align-items-center py-3 active">
-                                            <span>{{ type.title }}</span><span class="badge text-bg-primary">{{ type.blogposts.count }}</span>
-                                        </div>
-                                    {% else %}
-                                        <a href="{{ url('blog_index',{'types': type.title ~ ',' ~ filtered_types|join(',')}) }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3">
-                                            <span>{{ type.title }}</span><span class="badge text-bg-primary">{{ type.blogposts.count }}</span>
-                                        </a>
-                                    {% endif %}
-                                {% endif %}
-                            {% endfor %}
-                        </div>
-                    </div>
-                    <a href="{{ url('blog_index') }}" class="d-block">Alle Beiträge anzeigen</a>
-                </div>
-            </div>
-
         </div>
-
 
     </div>
 </section>

@@ -14,26 +14,26 @@ use Symfony\Component\Routing\Attribute\Route;
 class BlogPostController extends AbstractController
 {
 
-    #[Route('', name: 'index')]
-    public function index(Request $request, BlogPostRepository $repository, BlogTypeRepository $typeRepository): Response
+    #[Route('/{page}', name: 'index')]
+    public function index(Request $request, BlogPostRepository $repository, BlogTypeRepository $typeRepository, int $page = 1): Response
     {
-        $filteredTypesQuery = trim($request->query->get('types'),',');
-        $filteredTypes = array_filter(explode(',', $filteredTypesQuery));
-        if (!empty($filteredTypes)) {
-            $posts = $repository->findPublishedBlogPosts($filteredTypes);
-        } else {
-            $posts = $repository->findPublishedBlogPosts();
-        }
+
+        $posts = $repository->findPublishedBlogPosts(offset: $page);
+        $postCount = count($repository->findPublishedBlogPosts());
+
+
+
 
         $types = $typeRepository->findByTypes('Blog Erfahrungsbericht Interview Podcast Fachartikel');
         return $this->render('blog/blog_index.html.twig', [
             'posts' => $posts,
             'types' => $types,
-            'filtered_types' => $filteredTypes,
+            'page' => $page,
+            'post_count' => $postCount
         ]);
     }
 
-    #[Route('/{slug}', name: 'show')]
+    #[Route('/details/{slug}', name: 'show')]
     public function show(BlogPost $post): Response
     {
 

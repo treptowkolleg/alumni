@@ -19,7 +19,7 @@ class BlogPostRepository extends ServiceEntityRepository
     /**
      * @return BlogPost[] Returns an array of BlogPost objects
      */
-    public function findPublishedNews($limit = 10): array
+    public function findPublishedNews($limit = 10, $offset = 1): array
     {
         return $this->createQueryBuilder('b')
             ->addSelect('t')
@@ -31,7 +31,7 @@ class BlogPostRepository extends ServiceEntityRepository
             ->setParameter('b', "Pressemitteilung")
             ->setParameter('c', "Meldung")
             ->orderBy('b.updatedAt', 'DESC')
-            ->setMaxResults($limit)
+            ->setFirstResult($limit * ($offset - 1))
             ->getQuery()
             ->getResult()
         ;
@@ -40,7 +40,7 @@ class BlogPostRepository extends ServiceEntityRepository
     /**
      * @return BlogPost[] Returns an array of BlogPost objects
      */
-    public function findPublishedBlogPosts(array $types = [], $limit = 10): array
+    public function findPublishedBlogPosts(array $types = [], $limit = 6, int $offset = 1): array
     {
         if(empty($types)) {
             $types = explode(" ", "Blog Erfahrungsbericht Interview Podcast Fachartikel");
@@ -51,7 +51,7 @@ class BlogPostRepository extends ServiceEntityRepository
             ->orWhere('t.title IN (:a)')
             ->setParameter('a', $types)
             ->orderBy('b.updatedAt', 'DESC')
-            ->setMaxResults($limit)
+            ->setFirstResult(($offset - 1) * $limit)
             ->getQuery()
             ->getResult()
             ;

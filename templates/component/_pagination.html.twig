@@ -1,0 +1,19 @@
+<div class="row g-3 py-3 mb-3">
+    <div class="col-12">
+        <nav aria-label="Page Navigation" class="card d-flex justify-content-center">
+            <ul class="pagination mx-auto mb-0">
+                {% set page_nr = 1 %}
+                {% for event_nr in 1..post_count %}
+                    {% if loop.first or loop.index0 is divisible by(cut) %}
+                        <li class="page-item">
+                            <a class="page-link border-top-0 border-bottom-0 {{ page == page_nr ? 'active' : '' }}" href="{{ url(route_url, {'page':page_nr}) }}">
+                                {{ page_nr }}
+                            </a>
+                        </li>
+                        {% set page_nr = page_nr + 1 %}
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </nav>
+    </div>
+</div>

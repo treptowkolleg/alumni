@@ -24,16 +24,14 @@
                             </div>
                             <div class="list-group list-group-flush">
                                 {% for post in posts|sort((a, b) => b.startDate <=> a.startDate) %}
-                                    {% if post.endDate|date('Ymd') >= date('now')|date('Ymd')%}
-                                        {{ include('component/_event_list.html.twig') }}
+                                    {% if loop.index <= 10 %}
+                                        {% if post.endDate|date('Ymd') >= date('now')|date('Ymd')%}
+                                            {{ include('component/_event_list.html.twig') }}
+                                        {% endif %}
+                                        {% if post.endDate|date('Ymd') <= date('-1 days')|date('Ymd')%}
+                                            {{ include('component/_event_list_old.html.twig') }}
+                                        {% endif %}
                                     {% endif %}
-                                    {% if post.endDate|date('Ymd') <= date('-1 days')|date('Ymd')%}
-                                        {{ include('component/_event_list_old.html.twig') }}
-                                    {% endif %}
-                                {% else %}
-                                    <div class="list-group-item d-flex justify-content-center align-items-center p-3 text-muted">
-                                        keine passenden Events gefunden.
-                                    </div>
                                 {% endfor %}
                             </div>
                         </div>
@@ -46,7 +44,7 @@
                             <ul class="pagination mx-auto mb-0">
                                 {% set page_nr = 1 %}
                                 {% for event_nr in 1..event_count %}
-                                    {% if loop.first or loop.index0 is divisible by(5) %}
+                                    {% if loop.first or loop.index0 is divisible by(10) %}
                                         <li class="page-item">
                                             <a class="page-link border-top-0 border-bottom-0 {{ page == page_nr ? 'active' : '' }}" href="{{ url('event_index',{'page':page_nr}) }}">
                                                 {{ page_nr }}

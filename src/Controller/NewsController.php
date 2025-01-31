@@ -19,16 +19,19 @@ class NewsController extends AbstractController
         ]);
     }
 
-    #[Route('/meldungen', name: 'index')]
-    public function indexNews(BlogPostRepository $repository): Response
+    #[Route('/meldungen/{page}', name: 'index')]
+    public function indexNews(BlogPostRepository $repository, int $page = 1): Response
     {
-        $posts = $repository->findPublishedNews(25);
+        $posts = $repository->findPublishedNews(offset: $page);
+        $postCount = count($repository->findPublishedNews());
         return $this->render('blog/news_index.html.twig', [
+            'page' => $page,
             'posts' => $posts,
+            'post_count' => $postCount,
         ]);
     }
 
-    #[Route('/meldungen/{slug}', name: 'show')]
+    #[Route('/meldungen/details/{slug}', name: 'show')]
     public function show(BlogPost $post): Response
     {
 

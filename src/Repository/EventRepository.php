@@ -60,7 +60,7 @@ class EventRepository extends ServiceEntityRepository
     /**
      * @return Event[] Returns an array of Event objects
      */
-    public function findBySearchQuery(?array $filterValues = [],int $results = 6,  int $offset = 1): array
+    public function findBySearchQuery(?array $filterValues = [],int $results = 10,  int $offset = 1): array
     {
         $query = $this->createQueryBuilder('e');
 
@@ -96,6 +96,8 @@ class EventRepository extends ServiceEntityRepository
 
         }
 
-        return $query->getQuery()->setMaxResults($results)->setFirstResult($results*($offset-1))->getResult();
+        $query->orderBy('e.startDate', 'DESC');
+
+        return $query->getQuery()->setMaxResults(50)->setFirstResult($results*($offset-1))->getResult();
     }
 }
