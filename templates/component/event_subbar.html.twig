@@ -1,17 +1,25 @@
 <div class="mb-3">
     <div class="nav nav-underline">
-        <a href="{{ path('event_index') }}" class="nav-item nav-link {{ selected|default() == 'index' ? 'active' : '' }} text-nowrap">
-            <i class="fa-solid fa-list text-primary"></i>
-            <span class="ms-1">Übersicht</span>
-        </a>
-        <a href="#" class="nav-item nav-link {{ selected|default() == 'show' ? 'active' : 'disabled' }} text-nowrap">
-            <i class="fa-solid fa-magnifying-glass text-muted"></i>
-            <span class="ms-1 d-none d-lg-inline">Details</span>
-        </a>
+        {% if selected|default() == 'show' %}
+            <a href="{{ path('event_index') }}" class="nav-item nav-link {{ selected|default() == 'index' ? 'active' : '' }} text-nowrap">
+                <i class="bx bxs-chevrons-left text-primary"></i>
+                <span class="ms-1">Zurück</span>
+            </a>
+            {% if app.user %}
+                {% if post in app.user.followedEvents %}
+                    <a href="#" class="nav-link dropdown-toggle ms-auto" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-star text-secondary me-2"></i>Du nimmst teil</a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="#"><i class="bx bx-block me-2"></i>Nicht mehr teilnehmen</a></li>
+                    </ul>
+                {% else %}
+                    <a class="nav-link ms-auto" href="#"><i class="fa-regular fa-star text-secondary me-2"></i>Teilnehmen</a>
+                {% endif %}
+            {% endif %}
+        {% endif %}
         {% if event_count|default(null) %}
                 <a class="nav-item ms-auto nav-link disabled" href="#">
                     <span class="me-1 text-primary fw-bolder">{{ event_count }}</span>
-                    <i class="fa-solid fa-calendar-day text-primary"></i>
+                    <i class="bx bx-calendar-event text-primary"></i>
                 </a>
         {% endif %}
     </div>

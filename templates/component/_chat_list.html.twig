@@ -3,10 +3,10 @@
         <span class="fw-bolder">{{ user.userProfiles.first }}</span>
         <div class="d-flex align-items-center">
             {% if message > 0 %}
-                <div class="badge text-bg-secondary rounded-pill fw-normal me-2">{{ message }}</div>
+                <div class="badge text-bg-secondary rounded fw-normal me-1">{{ message }}</div>
             {% endif %}
-            <i class="fa-solid fa-chevron-right"></i>
+            <i class="bx bxs-chevron-right"></i>
         </div>
     </a>
-    <a href="{{ url('chat_new',{'id':chat.id}) }}" class="p-3 text-decoration-none"><i class="fa-regular fa-paper-plane"></i></a>
+    <a href="{{ url('chat_new',{'id':chat.id}) }}" class="p-3 text-decoration-none"><i class="bx bx-chat"></i></a>
 </div>

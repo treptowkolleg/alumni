@@ -40,30 +40,29 @@
                             <div class="col mb-2 mb-md-0">
                                 <div class="card text-bg-white align-self-stretch">
                                     <div class="row g-0">
-                                        <div class="col-md-4">
+                                        <div class="col-3 col-lg-4">
                                             {% if person.user.image.name %}
-                                                <img src="{{ vich_uploader_asset(person.user)|imagine_filter('avatar')  }}" class="img-fluid d-none d-lg-block w-100" alt="...">
-                                                <img src="{{ vich_uploader_asset(person.user)|imagine_filter('avatar_sm')  }}" class="img-fluid d-lg-none d-block w-100" alt="...">
+                                                <img src="{{ vich_uploader_asset(person.user)|imagine_filter('avatar')  }}" class="img-fluid w-100" alt="...">
                                             {% else %}
-                                                <img src="{{ asset('images/avatar_no_text.svg') }}" class=" d-none d-lg-block img-fluid w-100" alt="...">
+                                                <img src="{{ asset('images/avatar_no_text.svg') }}" class="img-fluid w-100" alt="...">
                                             {% endif %}
                                         </div>
-                                        <div class="col-md-8">
+                                        <div class="col-9 col-lg-8">
                                             <div class="card-body d-flex flex-column h-100">
                                                 <div class="d-flex align-items-start justify-content-between">
-                                                    <h3 class="h5 mb-0 text-truncate">{{ person }}</h3>
+                                                    <a href="{{ url('people_show',{'slug':person.user.slug }) }}" class="h5 mb-0 text-decoration-none stretched-link text-truncate">{{ person }}</a>
                                                 </div>
 
                                                 {% if person.user.hasSchool %}
-                                                    <p class="text-truncate">{{ person.user.school }}</p>
+                                                    <p class="text-truncate mb-0">{{ person.user.school }}</p>
                                                 {% endif %}
-                                                <a href="{{ url('people_show',{'slug':person.user.slug }) }}" class="card-link stretched-link text-decoration-none mt-auto">mehr erfahren <i class="fas fa-chevron-right"></i></a>
+                                                <a href="{{ url('people_show',{'slug':person.user.slug }) }}" class="card-link d-none d-lg-block stretched-link text-decoration-none mt-auto">mehr erfahren <i class="bx bxs-chevron-right"></i></a>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 {% if app.user %}
-                                    <div class="ps-2 pt-2 pb-2 border border-top-0 d-flex bg-light-subtle align-items-center">
+                                    <div class="ps-3 pt-2 pb-2 border border-top-0 d-flex bg-light-subtle align-items-center">
                                         {% if app.user.userProfiles.count > 0 %}
                                             {% if person.user != app.user %}
                                                 <div>
@@ -84,7 +83,7 @@
                                                 </div>
                                                 <div class="">
                                                     <a href="{{ url('chat_start',{'slug':person.user.slug}) }}" class="text-decoration-none">
-                                                        <i class="link-primary fa-solid fa-envelope me-1"></i>
+                                                        <i class="link-primary bx bx-chat me-1"></i>
                                                         <small>Nachricht</small>
                                                     </a>
                                                 </div>

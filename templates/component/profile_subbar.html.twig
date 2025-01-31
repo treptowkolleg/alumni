@@ -2,27 +2,27 @@
     <div class="nav nav-underline">
         {% if is_granted('ROLE_USER') %}
             <a href="{{ path('profile_index') }}" class="nav-item nav-link {{ selected|default() == 'index' ? 'active' : '' }} text-nowrap">
-                <i class="fa-solid fa-dashboard text-primary"></i>
+                <i class="bx bx-card text-primary"></i>
                 <span class="ms-1 d-none d-lg-inline">Übersicht</span>
             </a>
             <a href="{{ path('chat_index') }}" class="nav-item nav-link {{ selected|default() == 'chat' ? 'active' : '' }} text-nowrap">
-                <i class="fa-solid fa-users text-primary"></i>
+                <i class="bx bx-group text-primary"></i>
                 <span class="ms-1 d-none d-lg-inline">Kontakte</span>
             </a>
             <a href="{{ url('people_index',{'filter':'school'}) }}" class="nav-item nav-link {{ selected|default() == 'school' ? 'active' : '' }} text-nowrap">
-                <i class="fa-solid fa-university text-primary"></i>
+                <i class="bx bxs-school text-primary"></i>
                 <span class="ms-1 d-none d-lg-inline">Meine Schule</span>
             </a>
             <a href="{{ path('profile_profile_new') }}" class="nav-item nav-link {{ selected|default() == 'profile' ? 'active' : '' }} text-nowrap ms-auto">
-                <i class="fa-solid fa-user text-primary"></i>
+                <i class="bx bxs-user-detail text-primary"></i>
                 <span class="ms-1 d-none d-lg-inline">Profil</span>
             </a>
             <a href="{{ path('profile_image_new') }}" class="nav-item nav-link {{ selected|default() == 'image' ? 'active' : '' }} text-nowrap">
-                <i class="fa-solid fa-image text-primary"></i>
+                <i class="bx bx-image text-primary"></i>
                 <span class="ms-1 d-none d-lg-inline">Profilbild</span>
             </a>
             <a href="#" class="nav-item nav-link {{ selected|default() == 'account' ? 'active' : '' }} text-nowrap">
-                <i class="fa-solid fa-gear text-primary"></i>
+                <i class="bx bx-cog text-primary"></i>
                 <span class="ms-1 d-none d-lg-inline">{{ app.user.fullname }}</span>
             </a>
         {% endif %}

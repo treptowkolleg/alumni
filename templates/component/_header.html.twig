@@ -14,39 +14,37 @@
         <div class="ms-auto me-5 d-none d-lg-block" style="min-width: 300px">
             {{ render(controller('App\\Controller\\AppController::searchForm')) }}
         </div>
-        <ul class="nav">
+        <ul class="nav py-3">
             {% if app.user %}
-                <li class="nav-item">
-                    <div class="py-3 btn-group" role="group">
-                        <a type="button" class="btn btn-link text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fa-solid fa-user fa-fw"></i>
+                <li class="nav-item  dropdown">
+                        <a type="button" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bx bx-user" style="vertical-align: middle"></i>
                             {% if is_granted('ROLE_USER') and app.user.isVerified and app.user.userProfiles.count > 0 %}
-                                <span id="unread-count" data-id="{{ app.user.id }}" class="d-none badge text-bg-secondary fw-normal rounded-circle ms-1"></span>
+                                <span id="unread-count" data-id="{{ app.user.id }}" class="d-none small badge text-bg-secondary rounded fw-normal align-self-center" style="font-size: .6rem; vertical-align: middle"></span>
                             {% endif %}
                         </a>
                         <ul class="dropdown-menu">
                             <li><h6 class="dropdown-header">Alumni-Portal</h6></li>
-                            <li><a class="dropdown-item" href="{{ url('profile_index') }}"><i class="fa-solid fa-fw fa-user me-2"></i>Mein Portal</a></li>
-                            <li><a class="dropdown-item" href="{{ url('chat_index') }}"><i class="fa-solid fa-fw fa-users me-2" id="mail-marker"></i><span>Kontakte</span></a></li>
-                            <li><a class="dropdown-item" href="{{ url('people_index',{'filter':'school'}) }}"><i class="fa-solid fa-fw fa-university me-2"></i>Meine Schule</a></li>
+                            <li><a class="dropdown-item" href="{{ url('profile_index') }}"><i class="bx bx-fw bx-card"></i>Mein Portal</a></li>
+                            <li><a class="dropdown-item" href="{{ url('chat_index') }}"><i class="bx bx-fw bx-group" id="mail-marker"></i><span>Kontakte</span></a></li>
+                            <li><a class="dropdown-item" href="{{ url('people_index',{'filter':'school'}) }}"><i class="bx bx-fw bxs-school"></i>Meine Schule</a></li>
                             <li class="dropdown-divider"></li>
                             <li><h6 class="dropdown-header">Einstellungen</h6></li>
-                            <li><a class="dropdown-item" href="{{ path('profile_profile_new') }}"><i class="fa-solid fa-fw fa-user me-2"></i>Profil</a></li>
-                            <li><a class="dropdown-item" href="{{ url('profile_image_new') }}"><i class="fa-solid fa-fw fa-image me-2"></i>Profilbild</a></li>
-                            <li><a class="dropdown-item" href="{{ url('profile_index') }}"><i class="fa-solid fa-fw fa-gear me-2"></i>Konto</a></li>
+                            <li><a class="dropdown-item" href="{{ path('profile_profile_new') }}"><i class="bx bx-fw bxs-user-detail"></i>Profil</a></li>
+                            <li><a class="dropdown-item" href="{{ url('profile_image_new') }}"><i class="bx bx-fw bx-image"></i>Profilbild</a></li>
+                            <li><a class="dropdown-item" href="{{ url('profile_index') }}"><i class="bx bx-fw bx-cog"></i>Konto</a></li>
                             <li class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="{{ url('app_logout') }}"><i class="fa-solid fa-fw fa-right-from-bracket me-2"></i>Abmelden</a></li>
+                            <li><a class="dropdown-item" href="{{ url('app_logout') }}"><i class="bx bx-fw bx-log-out-circle"></i>Abmelden</a></li>
                         </ul>
-                    </div>
                 </li>
                 {% if app.user.userProfiles.count > 0 %}
 
                 {% endif %}
             {% else %}
-                <li class="nav-item py-3"><a href="{{ url('app_register') }}" class="btn btn-link"><i class="fa-solid fa-plus fa-fw"></i></a></li>
-                <li class="nav-item py-3"><a href="{{ url('profile_index') }}" class="btn btn-link"><i class="fa-solid fa-user fa-fw"></i></a></li>
+                <li class="nav-item"><a href="{{ url('app_register') }}" class="nav-link"><i class="fa-solid bx bx-plus" style="vertical-align: middle"></i></a></li>
+                <li class="nav-item"><a href="{{ url('profile_index') }}" class="nav-link"><i class="bx bx-user" style="vertical-align: middle"></i></a></li>
             {% endif %}
-            <li class="nav-item py-3"><a href="#" class="btn btn-link" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><i class="fas fa-bars"></i></a></li>
+            <li class="nav-item"><a href="#" class="nav-link" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><i class="bx bx-menu" style="vertical-align: middle"></i></a></li>
         </ul>
     </div>
 </div>

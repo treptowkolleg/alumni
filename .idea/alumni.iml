@@ -177,5 +177,6 @@
     <orderEntry type="library" name="4296ef4c438ce7df4d25b984e2936f1b" level="application" />
     <orderEntry type="library" name="dataTables.responsive" level="application" />
     <orderEntry type="library" name="slim-select" level="application" />
+    <orderEntry type="library" name="boxicons" level="application" />
   </component>
 </module>
