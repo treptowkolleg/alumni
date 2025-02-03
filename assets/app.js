@@ -290,7 +290,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ categories: ['necessary', 'preferences'] })
+                body: JSON.stringify({ categories: ['necessary'] })
             }).then(response => {
                 if (response.ok) {
                     cookieBanner.style.display = 'none';

@@ -21,7 +21,7 @@
                 <i class="bx bx-image text-primary"></i>
                 <span class="ms-1 d-none d-lg-inline">Profilbild</span>
             </a>
-            <a href="#" class="nav-item nav-link {{ selected|default() == 'account' ? 'active' : '' }} text-nowrap">
+            <a href="{{ path('profile_settings') }}" class="nav-item nav-link {{ selected|default() == 'account' ? 'active' : '' }} text-nowrap">
                 <i class="bx bx-cog text-primary"></i>
                 <span class="ms-1 d-none d-lg-inline">{{ app.user.fullname }}</span>
             </a>

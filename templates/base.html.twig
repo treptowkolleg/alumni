@@ -60,7 +60,7 @@
             <div class="container d-flex flex-column flex-md-row align-items-center justify-content-between">
                 <p class="mb-3 mb-lg-0 me-lg-2">
                     Wir verwenden ausschließlich funktionale Cookies, um das Alumni-System umzusetzen. Cookies von Drittanbietern werden nicht genutzt.
-                    Mehr Informationen findest du in unserer <a href="{{ url('app_privacy') }}" class="text-info text-decoration-underline text-nowrap">Datenschutzerklärung</a> und der <a href="{{ url('app_privacy') }}" class="text-info text-decoration-underline text-nowrap">Green-Data-Richtlinie</a>.
+                    Mehr Informationen findest du in unserer <a href="{{ url('app_privacy') }}" class="text-info text-decoration-underline text-nowrap">Datenschutzerklärung</a> und der <a href="{{ url('app_green_data') }}" class="text-info text-decoration-underline text-nowrap">Green-Data-Richtlinie</a>.
                 </p>
                 <div class="d-flex">
                     <button id="accept-all" class="btn text-nowrap btn-primary me-2">
@@ -83,7 +83,7 @@
                         <p>Wähle aus, welche Cookies du erlauben möchtest:</p>
                         <form id="cookie-settings-form">
                             <div class="form-check mb-2">
-                                <input class="form-check-input" type="checkbox" id="necessary-cookies" value="necessary" checked disabled>
+                                <input class="form-check-input" type="checkbox" name="cookie-category" id="necessary-cookies" value="necessary" checked disabled>
                                 <label class="form-check-label" for="necessary-cookies">
                                     Notwendige Cookies (immer aktiv)
                                 </label>
@@ -96,7 +96,7 @@
                                     Wenn du auf Speichern klickst, wird zusätzlich ein Cookie angelegt, das deine Auswahl speichert und festhält, welche Cookies erlaubt sind und welche nicht.
                                 </p>
                                 <p class="small mb-0">
-                                    Weitere Informationen, einschließlich einer Anleitung zum Löschen von Cookies, findest du in unserer <a href="{{ url('app_privacy') }}" target="_blank">Green-Data-Richtlinie</a>.
+                                    Weitere Informationen, einschließlich einer Anleitung zum Löschen von Cookies, findest du in unserer <a href="{{ url('app_green_data') }}" target="_blank">Green-Data-Richtlinie</a>.
                                 </p>
                             </div>
                         </form>

@@ -80,4 +80,10 @@ class AppController extends AbstractController
         return $this->render('app/terms.html.twig');
     }
 
+    #[Route('/rechtliches/green-data', name: 'green_data')]
+    public function greenData(): Response
+    {
+        return $this->render('app/green_data.html.twig');
+    }
+
 }

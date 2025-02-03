@@ -90,6 +90,19 @@ class ProfileController extends AbstractController
         ]);
     }
 
+    #[Route('/settings', name: 'settings', methods: ['GET', 'POST'])]
+    public function settings(Request $request, UserRepository $userRepository, EntityManagerInterface $entityManager): Response
+    {
+        $user = $userRepository->find($this->getUser());
+
+        $cookies = $request->cookies->all();
+
+        return $this->render('profile/settings.html.twig', [
+            'form' => null,
+            'cookies' => $cookies,
+        ]);
+    }
+
     #[Route('/schule/{page}', name: 'school')]
     public function school(Request $request, UserRepository $userRepository, UserProfileRepository $repository, SchoolRepository $schoolRepository, int $page = 1): Response
     {

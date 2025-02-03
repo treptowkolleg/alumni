@@ -171,3 +171,6 @@ pw: Politikwissenschaft
 success: Hinweis
 warning: Warnung
 danger: Fehler
+
+cookie_consent: Cookie-Zustimmung
+PHPSESSID: Session-ID
