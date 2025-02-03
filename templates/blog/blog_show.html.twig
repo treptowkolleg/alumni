@@ -52,8 +52,35 @@
 </section>
 {% endblock %}
 {% block body %}
-
-
+{#
+<script type="application/ld+json">
+{
+"@context": "https://schema.org",
+"@type": "Article",
+"headline": "{{ article.title }}",
+"description": "{{ article.description }}",
+"author": {
+"@type": "Person",
+"name": "{{ article.author }}"
+},
+"publisher": {
+"@type": "Organization",
+"name": "Deine Webseite",
+"logo": {
+  "@type": "ImageObject",
+  "url": "{{ asset('images/logo.png') }}"
+}
+},
+"datePublished": "{{ article.published_at|date('Y-m-d') }}",
+"dateModified": "{{ article.updated_at|date('Y-m-d') }}",
+"image": "{{ article.image_url }}",
+"mainEntityOfPage": {
+"@type": "WebPage",
+"@id": "{{ article.url }}"
+}
+}
+</script>
+#}
 {% endblock %}
 
 {% block aside %}

@@ -29,30 +29,45 @@
                     <div class="card bg-white">
                         <div class="card-body  border-bottom border-primary">
                             <h3 class="h5 mb-0 text-center text-lg-start">Nachrichten</h3>
-                            <div class="text-center fw-bolder text-lg-start text-primary text-truncate">{{ partner.userprofiles.first }}</div>
+                            <div class="text-center fw-bolder text-lg-start text-primary text-truncate"><a href="{{ url('people_show',{'slug':partner.slug}) }}" class=" text-decoration-none"><i class="bx bx-user me-1"></i>{{ partner.userprofiles.first }}</a></div>
                         </div>
                         <div id="emails" class="table-responsive">
                             <table class="table table-hover nowrap" style="width: 100%" id="datatable">
                                 <thead>
                                 <tr>
+                                    <th>Von</th>
                                     <th>Betreff</th>
                                     <th class="text-end">Datum</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 {% for message in chat.messages %}
-                                    {% if app.user != message.sender %}
                                         <tr class="{{ message.isRead ? '' : 'fw-bold' }}" style="cursor: pointer;" data-url="{{ url('chat_read',{'id':message.id}) }}">
+                                            <td>
+                                                {% if message.sender != app.user %}
+                                                {{ message.sender.userProfiles.first }}
+                                                {% else %}
+                                                    Dir
+                                                {% endif %}
+                                            </td>
                                             <td>{{ message.subject }}</td>
                                             <td class="text-end">{{ message.created|date('d.m.Y H:i') }}</td>
                                         </tr>
-                                    {% endif %}
                                 {% endfor %}
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
+
+                <div class="col-lg-12">
+                    <div class="card bg-white">
+                        <div class="card-body  border-bottom border-danger d-flex justify-content-center p-0">
+                            <button type="submit" onclick="confirm('Möchtest du wirklich eure gesamte Konversation löschen?')" class="btn btn-link"><i class="bx bx-trash text-danger me-1"></i>Konversation löschen</button>
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
         </div>
@@ -80,11 +95,11 @@
             dom: '<"top"l><"datatable-wrapper"t><"bottom"p><"clear">',
             pageLength: 25,
             lengthChange: false,
-            order: [[1, 'desc']],
+            order: [[2, 'desc']],
             "language": tableOptions,
             columnDefs: [
-                { width: '70%', targets: 0 },
-                { type: 'date-de', targets: 1 }
+                { width: '70%', targets: 1 },
+                { type: 'date-de', targets: 2 }
             ]
         });
 

@@ -15,7 +15,7 @@
             </li>
             {% if app.user.hasSchool %}
                 <li class="nav-item">
-                    <a class="nav-link {{ filter == 'school' ? 'active ' : '' }}" href="{{ url('people_index',{'filter':'school'}) }}">
+                    <a class="nav-link {{ filter == 'school' ? 'active ' : '' }}" href="{{ url('profile_school') }}">
                         <i class="bx bxs-school  text-primary"></i>
                         <span class="ms-1 d-none d-lg-inline">Meine Schule</span>
                     </a>

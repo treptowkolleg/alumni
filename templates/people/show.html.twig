@@ -142,7 +142,64 @@
 
 {% endblock %}
 
-{% block body %}{% endblock %}
+{% block body %}
+{#
+
+{% set alumni = {
+    "name": "Max Mustermann",
+    "job_title": "Software Engineer",
+    "bio": "Ehemaliger Student der Informatik mit Fokus auf KI.",
+    "image_url": "https://example.com/max.jpg",
+    "university": "Technische Universität Berlin",
+    "university_url": "https://www.tu-berlin.de/",
+    "university_city": "Berlin",
+    "university_country": "Deutschland",
+    "degree": "Master of Science",
+    "graduation_year": "2020",
+    "subjects": ["Informatik", "Mathematik", "Maschinelles Lernen"],
+    "linkedin": "https://linkedin.com/in/maxmustermann",
+    "twitter": "https://twitter.com/maxmustermann"
+} %}
+
+
+<script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "{{ alumni.name }}",
+    "jobTitle": "{{ alumni.job_title }}",
+    "description": "{{ alumni.bio }}",
+    "image": "{{ alumni.image_url }}",
+    "alumniOf": {
+    "@type": "EducationalOrganization",
+    "name": "{{ alumni.university }}",
+    "url": "{{ alumni.university_url }}"
+    },
+    "educationalCredentialAwarded": "{{ alumni.degree }}",
+    "hasCredential": {
+    "@type": "EducationalOccupationalCredential",
+    "credentialCategory": "{{ alumni.degree }}",
+    "dateIssued": "{{ alumni.graduation_year }}",
+    "recognizedBy": {
+      "@type": "EducationalOrganization",
+      "name": "{{ alumni.university }}"
+    }
+    },
+    "knowsAbout": {{ alumni.subjects|json_encode }},
+    "worksFor": {
+    "@type": "Organization",
+    "name": "{{ alumni.company }}",
+    "url": "{{ alumni.company_url }}"
+    },
+    "sameAs": [
+    "{{ alumni.linkedin }}",
+    "{{ alumni.twitter }}",
+    "{{ alumni.website }}"
+    ]
+    }
+</script>
+#}
+{% endblock %}
 {% block aside %}{% endblock %}
 
 

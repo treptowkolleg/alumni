@@ -1,15 +1,15 @@
 {% extends '_full.html.twig' %}
 
-{% set meta_title = 'Alumni' %}
-{% set meta_subtitle = 'Personen finden' %}
+{% set meta_title = 'Mein Portal' %}
+{% set meta_subtitle = 'Meine Schule' %}
 
-{% set sidebar = 'people' %}
+{% set sidebar = 'profile-index' %}
 
 {% block page_header %}
 <section class="py-3">
     <div class="container">
 
-        {{ include('component/person_subbar.html.twig') }}
+        {{ include('component/profile_subbar.html.twig',{'selected':'school'}) }}
 
         <div class="mb-3">{{ include('component/_person_filter.html.twig') }}</div>
 
@@ -50,11 +50,11 @@
                                         <div class="col-9 col-lg-8">
                                             <div class="card-body d-flex flex-column h-100">
                                                 <div class="d-flex align-items-start justify-content-between">
-                                                    <a href="{{ url('people_show',{'slug':person.user.slug }) }}" class="h6 mb-0 text-decoration-none stretched-link text-truncate">{{ person }}</a>
+                                                    <a href="{{ url('people_show',{'slug':person.user.slug }) }}" class="h5 mb-0 text-decoration-none stretched-link text-truncate">{{ person }}</a>
                                                 </div>
 
                                                 {% if person.user.hasSchool %}
-                                                    <p class="text-truncate text-primary small mb-0">{{ person.user.school }}</p>
+                                                    <p class="text-truncate mb-0">{{ person.user.school }}</p>
                                                 {% endif %}
                                                 <a href="{{ url('people_show',{'slug':person.user.slug }) }}" class="card-link d-none d-lg-block stretched-link text-decoration-none mt-auto">mehr erfahren <i class="bx bxs-chevron-right"></i></a>
                                             </div>

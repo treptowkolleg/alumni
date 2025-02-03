@@ -5,10 +5,12 @@ namespace App\Controller;
 use App\Entity\Newsletter;
 use App\Entity\User;
 use App\Entity\UserProfile;
+use App\Enums\PerformanceCourseEnum;
 use App\Form\NewsLetterToggleFormType;
 use App\Form\UserImageType;
 use App\Form\UserprofileFormType;
 use App\Repository\NewsletterRepository;
+use App\Repository\SchoolRepository;
 use App\Repository\UserProfileRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -85,6 +87,60 @@ class ProfileController extends AbstractController
         }
         return $this->render('profile/image_update.html.twig', [
             'form' => $form,
+        ]);
+    }
+
+    #[Route('/schule/{page}', name: 'school')]
+    public function school(Request $request, UserRepository $userRepository, UserProfileRepository $repository, SchoolRepository $schoolRepository, int $page = 1): Response
+    {
+        if($request->isMethod('POST')) {
+            $filterValues = $request->request->all();
+            $request->getSession()->set('filter_school', $filterValues);
+        }
+
+        $search = $request->getSession()->get('filter_school')['person'] ?? null;
+        $courses = $request->getSession()->get('filter_school')['course'] ?? null;
+        $startDate = $request->getSession()->get('filter_school')['start_date'] ?? null;
+        $endDate = $request->getSession()->get('filter_school')['end_date'] ?? null;
+
+        $searchArray = explode(' ', $search);
+        if(count($searchArray) > 1){
+            $name = array_pop($searchArray);
+            $firstname = implode(' ', $searchArray);
+        } else {
+            $firstname = false;
+            $name = array_pop($searchArray);
+        }
+
+        $usedDates = $repository->findExamDates();
+
+
+        if($this->isGranted('ROLE_USER')) {
+            $user = $userRepository->find($this->getUser());
+            if($school = $user->getSchool()) {
+                $filtered = $request->getSession()->get('filter_school');
+                $filtered['school'] = [$school->getId()];
+                $request->getSession()->set('filter_school',$filtered);
+                $people = $repository->findBySearchQuery($name, $firstname, [$school->getId()], $courses, $startDate, $endDate, offset: $page);
+                $peopleCount = count($repository->findBySearchQuery($name, $firstname, [$school->getId()], $courses, $startDate, $endDate));
+            } else {
+                $this->addFlash('warning','Du hast dich keiner Bildungseinrichtung zugeordnet!');
+                return $this->redirectToRoute('people_index');
+            }
+        } else {
+            return $this->redirectToRoute('people_index');
+        }
+
+
+        return $this->render('people/school.html.twig', [
+            'filterValues' => $request->getSession()->get('filter_school'),
+            'filter' => 'school',
+            'page' => $page,
+            'people' => $people,
+            'people_count' => $peopleCount,
+            'schools' => $schoolRepository->findAll(),
+            'dates' => $usedDates,
+            'courses' => PerformanceCourseEnum::cases(),
         ]);
     }
 

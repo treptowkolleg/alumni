@@ -8,6 +8,8 @@ use App\Repository\BlogPostRepository;
 use App\Repository\EventRepository;
 use App\Repository\EventTypeRepository;
 use App\Repository\SchoolRepository;
+use App\Repository\UserRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -41,9 +43,22 @@ class EventController extends AbstractController
         ]);
     }
 
-    #[Route('/details/{slug}', name: 'show')]
-    public function show(Event $post): Response
+    #[Route('/details/{slug}', name: 'show', methods: ['GET','POST'])]
+    public function show(Request $request, Event $post, UserRepository $userRepository, EntityManagerInterface $entityManager): Response
     {
+        if($request->isMethod('POST')) {
+            $user = $userRepository->find($this->getUser());
+            $event = $post;
+
+            if(!$user->getFollowedEvents()->contains($event)) {
+                $user->addFollowedEvent($event);
+            } else {
+                $user->removeFollowedEvent($event);
+            }
+            $entityManager->persist($event);
+            $entityManager->flush();
+        }
+
         return $this->render('blog/event_show.html.twig', [
             'post' => $post,
         ]);

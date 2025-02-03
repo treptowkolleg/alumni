@@ -6,13 +6,15 @@
                 <span class="ms-1">Zurück</span>
             </a>
             {% if app.user %}
+                <form id="event-toggle" method="post"></form>
                 {% if post in app.user.followedEvents %}
                     <a href="#" class="nav-link dropdown-toggle ms-auto" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-star text-secondary me-2"></i>Du nimmst teil</a>
                     <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item" href="#"><i class="bx bx-block me-2"></i>Nicht mehr teilnehmen</a></li>
+                        <li><button type="submit" form="event-toggle" class="dropdown-item" href="#"><i class="bx bx-block me-2"></i>Nicht mehr teilnehmen</button></li>
                     </ul>
+
                 {% else %}
-                    <a class="nav-link ms-auto" href="#"><i class="fa-regular fa-star text-secondary me-2"></i>Teilnehmen</a>
+                    <button type="submit" form="event-toggle" class="nav-link ms-auto" href="#"><i class="fa-regular fa-star text-secondary me-2"></i>Teilnehmen</button>
                 {% endif %}
             {% endif %}
         {% endif %}

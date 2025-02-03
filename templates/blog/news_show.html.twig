@@ -41,7 +41,43 @@
 </section>
 {% endblock %}
 {% block body %}
-
+{#
+<script type="application/ld+json">
+{
+"@context": "https://schema.org",
+"@type": "NewsArticle",
+"headline": "{{ news.title }}",
+"description": "{{ news.description }}",
+"author": {
+"@type": "Person",
+"name": "{{ news.author }}"
+},
+"publisher": {
+"@type": "Organization",
+"name": "Deine Webseite",
+"logo": {
+  "@type": "ImageObject",
+  "url": "{{ asset('images/logo.png') }}"
+}
+},
+"datePublished": "{{ news.published_at|date('Y-m-d') }}",
+"dateModified": "{{ news.updated_at|date('Y-m-d') }}",
+"image": {
+"@type": "ImageObject",
+"url": "{{ news.image_url }}",
+"width": 1200,
+"height": 675
+},
+"mainEntityOfPage": {
+"@type": "WebPage",
+"@id": "{{ news.url }}"
+},
+"articleSection": "{{ news.category }}",
+"isAccessibleForFree": "true",
+"url": "{{ news.url }}"
+}
+</script>
+#}
 {% endblock %}
 
 {% block aside %}
