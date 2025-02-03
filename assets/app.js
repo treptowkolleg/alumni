@@ -117,7 +117,7 @@ function setLike(link, value){
             App.setClass(likeIcon,'d-none',true);
             App.setClass(likeLoader,'d-none');
             if(response.match === true) {
-                matchDiv.innerHTML = 'Ihr kennt euch gegenseitig';
+                matchDiv.innerHTML = 'Ihr kennt euch';
             } else {
                 matchDiv.innerHTML = '';
             }
