@@ -36,7 +36,7 @@
                             <h3 class="h5 mb-0 text-center text-lg-start">Kontakte</h3>
                         </div>
                         <div class="list-group list-group-flush border-bottom-0">
-                            {% for chat in app.user.chats|sort %}
+                            {% for chat in chats|sort %}
                                 {% set message_unread = 0 %}
                                 {% for message in chat.messages %}
                                     {% if message.sender != app.user and not message.isRead %}
@@ -44,9 +44,13 @@
                                     {% endif %}
                                 {% endfor %}
                                 {% if chat.owner == app.user %}
-                                    {{ include('component/_chat_list.html.twig',{'chat':chat, 'user':chat.participant, 'message':message_unread}) }}
+                                    {% if chat.participant.isContactable %}
+                                        {{ include('component/_chat_list.html.twig',{'chat':chat, 'user':chat.participant, 'message':message_unread}) }}
+                                    {% endif %}
                                 {% else %}
-                                    {{ include('component/_chat_list.html.twig',{'chat':chat, 'user':chat.owner, 'message':message_unread}) }}
+                                    {% if chat.owner.isContactable %}
+                                        {{ include('component/_chat_list.html.twig',{'chat':chat, 'user':chat.owner, 'message':message_unread}) }}
+                                    {% endif %}
                                 {% endif %}
                             {% else %}
                                 <div class="list-group-item">Noch keine Konversationen vorhanden.</div>

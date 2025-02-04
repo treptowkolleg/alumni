@@ -10,6 +10,7 @@ use App\Form\NewsLetterToggleFormType;
 use App\Form\UserImageType;
 use App\Form\UserprofileFormType;
 use App\Operator\SoundExpression;
+use App\Repository\ChatRepository;
 use App\Repository\NewsletterRepository;
 use App\Repository\SchoolRepository;
 use App\Repository\UserProfileRepository;
@@ -35,10 +36,11 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 class ProfileController extends AbstractController
 {
     #[Route('', name: 'index')]
-    public function index(Request $request, UserProfileRepository $userProfileRepository, NewsletterRepository $newsletterRepository, EntityManagerInterface $entityManager): Response
+    public function index(Request $request, UserProfileRepository $userProfileRepository, ChatRepository $chatRepository, NewsletterRepository $newsletterRepository, EntityManagerInterface $entityManager): Response
     {
         $userProfile = $userProfileRepository->findBy(['user' => $this->getUser()]);
         $newsletter = $newsletterRepository->findOneBy(['email' => $this->getUser()->getUserIdentifier()]);
+        $chats = $chatRepository->findAllChats($this->getUser());
 
         $form = $this->createForm(NewsLetterToggleFormType::class);
         $form->handleRequest($request);
@@ -61,6 +63,7 @@ class ProfileController extends AbstractController
             'controller_name' => 'ProfileController',
             'user_profile' => $userProfile,
             'has_newsletter' => $newsletter,
+            'chats' => $chats,
         ]);
     }
 
