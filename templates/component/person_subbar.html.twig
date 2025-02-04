@@ -2,27 +2,27 @@
     <ul class="nav nav-underline mb-4">
         {% if filter|default() == 'details' %}
             <a href="javascript:void(0)" onclick="history.back()" class="nav-item nav-link {{ selected|default() == 'index' ? 'active' : '' }} text-nowrap">
-                <i class="bx bxs-chevrons-left text-primary"></i>
+                <i class="ri-arrow-left-double-line text-primary"></i>
                 <span class="ms-1">Zurück</span>
             </a>
         {% else %}
             <li class="nav-item">
                 <a class="nav-link {{ filter == 'all' ? 'active ' : '' }}" href="{{ url('people_index',{'filter':'all'}) }}">
-                    <i class="bx bxs-group text-primary"></i>
+                    <i class="ri-group-2-line text-primary"></i>
                     <span class="ms-1 d-none d-lg-inline">Alle</span>
                 </a>
             </li>
             {% if app.user %}
                 <li class="nav-item">
                     <a class="nav-link {{ filter == 'freunde' ? 'active ' : '' }}" href="{{ url('people_index',{'filter':'freunde'}) }}">
-                        <i class="bx bxs-star text-primary"></i>
+                        <i class="ri-star-fill text-primary"></i>
                         <span class="ms-1 d-none d-lg-inline">Bekannte</span>
                     </a>
                 </li>
                 {% if app.user.hasSchool %}
                     <li class="nav-item">
                         <a class="nav-link {{ filter == 'school' ? 'active ' : '' }}" href="{{ url('profile_school') }}">
-                            <i class="bx bxs-school  text-primary"></i>
+                            <i class="ri-school-line  text-primary"></i>
                             <span class="ms-1 d-none d-lg-inline">Meine Schule</span>
                         </a>
                     </li>
@@ -32,7 +32,7 @@
                 <li class="nav-item ms-auto">
                     <a class="nav-link disabled" href="#">
                         <span class="me-1 text-primary fw-bolder">{{ people_count }}</span>
-                        <i class="bx bx-group text-primary"></i>
+                        <i class="ri-group-2-line text-primary"></i>
                     </a>
                 </li>
             {% endif %}

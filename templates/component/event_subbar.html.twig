@@ -2,7 +2,7 @@
     <div class="nav nav-underline">
         {% if selected|default() == 'show' %}
             <a href="{{ url('event_index') }}" class="nav-item nav-link {{ selected|default() == 'index' ? 'active' : '' }} text-nowrap">
-                <i class="bx bxs-chevrons-left text-primary"></i>
+                <i class="ri-arrow-left-double-line text-primary"></i>
                 <span class="ms-1">Zurück</span>
             </a>
             {% if app.user %}
@@ -21,7 +21,7 @@
         {% if event_count|default(null) %}
                 <a class="nav-item ms-auto nav-link disabled" href="#">
                     <span class="me-1 text-primary fw-bolder">{{ event_count }}</span>
-                    <i class="bx bx-calendar-event text-primary"></i>
+                    <i class="ri-calendar-2-line text-primary"></i>
                 </a>
         {% endif %}
     </div>

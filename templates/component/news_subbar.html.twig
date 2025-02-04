@@ -2,7 +2,7 @@
     <div class="nav nav-underline">
         {% if selected|default() == 'show' %}
             <a href="javascript:void(0)" onclick="history.back()" class="nav-item nav-link {{ selected|default() == 'index' ? 'active' : '' }} text-nowrap">
-                <i class="bx bxs-chevrons-left text-primary"></i>
+                <i class="ri-arrow-left-double-line text-primary"></i>
                 <span class="ms-1">Zurück</span>
             </a>
         {% else %}

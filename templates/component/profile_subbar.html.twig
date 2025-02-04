@@ -2,27 +2,27 @@
     <div class="nav nav-underline">
         {% if is_granted('ROLE_USER') %}
             <a href="{{ path('profile_index') }}" class="nav-item nav-link {{ selected|default() == 'index' ? 'active' : '' }} text-nowrap">
-                <i class="bx bx-card text-primary"></i>
+                <i class="ri-layout-2-line text-primary"></i>
                 <span class="ms-1 d-none d-lg-inline">Übersicht</span>
             </a>
             <a href="{{ path('chat_index') }}" class="nav-item nav-link {{ selected|default() == 'chat' ? 'active' : '' }} text-nowrap">
-                <i class="bx bx-group text-primary"></i>
+                <i class="ri-contacts-book-2-line text-primary"></i>
                 <span class="ms-1 d-none d-lg-inline">Kontakte</span>
             </a>
             <a href="{{ url('profile_school') }}" class="nav-item nav-link {{ selected|default() == 'school' ? 'active' : '' }} text-nowrap">
-                <i class="bx bxs-school text-primary"></i>
+                <i class="ri-school-line text-primary"></i>
                 <span class="ms-1 d-none d-lg-inline">Meine Schule</span>
             </a>
             <a href="{{ path('profile_profile_new') }}" class="nav-item nav-link {{ selected|default() == 'profile' ? 'active' : '' }} text-nowrap ms-auto">
-                <i class="bx bxs-user-detail text-primary"></i>
+                <i class="ri-user-3-line text-primary"></i>
                 <span class="ms-1 d-none d-lg-inline">Profil</span>
             </a>
             <a href="{{ path('profile_image_new') }}" class="nav-item nav-link {{ selected|default() == 'image' ? 'active' : '' }} text-nowrap">
-                <i class="bx bx-image text-primary"></i>
+                <i class="ri-image-2-line text-primary"></i>
                 <span class="ms-1 d-none d-lg-inline">Profilbild</span>
             </a>
             <a href="{{ path('profile_settings') }}" class="nav-item nav-link {{ selected|default() == 'account' ? 'active' : '' }} text-nowrap">
-                <i class="bx bx-cog text-primary"></i>
+                <i class="ri-settings-2-line text-primary"></i>
                 <span class="ms-1 d-none d-lg-inline">{{ app.user.fullname }}</span>
             </a>
         {% endif %}
