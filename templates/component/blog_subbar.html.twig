@@ -1,7 +1,7 @@
 <div class="mb-3">
     <div class="nav nav-underline">
         {% if selected|default() == 'show' %}
-        <a href="{{ path('blog_index') }}" class="nav-item nav-link {{ selected|default() == 'index' ? 'active' : '' }} text-nowrap">
+        <a href="javascript:void(0)" onclick="history.back()" class="nav-item nav-link {{ selected|default() == 'index' ? 'active' : '' }} text-nowrap">
             <i class="bx bxs-chevrons-left text-primary"></i>
             <span class="ms-1">Zurück</span>
         </a>

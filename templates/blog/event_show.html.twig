@@ -70,10 +70,13 @@
                     </div>
                     <div class="list-group list-group-flush">
                         {% for school in post.school|sort((a,b) => a.title <=> b.title) %}
-                            <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
-                                {{ school.title }}
-                                <i class="bx bxs-chevron-right"></i>
-                            </a>
+                            <div class="list-group-item p-0">
+                                <a href="#" class="ripplelink swipe-link-start d-flex justify-content-between align-items-center p-3">
+                                    <span class="fw-bolder">{{ school.title }}</span>
+                                    <i class="ri ri-arrow-right-s-line"></i>
+                                </a>
+                            </div>
+
                         {% endfor %}
                     </div>
                 </div>

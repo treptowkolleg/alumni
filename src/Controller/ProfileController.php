@@ -9,6 +9,7 @@ use App\Enums\PerformanceCourseEnum;
 use App\Form\NewsLetterToggleFormType;
 use App\Form\UserImageType;
 use App\Form\UserprofileFormType;
+use App\Operator\SoundExpression;
 use App\Repository\NewsletterRepository;
 use App\Repository\SchoolRepository;
 use App\Repository\UserProfileRepository;
@@ -23,6 +24,9 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\PasswordHasher\PasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -111,7 +115,7 @@ class ProfileController extends AbstractController
     }
 
     #[Route('/settings/{section}', name: 'settings_do', methods: ['GET', 'POST'])]
-    public function PersonalSettings(Request $request, UserRepository $userRepository, EntityManagerInterface $entityManager, string $section): Response
+    public function PersonalSettings(Request $request, UserRepository $userRepository, NewsletterRepository $newsletterRepository, UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $entityManager, string $section): Response
     {
         $subtitle = 'Einstellungen';
         $user = $userRepository->find($this->getUser());
@@ -158,14 +162,12 @@ class ProfileController extends AbstractController
                 $subtitle = "Passwort";
                 break;
             case 'privacy':
-                $form->add('chatSystem',CheckboxType::class,[
-                    'mapped' => false,
+                $form->add('isContactable',CheckboxType::class,[
                     'required' => false,
                     'label' => 'Nachrichtensystem aktivieren',
                     'help' => 'Deaktivieren, um keine Nachrichten von anderen erhalten zu können.',
                 ])
-                    ->add('eventSystem',CheckboxType::class,[
-                        'mapped' => false,
+                    ->add('isEventsVisible',CheckboxType::class,[
                         'required' => false,
                         'label' => 'Teilnahme an Veranstaltungen anzeigen',
                         'help' => 'Deaktivieren, um Teilnahmen zu verbergen.',
@@ -174,8 +176,7 @@ class ProfileController extends AbstractController
                 $subtitle = "Privatsphäre";
                 break;
             case 'newsletter':
-                $form->add('newsletter',CheckboxType::class,[
-                    'mapped' => false,
+                $form->add('HasNewsletter',CheckboxType::class,[
                     'required' => false,
                     'label' => 'Newsletter erhalten',
                     'help' => 'Üblicherweise versenden wir Newsletter einmal im Quartal.',
@@ -195,9 +196,33 @@ class ProfileController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             if($section == 'person') {
-                $user->setFirstnameSoundEx($user->getFirstname());
-                $user->setLastnameSoundEx($user->getLastname());
+                $user->setFirstnameSoundEx(SoundExpression::generate($user->getFirstname()));
+                $user->setLastnameSoundEx(SoundExpression::generate($user->getLastname()));
             }
+
+            if($section == 'email' and $user->getEmail() != $this->getUser()->getUserIdentifier()) {
+                $user->setVerified(false);
+            }
+
+            if($section == 'password') {
+                $password = $passwordHasher->hashPassword($user, $form->get('plainPassword')->getData());
+                $user->setPassword($password);
+            }
+
+            if($section == 'newsletter') {
+                if($user->hasNewsletter()) {
+                    if(!$newsletterRepository->findOneBy(['email' => $user->getEmail()])) {
+                        $newsletter = new Newsletter();
+                        $newsletter->setEmail($user->getEmail());
+                        $entityManager->persist($newsletter);
+                    }
+                } else {
+                    if($newsletter = $newsletterRepository->findOneBy(['email' => $user->getEmail()])) {
+                        $entityManager->remove($newsletter);
+                    }
+                }
+            }
+
             $entityManager->persist($user);
             $entityManager->flush();
             $this->addFlash('success','Daten wurden aktualisiert.');

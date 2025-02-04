@@ -13,7 +13,7 @@ $font-weight-normal: 300;
 
 $font-family-sans-serif: "IBM Plex Sans", serif;
 $enable-shadows: false;
-$enable-gradients: false;
+$enable-gradients: true;
 $enable-rounded: false;
 
 $systemBlue: #294a70;
@@ -485,4 +485,65 @@ tbody > tr > td {
   background-color: $systemYellow;
   width: 4px;
   height: 4px;
+}
+
+
+
+.ripplelink{
+  text-decoration:none;
+  position:relative;
+  overflow:hidden;
+  -webkit-transition: all 0.2s ease;
+  -moz-transition: all 0.2s ease;
+  -o-transition: all 0.2s ease;
+  transition: all 0.2s ease;
+  opacity: .8;
+}
+
+.ripplelink:hover{
+  z-index:400;
+  box-shadow:rgba(0, 0, 0, 0.1) 0 0 16px 0;
+  -webkit-box-shadow:rgba(0, 0, 0, 0.1) 0 0 16px 0;
+  -moz-box-shadow:rgba(0, 0, 0, 0.1) 0 0 16px 0;
+  opacity: 1;
+}
+
+.swipe-link-end:hover{
+  padding-right: 1.5rem!important;
+}
+
+.swipe-link-start:hover{
+  padding-left: 1.5rem!important;
+}
+
+.ink {
+  display: block;
+  position: absolute;
+  background:rgba(255, 255, 255, 0.3);
+  border-radius: 100%;
+  -webkit-transform:scale(0);
+  -moz-transform:scale(0);
+  -o-transform:scale(0);
+  transform:scale(0);
+}
+
+.animate {
+  -webkit-animation:all 0.4s ease-in-out;
+  -moz-animation:all 0.4s ease-in-out;
+  -ms-animation:all 0.4s ease-in-out;
+  -o-animation:all 0.4s ease-in-out;
+  animation:all 0.4s ease-in-out;
+}
+
+@-webkit-keyframes ripple {
+  100% {opacity: 0; -webkit-transform: scale(2.5);}
+}
+@-moz-keyframes ripple {
+  100% {opacity: 0; -moz-transform: scale(2.5);}
+}
+@-o-keyframes ripple {
+  100% {opacity: 0; -o-transform: scale(2.5);}
+}
+@keyframes ripple {
+  100% {opacity: 0; transform: scale(2.5);}
 }

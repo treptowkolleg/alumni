@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Operator\SoundExpression;
+use App\Repository\NewsletterRepository;
 use App\Repository\UserRepository;
 use App\Security\EmailVerifier;
 use Doctrine\ORM\EntityManagerInterface;
@@ -25,7 +26,7 @@ class RegistrationController extends AbstractController
     }
 
     #[Route('/register', name: 'app_register')]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
+    public function register(Request $request, NewsletterRepository $newsletterRepository, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
     {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -42,6 +43,17 @@ class RegistrationController extends AbstractController
 
             // encode the plain password
             $user->setPassword($userPasswordHasher->hashPassword($user, $plainPassword));
+
+            // Standard-Optionen aktivieren
+            $user->setIsEventsVisible(true);
+            $user->setIsEventsVisible(true);
+
+            // Prüfen, ob früher schon der Newsletter abonniert wurde
+            if($newsletterRepository->findOneBy(['email' => $user->getEmail()])) {
+                $user->setHasNewsletter(true);
+            } else {
+                $user->setHasNewsletter(false);
+            }
 
             $entityManager->persist($user);
             $entityManager->flush();

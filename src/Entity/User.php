@@ -124,6 +124,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
     #[ORM\ManyToMany(targetEntity: Event::class, mappedBy: 'followers')]
     private Collection $followedEvents;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $hasNewsletter = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?bool $isContactable = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?bool $isEventsVisible = null;
+
     public function __construct()
     {
         $this->blogPosts = new ArrayCollection();
@@ -637,6 +646,42 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
         if ($this->followedEvents->removeElement($followedEvent)) {
             $followedEvent->removeFollower($this);
         }
+
+        return $this;
+    }
+
+    public function hasNewsletter(): ?bool
+    {
+        return $this->hasNewsletter;
+    }
+
+    public function setHasNewsletter(?bool $hasNewsletter): static
+    {
+        $this->hasNewsletter = $hasNewsletter;
+
+        return $this;
+    }
+
+    public function isContactable(): ?bool
+    {
+        return $this->isContactable;
+    }
+
+    public function setIsContactable(?bool $isContactable): static
+    {
+        $this->isContactable = $isContactable;
+
+        return $this;
+    }
+
+    public function isEventsVisible(): ?bool
+    {
+        return $this->isEventsVisible;
+    }
+
+    public function setIsEventsVisible(?bool $isEventsVisible): static
+    {
+        $this->isEventsVisible = $isEventsVisible;
 
         return $this;
     }

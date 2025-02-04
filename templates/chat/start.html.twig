@@ -14,7 +14,7 @@
                 <div class="col-lg-12">
                     <div class="">
                         <div class="d-flex flex-column flex-lg-row">
-                            <a href="{{ url('chat_new',{'id':chat.id}) }}" class="btn btn-primary flex-grow-1 flex-lg-grow-0"><i class="fa-regular fa-paper-plane me-2"></i>Neue Nachricht</a>
+                            <a href="{{ url('chat_new',{'id':chat.id}) }}" class="{{ partner.isContactable ?: 'disabled' }} btn btn-primary flex-grow-1 flex-lg-grow-0"><i class="fa-regular fa-paper-plane me-2"></i>Neue Nachricht</a>
                             <div class="ms-lg-3 mt-3 mt-lg-0 flex-grow-1 flex-lg-grow-1">
                                 <label for="table-search" class="visually-hidden" hidden="hidden">Filtern</label>
                                 <input type="search" class="form-control h-100" id="table-search" placeholder="Nachrichten filtern" aria-controls="datatable" style="height: 38px!important;">

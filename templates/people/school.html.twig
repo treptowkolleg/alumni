@@ -33,11 +33,11 @@
             </div>
         </div>
 
-        <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3 g-3 align-content-stretch">
+        <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3 g-1 align-content-stretch">
             {% for person in people %}
                 {% if loop.index <= 9 %}
                 {% if (app.user and  person.networkState == 'registered') or person.networkState == 'public' or (filter in ['school','freunde'] and person.networkState == 'private') %}
-                            <div class="col mb-2 mb-md-0">
+                            <div class="col mb-0">
                                 <div class="card text-bg-white align-self-stretch">
                                     <div class="row g-0">
                                         <div class="col-3 col-lg-4">
@@ -62,12 +62,12 @@
                                     </div>
                                 </div>
                                 {% if app.user %}
-                                    <div class="ps-3 pt-2 pb-2 border border-top-0 d-flex bg-light-subtle align-items-center">
+                                    <div class="ps-3 pt-2 pb-2 border border-top-0 d-flex bg-light-subtle align-items-center ripplelink">
                                         {% if app.user.userProfiles.count > 0 %}
                                             {% if person.user != app.user %}
                                                 <div>
                                                     <span class="d-none small me-1 like-number-{{ person.id }}">{{ person.friends.count }}</span>
-                                                    <div class="spinner-border spinner-border-sm d-none like-loader-{{ person.id }}" role="status" style="margin-right: 2px"></div>
+                                                    <div class="text-primary spinner-border spinner-border-sm d-none like-loader-{{ person.id }}" role="status" style="margin-right: 2px"></div>
                                                     {% set like_icon = 'fa-regular fa-star' %}
                                                     {% if app.user.userProfiles.0 in person.friends %}
                                                         {% set like_icon = 'fa-solid fa-star' %}
@@ -82,10 +82,17 @@
                                                     </small>
                                                 </div>
                                                 <div class="">
-                                                    <a href="{{ url('chat_start',{'slug':person.user.slug}) }}" class="text-decoration-none">
-                                                        <i class="link-primary bx bx-chat me-1"></i>
-                                                        <small>Nachricht</small>
-                                                    </a>
+                                                    {% if person.user.isContactable %}
+                                                        <a href="{{ url('chat_start',{'slug':person.user.slug}) }}" class="text-decoration-none">
+                                                            <i class="link-primary ri-chat-4-line me-1"></i>
+                                                            <small>Nachricht</small>
+                                                        </a>
+                                                    {% else %}
+                                                        <a href="javascript:void(0)" class="text-muted text-decoration-none disabled">
+                                                            <i class="link-muted ri-chat-off-line me-1"></i>
+                                                            <small></small>
+                                                        </a>
+                                                    {% endif %}
                                                 </div>
                                             {% else %}
                                                 <div>

@@ -12,7 +12,8 @@
         {{ include('component/person_subbar.html.twig',{'filter':'details','people':1}) }}
 
         <div class="row g-3">
-            <div class="col-lg-4">
+
+            <div class="col-lg-3">
                 {% if person.user.image.name %}
                     <img src="{{ vich_uploader_asset(person.user)|imagine_filter('avatar')  }}" class="img-fluid d-none d-lg-block img-thumbnail w-100" alt="...">
                     <img src="{{ vich_uploader_asset(person.user)|imagine_filter('avatar_sm')  }}" class="img-fluid d-lg-none d-block img-thumbnail w-100" alt="...">
@@ -21,7 +22,7 @@
                 {% endif %}
             </div>
 
-            <div class="col-lg-8">
+            <div class="col-lg-9">
                 <div class="row g-3">
                     <div class="col-lg-12" id="section-school">
                         <div class="card bg-white">
@@ -88,10 +89,17 @@
                                                 </small>
                                             </div>
                                             <div class="">
-                                                <a href="{{ url('chat_start',{'slug':person.user.slug}) }}" class="text-decoration-none">
-                                                    <i class="link-primary bx bx-chat me-1"></i>
-                                                    <small>Nachricht</small>
-                                                </a>
+                                                {% if person.user.isContactable %}
+                                                    <a href="{{ url('chat_start',{'slug':person.user.slug}) }}" class="text-decoration-none">
+                                                        <i class="link-primary ri-chat-4-line me-1"></i>
+                                                        <small>Nachricht</small>
+                                                    </a>
+                                                {% else %}
+                                                    <a href="javascript:void(0)" class="text-muted text-decoration-none disabled">
+                                                        <i class="link-muted ri-chat-off-line me-1"></i>
+                                                        <small></small>
+                                                    </a>
+                                                {% endif %}
                                             </div>
                                         {% else %}
                                             <div>
@@ -115,27 +123,36 @@
                                 <h3 class="h5 mb-0 text-center text-lg-start">Nimmt teil</h3>
                             </div>
                             <div class="list-group list-group-flush border-bottom-0">
-                                {% for post in person.user.followedEvents|sort((a, b) => a.startDate <=> b.startDate) %}
-                                    {% if post.endDate|date('Ymd') >= date('now')|date('Ymd')%}
-                                        {{ include('component/_event_list.html.twig') }}
-                                    {% endif %}
+                                {% if person.user.isEventsVisible %}
+                                    {% for post in person.user.followedEvents|sort((a, b) => a.startDate <=> b.startDate) %}
+                                        {% if post.endDate|date('Ymd') >= date('now')|date('Ymd')%}
+                                            {{ include('component/_event_list.html.twig') }}
+                                        {% endif %}
+                                    {% else %}
+                                        <div class="list-group-item py-3">
+                                            folgt keinen Veranstaltungen
+                                        </div>
+                                    {% endfor %}
                                 {% else %}
-                                    <div class="list-group-item">
+                                    <div class="list-group-item py-3">
                                         folgt keinen Veranstaltungen
                                     </div>
-                                {% endfor %}
+                                {% endif %}
                             </div>
                             <div class="h-100"></div>
                             <div class="list-group list-group-flush">
                                 <a href="{{ url('event_index') }}" class="list-group-item list-group-item-action link-primary d-flex align-items-center justify-content-between">
                                     <div>weitere Termine finden</div>
-                                    <i class="bx bxs-chevron-right"></i>
+                                    <i class="ri-arrow-right-s-line"></i>
                                 </a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+
+
         </div>
     </div>
 </section>

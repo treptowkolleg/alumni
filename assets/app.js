@@ -62,11 +62,11 @@ function toggleEvent(link, value){
 
             if(response.sampleHasLike === true)
             {
-                App.setClass(likeIcon,'bxs-star');
-                App.setClass(likeIcon,'bx-star',true);
+                App.setClass(likeIcon,'ri-star-fill');
+                App.setClass(likeIcon,'ri-star-line',true);
             } else {
-                App.setClass(likeIcon,'bx-star');
-                App.setClass(likeIcon,'bxs-star',true);
+                App.setClass(likeIcon,'ri-star-line');
+                App.setClass(likeIcon,'ri-star-fill',true);
             }
         }
     };
