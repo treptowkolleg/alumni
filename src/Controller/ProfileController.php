@@ -15,9 +15,17 @@ use App\Repository\UserProfileRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 #[Route('/profile', name: 'profile_')]
 class ProfileController extends AbstractController
@@ -98,8 +106,109 @@ class ProfileController extends AbstractController
         $cookies = $request->cookies->all();
 
         return $this->render('profile/settings.html.twig', [
-            'form' => null,
             'cookies' => $cookies,
+        ]);
+    }
+
+    #[Route('/settings/{section}', name: 'settings_do', methods: ['GET', 'POST'])]
+    public function PersonalSettings(Request $request, UserRepository $userRepository, EntityManagerInterface $entityManager, string $section): Response
+    {
+        $subtitle = 'Einstellungen';
+        $user = $userRepository->find($this->getUser());
+
+        $form = $this->createFormBuilder($user);
+
+        switch ($section) {
+            case 'person':
+                $form->add('firstname',TextType::class,[
+                    'required'=>true,'row_attr' => ['class' => 'form-floating mb-3'],
+                    'attr' => ['placeholder' => 'Firstname'],
+                ])
+                    ->add('lastname',TextType::class,[
+                        'required'=>true,'row_attr' => ['class' => 'form-floating mb-3'],
+                        'attr' => ['placeholder' => 'Lastname'],
+                    ]);
+                $subtitle = "Personendaten";
+                break;
+            case 'email':
+                $form->add('email',EmailType::class,[
+                    'required'=>true,'row_attr' => ['class' => 'form-floating mb-3'],
+                    'attr' => ['placeholder' => 'Email'],
+                    'help' => 'Nach Änderung wirst du automatisch ausgeloggt. Du musst deine neue E-Mail-Adresse ebenfalls verifizieren.',
+                ]);
+                $subtitle = "E-Mail-Adresse";
+                break;
+            case 'password':
+                $form->add('plainPassword',PasswordType::class,[
+                    'required'=>true,'row_attr' => ['class' => 'form-floating mb-3'],
+                    'attr' => ['placeholder' => 'Password'],
+                    'mapped' => false,
+                    'constraints' => [
+                        new NotBlank([
+                            'message' => 'Please enter a password',
+                        ]),
+                        new Length([
+                            'min' => 6,
+                            'minMessage' => 'Your password should be at least {{ limit }} characters',
+                            // max length allowed by Symfony for security reasons
+                            'max' => 4096,
+                        ]),
+                    ],
+                ]);
+                $subtitle = "Passwort";
+                break;
+            case 'privacy':
+                $form->add('chatSystem',CheckboxType::class,[
+                    'mapped' => false,
+                    'required' => false,
+                    'label' => 'Nachrichtensystem aktivieren',
+                    'help' => 'Deaktivieren, um keine Nachrichten von anderen erhalten zu können.',
+                ])
+                    ->add('eventSystem',CheckboxType::class,[
+                        'mapped' => false,
+                        'required' => false,
+                        'label' => 'Teilnahme an Veranstaltungen anzeigen',
+                        'help' => 'Deaktivieren, um Teilnahmen zu verbergen.',
+                    ])
+                ;
+                $subtitle = "Privatsphäre";
+                break;
+            case 'newsletter':
+                $form->add('newsletter',CheckboxType::class,[
+                    'mapped' => false,
+                    'required' => false,
+                    'label' => 'Newsletter erhalten',
+                    'help' => 'Üblicherweise versenden wir Newsletter einmal im Quartal.',
+                ]);
+                $subtitle = "Newsletter";
+                break;
+        }
+
+
+
+
+        $form->add('save', SubmitType::class, [
+            'label' => 'Aktualisieren','attr' => ['class' => 'btn btn-primary w-100 mt-3']
+        ]);
+        $form = $form->getForm();
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            if($section == 'person') {
+                $user->setFirstnameSoundEx($user->getFirstname());
+                $user->setLastnameSoundEx($user->getLastname());
+            }
+            $entityManager->persist($user);
+            $entityManager->flush();
+            $this->addFlash('success','Daten wurden aktualisiert.');
+            return $this->redirectToRoute('profile_settings');
+        }
+
+        return $this->render('profile/settings_form.html.twig', [
+            'meta_title' => 'Konto',
+            'meta_subtitle' => $subtitle,
+            'sidebar' => 'profile-index',
+            'form' => $form,
         ]);
     }
 

@@ -14,32 +14,36 @@
             <div class="col-lg-12">
                 <div class="card bg-white">
                     <div class="card-body  border-bottom border-primary">
-                        <h3 class="h5 text-center text-lg-start">Konto</h3>
-                        <p class="card-text text-center text-lg-start text-primary">Einstellungen und Daten anpassen</p>
+                        <h3 class="h5 mb-0 text-center text-lg-start">Kontodaten</h3>
+                        <p class="card-text text-center fw-bolder text-lg-start text-primary">Einstellungen und Personenangaben</p>
                     </div>
                     <div class="list-group list-group-flush">
-                        <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3">
-                            <span class="d-flex align-items-center"><i class="bx bx-user bx-fw text-primary"></i>Persönliche Angaben</span>
-                            <i class="bx bxs-chevron-right text-primary"></i>
+                        <a href="{{ url('profile_settings_do',{'section':'person'}) }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3">
+                            <span class="d-flex align-items-center"><i class="ri-user-3-line ri-fw me-2 text-primary"></i>Persönliche Daten</span>
+                            <i class="ri-arrow-right-s-line text-primary"></i>
                         </a>
-                        <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3">
-                            <span class="d-flex align-items-center"><i class="bx bx-lock bx-fw text-primary"></i>Zugangsdaten</span>
-                            <i class="bx bxs-chevron-right text-primary"></i>
+                        <a href="{{ url('profile_settings_do',{'section':'email'}) }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3">
+                            <span class="d-flex align-items-center"><i class="ri-mail-line ri-fw me-2 text-primary"></i>E-Mail-Adresse</span>
+                            <i class="ri-arrow-right-s-line text-primary"></i>
+                        </a>
+                        <a href="{{ url('profile_settings_do',{'section':'password'}) }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3">
+                            <span class="d-flex align-items-center"><i class="ri-lock-fill ri-fw me-2 text-primary"></i>Passwort</span>
+                            <i class="ri-arrow-right-s-line text-primary"></i>
                         </a>
                         <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3 disabled">
-                            <span class="d-flex align-items-center"><i class="bx bx-brush-alt bx-fw text-primary"></i>Layout und Design</span>
+                            <span class="d-flex align-items-center"><i class="ri-paint-fill ri-fw me-2 text-primary"></i>Layout und Design</span>
                             <div class="d-flex align-items-center">
                                 <span class="me-2 badge bg-warning-subtle text-warning rounded">in Planung</span>
-                                <i class="bx bxs-chevron-right text-primary"></i>
+                                <i class="ri-arrow-right-s-line text-primary"></i>
                             </div>
                         </a>
-                        <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3">
-                            <span class="d-flex align-items-center"><i class="bx bx-shield bx-fw text-primary"></i>Privatsphäre</span>
-                            <i class="bx bxs-chevron-right text-primary"></i>
+                        <a href="{{ url('profile_settings_do',{'section':'privacy'}) }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3">
+                            <span class="d-flex align-items-center"><i class="ri-shield-user-line ri-fw me-2 text-primary"></i>Privatsphäre</span>
+                            <i class="ri-arrow-right-s-line text-primary"></i>
                         </a>
-                        <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3">
-                            <span class="d-flex align-items-center"><i class="bx bx-news bx-fw text-primary"></i>Newsletter</span>
-                            <i class="bx bxs-chevron-right text-primary"></i>
+                        <a href="{{ url('profile_settings_do',{'section':'newsletter'}) }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3">
+                            <span class="d-flex align-items-center"><i class="ri-newspaper-line ri-fw me-2 text-primary"></i>Newsletter</span>
+                            <i class="ri-arrow-right-s-line text-primary"></i>
                         </a>
                     </div>
                 </div>
@@ -48,16 +52,16 @@
             <div class="col-lg-12">
                 <div class="card bg-white">
                     <div class="card-body  border-bottom border-primary">
-                        <h3 class="h5 text-center text-lg-start">Browserdaten</h3>
-                        <p class="card-text text-center text-lg-start text-primary">Von uns gespeicherte Cookies</p>
+                        <h3 class="h5 mb-0 text-center text-lg-start">Browserdaten</h3>
+                        <p class="card-text text-center fw-bolder text-lg-start text-primary">Von uns gespeicherte Cookies</p>
                     </div>
                     <div class="list-group list-group-flush">
                         {% for cookie, content in cookies %}
                             <div class="list-group-item d-flex flex-wrap align-items-center py-3">
                                 <span class="fw-bold">{{ cookie|trans }}:</span>
                                 <div class="d-flex justify-content-between justify-content-lg-end align-items-center flex-fill">
-                                    <div class="">{{ content }}</div>
-                                    <a href="#" class="link-danger ms-3"><i class="bx bx-trash"></i></a>
+                                    <code class="small text-muted">{{ content }}</code>
+                                    <a href="#" class="text-danger text-decoration-none ms-3"><i class="ri-close-circle-line"></i></a>
                                 </div>
                             </div>
                         {% endfor %}

@@ -1,0 +1,31 @@
+{% extends '_full.html.twig' %}
+
+
+
+{% block page_header %}
+<section class="py-3">
+    <div class="container">
+
+        {{ include('component/profile_subbar.html.twig',{'selected':'account'}) }}
+
+        <div class="row g-3">
+            <div class="col-lg-12">
+                <div class="card bg-white">
+                    <div class="card-body  border-bottom border-primary">
+                        <h3 class="h5 mb-0 text-center text-lg-start">Anpassen</h3>
+                    </div>
+                    <div class="card-body">
+                        {{ form(form) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{% endblock %}
+
+{% block body %}{% endblock %}
+{% block aside %}{% endblock %}
+

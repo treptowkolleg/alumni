@@ -2,12 +2,12 @@
     <div class="toast-container position-fixed p-3" style="top: 30px">
         {% for label, messages in app.flashes %}
             {% for message in messages %}
-                <div class="toast w-100 text-bg-{{ label }} text-white border-0 fade show" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast w-100 text-bg-light border-0 fade show" role="alert" aria-live="assertive" aria-atomic="true">
                     <div class="d-flex">
                         <div class="toast-body">
                             {{ message }}
                         </div>
-                        <button type="button" class="m-auto me-2 btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+                        <button type="button" class="m-auto me-2 btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
                     </div>
                 </div>
             {% endfor %}
