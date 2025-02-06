@@ -1,0 +1,77 @@
+{% extends '_full.html.twig' %}
+
+{% set meta_title = 'Alumni' %}
+{% set meta_subtitle = 'Schule' %}
+
+{% set sidebar = 'people' %}
+
+{% block page_header %}
+<section class="py-3">
+    <div class="container">
+
+        <div class="mb-3">
+            <ul class="nav nav-underline mb-4">
+                <a href="javascript:void(0)" onclick="history.back()" class="nav-item nav-link {{ selected|default() == 'index' ? 'active' : '' }} text-nowrap">
+                    <i class="ri-arrow-left-double-line text-primary"></i>
+                    <span class="ms-1">Zurück</span>
+                </a>
+            </ul>
+        </div>
+
+        <div class="row g-3">
+            <div class="col-lg-12" id="section-school">
+                <div class="card bg-white">
+                    <div class="card-body  border-bottom border-primary">
+                        <h3 class="h5 mb-0 text-center text-lg-start">{{ school.title }}</h3>
+                        <div class="mb-0 text-center text-lg-start"><span class="text-primary">{{ school.district }}</span></div>
+                    </div>
+                    <div class="card-body ratio ratio-21x9" id="map" data-lon="{{ school.lon }}" data-lat="{{ school.lat }}" data-name="{{ school.title }}"></div>
+                    <div class="card-body">
+                        Anzahl der Lernenden: {{ school.users.count }}
+                    </div>
+                    <div class="list-group list-group-flush">
+                        {% for post in school.events|sort((a, b) => b.startDate <=> a.startDate) %}
+                            {% if loop.index <= 10 %}
+                                {% if post.endDate|date('Ymd') >= date('now')|date('Ymd')%}
+                                    {{ include('component/_event_list.html.twig') }}
+                                {% endif %}
+                                {% if post.endDate|date('Ymd') <= date('-1 days')|date('Ymd')%}
+                                    {{ include('component/_event_list_old.html.twig') }}
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <script>
+        // Koordinaten aus Twig in JavaScript übernehmen
+        let mapDiv = document.getElementById("map");
+        let lat = mapDiv.getAttribute('data-lat');
+        let lng = mapDiv.getAttribute('data-lon');
+        let name = mapDiv.getAttribute('data-name');
+
+
+        // Karte initialisieren
+        let map = L.map('map', {
+            center: [lat, lng],
+            zoom: 16,
+            scrollWheelZoom: false, // Deaktiviert normales Scroll-Zoomen
+            gestureHandling: true,
+            zoomControl: false
+        });
+
+        // OpenStreetMap-Tiles hinzufügen
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+
+        // Marker setzen
+        L.marker([lat, lng]).addTo(map)
+            .bindPopup(name);
+    </script>
+
+{% endblock %}

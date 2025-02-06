@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\BlogPost;
 use App\Entity\Event;
+use App\Entity\School;
 use App\Entity\User;
 use App\Entity\UserProfile;
 use App\Enums\PerformanceCourseEnum;
@@ -114,5 +115,13 @@ class PersonController extends AbstractController
         }
         $this->addFlash('warning', 'Person existiert nicht oder nicht mehr.');
         return $this->redirectToRoute('people_index');
+    }
+
+    #[Route('/alumni/schule/{bsn}', name: 'school')]
+    public function school(School $school): Response
+    {
+        return $this->render('school/show.html.twig', [
+            'school' => $school,
+        ]);
     }
 }

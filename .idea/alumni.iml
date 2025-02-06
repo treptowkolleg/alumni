@@ -179,5 +179,7 @@
     <orderEntry type="library" name="slim-select" level="application" />
     <orderEntry type="library" name="boxicons" level="application" />
     <orderEntry type="library" name="remixicon" level="application" />
+    <orderEntry type="library" name="leaflet" level="application" />
+    <orderEntry type="library" name="leaflet-gesture-handling" level="application" />
   </component>
 </module>

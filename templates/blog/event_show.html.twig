@@ -71,7 +71,7 @@
                     <div class="list-group list-group-flush">
                         {% for school in post.school|sort((a,b) => a.title <=> b.title) %}
                             <div class="list-group-item p-0">
-                                <a href="#" class="ripplelink swipe-link-start d-flex justify-content-between align-items-center p-3">
+                                <a href="{{ url('people_school',{'bsn':school.bsn}) }}" class="ripplelink swipe-link-start d-flex justify-content-between align-items-center p-3">
                                     <span class="fw-bolder">{{ school.title }}</span>
                                     <i class="ri ri-arrow-right-s-line"></i>
                                 </a>
