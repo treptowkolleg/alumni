@@ -41,13 +41,15 @@ class AppController extends AbstractController
     #[Route('/suchergebnisse', name: 'search', methods: ['POST'])]
     public function search(Request $request, BlogPostRepository $postRepository): Response
     {
-        $results = $postRepository->findByQuery();
+
 
         $search_form = $this->createForm(GlobalSearchType::class);
         $search_form->handleRequest($request);
         if ($search_form->isSubmitted() && $search_form->isValid()) {
+            $results = $postRepository->findByQuery($search_form->get('search')->getData());
             return $this->render('app/search_result.html.twig', [
-                'results' => $results
+                'results' => $results,
+                'search' => $search_form->get('search')->getData(),
             ]);
         }
         return $this->redirectToRoute('app_index');
@@ -60,6 +62,12 @@ class AppController extends AbstractController
         return $this->render('component/_search_form.html.twig', [
             'form' => $search_form
         ]);
+    }
+
+    #[Route('/about/allgemein', name: 'about_index')]
+    public function aboutIndex(): Response
+    {
+        return $this->render('app/about.html.twig');
     }
 
     #[Route('/rechtliches/datenschutz', name: 'privacy')]

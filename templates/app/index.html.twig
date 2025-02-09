@@ -30,7 +30,23 @@
             {% endif %}
     </div>
 
-    <div class="container my-5">
+    <div class="container mb-5 mt-3">
+
+        <div class="row g-3">
+            <div class="col-12">
+                <div class="card card-body shadow-sm bg-white border-primary d-flex align-items-center">
+                    <i class="ri-group-line fs-4"></i>
+                    <a href="{{ path('people_index') }}" class="stretched-link text-decoration-none">Alumni finden</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <h2 class="mb-3 mt-5 fs-4 fw-light text-muted">Themen</h2>
+            </div>
+        </div>
+
         <div class="row row-cols-1 row-cols-lg-3 g-3 align-content-stretch">
             {% if podcast %}
                 <div class="col">

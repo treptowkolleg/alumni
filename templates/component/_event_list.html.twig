@@ -14,8 +14,8 @@
     {% if app.user %}
         <a href="#" class="ripplelink text-decoration-none text-secondary align-self-stretch event-follow-btn"  data-url="{{ url('api_event_follow_toggle') }}" data-id="{{ post.id }}">
             <div class="p-3 d-flex align-items-center h-100">
-                <div class="text-primary spinner-border spinner-border-sm d-none loader-{{ post.id }}" role="status" style="width: 18px!important;"></div>
-                <i class="ri ri-star-{{ app.user.followedEvents.contains(post) == true ? 'fill' : 'line' }} event-follow-icon-{{ post.id }}" style="width: 18px!important;"></i>
+                <i class="text-off ri-loader-2-line spinning d-none loader-{{ post.id }}" role="status" style=""></i>
+                <i class="ri ri-star-{{ app.user.followedEvents.contains(post) == true ? 'fill' : 'line' }} event-follow-icon-{{ post.id }}" ></i>
             </div>
         </a>
     {% endif %}

@@ -67,7 +67,7 @@
                                             {% if person.user != app.user %}
                                                 <div>
                                                     <span class="d-none small me-1 like-number-{{ person.id }}">{{ person.friends.count }}</span>
-                                                    <div class="text-primary spinner-border spinner-border-sm d-none like-loader-{{ person.id }}" role="status" style="margin-right: 2px"></div>
+                                                    <div class="text-off spinner-border spinner-border-sm d-none like-loader-{{ person.id }}" role="status" style="margin-right: 2px"></div>
                                                     {% set like_icon = 'fa-regular fa-star' %}
                                                     {% if app.user.userProfiles.0 in person.friends %}
                                                         {% set like_icon = 'fa-solid fa-star' %}

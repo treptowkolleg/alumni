@@ -88,9 +88,19 @@ class BlogPostRepository extends ServiceEntityRepository
             ;
     }
 
-    public function findByQuery(): array
+    /**
+     * @return BlogPost[] Returns an array of BlogPost objects
+     */
+    public function findByQuery(string $query): array
     {
-        return [];
+        return $this->createQueryBuilder('p')
+            ->orWhere('p.title LIKE :query')
+            ->orWhere('p.content LIKE :query')
+            ->setParameter('query', "%$query%")
+            ->orderBy('p.type', 'ASC')
+            ->getQuery()
+            ->getResult()
+            ;
     }
 
 }
