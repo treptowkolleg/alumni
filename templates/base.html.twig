@@ -12,13 +12,13 @@
         <link rel="manifest" href="/site.webmanifest" />
 
         {# Meta-Tags #}
-        <meta name="description" content="Portal für Alumni, Lernende und Lehrkräfte des Treptow-Kollegs Berlin und des Zweiten Bildungswegs">
+        <meta name="description" content="{{ meta_description|default('Portal für Alumni, Lernende und Lehrkräfte des Treptow-Kollegs Berlin und des Zweiten Bildungswegs') }}">
         <meta name="robots" content="all">
         <link rel="canonical" href="{{ url('app_index') }}">
         <meta property="og:type" content="website">
         <meta property="og:locale" content="de_DE">
         <meta property="og:title" content="Alumni Portal">
-        <meta property="og:description" content="Portal für Alumni, Lernende und Lehrkräfte des Treptow-Kollegs Berlin und des Zweiten Bildungswegs">
+        <meta property="og:description" content="{{ meta_description|default('Portal für Alumni, Lernende und Lehrkräfte des Treptow-Kollegs Berlin und des Zweiten Bildungswegs') }}">
         <title>{% block title %}{{ meta_title ? meta_title ~ ' | Alumni Portal' : 'Alumni Portal' }}{% endblock %}</title>
 
         {% block stylesheets %}

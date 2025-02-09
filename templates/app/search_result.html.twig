@@ -2,6 +2,7 @@
 
 {% set meta_title = 'Alumni-Portal' %}
 {% set meta_subtitle = 'Suchergebnisse' %}
+{% set meta_description = 'Blog-Beiträge, News und Veranstaltungen finden.' %}
 
 {% set sidebar = 'index' %}
 
@@ -13,7 +14,7 @@
                 {{ render(controller('App\\Controller\\AppController::searchForm')) }}
             </div>
             <div class="col-12">
-                <h1 class="h5 fw-normal">{{ results|length }} Suchergebnisse für <span class="fst-italic fw-bold">{{ search }}</span></h1>
+                <h3 class="h5 fw-normal">{{ results|length }} Suchergebnisse für <span class="fst-italic fw-bold">{{ search }}</span></h3>
             </div>
             {% for result in results %}
                 <div class="col-12">

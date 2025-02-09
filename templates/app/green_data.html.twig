@@ -2,14 +2,15 @@
 
 {% set meta_title = 'Rechtliches' %}
 {% set meta_subtitle = 'Green-Data' %}
+{% set meta_description = 'Unsere Green-Data-Richtlinie stellt außerdem sicher, dass Ihre Daten weder verkauft noch an Dritte zur Analyse weitergegeben werden. ' %}
 
 {% set sidebar = 'green-data' %}
 
 {% block page_header %}
 <section class="py-5">
     <div class="container">
-        <h1 class="h5">Informationen zum Schutz der Daten vor unbefugtem Zugriff</h1>
-        <h2 class="h3 text-primary">Green-Data-Richtlinie</h2>
+        <h3 class="h5">Informationen zum Schutz der Daten vor unbefugtem Zugriff</h3>
+        <h4 class="h3 text-primary">Green-Data-Richtlinie</h4>
         <p>
             Wir verarbeiten Ihre personenbezogenen Daten unter Beachtung der geltenden datenschutzrechtlichen Bestimmungen, insbesondere der EU-Datenschutz-Grundverordnung (DSGVO) und des Berliner Datenschutzgesetzes (BlnDSG).
         </p>
@@ -17,38 +18,38 @@
             Unsere Green-Data-Richtlinie stellt außerdem sicher, dass Ihre Daten weder verkauft noch an Dritte zur Analyse weitergegeben werden. Um darüberhinaus unbefugten Zugriff zu verhindern, setzen wir moderne Sicherheitstechniken ein.
         </p>
 
-        <h2 class="h3 text-primary">Sicherheitsmaßnahmen</h2>
-        <h3 class="h5 text-primary">CSRF-Schutz (Cross-Site Request Forgery)</h3>
+        <h4 class="h3 text-primary">Sicherheitsmaßnahmen</h4>
+        <h5 class="h5 text-primary">CSRF-Schutz (Cross-Site Request Forgery)</h5>
         <p>
             CSRF-Schutz verhindert, dass Angreifer unerlaubte Aktionen in Ihrem Namen ausführen, indem sie Sie unbemerkt zu einer schädlichen Anfrage verleiten. Dazu werden Sicherheits-Tokens verwendet, die sicherstellen, dass nur autorisierte Anfragen akzeptiert werden.
         </p>
 
-        <h3 class="h5 text-primary">XSS-Schutz (Cross-Site Scripting)</h3>
+        <h5 class="h5 text-primary">XSS-Schutz (Cross-Site Scripting)</h5>
         <p>
             XSS-Schutz verhindert, dass schädliche Skripte in eine Webseite eingeschleust werden, um Daten auszulesen oder zu manipulieren. Moderne Schutzmaßnahmen wie das automatische Escaping von Benutzereingaben verhindern solche Angriffe.
         </p>
 
-        <h3 class="h5 text-primary">SQL-Injection-Schutz</h3>
+        <h5 class="h5 text-primary">SQL-Injection-Schutz</h5>
         <p>
             SQL-Injections treten auf, wenn Angreifer versuchen, schädliche SQL-Befehle in eine Datenbank einzuschleusen. Durch die Nutzung von sicheren Abfragen mit Platzhaltern (Prepared Statements) wird verhindert, dass unautorisierte Datenbankzugriffe stattfinden.
         </p>
 
-        <h3 class="h5 text-primary">Authentifizierung und Autorisierung</h3>
+        <h5 class="h5 text-primary">Authentifizierung und Autorisierung</h5>
         <p>
             Dieser Schutz stellt sicher, dass nur berechtigte Nutzer Zugriff auf geschützte Bereiche und Daten erhalten. Mithilfe von Rollen und Berechtigungen wird kontrolliert, wer welche Aktionen ausführen darf.
         </p>
 
-        <h3 class="h5 text-primary">Brute-Force-Schutz</h3>
+        <h5 class="h5 text-primary">Brute-Force-Schutz</h5>
         <p>
             Um automatisierte Angriffe auf Passwörter zu verhindern, wird die Anzahl der fehlgeschlagenen Login-Versuche begrenzt. Nach einer bestimmten Anzahl falscher Eingaben wird der Zugang vorübergehend gesperrt, um Angreifer auszubremsen.
         </p>
 
-        <h3 class="h5 text-primary">Passwort-Hashing</h3>
+        <h5 class="h5 text-primary">Passwort-Hashing</h5>
         <p>
             Anstatt Passwörter im Klartext zu speichern, werden sie mit starken Algorithmen wie bcrypt oder Argon2id verschlüsselt. Selbst wenn eine Datenbank kompromittiert wird, bleiben die Passwörter sicher. Zusätzlich ist auch die Verschlüsselung sämtlicher personenbezogener Daten möglich.
         </p>
 
-        <h3 class="h5 text-primary">Secure Headers</h3>
+        <h5 class="h5 text-primary">Secure Headers</h5>
         <p>
             Zusätzliche Sicherheits-Header wie <code>Content-Security-Policy</code> oder <code>X-Frame-Options</code> schützen vor Angriffen wie Clickjacking oder dem Laden unsicherer Inhalte. Diese Header verstärken die Sicherheit des Browsers und verhindern potenzielle Manipulationen.
         </p>

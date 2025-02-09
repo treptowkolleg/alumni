@@ -18,7 +18,7 @@
                                     <div class="row">
                                         <div class="col-12 px-4 py-3">
                                             <div class="text-uppercase small card-text">{{ lead.type }}</div>
-                                            <h3 class="fw-normal h2 mb-0">{{ lead.title }}</h3>
+                                            <h4 class="fw-normal h2 mb-0">{{ lead.title }}</h4>
                                             <p class="card-text lead d-none d-md-block fw-bolder">{{ lead.subtitle }}</p>
                                             <a href="{{ path('blog_show',{'slug':lead.slug}) }}" class="card-link stretched-link text-decoration-none link-white fs-5">mehr erfahren <i class="fas fa-chevron-right"></i></a>
                                         </div>
@@ -43,7 +43,7 @@
 
         <div class="row">
             <div class="col-12">
-                <h2 class="mb-3 mt-5 fs-4 fw-light text-muted">Themen</h2>
+                <h3 class="mb-3 mt-5 fs-4 fw-light text-muted">Themen</h3>
             </div>
         </div>
 
@@ -52,7 +52,7 @@
                 <div class="col">
                     <div class="card card-body shadow-sm bg-white border-primary h-100">
                         <div class="text-uppercase small">{{ podcast.type }}</div>
-                        <h3 class="h4 text-primary fw-normal">{{ podcast.title }}</h3>
+                        <h4 class="h4 text-primary fw-normal">{{ podcast.title }}</h4>
                         <p>Neuer Podcast online</p>
                         <a href="{{ path('blog_show',{'slug':podcast.slug}) }}" class="card-link stretched-link text-decoration-none link-black mt-auto fs-5">anhören <i class="fas fa-chevron-right"></i></a>
                     </div>
@@ -62,7 +62,7 @@
                 <div class="col">
                     <div class="card card-body shadow-sm bg-white border-primary h-100">
                         <div class="text-uppercase small">{{ interview.type }}</div>
-                        <h3 class="h4 text-primary fw-normal">{{ interview.title }}</h3>
+                        <h4 class="h4 text-primary fw-normal">{{ interview.title }}</h4>
                         <p>{{ interview.title }}</p>
                         <a href="{{ path('blog_show',{'slug':interview.slug}) }}" class="card-link stretched-link text-decoration-none link-black mt-auto fs-5">lesen <i class="fas fa-chevron-right"></i></a>
                     </div>
@@ -72,7 +72,7 @@
                 <div class="col">
                     <div class="card card-body shadow-sm text-bg-primary border-0 h-100">
                         <div class="text-uppercase small">{{ blog_post.type }}</div>
-                        <h3 class="h4 text-light fw-normal">{{ blog_post.title }}</h3>
+                        <h4 class="h4 text-light fw-normal">{{ blog_post.title }}</h4>
                         <p>Aktueller Themenbeitrag</p>
                         <a href="{{ path('blog_show',{'slug':blog_post.slug}) }}" class="card-link stretched-link text-decoration-none link-white mt-auto fs-5">lesen <i class="fas fa-chevron-right"></i></a>
                     </div>
@@ -82,7 +82,7 @@
 
         <div class="row">
             <div class="col-lg-8">
-                <h2 class="mb-3 mt-5 fs-4 fw-light text-muted">Aktuelle Meldungen</h2>
+                <h3 class="mb-3 mt-5 fs-4 fw-light text-muted">Aktuelle Meldungen</h3>
                 <div class="row row-cols-1 row-cols-lg-2 g-3 align-content-stretch">
                     {% for post in posts %}
                         {% if post.isPublished %}
@@ -113,7 +113,7 @@
                 <a href="{{ url('blog_news_index') }}" class="btn btn-outline-primary mt-3">Weitere Meldungen</a>
             </div>
             <div class="col-lg-4">
-                <h2 class="mb-3 mt-5 fs-4 fw-light text-muted">Nächste Veranstaltungen</h2>
+                <h3 class="mb-3 mt-5 fs-4 fw-light text-muted">Nächste Veranstaltungen</h3>
                 <div class="list-group">
                     {% for post in events|sort((a, b) => a.startDate <=> b.startDate) %}
                         {% if post.endDate|date('Ymd') >= date('now')|date('Ymd')%}
