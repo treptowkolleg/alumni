@@ -10,7 +10,15 @@
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
         <meta name="apple-mobile-web-app-title" content="Alumni" />
         <link rel="manifest" href="/site.webmanifest" />
-        <meta name="description" content="Portal für Alumni, Lernende und Lehrkräfte des Treptow-Kollegs Berlin">
+
+        {# Meta-Tags #}
+        <meta name="description" content="Portal für Alumni, Lernende und Lehrkräfte des Treptow-Kollegs Berlin und des Zweiten Bildungswegs">
+        <meta name="robots" content="index,follow">
+        <link rel="canonical" href="{{ url('app_index') }}">
+        <meta property="og:type" content="website">
+        <meta property="og:locale" content="de_DE">
+        <meta property="og:title" content="Alumni Portal">
+        <meta property="og:description" content="Portal für Alumni, Lernende und Lehrkräfte des Treptow-Kollegs Berlin und des Zweiten Bildungswegs">
         <title>{% block title %}{{ meta_title ? meta_title ~ ' | Alumni Portal' : 'Alumni Portal' }}{% endblock %}</title>
 
         {% block stylesheets %}
