@@ -23,6 +23,7 @@ class InboundController extends AbstractController
 
         // Beispiel: Daten auswerten
         $from = $request->request->get('from'); // Absender-E-Mail
+        $to = $request->request->get('to'); // Absender-E-Mail
         $subject = $request->request->get('subject'); // Betreff
         $text = $request->request->get('text'); // Textinhalt der E-Mail
         $html = $request->request->get('html'); // Textinhalt der E-Mail
@@ -30,6 +31,7 @@ class InboundController extends AbstractController
         // Beispiel: Logging oder Weiterverarbeitung
         $inbound = new Inbound();
         $inbound->setSubject($subject);
+        $inbound->setDepartement($to);
         $inbound->setSender($from);
         $inbound->setText($text);
         $inbound->setHtml($html);
