@@ -44,7 +44,7 @@ class EventController extends AbstractController
     }
 
     #[Route('/details/{slug}', name: 'show', methods: ['GET','POST'])]
-    public function show(Request $request, Event $post, UserRepository $userRepository, EntityManagerInterface $entityManager): Response
+    public function show(Request $request, Event $post, EventRepository $repository, UserRepository $userRepository, EntityManagerInterface $entityManager): Response
     {
         if($request->isMethod('POST')) {
             $user = $userRepository->find($this->getUser());
@@ -59,8 +59,13 @@ class EventController extends AbstractController
             $entityManager->flush();
         }
 
+        $prevPost = $repository->findPreviousPost($post->getId());
+        $nextPost = $repository->findNextPost($post->getId());
+
         return $this->render('blog/event_show.html.twig', [
             'post' => $post,
+            'prev_post' => $prevPost,
+            'next_post' => $nextPost
         ]);
     }
 }

@@ -32,11 +32,17 @@ class NewsController extends AbstractController
     }
 
     #[Route('/meldungen/details/{slug}', name: 'show')]
-    public function show(BlogPost $post): Response
+    public function show(BlogPost $post, BlogPostRepository $repository): Response
     {
+        $types = ['Neuigkeiten', 'Pressemitteilung','Meldung'];
+
+        $prevPost = $repository->findPreviousPost($post->getId(),$types);
+        $nextPost = $repository->findNextPost($post->getId(),$types);
 
         return $this->render('blog/news_show.html.twig', [
             'post' => $post,
+            'prev_post' => $prevPost,
+            'next_post' => $nextPost
         ]);
     }
 }

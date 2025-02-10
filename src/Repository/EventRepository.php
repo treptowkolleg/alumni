@@ -32,6 +32,32 @@ class EventRepository extends ServiceEntityRepository
             ;
     }
 
+    public function findPreviousPost(int $id): ?Event
+    {
+
+        return $this->createQueryBuilder('b')
+            ->andWhere('b.id < :id')
+            ->setParameter('id', $id)
+            ->orderBy('b.id', 'DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
+    }
+
+    public function findNextPost(int $id): ?Event
+    {
+
+        return $this->createQueryBuilder('b')
+            ->andWhere('b.id > :id')
+            ->setParameter('id', $id)
+            ->orderBy('b.id', 'ASC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
+    }
+
 //    /**
 //     * @return Event[] Returns an array of Event objects
 //     */

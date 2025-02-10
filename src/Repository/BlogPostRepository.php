@@ -103,4 +103,48 @@ class BlogPostRepository extends ServiceEntityRepository
             ;
     }
 
+    public function findPreviousPost(int $id, array $types = []): ?BlogPost
+    {
+        if(empty($types)) {
+            $types = explode(" ", "Blog Erfahrungsbericht Interview Podcast Fachartikel");
+        }
+
+        return $this->createQueryBuilder('b')
+            ->addSelect('t')
+            ->leftJoin('b.type', 't')
+            ->andWhere('b.isPublished = :a')
+            ->andWhere('t.title IN (:types)')
+            ->andWhere('b.id < :id')
+            ->setParameter('a', true)
+            ->setParameter('types', $types)
+            ->setParameter('id', $id)
+            ->orderBy('b.id', 'DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
+    }
+
+    public function findNextPost(int $id, array $types = []): ?BlogPost
+    {
+        if(empty($types)) {
+            $types = explode(" ", "Blog Erfahrungsbericht Interview Podcast Fachartikel");
+        }
+
+        return $this->createQueryBuilder('b')
+            ->addSelect('t')
+            ->leftJoin('b.type', 't')
+            ->andWhere('b.isPublished = :a')
+            ->andWhere('t.title IN (:types)')
+            ->andWhere('b.id > :id')
+            ->setParameter('a', true)
+            ->setParameter('types', $types)
+            ->setParameter('id', $id)
+            ->orderBy('b.id', 'ASC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
+    }
+
 }

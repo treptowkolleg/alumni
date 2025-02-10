@@ -34,11 +34,15 @@ class BlogPostController extends AbstractController
     }
 
     #[Route('/details/{slug}', name: 'show')]
-    public function show(BlogPost $post): Response
+    public function show(BlogPost $post, BlogPostRepository $repository): Response
     {
+        $prevPost = $repository->findPreviousPost($post->getId());
+        $nextPost = $repository->findNextPost($post->getId());
 
         return $this->render('blog/blog_show.html.twig', [
             'post' => $post,
+            'prev_post' => $prevPost,
+            'next_post' => $nextPost
         ]);
     }
 }
