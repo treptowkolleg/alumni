@@ -45,7 +45,8 @@ class RegistrationController extends AbstractController
             $user->setPassword($userPasswordHasher->hashPassword($user, $plainPassword));
 
             // Standard-Optionen aktivieren
-            $user->setIsEventsVisible(true);
+            $user->setIsContactable(true);
+            $user->setHasPinnboard(true);
             $user->setIsEventsVisible(true);
 
             // Prüfen, ob früher schon der Newsletter abonniert wurde

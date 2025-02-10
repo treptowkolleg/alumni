@@ -97,11 +97,25 @@ class UserProfile
     #[ORM\ManyToMany(targetEntity: self::class, mappedBy: 'friends')]
     private Collection $userProfiles;
 
+    /**
+     * @var Collection<int, PinboardEntry>
+     */
+    #[ORM\OneToMany(targetEntity: PinboardEntry::class, mappedBy: 'userProfile')]
+    private Collection $pinboardEntries;
+
+    /**
+     * @var Collection<int, PinboardEntry>
+     */
+    #[ORM\OneToMany(targetEntity: PinboardEntry::class, mappedBy: 'writer')]
+    private Collection $writtenPinnboardEntries;
+
     public function __construct()
     {
         $this->image = new EmbeddedFile();
         $this->friends = new ArrayCollection();
         $this->userProfiles = new ArrayCollection();
+        $this->pinboardEntries = new ArrayCollection();
+        $this->writtenPinnboardEntries = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -404,6 +418,66 @@ class UserProfile
     {
         if ($this->userProfiles->removeElement($userProfile)) {
             $userProfile->removeFriend($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PinboardEntry>
+     */
+    public function getPinboardEntries(): Collection
+    {
+        return $this->pinboardEntries;
+    }
+
+    public function addPinboardEntry(PinboardEntry $pinboardEntry): static
+    {
+        if (!$this->pinboardEntries->contains($pinboardEntry)) {
+            $this->pinboardEntries->add($pinboardEntry);
+            $pinboardEntry->setUserProfile($this);
+        }
+
+        return $this;
+    }
+
+    public function removePinboardEntry(PinboardEntry $pinboardEntry): static
+    {
+        if ($this->pinboardEntries->removeElement($pinboardEntry)) {
+            // set the owning side to null (unless already changed)
+            if ($pinboardEntry->getUserProfile() === $this) {
+                $pinboardEntry->setUserProfile(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PinboardEntry>
+     */
+    public function getWrittenPinnboardEntries(): Collection
+    {
+        return $this->writtenPinnboardEntries;
+    }
+
+    public function addWrittenPinnboardEntry(PinboardEntry $writtenPinnboardEntry): static
+    {
+        if (!$this->writtenPinnboardEntries->contains($writtenPinnboardEntry)) {
+            $this->writtenPinnboardEntries->add($writtenPinnboardEntry);
+            $writtenPinnboardEntry->setWriter($this);
+        }
+
+        return $this;
+    }
+
+    public function removeWrittenPinnboardEntry(PinboardEntry $writtenPinnboardEntry): static
+    {
+        if ($this->writtenPinnboardEntries->removeElement($writtenPinnboardEntry)) {
+            // set the owning side to null (unless already changed)
+            if ($writtenPinnboardEntry->getWriter() === $this) {
+                $writtenPinnboardEntry->setWriter(null);
+            }
         }
 
         return $this;

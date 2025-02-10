@@ -169,7 +169,12 @@ class ProfileController extends AbstractController
                     'required' => false,
                     'label' => 'Nachrichtensystem aktivieren',
                     'help' => 'Deaktivieren, um keine Nachrichten von anderen erhalten zu können.',
-                ])
+                    ])
+                    ->add('hasPinnboard',CheckboxType::class,[
+                        'required' => false,
+                        'label' => 'Pinnwand aktivieren',
+                        'help' => 'Wenn aktiv, richtet sich die Sichtbarkeit nach deinem Alumni-Profil.',
+                    ])
                     ->add('isEventsVisible',CheckboxType::class,[
                         'required' => false,
                         'label' => 'Teilnahme an Veranstaltungen anzeigen',

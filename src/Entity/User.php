@@ -133,6 +133,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
     #[ORM\Column(nullable: true)]
     private ?bool $isEventsVisible = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $hasPinnboard = null;
+
     public function __construct()
     {
         $this->blogPosts = new ArrayCollection();
@@ -682,6 +685,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
     public function setIsEventsVisible(?bool $isEventsVisible): static
     {
         $this->isEventsVisible = $isEventsVisible;
+
+        return $this;
+    }
+
+    public function getHasPinnboard(): ?bool
+    {
+        return $this->hasPinnboard;
+    }
+
+    public function setHasPinnboard(?bool $hasPinnboard): static
+    {
+        $this->hasPinnboard = $hasPinnboard;
 
         return $this;
     }
