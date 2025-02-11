@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\BlogPost;
 use App\Entity\Event;
+use App\Entity\PinboardEntry;
 use App\Entity\School;
 use App\Entity\User;
 use App\Entity\UserProfile;
@@ -12,12 +13,15 @@ use App\Operator\SoundExpression;
 use App\Repository\BlogPostRepository;
 use App\Repository\EventRepository;
 use App\Repository\EventTypeRepository;
+use App\Repository\PinboardEntryRepository;
 use App\Repository\SchoolRepository;
 use App\Repository\UserProfileRepository;
 use App\Repository\UserRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionBagInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/personen', name: 'people_', methods: ['GET','POST'])]
@@ -103,16 +107,40 @@ class PersonController extends AbstractController
     }
 
     #[Route('/alumni/details/{slug}', name: 'show')]
-    public function show(User $user, UserRepository $userRepository): Response
+    public function show(Request $request, User $user, UserRepository $userRepository, UserProfileRepository $profileRepository, PinboardEntryRepository $entryRepository, EntityManagerInterface $entityManager): Response
     {
         $profile = $user->getUserProfiles()->first();
         if($profile != null){
+
             if(($this->getUser() and $profile->getNetworkState() == 'registered') or ($profile->getNetworkState() == 'public') or ($profile->getUser()->getSchool()->getTitle() === $userRepository->find($this->getUser())->getSchool()->getTitle())){
+
+                $submittedToken = $request->getPayload()->get('token');
+
+
+                if ($request->isMethod('post') && $this->isCsrfTokenValid('pinboard-comment', $submittedToken)) {
+
+                    $ownProfile = $profileRepository->findOneBy(['user' => $this->getUser()]);
+
+                    $pinBoardEntry = new PinboardEntry();
+                    $pinBoardEntry->setWriter($ownProfile);
+                    $pinBoardEntry->setUserProfile($profile);
+                    $pinBoardEntry->setContent($request->request->get('comment'));
+
+                    $entityManager->persist($pinBoardEntry);
+                    $entityManager->flush();
+                    $this->addFlash("success","Nachricht angepinnt");
+                }
+
+                $pinBoardEntries = $entryRepository->findBy(['userProfile' => $profile]);
+
                 return $this->render('people/show.html.twig', [
                     'person' => $profile,
+                    'pinboard_entries' => $pinBoardEntries,
                 ]);
             }
         }
+
+
         $this->addFlash('warning', 'Person existiert nicht oder nicht mehr.');
         return $this->redirectToRoute('people_index');
     }
