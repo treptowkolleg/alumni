@@ -41,4 +41,61 @@ return [
         'version' => '5.3.3',
         'type' => 'css',
     ],
+    'trix' => [
+        'version' => '2.1.12',
+    ],
+    'trix/dist/trix.min.css' => [
+        'version' => '2.1.12',
+        'type' => 'css',
+    ],
+    'datatables.net-dt' => [
+        'version' => '2.2.2',
+    ],
+    'jquery' => [
+        'version' => '3.7.1',
+    ],
+    'datatables.net' => [
+        'version' => '2.2.2',
+    ],
+    'datatables.net-dt/css/dataTables.dataTables.min.css' => [
+        'version' => '2.2.2',
+        'type' => 'css',
+    ],
+    'datatables.net-responsive-dt' => [
+        'version' => '3.0.4',
+    ],
+    'datatables.net-responsive' => [
+        'version' => '3.0.4',
+    ],
+    'datatables.net-responsive-dt/css/responsive.dataTables.min.css' => [
+        'version' => '3.0.4',
+        'type' => 'css',
+    ],
+    'datatables.net-buttons-dt' => [
+        'version' => '3.2.2',
+    ],
+    'datatables.net-buttons' => [
+        'version' => '3.2.2',
+    ],
+    'datatables.net-buttons-dt/css/buttons.dataTables.min.css' => [
+        'version' => '3.2.2',
+        'type' => 'css',
+    ],
+    'slim-select' => [
+        'version' => '2.10.0',
+    ],
+    'slim-select/dist/slimselect.min.css' => [
+        'version' => '2.10.0',
+        'type' => 'css',
+    ],
+    'leaflet' => [
+        'version' => '1.9.4',
+    ],
+    'leaflet/dist/leaflet.min.css' => [
+        'version' => '1.9.4',
+        'type' => 'css',
+    ],
+    'leaflet-gesture-handling' => [
+        'version' => '1.2.2',
+    ],
 ];

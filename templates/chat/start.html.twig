@@ -84,33 +84,8 @@
 
 {% block aside %}
     <script>
-        let tableOptions = {
-            "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
-        }
 
-        let table = new DataTable('#datatable', {
-            fixedHeader: true,
-            responsive: true,
-            searching: true,
-            dom: '<"top"l><"datatable-wrapper"t><"bottom"p><"clear">',
-            pageLength: 25,
-            lengthChange: false,
-            order: [[2, 'desc']],
-            "language": tableOptions,
-            columnDefs: [
-                { width: '70%', targets: 1 },
-                { type: 'date-de', targets: 2 }
-            ]
-        });
 
-        table.on('init', function () {
-                $("#table-search").keyup(function() {
-                    table.search($(this).val()).draw();
-                });
-            } )
 
-        $('tbody').on('click', 'tr', function() {
-            window.location.href = $(this).data('url')
-        });
     </script>
 {% endblock %}

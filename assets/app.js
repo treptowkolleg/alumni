@@ -10,6 +10,59 @@ import './styles/app.scss';
 import * as bootstrap from 'bootstrap';
 import Core from "./app/core.js";
 
+import $ from "jquery";
+
+import DataTable from 'datatables.net-dt';
+import 'datatables.net-buttons-dt';
+import 'datatables.net-responsive-dt';
+import 'datatables.net-dt/css/dataTables.dataTables.min.css'
+
+import SlimSelect from 'slim-select'
+import 'slim-select/dist/slimselect.min.css'
+
+let tableOptions = {
+    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
+}
+let tableElement = document.getElementById('datatable');
+
+if(tableElement) {
+    let table = new DataTable(tableElement, {
+        fixedHeader: true,
+        responsive: true,
+        searching: true,
+        dom: '<"top"l><"datatable-wrapper"t><"bottom"p><"clear">',
+        pageLength: 25,
+        lengthChange: false,
+        order: [[2, 'desc']],
+        "language": tableOptions,
+        columnDefs: [
+            { width: '70%', targets: 1 },
+            { type: 'date-de', targets: 2 }
+        ]
+    });
+
+    table.on('init', function () {
+        let search = document.getElementById("table-search");
+
+        search.addEventListener("keyup", function () {
+            table.search(search.value).draw();
+        });
+    });
+
+    document.querySelector("tbody").addEventListener("click", function (event) {
+        const row = event.target.closest("tr");
+        if (row && row.dataset.url) {
+            window.location.href = row.dataset.url;
+        }
+    });
+
+
+    $('tbody').on('click', 'tr', function() {
+        window.location.href = $(this).data('url')
+    });
+}
+
+
 
 
 const App = new Core();
