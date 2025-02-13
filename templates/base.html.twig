@@ -12,14 +12,14 @@
         <link rel="manifest" href="/site.webmanifest" />
 
         {# Meta-Tags #}
-        <meta name="description" content="{{ meta_description|default('Portal für Alumni, Lernende und Lehrkräfte des Treptow-Kollegs Berlin und des Zweiten Bildungswegs') }}">
+        <meta name="description" content="{{ meta_description|default('Portal für Alumni, Lernende und Lehrkräfte des Treptow-Kollegs Berlin und des Zweiten Bildungswegs zum Austausch und der Kommunikation.') }}">
         <meta name="robots" content="all">
-        <link rel="canonical" href="{{ url('app_index') }}">
+        <link rel="canonical" href="{{ app.request.uri }}">
         <meta property="og:type" content="website">
         <meta property="og:locale" content="de_DE">
-        <meta property="og:title" content="Alumni Portal">
-        <meta property="og:description" content="{{ meta_description|default('Portal für Alumni, Lernende und Lehrkräfte des Treptow-Kollegs Berlin und des Zweiten Bildungswegs') }}">
-        <title>{% block title %}{{ meta_title ? meta_title ~ ' | Alumni Portal' : 'Alumni Portal' }}{% endblock %}</title>
+        <meta property="og:title" content="{{ seo_title ? seo_title ~ ' | Alumni Portal' : 'Alumni Portal des zweiten Bildungsweges' }}">
+        <meta property="og:description" content="{{ meta_description|default('Portal für Alumni, Lernende und Lehrkräfte des Treptow-Kollegs Berlin und des Zweiten Bildungswegs zum Austausch und der Kommunikation.') }}">
+        <title>{% block title %}{{ seo_title ? seo_title ~ ' | Alumni Portal' : 'Alumni Portal des zweiten Bildungsweges' }}{% endblock %}</title>
 
         {% block stylesheets %}
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />

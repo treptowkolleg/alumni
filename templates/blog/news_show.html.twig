@@ -2,7 +2,9 @@
 
 {% set meta_title = 'Nachrichten' %}
 {% set meta_subtitle = post.type %}
-{% set meta_description = post.title ~ ' - Nachricht lesen und informiert bleiben.' %}
+{% set meta_description = post.content|striptags|slice(0,150) %}
+
+{% set seo_title = post.title %}
 
 {% set sidebar = 'news' %}
 

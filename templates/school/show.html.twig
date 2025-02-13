@@ -2,6 +2,10 @@
 
 {% set meta_title = 'Alumni' %}
 {% set meta_subtitle = 'Schule' %}
+{% set meta_description = school.description|striptags|slice(0,150) %}
+
+{% set seo_title = school.title %}
+
 
 {% set sidebar = 'people' %}
 
@@ -39,7 +43,11 @@
                     </div>
                     <div class="card-body ratio ratio-21x9" id="map" data-lon="{{ school.lon }}" data-lat="{{ school.lat }}" data-name="{{ school.title }}"></div>
                     <div class="card-body">
-                        Anzahl der Lernenden: {{ school.users.count }}
+                        <h3 class="h6">Beschreibung</h3>
+                        {{ school.description|default('keine Beschreibung verfügbar')|raw }}
+                    </div>
+                    <div class="card-body small text-end">
+                        Registrierte Alumni: <span class="badge rounded text-bg-light">{{ school.users.count }}</span>
                     </div>
                     <div class="list-group list-group-flush">
                         {% for post in school.events|sort((a, b) => b.startDate <=> a.startDate) %}
