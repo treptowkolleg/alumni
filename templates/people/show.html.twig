@@ -30,7 +30,7 @@
                         <div class="card bg-white">
                             <div class="card-body  border-bottom border-primary">
                                 <h3 class="h5 mb-0 text-center text-lg-start">{{ person }}<small class="text-muted ms-1">({{ person.user.userType|trans }})</small></h3>
-                                <div class="mb-0 text-center text-lg-start"><span class="text-primary">{{ person.user.school }}</span></div>
+                                <div class="mb-0 text-center text-lg-start"><a href="{{ url('people_school',{'bsn':person.user.school.bsn}) }}">{{ person.user.school }}</a></div>
                             </div>
                             <div class="list-group list-group-flush">
                                 {% if person.user.userType == 'Student' %}
