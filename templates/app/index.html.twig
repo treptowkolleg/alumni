@@ -8,19 +8,16 @@
 {% block body %}
     <div class="">
             {% if lead %}
-                    <div class="card text-white border-0 h-100">
-                        <img class="card-img d-none d-md-block" src="{{ asset(lead.blogPostImageUrl)|imagine_filter('lead_thumbnail')  }}" alt="{{ lead }}" style="filter: brightness(80%);">
-                        <img class="card-img d-block d-md-none" src="{{ asset(lead.blogPostImageUrl)|imagine_filter('lead_mobile_thumbnail')  }}" alt="{{ lead }}" style="filter: brightness(80%);">
-                        <div class="card-img-overlay h-100 align-content-end px-0 pb-0">
-                            <div class="text-bg-primary">
-                                <div class="container">
-                                    <div class="row">
-                                        <div class="col-12 px-4 py-3">
-                                            <div class="text-uppercase small card-text">{{ lead.type }}</div>
-                                            <h4 class="fw-normal h2 mb-0">{{ lead.title }}</h4>
-                                            <p class="card-text lead d-none d-md-block fw-bolder">{{ lead.subtitle }}</p>
-                                            <a href="{{ path('blog_show',{'slug':lead.slug}) }}" class="card-link stretched-link text-decoration-none link-white fs-5">mehr erfahren <i class="fas fa-chevron-right"></i></a>
-                                        </div>
+                    <div class="card text-white border-0">
+                        <img class="card-img" src="{{ asset(lead.blogPostImageUrl)|imagine_filter('lead_thumbnail')  }}" alt="{{ lead }}" style="filter: brightness(80%);">
+                        <div class="text-bg-primary border-0">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-12 px-4 py-3">
+                                        <div class="text-uppercase small card-text">{{ lead.type }}</div>
+                                        <h4 class="fw-normal h2 mb-0">{{ lead.title }}</h4>
+                                        <p class="card-text lead d-none d-md-block fw-bolder">{{ lead.subtitle }}</p>
+                                        <a href="{{ path('blog_show',{'slug':lead.slug}) }}" class="card-link stretched-link text-decoration-none link-white fs-5">mehr erfahren <i class="fas fa-chevron-right"></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -31,15 +28,6 @@
 
     <div class="container mb-5 mt-3">
 
-        <div class="row g-3">
-            <div class="col-12">
-                <div class="card card-body shadow-sm bg-white border-primary d-flex align-items-center">
-                    <i class="ri-group-line fs-4"></i>
-                    <a href="{{ path('people_index') }}" class="stretched-link text-decoration-none">Alumni finden</a>
-                </div>
-            </div>
-        </div>
-
         <div class="row">
             <div class="col-12">
                 <h3 class="mb-3 mt-5 fs-4 fw-light text-muted">Themen</h3>
@@ -47,16 +35,15 @@
         </div>
 
         <div class="row row-cols-1 row-cols-lg-3 g-3 align-content-stretch">
-            {% if podcast %}
+
                 <div class="col">
                     <div class="card card-body shadow-sm bg-white border-primary h-100">
-                        <div class="text-uppercase small">{{ podcast.type }}</div>
-                        <h4 class="h4 text-primary fw-normal">{{ podcast.title }}</h4>
-                        <p>Neuer Podcast online</p>
-                        <a href="{{ path('blog_show',{'slug':podcast.slug}) }}" class="card-link stretched-link text-decoration-none link-black mt-auto fs-5">anhören <i class="fas fa-chevron-right"></i></a>
+                        <div class="text-uppercase small">Alumni-Portal</div>
+                        <h4 class="h4 text-primary fw-normal">Jetzt durchstarten</h4>
+                        <p>Finde ehemalige Kommilitonen und Lehrkräfte deiner Bildungseinrichtung des zweiten Bildungsweges.</p>
+                        <a href="{{ path('people_index') }}" class="card-link stretched-link text-decoration-none link-black mt-auto fs-5">Alumni finden <i class="ri-arrow-right-s-line"></i></a>
                     </div>
                 </div>
-            {% endif %}
             {% if interview %}
                 <div class="col">
                     <div class="card card-body shadow-sm bg-white border-primary h-100">
@@ -124,4 +111,32 @@
             </div>
          </div>
     </div>
+
+<section class="bg-white py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <h3>Gemeinnützig und unabhängig – Ein Projekt von Lernenden für Lernende</h3>
+                <p>
+                    Bildung ist ein lebenslanger Prozess – und für viele beginnt ein neuer Abschnitt des Lernens erst im zweiten Bildungsweg. Das Alumni-Portal des Treptow-Kollegs Berlin wurde ins Leben gerufen, um genau diesen Geist des gemeinsamen Lernens, der Durchlässigkeit und der Bildungsgerechtigkeit zu bewahren. Gegründet durch Benjamin Wagner (Kollegsprecher 2021–2024) und Sami Teuchert (Kollegsprecher 2024–2026) in enger Zusammenarbeit mit der Kollegvertretung der Lernenden und dem Förderverein des Treptow-Kollegs Berlin e. V., verfolgt dieses Portal eine klare Mission: Es soll eine kostenfreie, unabhängige Plattform sein, die ehemalige Lernende und Lehrkräfte verbindet.
+                </p>
+                <p>
+                    Die Idee hinter diesem Portal ist tief in dem Wunsch verwurzelt, die Gemeinschaft des zweiten Bildungswegs lebendig zu halten. Viele Erwachsene entscheiden sich für den nachträglichen Erwerb eines Schulabschlusses, um neue berufliche und persönliche Chancen zu ergreifen. Doch nach dem Abschluss verlieren sich viele Kontakte, und mit der Schließung von Einrichtungen des zweiten Bildungswegs schwindet oft auch das Gefühl der Zugehörigkeit. Unser Alumni-Portal setzt genau hier an. Es bietet eine Plattform für Vernetzung, Austausch und Inspiration – nicht aus kommerziellen Interessen, sondern allein aus dem Antrieb heraus, Bildung als ein gemeinschaftliches Gut zu erhalten.
+                </p>
+                <h4>Die Bedeutung eines Alumni-Portals für den zweiten Bildungsweg</h4>
+                <p>
+                    Die Schullandschaft in Deutschland verändert sich stetig. Leider sind Einrichtungen des zweiten Bildungswegs immer wieder von Schließungen bedroht, obwohl sie eine essenzielle Rolle für Bildungsdurchlässigkeit und Chancengleichheit spielen. Unser Portal will nicht nur Kontakte erhalten, sondern auch ein Zeichen setzen. Es soll deutlich machen, dass Lernen keine Frage des Alters ist und dass jeder Mensch die Möglichkeit haben sollte, seinen Bildungsweg frei zu gestalten. Durch den Austausch zwischen ehemaligen Lernenden und Lehrkräften bleibt das Wissen erhalten, Erfahrungen werden weitergegeben und Netzwerke entstehen, die über den Schulbesuch hinausreichen.
+                </p>
+                <p>
+                    Das Alumni-Portal bietet Raum für persönliche Geschichten und Einblicke in die Bildungsbiografien derjenigen, die den zweiten Bildungsweg gewählt haben. Erfahrungsberichte zeigen, welche Herausforderungen gemeistert wurden und welche Perspektiven sich nach dem Abschluss eröffneten. Auch Lehrkräfte kommen zu Wort, um ihre Sicht auf die Bedeutung des zweiten Bildungswegs zu teilen. Neben der Vernetzung dient das Portal auch als Informationsquelle zu bildungspolitischen Entwicklungen, die die Zukunft dieser wichtigen Bildungssäule beeinflussen.
+                </p>
+                <h4>Ein Netzwerk, das verbindet</h4>
+                <p>
+                    Das Alumni-Portal lebt von der Beteiligung seiner Mitglieder. Jeder, der den zweiten Bildungsweg beschritten hat oder sich für dessen Erhalt engagieren möchte, ist eingeladen, Teil dieser Gemeinschaft zu werden. Die Plattform bietet die Möglichkeit, Kontakte zu pflegen, neue berufliche Chancen zu entdecken und sich für die Stärkung des zweiten Bildungswegs einzusetzen. So bleibt nicht nur der Geist der Erwachsenenbildung lebendig, sondern es wird auch ein starkes Zeichen für mehr Bildungsgerechtigkeit gesetzt. Denn der zweite Bildungsweg endet nicht mit dem Abschluss – er beginnt dort erst richtig.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
 {% endblock %}
