@@ -5,6 +5,16 @@
                 <i class="ri-arrow-left-double-line text-primary"></i>
                 <span class="ms-1">Zurück</span>
             </a>
+            {% if (is_granted('ROLE_SUPER_PLANNER') or (is_granted('ROLE_PLANNER') and post.user == app.user ))  %}
+                <a class="nav-item nav-link text-nowrap" target="_blank" href="{{ ea_url()
+                    .setController('App\\Controller\\Admin\\EventCrudController')
+                    .setAction('edit')
+                    .setEntityId(post.id)
+                }}">
+                    <i class="ti ti-pencil text-primary"></i>
+                    Bearbeiten
+                </a>
+            {% endif %}
             {% if app.user %}
                 <form id="event-toggle" method="post"></form>
                 {% if post in app.user.followedEvents %}

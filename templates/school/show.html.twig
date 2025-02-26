@@ -31,6 +31,16 @@
                     <i class="ri-arrow-left-double-line text-primary"></i>
                     <span class="ms-1">Zurück</span>
                 </a>
+                {% if is_granted('ROLE_ADMIN')  %}
+                    <a class="nav-item nav-link text-nowrap" target="_blank" href="{{ ea_url()
+                        .setController('App\\Controller\\Admin\\SchoolCrudController')
+                        .setAction('edit')
+                        .setEntityId(school.id)
+                    }}">
+                        <i class="ti ti-pencil text-primary"></i>
+                        Bearbeiten
+                    </a>
+                {% endif %}
             </div>
         </div>
 

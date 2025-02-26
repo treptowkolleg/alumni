@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\BlogPost;
 use App\Repository\BlogTypeRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use EasyCorp\Bundle\EasyAdminBundle\Collection\FieldCollection;
 use EasyCorp\Bundle\EasyAdminBundle\Collection\FilterCollection;
@@ -59,6 +60,14 @@ class BlogPostCrudController extends AbstractCrudController
             ->setParameter('user', $this->getUser());
 
         return $queryBuilder;
+    }
+
+    public function persistEntity(EntityManagerInterface $entityManager, $entityInstance): void
+    {
+        if($entityInstance instanceof BlogPost and !$entityInstance->getAuthor()) {
+            $entityInstance->setAuthor($this->getUser());
+        }
+        parent::persistEntity($entityManager, $entityInstance);
     }
 
 

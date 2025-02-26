@@ -82,13 +82,13 @@ class DashboardController extends AbstractDashboardController
             ->setCssClass('blog-link')
             ->setPermission('ROLE_AUTHOR')
         ;
-        yield MenuItem::linkToCrud('Beitragsarten', 'ti ti-category',BlogType::class)
-            ->setCssClass('blog-link')
-            ->setPermission('ROLE_AUTHOR')
-        ;
         yield MenuItem::linkToCrud('Neuer Beitrag', 'ti ti-pencil-plus',BlogPost::class)
             ->setCssClass('blog-link')
             ->setAction('new')
+            ->setPermission('ROLE_AUTHOR')
+        ;
+        yield MenuItem::linkToCrud('Kategorien', 'ti ti-category',BlogType::class)
+            ->setCssClass('blog-link')
             ->setPermission('ROLE_AUTHOR')
         ;
 
@@ -96,13 +96,13 @@ class DashboardController extends AbstractDashboardController
             ->setCssClass('event-link')
             ->setPermission('ROLE_PLANNER')
         ;
-        yield MenuItem::linkToCrud('Veranstaltungsarten', 'ti ti-calendar-cog',EventType::class)
-            ->setCssClass('event-link')
-            ->setPermission('ROLE_PLANNER')
-        ;
         yield MenuItem::linkToCrud('Neue Veranstaltung', 'ti ti-calendar-plus',Event::class)
             ->setCssClass('event-link')
             ->setAction('new')
+            ->setPermission('ROLE_PLANNER')
+        ;
+        yield MenuItem::linkToCrud('Veranstaltungsarten', 'ti ti-ticket',EventType::class)
+            ->setCssClass('event-link')
             ->setPermission('ROLE_PLANNER')
         ;
 

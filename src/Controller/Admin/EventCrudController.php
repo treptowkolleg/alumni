@@ -2,11 +2,13 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\BlogPost;
 use App\Entity\Event;
 use App\Repository\BlogTypeRepository;
 use App\Repository\EventTypeRepository;
 use App\Repository\SchoolRepository;
 use App\Repository\UserRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use EasyCorp\Bundle\EasyAdminBundle\Collection\FieldCollection;
 use EasyCorp\Bundle\EasyAdminBundle\Collection\FilterCollection;
@@ -66,6 +68,14 @@ class EventCrudController extends AbstractCrudController
             ->setParameter('user', $this->getUser());
 
         return $queryBuilder;
+    }
+
+    public function persistEntity(EntityManagerInterface $entityManager, $entityInstance): void
+    {
+        if($entityInstance instanceof Event and !$entityInstance->getUser()) {
+            $entityInstance->setUser($this->getUser());
+        }
+        parent::persistEntity($entityManager, $entityInstance);
     }
 
 

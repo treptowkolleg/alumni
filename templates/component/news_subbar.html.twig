@@ -8,5 +8,15 @@
         {% else %}
             <div class="mb-3"></div>
         {% endif %}
+        {% if selected|default() == 'show' and (is_granted('ROLE_SUPER_AUTHOR') or (is_granted('ROLE_AUTHOR') and post.user == app.user ))  %}
+            <a class="nav-item nav-link text-nowrap" target="_blank" href="{{ ea_url()
+                .setController('App\\Controller\\Admin\\BlogPostCrudController')
+                .setAction('edit')
+                .setEntityId(post.id)
+            }}">
+                <i class="ti ti-pencil text-primary"></i>
+                Bearbeiten
+            </a>
+        {% endif %}
     </div>
 </div>
