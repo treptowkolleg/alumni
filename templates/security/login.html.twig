@@ -40,9 +40,16 @@
                                     <label for="password">{{ "Password"|trans }}</label>
                                 </div>
 
-                                <p class="small text-end">
-                                    Passwort <a href="{{ url('app_terms') }}" target="_blank">vergessen</a>?
-                                </p>
+                                <div class="d-flex justify-content-between align-items-start mb-3">
+                                    <div class="form-check mt-3">
+                                        <input type="checkbox" id="remember" class="form-check-input" name="_remember_me" checked>
+                                        <label class="form-check-label" for="remember">angemeldet bleiben</label>
+                                    </div>
+
+                                    <div class="small">
+                                        Passwort <a href="{{ url('app_terms') }}" target="_blank">vergessen</a>?
+                                    </div>
+                                </div>
 
                                 <input type="hidden" name="_csrf_token"
                                        value="{{ csrf_token('authenticate') }}"

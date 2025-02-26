@@ -5,14 +5,22 @@ namespace App\Controller\Admin;
 use App\Entity\BlogPost;
 use App\Entity\BlogType;
 use App\Entity\Event;
+use App\Entity\EventType;
+use App\Entity\Inbound;
+use App\Entity\Newsletter;
+use App\Entity\PinboardEntry;
+use App\Entity\School;
 use App\Entity\User;
 use App\Entity\UserProfile;
+use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminDashboard;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+#[AdminDashboard(routePath: '/admin', routeName: 'admin')]
 class DashboardController extends AbstractDashboardController
 {
 
@@ -49,24 +57,80 @@ class DashboardController extends AbstractDashboardController
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('Alumni Portal');
+            ->setTitle('Alumni Portal')
+            ->setFaviconPath('favicon.svg')
+            ;
+    }
+
+    public function configureAssets(): Assets
+    {
+        return Assets::new()
+            ->addCssFile('build/admin.css')
+            ->addCssFile('build/webfont/tabler-icons.min.css')
+            ;
     }
 
     public function configureMenuItems(): iterable
     {
-        yield MenuItem::section('Website');
-        yield MenuItem::linkToRoute('Startseite', 'fa fa-home', 'app_index');
+        yield MenuItem::section('Übersicht');
+        yield MenuItem::linkToRoute('Zurück zur Website', 'ti ti-world-www', 'app_index');
+        yield MenuItem::linkToDashboard('Dashboard', 'ti ti-dashboard');
+
+
+        yield MenuItem::section('Redaktion');
+        yield MenuItem::linkToCrud('Beiträge', 'ti ti-article',BlogPost::class)
+            ->setCssClass('blog-link')
+            ->setPermission('ROLE_AUTHOR')
+        ;
+        yield MenuItem::linkToCrud('Beitragsarten', 'ti ti-category',BlogType::class)
+            ->setCssClass('blog-link')
+            ->setPermission('ROLE_AUTHOR')
+        ;
+        yield MenuItem::linkToCrud('Neuer Beitrag', 'ti ti-pencil-plus',BlogPost::class)
+            ->setCssClass('blog-link')
+            ->setAction('new')
+            ->setPermission('ROLE_AUTHOR')
+        ;
+
+        yield MenuItem::linkToCrud('Veranstaltungen', 'ti ti-calendar',Event::class)
+            ->setCssClass('event-link')
+            ->setPermission('ROLE_PLANNER')
+        ;
+        yield MenuItem::linkToCrud('Veranstaltungsarten', 'ti ti-calendar-cog',EventType::class)
+            ->setCssClass('event-link')
+            ->setPermission('ROLE_PLANNER')
+        ;
+        yield MenuItem::linkToCrud('Neue Veranstaltung', 'ti ti-calendar-plus',Event::class)
+            ->setCssClass('event-link')
+            ->setAction('new')
+            ->setPermission('ROLE_PLANNER')
+        ;
+
+        yield MenuItem::section('Newsletter');
+
+
+        yield MenuItem::section('Moderation');
+        yield MenuItem::linkToCrud('inbound', 'ti ti-mailbox',Inbound::class)
+            ->setCssClass('moderation-link')
+            ->setPermission('ROLE_MODERATION')
+        ;
+        yield MenuItem::linkToCrud('PinBoardEntries', 'ti ti-pin',PinboardEntry::class)
+            ->setCssClass('moderation-link')
+            ->setPermission('ROLE_MODERATION')
+        ;
+
         yield MenuItem::section('Administration');
-        yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
-
-        yield MenuItem::section('Content Management');
-        yield MenuItem::linkToCrud('Beiträge', 'fa fa-file',BlogPost::class);
-        yield MenuItem::linkToCrud('Events', 'fa fa-list',Event::class);
-
-        yield MenuItem::section('Benutzerverwaltung');
-        yield MenuItem::linkToCrud('Benutzer', 'fa fa-users',User::class);
-        yield MenuItem::linkToCrud('Alumni-Profile', 'fa fa-users',UserProfile::class);
-
-        // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
+        yield MenuItem::linkToCrud('Benutzer', 'ti ti-users',User::class)
+            ->setCssClass('admin-link')
+            ->setPermission('ROLE_ADMIN')
+        ;
+        yield MenuItem::linkToCrud('E-Mail-Adressen', 'ti ti-mail',Newsletter::class)
+            ->setCssClass('admin-link')
+            ->setPermission('ROLE_ADMIN')
+        ;
+        yield MenuItem::linkToCrud('Schulen', 'ti ti-school',School::class)
+            ->setCssClass('admin-link')
+            ->setPermission('ROLE_ADMIN')
+        ;
     }
 }

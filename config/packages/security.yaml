@@ -10,13 +10,15 @@ security:
                 class: App\Entity\User
                 property: email
     role_hierarchy:
+        ROLE_MODERATION: 'ROLE_USER'
+        ROLE_SUPER_MODERATION: 'ROLE_MODERATION'
         ROLE_PLANNER: 'ROLE_USER'
         ROLE_AUTHOR: 'ROLE_USER'
         ROLE_SUPER_PLANNER: 'ROLE_PLANNER'
         ROLE_SUPER_AUTHOR: 'ROLE_AUTHOR'
         ROLE_EDITOR: ['ROLE_AUTHOR','ROLE_PLANNER']
         ROLE_SUPER_EDITOR: ['ROLE_SUPER_PLANNER','ROLE_SUPER_AUTHOR']
-        ROLE_ADMIN: 'ROLE_SUPER_EDITOR'
+        ROLE_ADMIN: ['ROLE_SUPER_EDITOR', 'ROLE_SUPER_MODERATION']
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -29,6 +31,9 @@ security:
                 login_path: app_login
                 check_path: app_login
                 enable_csrf: true
+            remember_me:
+                secret: '%kernel.secret%'
+                lifetime: 604800
             logout:
                 path: app_logout
                 # where to redirect after logout

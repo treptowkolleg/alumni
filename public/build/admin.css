@@ -1,0 +1,20 @@
+
+li.active > .blog-link, .blog-link > span > i, .blog-title {
+    color: var(--bs-info) !important;
+    fill: var(--bs-info) !important;
+}
+
+li.active > .event-link, .event-link > span > i, .event-title {
+    color: var(--bs-success) !important;
+    fill: var(--bs-success) !important;
+}
+
+li.active > .moderation-link, .moderation-link > span > i, .moderation-title {
+    color: var(--bs-warning) !important;
+    fill: var(--bs-warning) !important;
+}
+
+li.active > .admin-link, .admin-link > span > i, .admin-title {
+    color: var(--bs-danger) !important;
+    fill: var(--bs-danger) !important;
+}

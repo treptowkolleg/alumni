@@ -1,4 +1,4 @@
-<div class="d-flex flex-column flex-shrink-0">
+<div class="d-flex flex-column flex-shrink-0 flex-fill h-100">
     <ul class="nav nav-pills nav-sidebar flex-column mb-auto">
         <li class="nav-item">
             <a href="{{ url('app_index') }}" class="nav-link {{ selected == 'main' ? 'active' : '' }}">Magazin</a>
@@ -18,19 +18,13 @@
         <li class="nav-item">
             <a href="{{ url('people_index') }}" class="nav-link {{ selected == 'people' ? 'active' : '' }}">Alumni</a>
         </li>
-
-
+    </ul>
+    <ul class="nav nav-pills nav-sidebar flex-column mt-auto">
         {% if is_granted('ROLE_AUTHOR') or is_granted('ROLE_PLANNER') %}
-            <li class="nav-item">
-                <div class="nav-text">
-                    <i class="fa-solid fa-fw fa-dashboard me-2 text-primary fs-6"></i>
-                    Administration
-                </div>
-            </li>
             <li class="nav-item">
                 <a href="{{ path('admin') }}" class="nav-link {{ selected == 'admin-user-roles' ? 'active' : '' }}">
                     <i class="fa-solid fa-fw fa-dashboard me-2"></i>
-                    Dashboard
+                    Administration
                 </a>
             </li>
         {% endif %}

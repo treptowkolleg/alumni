@@ -221,7 +221,9 @@ class ProfileController extends AbstractController
                 if($user->hasNewsletter()) {
                     if(!$newsletterRepository->findOneBy(['email' => $user->getEmail()])) {
                         $newsletter = new Newsletter();
+                        $newsletter->setUser($user);
                         $newsletter->setEmail($user->getEmail());
+                        $newsletter->addSchool($user->getSchool());
                         $entityManager->persist($newsletter);
                     }
                 } else {

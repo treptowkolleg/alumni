@@ -7,7 +7,15 @@ use App\Repository\BlogTypeRepository;
 use App\Repository\EventTypeRepository;
 use App\Repository\SchoolRepository;
 use App\Repository\UserRepository;
+use Doctrine\ORM\QueryBuilder;
+use EasyCorp\Bundle\EasyAdminBundle\Collection\FieldCollection;
+use EasyCorp\Bundle\EasyAdminBundle\Collection\FilterCollection;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto;
+use EasyCorp\Bundle\EasyAdminBundle\Dto\SearchDto;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
@@ -18,39 +26,94 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class EventCrudController extends AbstractCrudController
 {
+
     public static function getEntityFqcn(): string
     {
         return Event::class;
+    }
+
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud
+            ->showEntityActionsInlined()
+            ;
+    }
+
+    public function configureActions(Actions $actions): Actions
+    {
+        return $actions
+            ->setPermission(Action::INDEX, 'ROLE_PLANNER')
+            ->setPermission(Action::NEW, 'ROLE_PLANNER')
+            ->setPermission(Action::EDIT, 'ROLE_ADMIN')
+            ->setPermission(Action::DELETE, 'ROLE_ADMIN')
+            ->setPermission(Action::BATCH_DELETE, 'ROLE_ADMIN')
+            ;
+    }
+
+    public function createIndexQueryBuilder(SearchDto $searchDto, EntityDto $entityDto, FieldCollection $fields, FilterCollection $filters): QueryBuilder
+    {
+        $queryBuilder = parent::createIndexQueryBuilder($searchDto, $entityDto, $fields, $filters);
+
+
+        // Beispiel: Nur Produkte anzeigen, die aktiv sind oder für den Benutzer relevant
+        if ($this->isGranted('ROLE_SUPER_PLANNER')) {
+            // Admins sehen alle Produkte
+            return $queryBuilder;
+        }
+
+        // Wenn der Benutzer kein Admin ist, zeige nur Produkte an, die ihm gehören sind
+        $queryBuilder->andWhere('entity.user = :user')
+            ->setParameter('user', $this->getUser());
+
+        return $queryBuilder;
     }
 
 
     public function configureFields(string $pageName): iterable
     {
         return [
-            FormField::addPanel("Veranstaltungsdetails"),
-            AssociationField::new('type')->setRequired(true)->setColumns(6)->onlyOnForms()
-                ->setFormTypeOption('query_builder', function (EventTypeRepository $repository) {
-                    return $repository->createQueryBuilder('e')
-                        ->orderBy('e.title', 'ASC'); // Order by the 'title' field in ascending order
-                }),
-            AssociationField::new('school')->setRequired(true)->setColumns(6)->onlyOnForms()
+
+            TextField::new('title')->onlyOnIndex(),
+            AssociationField::new('type')->onlyOnIndex(),
+            DateTimeField::new('startDate')->onlyOnIndex(),
+            DateTimeField::new('endDate')->onlyOnIndex(),
+            AssociationField::new('school')->onlyOnIndex(),
+            AssociationField::new('user')->onlyOnIndex(),
+
+
+            FormField::addTab('Allgemein')->onlyOnForms(),
+            FormField::addColumn('col-xl-9'),
+            TextField::new('title')->onlyOnForms(),
+            TextEditorField::new('description')->onlyOnForms(),
+            AssociationField::new('school')->setRequired(true)->setLabel('schools')->onlyOnForms()
                 ->setFormTypeOption('query_builder', function (SchoolRepository $repository) {
                     return $repository->createQueryBuilder('e')
                         ->orderBy('e.title', 'ASC'); // Order by the 'title' field in ascending order
                 }),
-            TextField::new('title'),
-            TextEditorField::new('description')->onlyOnForms(),
-            TextField::new('website')->onlyOnForms(),
-            TextField::new('location')->onlyOnForms(),
-            TextField::new('contactPerson')->onlyOnForms(),
-            EmailField::new('contactEmail')->onlyOnForms(),
-            DateTimeField::new('startDate')->onlyOnForms(),
-            DateTimeField::new('endDate')->onlyOnForms(),
-            AssociationField::new('user')->setRequired(true)->setColumns(6)->onlyOnForms()
+            AssociationField::new('user')->setRequired(true)->setPermission('ROLE_ADMIN')->onlyOnForms()
                 ->setFormTypeOption('query_builder', function (UserRepository $repository) {
                     return $repository->createQueryBuilder('e')
                         ->orderBy('e.lastname', 'ASC'); // Order by the 'title' field in ascending order
                 }),
+
+            FormField::addColumn('col-xl-3','Einstellungen'),
+            FormField::addPanel(),
+            AssociationField::new('type')->setRequired(true)->onlyOnForms()
+                ->setFormTypeOption('query_builder', function (EventTypeRepository $repository) {
+                    return $repository->createQueryBuilder('e')
+                        ->orderBy('e.title', 'ASC'); // Order by the 'title' field in ascending order
+                }),
+            TextField::new('website')->onlyOnForms()->setHelp('https://domain.de'),
+            TextField::new('contactPerson')->onlyOnForms()->setHelp('Verantwortliche Personen'),
+            EmailField::new('contactEmail')->onlyOnForms()->setHelp('E-Mail-Kontakt für Rückfragen (öffentlich)'),
+
+            FormField::addTab('Ort und Zeit')->onlyOnForms(),
+            FormField::addColumn('col-xl-9'),
+
+            TextField::new('location')->onlyOnForms()->setHelp("Adresszeilen bitte kommagetrennt eingeben (z. B. Haus 13 Pfefferberg, Schönhauser Allee 176, 10119  Berlin)"),
+
+            DateTimeField::new('startDate')->onlyOnForms(),
+            DateTimeField::new('endDate')->onlyOnForms(),
         ];
     }
 
