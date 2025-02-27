@@ -66,8 +66,9 @@ class DashboardController extends AbstractDashboardController
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('Alumni Portal')
+            ->setTitle('<div class="d-flex align-items-end"><img src="/favicon.svg" height="20" class="me-2" alt="Alumni Portal Logo"><div style="line-height: 1">Administration</div></div> ')
             ->setFaviconPath('favicon.svg')
+            ->renderContentMaximized()
             ;
     }
 
