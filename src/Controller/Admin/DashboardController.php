@@ -12,11 +12,13 @@ use App\Entity\PinboardEntry;
 use App\Entity\School;
 use App\Entity\User;
 use App\Entity\UserProfile;
+use App\Repository\BlogPostRepository;
 use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminDashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
+use Symfony\Component\DomCrawler\Field\FormField;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -25,16 +27,23 @@ class DashboardController extends AbstractDashboardController
 {
 
 
+    public function __construct(
+        private BlogPostRepository $repository
+    )
+    {
+    }
+
     #[Route('/admin', name: 'admin')]
     public function index(): Response
     {
-        // return parent::index();
+        $posts = $this->repository->findPublishedBlogPosts(user: $this->getUser());
+        $newsPosts = $this->repository->findPublishedNews(user: $this->getUser());
 
-
-        // ...set chart data and options somehow
 
         return $this->render('admin/dashboard.html.twig', [
             'title' => 'test',
+            'posts' => $posts,
+            'news_articles' => $newsPosts,
         ]);
 
         // Option 1. You can make your dashboard redirect to some common page of your backend
@@ -72,44 +81,39 @@ class DashboardController extends AbstractDashboardController
 
     public function configureMenuItems(): iterable
     {
-        yield MenuItem::section('Übersicht');
         yield MenuItem::linkToRoute('Zurück zur Website', 'ti ti-world-www', 'app_index');
         yield MenuItem::linkToDashboard('Dashboard', 'ti ti-dashboard');
 
 
         yield MenuItem::section('Redaktion');
-        yield MenuItem::linkToCrud('Beiträge', 'ti ti-article',BlogPost::class)
-            ->setCssClass('blog-link')
-            ->setPermission('ROLE_AUTHOR')
-        ;
         yield MenuItem::linkToCrud('Neuer Beitrag', 'ti ti-pencil-plus',BlogPost::class)
             ->setCssClass('blog-link')
             ->setAction('new')
+            ->setPermission('ROLE_AUTHOR')
+        ;
+        yield MenuItem::linkToCrud('Alle Beiträge', 'ti ti-article',BlogPost::class)
+            ->setCssClass('blog-link')
             ->setPermission('ROLE_AUTHOR')
         ;
         yield MenuItem::linkToCrud('Kategorien', 'ti ti-category',BlogType::class)
             ->setCssClass('blog-link')
             ->setPermission('ROLE_AUTHOR')
         ;
-
-        yield MenuItem::linkToCrud('Veranstaltungen', 'ti ti-calendar',Event::class)
-            ->setCssClass('event-link')
-            ->setPermission('ROLE_PLANNER')
-        ;
+        yield MenuItem::section();
         yield MenuItem::linkToCrud('Neue Veranstaltung', 'ti ti-calendar-plus',Event::class)
             ->setCssClass('event-link')
             ->setAction('new')
+            ->setPermission('ROLE_PLANNER')
+        ;
+        yield MenuItem::linkToCrud('Alle Veranstaltungen', 'ti ti-calendar',Event::class)
+            ->setCssClass('event-link')
             ->setPermission('ROLE_PLANNER')
         ;
         yield MenuItem::linkToCrud('Veranstaltungsarten', 'ti ti-ticket',EventType::class)
             ->setCssClass('event-link')
             ->setPermission('ROLE_PLANNER')
         ;
-
-        yield MenuItem::section('Newsletter');
-
-
-        yield MenuItem::section('Moderation');
+        yield MenuItem::section();
         yield MenuItem::linkToCrud('inbound', 'ti ti-mailbox',Inbound::class)
             ->setCssClass('moderation-link')
             ->setPermission('ROLE_MODERATION')
@@ -118,6 +122,11 @@ class DashboardController extends AbstractDashboardController
             ->setCssClass('moderation-link')
             ->setPermission('ROLE_MODERATION')
         ;
+
+        yield MenuItem::section('Newsletter');
+
+
+
 
         yield MenuItem::section('Administration');
         yield MenuItem::linkToCrud('Benutzer', 'ti ti-users',User::class)

@@ -1,8 +1,88 @@
-{% extends '@EasyAdmin/layout.html.twig' %}
+{% extends '@!EasyAdmin/layout.html.twig' %}
+
+{% block content_title %}Aktivitäten{% endblock %}
+
+{% block configured_stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block configured_javascripts %}
+    {{ parent() }}
+{% endblock %}
 
 {% block main %}
-    {# ... #}
 
-    <h6>{{ title }}</h6>
+    {% if is_granted('ROLE_AUTHOR') %}
+        <div class="h5 border-bottom pb-2 mb-3">Meine aktiven Beiträge</div>
+        <div class="h6 txt-primary">Themen-Blog</div>
+            <table class="table datagrid mb-3">
+                <thead>
+                <tr>
+                    <th class="py-2" data-column="title">Titel</th>
+                    <th>Typ</th>
+                    <th>Leitartikel</th>
+                    <th>Erstellt</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for post in posts %}
+                    <tr data-id="{{ loop.index }}">
+                        <td class="field-text text-truncate" data-column="title">{{ post.title }}</td>
+                        <td>{{ post.type }}</td>
+                        <td>{{ post.isLeadPost ? 'ja' : 'nein' }}</td>
+                        <td>{{ post.updatedAt|ago }}</td>
+                        <td class="actions">
+                            <a href="#" class="action-edit">
+                                <span class="action-label">Anzeigen</span>
+                            </a>
+                            <a href="#" class="action-edit">
+                                <span class="action-label">Bearbeiten</span>
+                            </a>
+                        </td>
+                    </tr>
+                {% else %}
+                {% endfor %}
+                </tbody>
+            </table>
+        <div class="h6 txt-primary">Aktuelles und Meldungen</div>
+        <table class="table datagrid">
+            <thead>
+            <tr>
+                <th class="py-2" data-column="title">Titel</th>
+                <th>Typ</th>
+                <th>Erstellt</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for post in news_articles %}
+                <tr data-id="{{ loop.index }}">
+                    <td class="field-text text-truncate" data-column="title">{{ post.title }}</td>
+                    <td>{{ post.type }}</td>
+                    <td>{{ post.updatedAt|ago }}</td>
+                    <td class="actions">
+                        <a href="#" class="action-edit">
+                            <span class="action-label">Anzeigen</span>
+                        </a>
+                        <a href="#" class="action-edit">
+                            <span class="action-label">Bearbeiten</span>
+                        </a>
+                    </td>
+                </tr>
+            {% else %}
+            {% endfor %}
+            </tbody>
+        </table>
+
+    {% endif %}
 
 {% endblock main %}
+
+{% block page_actions %}
+    {#
+    <a class="btn btn-primary" href="#">Some Action</a>
+    <a class="btn btn-primary" href="#">Some Action</a>
+    <a class="btn btn-primary" href="#">Some Action</a>
+    #}
+{% endblock %}

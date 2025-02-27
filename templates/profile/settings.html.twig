@@ -59,9 +59,9 @@
                     <div class="list-group list-group-flush">
                         {% for cookie, content in cookies %}
                             <div class="list-group-item d-flex flex-wrap align-items-center py-3">
-                                <span class="fw-bold">{{ cookie|trans }}:</span>
+                                <span class="small text-dark">{{ cookie|trans }}:</span>
                                 <div class="d-flex justify-content-between justify-content-lg-end align-items-center flex-fill">
-                                    <code class="small text-muted">{{ content }}</code>
+                                    <span class="small text-muted">{{ content|slice(0,20) }}...</span>
                                     <a href="#" class="text-danger text-decoration-none ms-3"><i class="ri-close-circle-line"></i></a>
                                 </div>
                             </div>

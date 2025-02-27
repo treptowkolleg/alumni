@@ -3,8 +3,10 @@
 namespace App\Repository;
 
 use App\Entity\BlogPost;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @extends ServiceEntityRepository<BlogPost>
@@ -19,9 +21,9 @@ class BlogPostRepository extends ServiceEntityRepository
     /**
      * @return BlogPost[] Returns an array of BlogPost objects
      */
-    public function findPublishedNews($limit = 10, $offset = 1): array
+    public function findPublishedNews($limit = 10, $offset = 1, ?UserInterface $user = null): array
     {
-        return $this->createQueryBuilder('b')
+        $query = $this->createQueryBuilder('b')
             ->addSelect('t')
             ->leftJoin('b.type', 't')
             ->orWhere('t.title = :a')
@@ -31,8 +33,14 @@ class BlogPostRepository extends ServiceEntityRepository
             ->setParameter('b', "Pressemitteilung")
             ->setParameter('c', "Meldung")
             ->orderBy('b.updatedAt', 'DESC')
-            ->setFirstResult($limit * ($offset - 1))
-            ->getQuery()
+            ->setFirstResult($limit * ($offset - 1));
+
+        if($user) {
+            $query->andWhere('b.author = :user');
+            $query->setParameter('user', $user);
+        }
+
+            return $query->getQuery()
             ->getResult()
         ;
     }
@@ -40,19 +48,25 @@ class BlogPostRepository extends ServiceEntityRepository
     /**
      * @return BlogPost[] Returns an array of BlogPost objects
      */
-    public function findPublishedBlogPosts(array $types = [], $limit = 6, int $offset = 1): array
+    public function findPublishedBlogPosts(array $types = [], $limit = 6, int $offset = 1, ?UserInterface $user = null): array
     {
         if(empty($types)) {
             $types = explode(" ", "Blog Erfahrungsbericht Interview Podcast Fachartikel");
         }
-        return $this->createQueryBuilder('b')
+        $query = $this->createQueryBuilder('b')
             ->addSelect('t')
             ->leftJoin('b.type', 't')
             ->orWhere('t.title IN (:a)')
             ->setParameter('a', $types)
             ->orderBy('b.updatedAt', 'DESC')
-            ->setFirstResult(($offset - 1) * $limit)
-            ->getQuery()
+            ->setFirstResult(($offset - 1) * $limit);
+
+        if($user) {
+            $query->andWhere('b.author = :user');
+            $query->setParameter('user', $user);
+        }
+
+        return $query->getQuery()
             ->getResult()
             ;
     }
