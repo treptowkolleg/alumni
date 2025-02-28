@@ -5,7 +5,11 @@
 {% block page %}
     {% block page_header %}{% endblock %}
     {% block body %}{% endblock %}
-    {% block aside %}{% endblock %}
+
+    <section class="py-5">
+        {% block aside %}{% endblock %}
+    </section>
+
 {% endblock %}
 
 {% block footer %}{{ include('component/_footer.html.twig') }}{% endblock %}

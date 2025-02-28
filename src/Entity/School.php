@@ -70,6 +70,9 @@ class School
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $county = null;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
@@ -311,6 +314,18 @@ class School
     public function setDescription(?string $description): static
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getCounty(): ?string
+    {
+        return $this->county;
+    }
+
+    public function setCounty(?string $county): static
+    {
+        $this->county = $county;
 
         return $this;
     }

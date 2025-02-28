@@ -204,23 +204,29 @@
 {% endblock %}
 
 {% block body %}
-{# TODO: JSON-LD Person
+
+    {% set translatedArray = [] %}
+
+    {% for item in person.performanceCourse %}
+        {% set translatedItem = item | trans %}
+        {% set translatedArray = translatedArray | merge([translatedItem]) %}
+    {% endfor %}
+
 
 {% set alumni = {
-    "name": "Max Mustermann",
-    "job_title": "Software Engineer",
-    "bio": "Ehemaliger Student der Informatik mit Fokus auf KI.",
-    "image_url": "https://example.com/max.jpg",
-    "university": "Technische Universität Berlin",
-    "university_url": "https://www.tu-berlin.de/",
-    "university_city": "Berlin",
+    "name": person,
+    "bio": person.about|default('Keine Biographie hinterlegt.'),
+    "image_url": vich_uploader_asset(person.user)|imagine_filter('avatar') ,
+    "university": person.user.school.title,
+    "university_url": person.user.school.url,
+    "university_city": person.user.school.city,
     "university_country": "Deutschland",
-    "degree": "Master of Science",
-    "graduation_year": "2020",
-    "subjects": ["Informatik", "Mathematik", "Maschinelles Lernen"],
-    "linkedin": "https://linkedin.com/in/maxmustermann",
-    "twitter": "https://twitter.com/maxmustermann"
-} %}
+    "degree": person.examType,
+    "graduation_year": person.outYear,
+    "subjects": translatedArray,
+}
+%}
+
 
 
 <script type="application/ld+json">
@@ -228,7 +234,6 @@
     "@context": "https://schema.org",
     "@type": "Person",
     "name": "{{ alumni.name }}",
-    "jobTitle": "{{ alumni.job_title }}",
     "description": "{{ alumni.bio }}",
     "image": "{{ alumni.image_url }}",
     "alumniOf": {
@@ -246,20 +251,10 @@
       "name": "{{ alumni.university }}"
     }
     },
-    "knowsAbout": {{ alumni.subjects|json_encode }},
-    "worksFor": {
-    "@type": "Organization",
-    "name": "{{ alumni.company }}",
-    "url": "{{ alumni.company_url }}"
-    },
-    "sameAs": [
-    "{{ alumni.linkedin }}",
-    "{{ alumni.twitter }}",
-    "{{ alumni.website }}"
-    ]
+    "knowsAbout": {{ alumni.subjects|json_encode }}
     }
 </script>
-#}
+
 {% endblock %}
 {% block aside %}{% endblock %}
 

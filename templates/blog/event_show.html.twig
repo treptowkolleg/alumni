@@ -117,48 +117,37 @@
 {% endblock %}
 
 {% block body %}
-    {# TODO: JSON-LD Veranstaltung
+
+    {% set location = post.location|split(',') %}
+
 
         <script type="application/ld+json">
             {
             "@context": "https://schema.org",
             "@type": "Event",
-            "name": "{{ event_name }}",
-            "startDate": "{{ event_start_date|date('c') }}",
-            "endDate": "{{ event_end_date|date('c') }}",
+            "name": "{{ post }}",
+            "startDate": "{{ post.startDate|date('c') }}",
+            "endDate": "{{ post.endDate|date('c') }}",
             "location": {
             "@type": "Place",
-            "name": "{{ event_location }}",
-            "address": {
-              "@type": "PostalAddress",
-              "streetAddress": "{{ event_address.street }}",
-              "addressLocality": "{{ event_address.city }}",
-              "postalCode": "{{ event_address.zip }}",
-              "addressCountry": "{{ event_address.country }}"
-            }
+            "name": "{{ location.0|default('Unbekannter Ort') }}"
             },
-            "description": "{{ event_description }}",
-            "image": "{{ event_image }}",
+            "description": "{{ post.description|striptags }}",
             "offers": {
             "@type": "Offer",
-            "url": "{{ event_url }}",
-            "priceCurrency": "EUR",
-            "price": "{{ event_price }}",
-            "priceValidUntil": "{{ event_start_date|date('c') }}",
-            "availability": "https://schema.org/InStock",
-            "validFrom": "{{ event_start_date|date('c') }}"
+            "url": "{{ post.website|default('https://www.alumni-portal.org') }}"
             },
             "organizer": {
             "@type": "Organization",
-            "name": "{{ event_organizer_name }}",
-            "url": "{{ event_organizer_url }}"
+            "name": "{{ post.contactPerson }}",
+            "email": "{{ post.contactEmail }}"
             },
             "eventStatus": "https://schema.org/EventScheduled",
             "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
-            "mainEntityOfPage": "{{ event_url }}"
+            "mainEntityOfPage": "{{ url('event_show',{'slug':post.slug}) }}"
             }
         </script>
-    #}
+
 {% endblock %}
 
 {% block aside %}{% endblock %}

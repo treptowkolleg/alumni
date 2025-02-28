@@ -1,4 +1,7 @@
 <div class="d-flex flex-column flex-shrink-0 flex-fill h-100">
+    <div class="mb-3">
+        {{ render(controller('App\\Controller\\AppController::searchForm')) }}
+    </div>
     <ul class="nav nav-pills nav-sidebar flex-column mb-auto">
         <li class="nav-item">
             <a href="{{ url('app_index') }}" class="nav-link {{ selected == 'main' ? 'active' : '' }}">Magazin</a>

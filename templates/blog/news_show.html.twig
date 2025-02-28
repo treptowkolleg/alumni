@@ -69,44 +69,36 @@
 </section>
 {% endblock %}
 {% block body %}
-{# TODO: JSON-LD News
-
-<script type="application/ld+json">
-{
-"@context": "https://schema.org",
-"@type": "NewsArticle",
-"headline": "{{ news.title }}",
-"description": "{{ news.description }}",
+    <script type="application/ld+json">
+        {
+        "@context": "https://schema.org",
+        "@type": "News Article",
+        "headline": "{{ post.title }}",
+"description": "{{ post.subtitle }}",
 "author": {
-"@type": "Person",
-"name": "{{ news.author }}"
-},
+    "@type": "Person",
+    "name": "{{ post.author }}"
+    },
 "publisher": {
 "@type": "Organization",
-"name": "Deine Webseite",
+"name": "Alumni-Portal des Zweiten Bildungsweges",
 "logo": {
-  "@type": "ImageObject",
-  "url": "{{ asset('images/logo.png') }}"
-}
+      "@type": "ImageObject",
+      "url": "{{ absolute_url(asset('favicon.192x192.png')) }}"
+    }
 },
-"datePublished": "{{ news.published_at|date('Y-m-d') }}",
-"dateModified": "{{ news.updated_at|date('Y-m-d') }}",
-"image": {
-"@type": "ImageObject",
-"url": "{{ news.image_url }}",
-"width": 1200,
-"height": 675
-},
+"datePublished": "{{ post.updatedAt|date('Y-m-d') }}",
+"dateModified": "{{ post.updatedAt|date('Y-m-d') }}",
+"image": "{{ asset(post.blogPostImageUrl)|imagine_filter('post_thumbnail')  }}",
 "mainEntityOfPage": {
-"@type": "WebPage",
-"@id": "{{ news.url }}"
-},
-"articleSection": "{{ news.category }}",
+    "@type": "WebPage",
+    "@id": "{{ url('blog_show',{'slug':post.slug}) }}"
+    },
+"articleSection": "{{ post.type }}",
 "isAccessibleForFree": "true",
-"url": "{{ news.url }}"
+"url": "{{ url('blog_show',{'slug':post.slug})  }}"
 }
-</script>
-#}
+    </script>
 {% endblock %}
 
 {% block aside %}

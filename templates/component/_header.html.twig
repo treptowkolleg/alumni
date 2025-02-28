@@ -11,9 +11,7 @@
             </div>
         </div>
 
-        <div class="ms-auto me-5 d-none d-lg-block" style="min-width: 300px">
-            {{ render(controller('App\\Controller\\AppController::searchForm')) }}
-        </div>
+
         <ul class="nav py-3">
             {% if app.user %}
                 <li class="nav-item  dropdown">
@@ -51,13 +49,15 @@
 
 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
     <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="offcanvasRightLabel">Navigation</h5>
+        <div class="h5 offcanvas-title" id="offcanvasRightLabel">
+            <div class="d-flex align-items-center">
+                <img src="{{ asset('images/logo.svg') }}" height="24" class="me-2" alt="logo">
+                Navigation
+            </div>
+        </div>
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">
-        <div class="mb-3 d-block d-lg-none">
-            {{ render(controller('App\\Controller\\AppController::searchForm')) }}
-        </div>
         {{ include('component/_profile_sidebar.html.twig',{'selected':sidebar|default('main')}) }}
     </div>
 </div>

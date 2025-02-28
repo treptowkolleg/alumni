@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Entity\UserProfile;
 use App\Repository\ChatRepository;
 use App\Repository\EventRepository;
+use App\Repository\SchoolRepository;
 use App\Repository\UserProfileRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -30,6 +31,22 @@ class ApiController extends AbstractController
         } else {
             return $this->render('component/empty.html.twig', []);
         }
+    }
+
+    #[Route('/schools', name: 'schools_all', methods: ['GET'])]
+    public function getSchools(SchoolRepository $postRepository): Response
+    {
+        $counties = [];
+        $schools = $postRepository->findAll();
+        foreach ($schools as $school) {
+            $counties[$school->getCounty()][] = $school;
+        }
+
+        ksort($counties);
+
+        return $this->render('component/_footer_schools.html.twig', [
+            'items' => $counties
+        ]);
     }
 
     #[Route('/cookie-consent', name: 'cookie_consent', methods: ['POST'])]
