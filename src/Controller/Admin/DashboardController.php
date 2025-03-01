@@ -8,6 +8,8 @@ use App\Entity\Event;
 use App\Entity\EventType;
 use App\Entity\Inbound;
 use App\Entity\Newsletter;
+use App\Entity\OfferType;
+use App\Entity\PersonOffer;
 use App\Entity\PinboardEntry;
 use App\Entity\School;
 use App\Entity\User;
@@ -126,6 +128,12 @@ class DashboardController extends AbstractDashboardController
 
         yield MenuItem::section('Newsletter');
 
+        yield MenuItem::section('Angebote');
+        yield MenuItem::linkToCrud('Angebote', 'ti ti-school',PersonOffer::class)
+            ->setCssClass('moderation-link')
+            ->setPermission('ROLE_ADMIN')
+        ;
+
 
 
 
@@ -135,6 +143,10 @@ class DashboardController extends AbstractDashboardController
             ->setPermission('ROLE_ADMIN')
         ;
         yield MenuItem::linkToCrud('E-Mail-Adressen', 'ti ti-mail',Newsletter::class)
+            ->setCssClass('admin-link')
+            ->setPermission('ROLE_ADMIN')
+        ;
+        yield MenuItem::linkToCrud('Angebotstypen', 'ti ti-school',OfferType::class)
             ->setCssClass('admin-link')
             ->setPermission('ROLE_ADMIN')
         ;

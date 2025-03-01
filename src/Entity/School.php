@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 #[ORM\Entity(repositoryClass: SchoolRepository::class)]
 class School
@@ -18,6 +19,10 @@ class School
 
     #[ORM\Column(length: 255)]
     private ?string $title = null;
+
+    #[ORM\Column(length: 128, unique: true)]
+    #[Gedmo\Slug(fields: ['title'])]
+    private $slug;
 
     /**
      * @var Collection<int, User>
@@ -101,6 +106,15 @@ class School
 
         return $this;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getSlug(): mixed
+    {
+        return $this->slug;
+    }
+
 
     /**
      * @return Collection<int, User>

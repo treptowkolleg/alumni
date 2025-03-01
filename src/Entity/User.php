@@ -136,6 +136,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
     #[ORM\Column(nullable: true)]
     private ?bool $hasPinnboard = null;
 
+    /**
+     * @var Collection<int, PersonOffer>
+     */
+    #[ORM\OneToMany(targetEntity: PersonOffer::class, mappedBy: 'user')]
+    private Collection $personOffers;
+
     public function __construct()
     {
         $this->blogPosts = new ArrayCollection();
@@ -145,6 +151,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
         $this->events = new ArrayCollection();
         $this->newsletters = new ArrayCollection();
         $this->followedEvents = new ArrayCollection();
+        $this->personOffers = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -697,6 +704,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
     public function setHasPinnboard(?bool $hasPinnboard): static
     {
         $this->hasPinnboard = $hasPinnboard;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PersonOffer>
+     */
+    public function getPersonOffers(): Collection
+    {
+        return $this->personOffers;
+    }
+
+    public function addPersonOffer(PersonOffer $personOffer): static
+    {
+        if (!$this->personOffers->contains($personOffer)) {
+            $this->personOffers->add($personOffer);
+            $personOffer->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removePersonOffer(PersonOffer $personOffer): static
+    {
+        if ($this->personOffers->removeElement($personOffer)) {
+            // set the owning side to null (unless already changed)
+            if ($personOffer->getUser() === $this) {
+                $personOffer->setUser(null);
+            }
+        }
 
         return $this;
     }
