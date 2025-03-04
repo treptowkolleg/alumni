@@ -134,17 +134,23 @@
             },
             "description": "{{ post.description|striptags }}",
             "offers": {
-            "@type": "Offer",
-            "url": "{{ post.website|default('https://www.alumni-portal.org') }}"
+                "@type": "Offer",
+                "validFrom": "{{ post.startDate|date('c') }}",
+                "priceCurrency": "EUR",
+                "price": "0",
+                "availability": "InStock",
+                "url": "{{ url('event_show',{'slug':post.slug}) }}"
             },
             "organizer": {
-            "@type": "Organization",
-            "name": "{{ post.contactPerson }}",
-            "email": "{{ post.contactEmail }}"
+                "@type": "Organization",
+                "name": "{{ post.contactPerson }}",
+                "email": "{{ post.contactEmail }}",
+                "url": "{{ post.website|default('https://www.alumni-portal.org') }}"
             },
             "eventStatus": "https://schema.org/EventScheduled",
             "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
-            "mainEntityOfPage": "{{ url('event_show',{'slug':post.slug}) }}"
+            "mainEntityOfPage": "{{ url('event_show',{'slug':post.slug}) }}",
+            "performer": "{{ post.contactPerson }}"
             }
         </script>
 
