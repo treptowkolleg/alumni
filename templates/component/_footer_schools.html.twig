@@ -40,7 +40,7 @@
                     "position": "{{ loop.index }}",
                     "item": {
                         "@type": "Course",
-                        "name": "Abitur im Zweiten Bildungsweg",
+                        "name": "Abitur im Zweiten Bildungsweg - {{ school.title }}",
                         "description": "Verbessere BAföG-gefördert deinen Schulabschluss.",
                         "provider": {
                             "@type": "Organization",
@@ -56,7 +56,7 @@
                         "hasCourseInstance": [
                               {
                                 "@type": "CourseInstance",
-                                "courseMode": ["part-time","full-time"],
+                                "courseMode": ["Online","Offline"],
                                 "courseWorkload": "P2Y"
                         }],
                         "url": "{{ url('people_school',{'bsn':school.bsn}) }}"
