@@ -53,7 +53,12 @@
                                 "priceCurrency": "EUR",
                                 "price": 0
                               }],
-                        "hasCourseInstance": "false",
+                        "hasCourseInstance": [
+                              {
+                                "@type": "CourseInstance",
+                                "courseMode": "Offline",
+                                "courseWorkload": "P2Y"
+                        }],
                         "url": "{{ url('people_school',{'bsn':school.bsn}) }}"
                     }
                 }{% if not loop.last %},{% endif %}
