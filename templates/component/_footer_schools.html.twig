@@ -44,7 +44,7 @@
                         "provider": {
                             "@type": "Organization",
                             "name": "{{ school.title }}",
-                            "sameAs": "{{ school.url }}"
+                            "sameAs": "{{ url('people_school',{'bsn':school.bsn}) }}"
                         },
                         "url": "{{ url('people_school',{'bsn':school.bsn}) }}"
                     }
