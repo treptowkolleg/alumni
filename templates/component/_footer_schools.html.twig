@@ -47,6 +47,13 @@
                             "name": "{{ school.title }}",
                             "sameAs": "{{ url('people_school',{'bsn':school.bsn}) }}"
                         },
+                        "offers": [{
+                                "@type": "Offer",
+                                "category": "Free",
+                                "priceCurrency": "EUR",
+                                "price": 0
+                              }],
+                        "hasCourseInstance": "false",
                         "url": "{{ url('people_school',{'bsn':school.bsn}) }}"
                     }
                 }{% if not loop.last %},{% endif %}
