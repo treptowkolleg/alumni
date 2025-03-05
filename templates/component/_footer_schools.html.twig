@@ -20,3 +20,39 @@
         </div>
     </div>
 {% endfor %}
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "Kollegs und Abendgymnasien in Deutschland",
+    "description": "Liste der teilnehmenden Schulen der Bundesländer Deutschlands für das Alumni-Portal.",
+    "url": "{{ url('app_index') }}",
+    "itemListElement": [
+    {% for city, schools in items %}
+        {
+            "@type": "ItemList",
+            "name": "{{ city }}",
+            "itemListElement": [
+            {% for school in schools|sort((a, b) => a.title <=> b.title) %}
+                {
+                    "@type": "Organization",
+                    "name": "{{ school.title }}",
+                    "address": {
+                    "@type": "PostalAddress",
+                    "streetAddress": "{{ school.street }}",
+                    "addressLocality": "{{ school.city }}",
+                    "postalCode": "{{ school.plz }}",
+                    "addressCountry": "DE"
+                    },
+                    "url": "{{ url('people_school',{'bsn':school.bsn}) }}"
+                }{% if not loop.last %},{% endif %}
+            {% endfor %}
+            ]
+        }{% if not loop.last %},{% endif %}
+    {% endfor %}
+    ]
+  }
+</script>
+
+
