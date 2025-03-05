@@ -88,7 +88,8 @@
 "description": "{{ post.subtitle }}",
 "author": {
     "@type": "Person",
-    "name": "{{ post.author }}"
+    "name": "{{ post.author.userProfiles.0 }}",
+    "url": "{{ url('app_index')  }}"
     },
 "publisher": {
 "@type": "Organization",
@@ -98,8 +99,8 @@
       "url": "{{ absolute_url(asset('favicon.192x192.png')) }}"
     }
 },
-"datePublished": "{{ post.updatedAt|date('Y-m-d') }}",
-"dateModified": "{{ post.updatedAt|date('Y-m-d') }}",
+"datePublished": "{{ post.updatedAt|date('c') }}",
+"dateModified": "{{ post.updatedAt|date('c') }}",
 "image": "{{ asset(post.blogPostImageUrl)|imagine_filter('post_thumbnail')  }}",
 "mainEntityOfPage": {
     "@type": "WebPage",
