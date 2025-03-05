@@ -175,3 +175,14 @@ danger: Fehler
 
 cookie_consent: Cookie-Zustimmung
 PHPSESSID: Session-ID
+
+Street: Adresse
+Plz: Postleitzahl
+Sub District: Ortsteil
+District: Bezirk
+City: Ort
+County: Bundesland
+Lon: Längengrad
+Lat: Bteitengrad
+URL: Website
+Bsn: Schulnummer

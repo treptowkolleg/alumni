@@ -47,7 +47,7 @@ class RegistrationFormType extends AbstractType
             ])
             ->add('school', EntityType::class, [
                 'class' => School::class,
-                'row_attr' => ['class' => 'slim-form mb-3'],
+                'row_attr' => ['class' => 'slim-form slim-group mb-3'],
                 'attr' => ['placeholder' => 'School', 'class' => 'slim-select-single-school'],
                 'query_builder' => function (EntityRepository $er): QueryBuilder {
                     return $er->createQueryBuilder('u')

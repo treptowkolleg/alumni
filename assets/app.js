@@ -264,6 +264,18 @@ function checkUnreadMessages() {
 checkUnreadMessages();
 setInterval(checkUnreadMessages, 10 * 1000); // Ruft alle 5 Sekunden `checkUnreadMessages` auf
 
+function slimGrouping() {
+    let selectGroups = document.querySelectorAll('.slim-group');
+
+    selectGroups.forEach(function (element) {
+        let optGroups = element.querySelectorAll('optgroup');
+        optGroups.forEach(function (optGroup) {
+            optGroup.setAttribute('data-closable', 'close');
+        })
+    })
+}
+
+
 const toastTrigger = document.getElementById('liveToastBtn')
 const toastLiveExample = document.getElementById('liveToast')
 
@@ -302,28 +314,7 @@ let singleSettings = {
     hideSelected: true,
 }
 
-Array.prototype.slice.call(selectSingleElements)
-    .forEach(function (element) {
-        initSingleSlimSelect(element,singleSettings);
-    })
 
-Array.prototype.slice.call(selectMultiElements)
-    .forEach(function (element) {
-        let multiSettings = {
-            allowDeselect: true,
-            maxSelected: element.getAttribute('data-max') ?? 5,
-            showSearch: true, // used in example
-            focusSearch: true, // used in example
-            searchText: 'nichts gefunden', // used in example
-            searchPlaceholder: 'Suchen ...', // used in example
-            searchHighlight: true,
-            maxValuesShown: 1,
-            maxValuesMessage: '{number} ausgewählt',
-            closeOnSelect: false,
-            placeholderText: 'auswählen'
-        }
-        initMultiSlimSelect(element,multiSettings);
-    })
 
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -332,6 +323,32 @@ document.addEventListener('DOMContentLoaded', () => {
     const acceptAllButton = document.getElementById('accept-all');
     const customizeButton = document.getElementById('customize');
     const saveSettingsButton = document.getElementById('save-cookie-settings');
+
+    slimGrouping();
+
+    Array.prototype.slice.call(selectSingleElements)
+        .forEach(function (element) {
+            initSingleSlimSelect(element,singleSettings);
+        })
+
+
+    Array.prototype.slice.call(selectMultiElements)
+        .forEach(function (element) {
+            let multiSettings = {
+                allowDeselect: true,
+                maxSelected: element.getAttribute('data-max') ?? 5,
+                showSearch: true, // used in example
+                focusSearch: true, // used in example
+                searchText: 'nichts gefunden', // used in example
+                searchPlaceholder: 'Suchen ...', // used in example
+                searchHighlight: true,
+                maxValuesShown: 1,
+                maxValuesMessage: '{number} ausgewählt',
+                closeOnSelect: false,
+                placeholderText: 'auswählen'
+            }
+            initMultiSlimSelect(element,multiSettings);
+        })
 
     // Bootstrap-Modal-Instanz
     if(cookieModalElement) {

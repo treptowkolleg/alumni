@@ -1,0 +1,9 @@
+{% block choice_widget_options %}
+    {% for group, choices in form_widget_choices %}
+        <optgroup label="{{ group }}" data-closable="close">
+            {% for choice in choices %}
+                {{ choice }}
+            {% endfor %}
+        </optgroup>
+    {% endfor %}
+{% endblock %}
