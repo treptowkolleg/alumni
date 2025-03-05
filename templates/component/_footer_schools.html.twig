@@ -36,16 +36,18 @@
             "itemListElement": [
             {% for school in schools|sort((a, b) => a.title <=> b.title) %}
                 {
-                    "@type": "Organization",
-                    "name": "{{ school.title }}",
-                    "address": {
-                    "@type": "PostalAddress",
-                    "streetAddress": "{{ school.street }}",
-                    "addressLocality": "{{ school.city }}",
-                    "postalCode": "{{ school.plz }}",
-                    "addressCountry": "DE"
-                    },
-                    "url": "{{ url('people_school',{'bsn':school.bsn}) }}"
+                    "@type": "ListItem",
+                    "position": "{{ loop.index }}",
+                    "item": {
+                        "@type": "Course",
+                        "name": "Abitur im Zweiten Bildungsweg",
+                        "provider": {
+                            "@type": "Organization",
+                            "name": "{{ school.title }}",
+                            "sameAs": "{{ school.url }}"
+                        },
+                        "url": "{{ url('people_school',{'bsn':school.bsn}) }}"
+                    }
                 }{% if not loop.last %},{% endif %}
             {% endfor %}
             ]
