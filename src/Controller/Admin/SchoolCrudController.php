@@ -77,8 +77,8 @@ class SchoolCrudController extends AbstractCrudController
                 'Thüringen' => 'Thüringen'
             ])
             ,
-            TextField::new('lon')->setRequired(true)->hideOnIndex(),
             TextField::new('lat')->setRequired(true)->hideOnIndex(),
+            TextField::new('lon')->setRequired(true)->hideOnIndex(),
             UrlField::new('url')->setRequired(true),
         ];
     }
