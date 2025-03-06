@@ -67,11 +67,11 @@
                             </div>
                             {% if person.portfolioLink %}
                                 <div class="list-group list-group-flush">
-                                    <a class="list-group-item list-group-item-action" href="{{ person.portfolioLink }}" target="_blank"><i class="fa fa-link me-2"></i>Portfolio-Website</a>
+                                    <a class="list-group-item list-group-item-action" href="{{ person.portfolioLink }}" target="_blank"><i class="text-primary ti ti-external-link me-2"></i>Portfolio-Website</a>
                                 </div>
                             {% endif %}
                             {% if app.user %}
-                                <div class="ps-2 pt-2 pb-2 card-body d-flex bg-light-subtle align-items-center">
+                                <div class=" pt-2 pb-2 card-body d-flex bg-light-subtle align-items-center">
                                     {% if app.user.userProfiles.count > 0 %}
                                         {% if person.user != app.user %}
                                             <div>
@@ -93,20 +93,19 @@
                                             <div class="">
                                                 {% if person.user.isContactable %}
                                                     <a href="{{ url('chat_start',{'slug':person.user.slug}) }}" class="text-decoration-none">
-                                                        <i class="link-primary ri-chat-4-line me-1"></i>
+                                                        <i class="link-primary ti ti-message-2 me-1"></i>
                                                         <small>Nachricht</small>
                                                     </a>
                                                 {% else %}
                                                     <a href="javascript:void(0)" class="text-muted text-decoration-none disabled">
-                                                        <i class="link-muted ri-chat-off-line me-1"></i>
+                                                        <i class="link-muted ti ti-message-2-off me-1"></i>
                                                         <small></small>
                                                     </a>
                                                 {% endif %}
                                             </div>
                                         {% else %}
                                             <div>
-                                                <i class="link-primary fa-solid fa-user me-2"></i>
-                                                <small class="text-muted">Das bist du</small>
+                                                <i class="link-primary ti ti-user me-2"></i><small class="text-muted">Das bist du</small>
                                             </div>
                                         {% endif %}
                                     {% else %}
@@ -145,7 +144,7 @@
                             <div class="list-group list-group-flush">
                                 <a href="{{ url('event_index') }}" class="list-group-item list-group-item-action link-primary d-flex align-items-center justify-content-between">
                                     <div>weitere Termine finden</div>
-                                    <i class="ri-arrow-right-s-line"></i>
+                                    <i class="ti ti-chevron-right"></i>
                                 </a>
                             </div>
                         </div>
@@ -162,7 +161,7 @@
                                     <form method="post">
                                         <label class="d-flex justify-content-between align-items-center w-100">
                                             <input class="form-control bg-light ps-3" required name="comment" placeholder="Notiz hinterlassen">
-                                            <button class="btn btn-primary border-top-0" type="submit"><i class="ri ri-pushpin-line"></i></button>
+                                            <button class="btn btn-primary border-top-0" type="submit"><i class="ti ti-pin"></i></button>
                                         </label>
                                         <input type="hidden" name="token" value="{{ csrf_token('pinboard-comment') }}">
                                     </form>
@@ -216,7 +215,7 @@
 {% set alumni = {
     "name": person,
     "bio": person.about|default('Keine Biographie hinterlegt.'),
-    "image_url": vich_uploader_asset(person.user)|imagine_filter('avatar') ,
+    "image_url": asset('images/avatar_no_text.svg'),
     "university": person.user.school.title,
     "university_url": person.user.school.url,
     "university_city": person.user.school.city,

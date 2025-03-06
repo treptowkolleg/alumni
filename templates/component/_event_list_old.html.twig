@@ -7,14 +7,14 @@
 
         </div>
         <div class="d-flex align-items-center">
-            <div class="d-none d-lg-block badge text-bg-light rounded-pill fw-normal me-2">{{ post.startDate|date('d.m.Y') }}{% if post.endDate|date('d.m.Y') != post.startDate|date('d.m.Y') %} - {{ post.endDate|date('d.m.Y') }}{% endif %}</div>
-            <i class="bx bxs-chevron-right"></i>
+            <div class="d-none d-lg-block badge text-bg-light rounded-pill fw-normal me-1">{{ post.startDate|date('d.m.Y') }}{% if post.endDate|date('d.m.Y') != post.startDate|date('d.m.Y') %} - {{ post.endDate|date('d.m.Y') }}{% endif %}</div>
+            <i class="ti ti-chevron-right"></i>
         </div>
     </a>
     {% if app.user %}
         <div class="text-decoration-none text-off align-self-stretch">
             <div class="p-3 d-flex align-items-center h-100">
-                <i class="bx bx{{ app.user.followedEvents.contains(post) == true ? 's' : '' }}-star"></i>
+                <i class="ri ri-star-{{ app.user.followedEvents.contains(post) == true ? 'fill' : 'line' }}"></i>
             </div>
         </div>
     {% endif %}

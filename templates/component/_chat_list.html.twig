@@ -5,12 +5,12 @@
             {% if message > 0 %}
                 <div class="badge text-bg-secondary rounded fw-normal me-1">{{ message }}</div>
             {% endif %}
-            <i class="ri-arrow-right-s-line"></i>
+            <i class="ti ti-chevron-right"></i>
         </div>
     </a>
     {% if user.isContactable %}
         <a href="{{ url('chat_new',{'id':chat.id}) }}" class="ripplelink p-3 text-decoration-none">
-            <i class="link-primary ri-chat-4-line"></i>
+            <i class="link-primary ti ti-message-2"></i>
         </a>
     {% endif %}
 </div>
