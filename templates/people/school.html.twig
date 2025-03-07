@@ -87,12 +87,12 @@
                                                 <div class="">
                                                     {% if person.user.isContactable %}
                                                         <a href="{{ url('chat_start',{'slug':person.user.slug}) }}" class="text-decoration-none">
-                                                            <i class="link-primary ri-chat-4-line me-1"></i>
+                                                            <i class="link-primary ti ti-message-2 me-1"></i>
                                                             <small>Nachricht</small>
                                                         </a>
                                                     {% else %}
                                                         <a href="javascript:void(0)" class="text-muted text-decoration-none disabled">
-                                                            <i class="link-muted ri-chat-off-line me-1"></i>
+                                                            <i class="link-muted ti ti-message-2-off me-1"></i>
                                                             <small></small>
                                                         </a>
                                                     {% endif %}
