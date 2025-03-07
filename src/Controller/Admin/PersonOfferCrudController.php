@@ -20,6 +20,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
@@ -102,7 +103,7 @@ class PersonOfferCrudController extends AbstractCrudController
             ChoiceField::new('city')->setRequired(true)->hideOnIndex()
                 ->setChoices($cities),
             TextField::new('contactPerson')->setRequired(true),
-            TextField::new('contactEmail')->setRequired(true),
+            EmailField::new('contactEmail')->setRequired(true),
             TextField::new('contactPhone')->hideOnIndex(),
         ];
     }
