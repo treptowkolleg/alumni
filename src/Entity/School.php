@@ -78,11 +78,18 @@ class School
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $county = null;
 
+    /**
+     * @var Collection<int, PersonOffer>
+     */
+    #[ORM\OneToMany(targetEntity: PersonOffer::class, mappedBy: 'school')]
+    private Collection $personOffers;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
         $this->events = new ArrayCollection();
         $this->newsletters = new ArrayCollection();
+        $this->personOffers = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -340,6 +347,36 @@ class School
     public function setCounty(?string $county): static
     {
         $this->county = $county;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PersonOffer>
+     */
+    public function getPersonOffers(): Collection
+    {
+        return $this->personOffers;
+    }
+
+    public function addPersonOffer(PersonOffer $personOffer): static
+    {
+        if (!$this->personOffers->contains($personOffer)) {
+            $this->personOffers->add($personOffer);
+            $personOffer->setSchool($this);
+        }
+
+        return $this;
+    }
+
+    public function removePersonOffer(PersonOffer $personOffer): static
+    {
+        if ($this->personOffers->removeElement($personOffer)) {
+            // set the owning side to null (unless already changed)
+            if ($personOffer->getSchool() === $this) {
+                $personOffer->setSchool(null);
+            }
+        }
 
         return $this;
     }

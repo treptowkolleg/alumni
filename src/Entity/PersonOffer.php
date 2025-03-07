@@ -45,6 +45,30 @@ class PersonOffer
     #[ORM\ManyToOne(inversedBy: 'personOffers')]
     private ?OfferType $type = null;
 
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $startDate = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $endDate = null;
+
+    #[ORM\ManyToOne(inversedBy: 'personOffers')]
+    private ?School $school = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $contactPerson = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $contactEmail = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $ContactPhone = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $department = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?bool $active = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -136,6 +160,102 @@ class PersonOffer
     public function setType(?OfferType $type): static
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    public function getStartDate(): ?\DateTimeInterface
+    {
+        return $this->startDate;
+    }
+
+    public function setStartDate(?\DateTimeInterface $startDate): static
+    {
+        $this->startDate = $startDate;
+
+        return $this;
+    }
+
+    public function getEndDate(): ?\DateTimeInterface
+    {
+        return $this->endDate;
+    }
+
+    public function setEndDate(?\DateTimeInterface $endDate): static
+    {
+        $this->endDate = $endDate;
+
+        return $this;
+    }
+
+    public function getSchool(): ?School
+    {
+        return $this->school;
+    }
+
+    public function setSchool(?School $school): static
+    {
+        $this->school = $school;
+
+        return $this;
+    }
+
+    public function getContactPerson(): ?string
+    {
+        return $this->contactPerson;
+    }
+
+    public function setContactPerson(?string $contactPerson): static
+    {
+        $this->contactPerson = $contactPerson;
+
+        return $this;
+    }
+
+    public function getContactEmail(): ?string
+    {
+        return $this->contactEmail;
+    }
+
+    public function setContactEmail(?string $contactEmail): static
+    {
+        $this->contactEmail = $contactEmail;
+
+        return $this;
+    }
+
+    public function getContactPhone(): ?string
+    {
+        return $this->ContactPhone;
+    }
+
+    public function setContactPhone(?string $ContactPhone): static
+    {
+        $this->ContactPhone = $ContactPhone;
+
+        return $this;
+    }
+
+    public function getDepartment(): ?string
+    {
+        return $this->department;
+    }
+
+    public function setDepartment(?string $department): static
+    {
+        $this->department = $department;
+
+        return $this;
+    }
+
+    public function isActive(): ?bool
+    {
+        return $this->active;
+    }
+
+    public function setActive(?bool $active): static
+    {
+        $this->active = $active;
 
         return $this;
     }

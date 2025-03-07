@@ -17,8 +17,9 @@ security:
         ROLE_SUPER_PLANNER: 'ROLE_PLANNER'
         ROLE_SUPER_AUTHOR: 'ROLE_AUTHOR'
         ROLE_EDITOR: ['ROLE_AUTHOR','ROLE_PLANNER']
+        ROLE_SCHOOL: ['ROLE_EDITOR','ROLE_MODERATION']
         ROLE_SUPER_EDITOR: ['ROLE_SUPER_PLANNER','ROLE_SUPER_AUTHOR']
-        ROLE_ADMIN: ['ROLE_SUPER_EDITOR', 'ROLE_SUPER_MODERATION']
+        ROLE_ADMIN: ['ROLE_SUPER_EDITOR', 'ROLE_SUPER_MODERATION', 'ROLE_SCHOOL']
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
