@@ -19,7 +19,7 @@ security:
         ROLE_EDITOR: ['ROLE_AUTHOR','ROLE_PLANNER']
         ROLE_SCHOOL: ['ROLE_EDITOR','ROLE_MODERATION']
         ROLE_SUPER_EDITOR: ['ROLE_SUPER_PLANNER','ROLE_SUPER_AUTHOR']
-        ROLE_ADMIN: ['ROLE_SUPER_EDITOR', 'ROLE_SUPER_MODERATION', 'ROLE_SCHOOL']
+        ROLE_ADMIN: ['ROLE_SUPER_EDITOR', 'ROLE_SUPER_MODERATION', 'ROLE_SCHOOL','ROLE_ALLOWED_TO_SWITCH']
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -27,6 +27,7 @@ security:
         main:
             pattern: ^/(?!inbound).*
             lazy: true
+            switch_user: true
             provider: app_user_provider
             form_login:
                 login_path: app_login

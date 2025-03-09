@@ -15,14 +15,21 @@ use App\Entity\School;
 use App\Entity\User;
 use App\Entity\UserProfile;
 use App\Repository\BlogPostRepository;
+use App\Repository\UserRepository;
 use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminDashboard;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Menu\SubMenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
+use EasyCorp\Bundle\EasyAdminBundle\Config\UserMenu;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 use Symfony\Component\DomCrawler\Field\FormField;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[AdminDashboard(routePath: '/admin', routeName: 'admin')]
 class DashboardController extends AbstractDashboardController
@@ -30,10 +37,44 @@ class DashboardController extends AbstractDashboardController
 
 
     public function __construct(
-        private BlogPostRepository $repository
+        private BlogPostRepository $repository,
+        private UserRepository $userRepository,
     )
     {
     }
+
+    public function configureUserMenu(UserInterface $user): UserMenu
+    {
+        $userMenu = parent::configureUserMenu($user)->setGravatarEmail($user->getUserIdentifier());
+
+        if (in_array('ROLE_ADMIN', $user->getRoles())) {
+            $subMenu = MenuItem::section('Benutzerimitation','fa fa-users');
+            $users = $this->userRepository->findAll();
+
+
+            foreach ($users as $targetUser) {
+                if ($targetUser->getUserIdentifier() !== $user->getUserIdentifier() and count($targetUser->getRoles()) > 1) {
+                    $userMenu->addMenuItems([
+                        MenuItem::linkToUrl(
+                        $targetUser->getFullname(),
+                        'fa fa-exchange',
+                        '/admin?_switch_user=' . $targetUser->getUserIdentifier()
+                    )
+                    ]);
+                }
+            }
+            $userMenu->addMenuItems([$subMenu]);
+        }
+
+        return $userMenu;
+    }
+
+    public function getImpersonateUsers(UserInterface $user): array
+    {
+
+        return $items;
+    }
+
 
     #[Route('/admin', name: 'admin')]
     public function index(): Response
