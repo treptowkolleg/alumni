@@ -56,12 +56,12 @@ class InboundController extends AbstractController
             return ''; // Falls kein Body gefunden wurde, gib einen leeren String zurück
         }
         $bodyContent = $matches[1];
-
+        $plainText = html_entity_decode($html, ENT_QUOTES, 'UTF-8');
         // Entferne alle anderen HTML-Tags
-        $plainText = strip_tags($bodyContent);
+        $plainText = strip_tags($plainText);
 
         // HTML-Entities dekodieren
-        $plainText = html_entity_decode($plainText);
+
 
         return trim($plainText);
     }
