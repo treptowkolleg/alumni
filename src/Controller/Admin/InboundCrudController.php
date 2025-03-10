@@ -45,10 +45,7 @@ class InboundCrudController extends AbstractCrudController
             TextField::new('subject'),
             EmailField::new('sender'),
             EmailField::new('departement'),
-            FormField::addPanel('Text-Ansicht')->collapsible()->renderCollapsed(),
             TextareaField::new('text')->hideOnIndex(),
-            FormField::addPanel('HTML-Ansicht')->collapsible()->renderCollapsed(),
-            TextareaField::new('html')->hideOnIndex()->renderAsHtml(),
         ];
     }
 
