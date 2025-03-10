@@ -56,7 +56,8 @@ class InboundController extends AbstractController
             return ''; // Falls kein Body gefunden wurde, gib einen leeren String zurück
         }
         $bodyContent = $matches[1];
-        $plainText = html_entity_decode($html, ENT_QUOTES, 'UTF-8');
+        $bodyContent = mb_convert_encoding($html, 'UTF-8', mb_detect_encoding($bodyContent, 'UTF-8, ISO-8859-1', true));
+        $plainText = html_entity_decode($bodyContent, ENT_QUOTES, 'UTF-8');
         // Entferne alle anderen HTML-Tags
         $plainText = strip_tags($plainText);
 
