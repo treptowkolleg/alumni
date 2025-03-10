@@ -57,18 +57,11 @@ class InboundController extends AbstractController
         }
         $bodyContent = $matches[1];
 
-        // Ersetze <br> und </p> durch Zeilenumbrüche
-        $bodyContent = preg_replace('/<br\s*\/?>/i', "\n", $bodyContent);
-        $bodyContent = preg_replace('/<\/p>/i', "\n", $bodyContent);
-
         // Entferne alle anderen HTML-Tags
         $plainText = strip_tags($bodyContent);
 
         // HTML-Entities dekodieren
-        $plainText = html_entity_decode($plainText, ENT_QUOTES | ENT_HTML5, 'UTF-8');
-
-        // Mehrfache Leerzeilen auf eine reduzieren
-        $plainText = preg_replace("/\n{2,}/", "\n\n", $plainText);
+        $plainText = html_entity_decode($plainText);
 
         return trim($plainText);
     }
