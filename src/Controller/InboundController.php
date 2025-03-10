@@ -62,9 +62,9 @@ class InboundController extends AbstractController
         $plainText = strip_tags($plainText);
 
         // HTML-Entities dekodieren
+        $text = preg_replace("/\n{3,}/", "\n\n", $plainText);
 
-
-        return trim($plainText);
+        return trim($text);
     }
 
 }
