@@ -1,0 +1,38 @@
+{% extends '_empty.html.twig' %}
+
+{% set meta_title = 'E-Mails überprüfen' %}
+
+{% block body %}
+<section class="my-auto py-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-4"></div>
+            <div class="col-xl-4">
+                <div class="d-flex align-items-center justify-content-center mb-3">
+                    <a href="{{ path('app_index') }}"
+                       class="d-flex align-items-center link-body-emphasis text-decoration-none p-2 me-2 ps-0 border-end border-3 border-primary">
+                        <img src="{{ asset('images/logo.svg') }}" height="48" class="" alt="logo">
+                    </a>
+                    <div>
+                        <div class="h5 mb-0">Alumni Portal</div>
+                        <div class="h6 text-primary mb-0">des zweiten Bildungswegs</div>
+                    </div>
+                </div>
+
+                <div class="card bg-white shadow-sm">
+                    <div class="card-body border-bottom">
+                        <h1 class="h4 mb-0 text-center">E-Mails überprüfen</h1>
+                    </div>
+                    <div class="card-body">
+                        <p>
+                            Sollte ein Konto mit der von dir angegebenen E-Mail-Adresse existieren, hast du nun eine E-Mail mit dem Link zum Zurücksetzen deines Passworts erhalten.
+                            Dieser Link verliert in {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }} seine Gültigkeit.
+                        </p>
+                        <p>Prüfe im Zweifelsfall auch deinen Spam-Ordner oder <a href="{{ path('app_forgot_password_request') }}">versuche es erneut</a>.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

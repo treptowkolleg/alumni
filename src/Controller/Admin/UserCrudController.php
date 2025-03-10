@@ -3,17 +3,30 @@
 namespace App\Controller\Admin;
 
 use App\Entity\User;
+use App\Operator\SoundExpression;
+use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserCrudController extends AbstractCrudController
 {
+
+    private UserPasswordHasherInterface $passwordHasher;
+
+    public function __construct(UserPasswordHasherInterface $passwordHasher)
+    {
+        $this->passwordHasher = $passwordHasher;
+    }
+
     public static function getEntityFqcn(): string
     {
         return User::class;
@@ -47,9 +60,31 @@ class UserCrudController extends AbstractCrudController
                 'ROLE_SUPER_AUTHOR' => 'ROLE_SUPER_AUTHOR',
                 'ROLE_EDITOR' => 'ROLE_EDITOR',
                 'ROLE_SUPER_EDITOR' => 'ROLE_SUPER_EDITOR',
+                'ROLE_MODERATION' => 'ROLE_MODERATION',
+                'ROLE_SUPER_MODERATION' => 'ROLE_SUPER_MODERATION',
+                'ROLE_SCHOOL' => 'ROLE_SCHOOL',
                 'ROLE_ADMIN' => 'ROLE_ADMIN',
             ])->allowMultipleChoices(),
+            ChoiceField::new('userType')->onlyWhenCreating()->setFormTypeOptions([
+                'choices' => ['student' => 'Student', 'teacher' => 'Teacher','employer' => 'Employer'],
+            ]),
+            AssociationField::new('school')->onlyWhenCreating()
         ];
+    }
+
+    public function persistEntity(EntityManagerInterface $entityManager, $entityInstance): void
+    {
+        if($entityInstance instanceof User) {
+            $user = $entityInstance;
+            $user->setFirstnameSoundEx(SoundExpression::generate($user->getFirstname()));
+            $user->setLastnameSoundEx(SoundExpression::generate($user->getLastname()));
+            $user->setHasSchool(true);
+            $user->setIsContactable(true);
+            $user->setHasPinnboard(true);
+            $user->setIsEventsVisible(true);
+            $user->setPassword('$2y$13$jHU9Nox//Lz7t5kJOJKOzOFyiUofXF255jJacHV2t01igD/P13hOy');
+        }
+        parent::persistEntity($entityManager, $entityInstance);
     }
 
 }

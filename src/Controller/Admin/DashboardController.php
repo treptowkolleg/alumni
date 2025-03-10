@@ -48,12 +48,12 @@ class DashboardController extends AbstractDashboardController
         $userMenu = parent::configureUserMenu($user)->setGravatarEmail($user->getUserIdentifier());
 
         if (in_array('ROLE_ADMIN', $user->getRoles())) {
-            $subMenu = MenuItem::section('Benutzerimitation','fa fa-users');
+            $subMenu = MenuItem::section('Benutzerimitation');
             $users = $this->userRepository->findAll();
 
 
             foreach ($users as $targetUser) {
-                if ($targetUser->getUserIdentifier() !== $user->getUserIdentifier() and count($targetUser->getRoles()) > 1) {
+                if ($targetUser->getUserIdentifier() !== $user->getUserIdentifier() and $this->isGranted('ROLE_DASHBOARD',$targetUser) and !in_array('ROLE_ADMIN', $targetUser->getRoles())) {
                     $userMenu->addMenuItems([
                         MenuItem::linkToUrl(
                         $targetUser->getFullname(),
@@ -68,13 +68,6 @@ class DashboardController extends AbstractDashboardController
 
         return $userMenu;
     }
-
-    public function getImpersonateUsers(UserInterface $user): array
-    {
-
-        return $items;
-    }
-
 
     #[Route('/admin', name: 'admin')]
     public function index(): Response
@@ -129,71 +122,74 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToDashboard('Dashboard', 'ti ti-dashboard');
 
 
-        yield MenuItem::section('Redaktion');
-        yield MenuItem::linkToCrud('Neuer Beitrag', 'ti ti-pencil-plus',BlogPost::class)
-            ->setCssClass('blog-link')
-            ->setAction('new')
-            ->setPermission('ROLE_AUTHOR')
-        ;
-        yield MenuItem::linkToCrud('Alle Beiträge', 'ti ti-article',BlogPost::class)
-            ->setCssClass('blog-link')
-            ->setPermission('ROLE_AUTHOR')
-        ;
-        yield MenuItem::linkToCrud('Kategorien', 'ti ti-category',BlogType::class)
-            ->setCssClass('blog-link')
-            ->setPermission('ROLE_AUTHOR')
-        ;
-        yield MenuItem::section();
-        yield MenuItem::linkToCrud('Neue Veranstaltung', 'ti ti-calendar-plus',Event::class)
-            ->setCssClass('event-link')
-            ->setAction('new')
-            ->setPermission('ROLE_PLANNER')
-        ;
-        yield MenuItem::linkToCrud('Alle Veranstaltungen', 'ti ti-calendar',Event::class)
-            ->setCssClass('event-link')
-            ->setPermission('ROLE_PLANNER')
-        ;
-        yield MenuItem::linkToCrud('Veranstaltungsarten', 'ti ti-ticket',EventType::class)
-            ->setCssClass('event-link')
-            ->setPermission('ROLE_PLANNER')
-        ;
-        yield MenuItem::section();
-        yield MenuItem::linkToCrud('inbound', 'ti ti-mailbox',Inbound::class)
-            ->setCssClass('moderation-link')
-            ->setPermission('ROLE_MODERATION')
-        ;
-        yield MenuItem::linkToCrud('PinBoardEntries', 'ti ti-pin',PinboardEntry::class)
-            ->setCssClass('moderation-link')
-            ->setPermission('ROLE_MODERATION')
-        ;
-
-        yield MenuItem::section('Newsletter');
-
-        yield MenuItem::section('Angebote');
-        yield MenuItem::linkToCrud('Angebote', 'ti ti-school',PersonOffer::class)
-            ->setCssClass('moderation-link')
-            ->setPermission('ROLE_ADMIN')
-        ;
+        if($this->isGranted('ROLE_AUTHOR') or $this->isGranted('ROLE_PLANNER')) {
+            yield MenuItem::section('Redaktion');
+            yield MenuItem::linkToCrud('Neuer Beitrag', 'ti ti-pencil-plus',BlogPost::class)
+                ->setCssClass('blog-link')
+                ->setAction('new')
+                ->setPermission('ROLE_AUTHOR')
+            ;
+            yield MenuItem::linkToCrud('Alle Beiträge', 'ti ti-article',BlogPost::class)
+                ->setCssClass('blog-link')
+                ->setPermission('ROLE_AUTHOR')
+            ;
+            yield MenuItem::linkToCrud('Kategorien', 'ti ti-category',BlogType::class)
+                ->setCssClass('blog-link')
+                ->setPermission('ROLE_AUTHOR')
+            ;
+            yield MenuItem::linkToCrud('Neue Veranstaltung', 'ti ti-calendar-plus',Event::class)
+                ->setCssClass('event-link')
+                ->setAction('new')
+                ->setPermission('ROLE_PLANNER')
+            ;
+            yield MenuItem::linkToCrud('Alle Veranstaltungen', 'ti ti-calendar',Event::class)
+                ->setCssClass('event-link')
+                ->setPermission('ROLE_PLANNER')
+            ;
+            yield MenuItem::linkToCrud('Veranstaltungsarten', 'ti ti-ticket',EventType::class)
+                ->setCssClass('event-link')
+                ->setPermission('ROLE_PLANNER')
+            ;
+            yield MenuItem::linkToCrud('inbound', 'ti ti-mailbox',Inbound::class)
+                ->setCssClass('moderation-link')
+                ->setPermission('ROLE_SUPER_MODERATION')
+            ;
+            yield MenuItem::linkToCrud('PinBoardEntries', 'ti ti-pin',PinboardEntry::class)
+                ->setCssClass('moderation-link')
+                ->setPermission('ROLE_SUPER_MODERATION')
+            ;
+        }
 
 
+        if($this->isGranted('ROLE_SCHOOL')) {
+            yield MenuItem::section('Newsletter');
 
+            yield MenuItem::section('Angebote');
+            yield MenuItem::linkToCrud('Angebote', 'ti ti-school',PersonOffer::class)
+                ->setCssClass('moderation-link')
+                ->setPermission('ROLE_SCHOOL')
+            ;
+        }
 
-        yield MenuItem::section('Administration');
-        yield MenuItem::linkToCrud('Benutzer', 'ti ti-users',User::class)
-            ->setCssClass('admin-link')
-            ->setPermission('ROLE_ADMIN')
-        ;
-        yield MenuItem::linkToCrud('E-Mail-Adressen', 'ti ti-mail',Newsletter::class)
-            ->setCssClass('admin-link')
-            ->setPermission('ROLE_ADMIN')
-        ;
-        yield MenuItem::linkToCrud('Angebotstypen', 'ti ti-school',OfferType::class)
-            ->setCssClass('admin-link')
-            ->setPermission('ROLE_ADMIN')
-        ;
-        yield MenuItem::linkToCrud('Schulen', 'ti ti-school',School::class)
-            ->setCssClass('admin-link')
-            ->setPermission('ROLE_ADMIN')
-        ;
+        if($this->isGranted('ROLE_ADMIN')) {
+            yield MenuItem::section('Administration');
+            yield MenuItem::linkToCrud('Benutzer', 'ti ti-users',User::class)
+                ->setCssClass('admin-link')
+                ->setPermission('ROLE_ADMIN')
+            ;
+            yield MenuItem::linkToCrud('E-Mail-Adressen', 'ti ti-mail',Newsletter::class)
+                ->setCssClass('admin-link')
+                ->setPermission('ROLE_ADMIN')
+            ;
+            yield MenuItem::linkToCrud('Angebotstypen', 'ti ti-school',OfferType::class)
+                ->setCssClass('admin-link')
+                ->setPermission('ROLE_ADMIN')
+            ;
+            yield MenuItem::linkToCrud('Schulen', 'ti ti-school',School::class)
+                ->setCssClass('admin-link')
+                ->setPermission('ROLE_ADMIN')
+            ;
+        }
+
     }
 }

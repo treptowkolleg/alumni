@@ -11,7 +11,34 @@ ROLE_EDITOR: Redakteur
 ROLE_SUPER_PLANNER: Chef-Veranstalter
 ROLE_SUPER_AUTHOR: Chef-Autor
 ROLE_SUPER_EDITOR: Chef-Redakteur
+ROLE_MODERATION: Moderator
+ROLE_SUPER_MODERATION: Supervisor
+ROLE_SCHOOL: Schulmanager
 ROLE_ADMIN: Administrator
+inbound: Posteingang
+Inbound: Posteingang
+PinBoardEntries: Pinnwand
+PinboardEntry: Pinnwand
+BlogPost: Beitrag
+BlogType: Kategorie
+Event: Veranstaltung
+EventType: Veranstaltungstyp
+schools: Schulen
+Created: Erstellt
+Is Published: Veröffentlichen
+Is Lead Post: Leitartikel
+Blog Post Image: Beitragsbild
+Blog Post Audio: Podcast-Audiodatei
+Image Cite: Name der Quelle
+Image City Url: Link zur Quelle
+Author: Autor
+Sender: Absender
+sender: Geschrieben von
+receiver: Inhaber
+Departement: Abteilung
+User Type: Personenkreis
+User: Benutzerkonto
+OfferType: Angebotstyp
 Start date: Von
 End date: Bis
 Title: Titel

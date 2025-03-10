@@ -55,7 +55,7 @@ class RegistrationFormType extends AbstractType
                         ->addOrderBy('u.title', 'ASC');
                 },
                 'group_by' => function (School $school) {
-                    return $school->getCity();
+                    return $school->getCounty();
                 },
                 'constraints' => [
                     new NotBlank([

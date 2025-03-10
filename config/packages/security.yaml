@@ -10,10 +10,11 @@ security:
                 class: App\Entity\User
                 property: email
     role_hierarchy:
-        ROLE_MODERATION: 'ROLE_USER'
+        ROLE_DASHBOARD: 'ROLE_USER'
+        ROLE_MODERATION: 'ROLE_DASHBOARD'
         ROLE_SUPER_MODERATION: 'ROLE_MODERATION'
-        ROLE_PLANNER: 'ROLE_USER'
-        ROLE_AUTHOR: 'ROLE_USER'
+        ROLE_PLANNER: 'ROLE_DASHBOARD'
+        ROLE_AUTHOR: 'ROLE_DASHBOARD'
         ROLE_SUPER_PLANNER: 'ROLE_PLANNER'
         ROLE_SUPER_AUTHOR: 'ROLE_AUTHOR'
         ROLE_EDITOR: ['ROLE_AUTHOR','ROLE_PLANNER']
@@ -54,7 +55,7 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        - { path: ^/admin, roles: [ROLE_ADMIN, ROLE_MODERATION, ROLE_SUPER_MODERATION, ROLE_AUTHOR, ROLE_PLANNER, ROLE_EDITOR, ROLE_SUPER_EDITOR] }
+        - { path: ^/admin, roles: ROLE_DASHBOARD }
         - { path: ^/profile, roles: ROLE_USER }
         - { path: ^/authoring, roles: ROLE_AUTHOR }
 

@@ -1,0 +1,49 @@
+{% extends '_empty.html.twig' %}
+
+{% set meta_title = 'Passwort zurücksetzen' %}
+
+{% block body %}
+<section class="my-auto py-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-4"></div>
+            <div class="col-xl-4">
+                <div class="d-flex align-items-center justify-content-center mb-3">
+                    <a href="{{ path('app_index') }}"
+                       class="d-flex align-items-center link-body-emphasis text-decoration-none p-2 me-2 ps-0 border-end border-3 border-primary">
+                        <img src="{{ asset('images/logo.svg') }}" height="48" class="" alt="logo">
+                    </a>
+                    <div>
+                        <div class="h5 mb-0">Alumni Portal</div>
+                        <div class="h6 text-primary mb-0">des zweiten Bildungswegs</div>
+                    </div>
+                </div>
+
+                <div class="card bg-white shadow-sm">
+                    <div class="card-body border-bottom">
+                        <h1 class="h4 mb-0 text-center">Passwort vergessen</h1>
+                    </div>
+                    <div class="card-body">
+                        {% for flash_error in app.flashes('reset_password_error') %}
+                            <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+                        {% endfor %}
+                        {{ form_start(requestForm) }}
+                            {{ form_row(requestForm.email) }}
+                            <div>
+                                <small>
+                                    Wir senden dir eine E-Mail mit Anweisungen zum Zurücksetzen deines Passworts.
+                                </small>
+                            </div>
+
+                            <button class="btn btn-primary my-3 w-100">Passwort zurücksetzen</button>
+                            <div class="text-center">
+                                <a href="{{ url('app_login') }}">Du weißt dein Passwort wieder?</a>
+                            </div>
+                        {{ form_end(requestForm) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
