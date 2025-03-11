@@ -50,8 +50,11 @@ class RegistrationController extends AbstractController
             $user->setIsEventsVisible(true);
 
             // Prüfen, ob früher schon der Newsletter abonniert wurde
-            if($newsletterRepository->findOneBy(['email' => $user->getEmail()])) {
+            if($newsletter = $newsletterRepository->findOneBy(['email' => $user->getEmail()])) {
                 $user->setHasNewsletter(true);
+                $newsletter->setUser($user);
+                $newsletter->addSchool($user->getSchool());
+                $entityManager->persist($newsletter);
             } else {
                 $user->setHasNewsletter(false);
             }
