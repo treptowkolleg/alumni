@@ -5,10 +5,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    {% for path in encore_entry_css_files('app') %}
-        <link rel="stylesheet" href="{{ absolute_url(path) }}">
-    {% endfor %}
+    <title>Registrierung abschließen</title>
 </head>
 <body>
     <h3>Hallo {{ user.firstname }} {{ user.lastname }}!</h3>
