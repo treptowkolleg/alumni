@@ -18,7 +18,7 @@
             <div class="col-lg-8">
                 <h3 class="h3">{{ post }}</h3>
                 <h4 class="h5 text-primary">{{ post.subtitle }}</h4>
-                {% if post.blogPostImageUrl %}
+                {% if post.blogPostImage.name %}
                     <img src="{{ asset(post.blogPostImageUrl)|imagine_filter('lead_thumbnail')  }}" alt="{{ post }}" class="img-fluid mb-1 d-none d-lg-block">
                     <img src="{{ asset(post.blogPostImageUrl)|imagine_filter('post_thumbnail')  }}" alt="{{ post }}" class="img-fluid mb-1 d-block d-lg-none">
                     {% if post.imageCite %}

@@ -10,7 +10,9 @@
     <div class="">
         {% if lead %}
                 <div class="card text-white border-0">
+                    {% if lead.blogPostImage.name %}
                     <img class="card-img" src="{{ asset(lead.blogPostImageUrl)|imagine_filter('lead_thumbnail')  }}" alt="{{ lead }}">
+                    {% endif %}
                     <div class="text-bg-primary border-0">
                         <div class="container">
                             <div class="row">
@@ -75,7 +77,7 @@
                         {% if post.isPublished %}
                         <div class="col">
                             <div class="card bg-transparent h-100">
-                                {% if post.blogPostImageUrl %}
+                                {% if post.blogPostImage.name %}
                                     <img src="{{ asset(post.blogPostImageUrl)|imagine_filter('post_thumbnail')  }}" alt="{{ post }}" class="img-fluid">
                                     <div class="px-3 py-2 bg-white h-100">
                                         <div class="mb-0"><span class="fw-bold">{{ post.updatedAt|date('d.m.Y') }}</span> <span class="text-uppercase">{{ post.type }}</span></div>
