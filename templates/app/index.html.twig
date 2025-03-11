@@ -10,7 +10,7 @@
     <div class="">
         {% if lead %}
                 <div class="card text-white border-0">
-                    {% if lead.blogPostImage.name %}
+                    {% if lead.blogPostImage %}
                     <img class="card-img" src="{{ asset(lead.blogPostImageUrl)|imagine_filter('lead_thumbnail')  }}" alt="{{ lead }}">
                     {% endif %}
                     <div class="text-bg-primary border-0">
