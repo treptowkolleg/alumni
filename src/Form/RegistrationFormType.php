@@ -66,6 +66,7 @@ class RegistrationFormType extends AbstractType
                 ],
             ])
             ->add('userType', ChoiceType::class, [
+                'placeholder' => 'Bitte wählen',
                 'choices' => ['student' => 'Student', 'teacher' => 'Teacher','employer' => 'Employer'],
                 'row_attr' => ['class' => 'slim-form mb-3'],
                 'attr' => ['placeholder' => 'User type', 'class' => 'slim-select-single-school-type'],
