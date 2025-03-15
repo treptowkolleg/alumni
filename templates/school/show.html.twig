@@ -11,14 +11,14 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <link rel="stylesheet" href="https://unpkg.com/leaflet-gesture-handling/dist/leaflet-gesture-handling.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-gesture-handling@1.2.2/dist/leaflet-gesture-handling.min.css" />
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="https://unpkg.com/leaflet-gesture-handling"></script>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet-gesture-handling@1.2.2/dist/leaflet-gesture-handling.min.js"></script>
 {% endblock %}
 
 {% block page_header %}
@@ -26,7 +26,7 @@
     <div class="container">
 
         <div class="mb-3">
-            <div class="nav nav-underline mb-4">
+            <div class="nav nav-underline mb-0">
                 <a href="javascript:void(0)" onclick="history.back()" class="nav-item nav-link {{ selected|default() == 'index' ? 'active' : '' }} text-nowrap">
                     <i class="ri-arrow-left-double-line text-primary"></i>
                     <span class="ms-1">Zurück</span>
@@ -44,26 +44,29 @@
             </div>
         </div>
 
+    </div>
+    <div class="container px-0">
+
         <div class="row g-3">
             <div class="col-lg-12" id="section-school">
-                <div class="card bg-white">
-                    <div class="card-body  border-bottom border-primary">
-                        <h3 class="h5 mb-0 text-center text-lg-start">{{ school.title }}</h3>
-                        <div class="mb-0 text-center text-lg-start"><span class="text-primary">{{ school.district }}</span></div>
+                <div class="card shadow-sm bg-light-subtle border-top-0 border-start-0 border-end-0 rounded rounded-2">
+                    <div class="card-body border-bottom border-primary">
+                        <h3 class="h6 mb-0">{{ school.title }}</h3>
+                        <div class="mb-0"><span class="text-primary">{{ school.district }}</span></div>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body bg-white">
                         {{ school.description|default('keine Beschreibung verfügbar')|raw }}
                     </div>
-                    <div class="card-body small text-end">
-                        Registrierte Alumni: <span class="badge rounded text-bg-light">{{ school.users.count }}</span>
+                    <div class="card-body border-top small text-end">
+                        Registrierte Alumni: <span class="badge rounded text-bg-white">{{ school.users.count }}</span>
                     </div>
                 </div>
             </div>
 
             <div class="col-lg-12" id="section-events">
-                <div class="card bg-white">
-                    <div class="card-body  border-bottom border-primary">
-                        <h3 class="h5 mb-0 text-center text-lg-start">Veranstaltungen</h3>
+                <div class="card shadow-sm bg-light-subtle border-0 rounded rounded-2">
+                    <div class="card-body border-bottom border-primary">
+                        <h3 class="h6 mb-0">Veranstaltungen</h3>
                     </div>
                     <div class="list-group list-group-flush">
                         {% for post in school.events|sort((a, b) => b.startDate <=> a.startDate) %}
@@ -77,12 +80,14 @@
                             {% endif %}
                         {% endfor %}
                     </div>
+                    <div class="card-body border-top">
+                    </div>
                 </div>
             </div>
 
             <div class="col-lg-12" id="section-map">
-                <div class="card bg-white">
-                    <div class="card-body ratio ratio-21x9" id="map" data-lon="{{ school.lon }}" data-lat="{{ school.lat }}" data-name="{{ school.title }}"></div>
+                <div class="card shadow-sm bg-light-subtle border-0 rounded rounded-2">
+                    <div class="card-body rounded rounded-2 ratio ratio-21x9" id="map" data-lon="{{ school.lon }}" data-lat="{{ school.lat }}" data-name="{{ school.title }}"></div>
                 </div>
             </div>
 
