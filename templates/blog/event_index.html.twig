@@ -14,36 +14,35 @@
 
         {{ include('component/event_subbar.html.twig',{'selected':'index'}) }}
 
-        <div class="mb-3">{{ include('component/_event_filter.html.twig') }}</div>
+    </div>
+    <div class="container px-0">
+        <div class="mb-5 px-3 px-sm-0">{{ include('component/_event_filter.html.twig') }}</div>
 
         <div class="row g-3">
             <div class="col-12">
 
-                <div class="row g-3 mb-3">
-                    <div class="col-12">
-                        <nav aria-label="Page Navigation" class="card d-flex justify-content-center">
-                            <ul class="pagination mx-auto mb-0">
-                                {% set page_nr = 1 %}
-                                {% for event_nr in 1..event_count %}
-                                    {% if loop.first or loop.index0 is divisible by(10) %}
-                                        <li class="page-item">
-                                            <a class="page-link border-top-0 border-bottom-0 {{ page == page_nr ? 'active' : '' }}" href="{{ url('event_index',{'page':page_nr}) }}">
-                                                {{ page_nr }}
-                                            </a>
-                                        </li>
-                                        {% set page_nr = page_nr + 1 %}
-                                    {% endif %}
-                                {% endfor %}
-                            </ul>
-                        </nav>
-                    </div>
-                </div>
-
                 <div class="row row-cols-1 align-content-stretch">
                     <div class="col">
-                        <div class="card">
-                            <div class="card-body bg-white border-0 border-bottom border-primary">
-                                <h3 class="h5 mb-0 text-center text-lg-start">Ergebnisse</h3>
+                        <div class="card shadow-sm bg-light-subtle border-0 rounded rounded-2">
+                            <div class="card-body border-0 border-bottom border-primary">
+                                <h3 class="h6 mb-0 text-center text-lg-start">Ergebnisse</h3>
+                            </div>
+                            <div class="card-body py-1 border-bottom">
+                                <nav aria-label="Page Navigation" class="d-flex justify-content-center">
+                                    <ul class="pagination mx-auto mb-0">
+                                        {% set page_nr = 1 %}
+                                        {% for event_nr in 1..event_count %}
+                                            {% if loop.first or loop.index0 is divisible by(10) %}
+                                                <li class="page-item">
+                                                    <a class="page-link border-top-0 border-bottom-0 {{ page == page_nr ? 'active' : '' }}" href="{{ url('event_index',{'page':page_nr}) }}">
+                                                        {{ page_nr }}
+                                                    </a>
+                                                </li>
+                                                {% set page_nr = page_nr + 1 %}
+                                            {% endif %}
+                                        {% endfor %}
+                                    </ul>
+                                </nav>
                             </div>
                             <div class="list-group list-group-flush">
                                 {% for post in posts|sort((a, b) => b.startDate <=> a.startDate) %}
@@ -57,27 +56,25 @@
                                     {% endif %}
                                 {% endfor %}
                             </div>
-                        </div>
-                    </div>
-                </div>
+                            <div class="card-body py-1 border-top">
+                                <nav aria-label="Page Navigation" class="d-flex justify-content-center">
+                                    <ul class="pagination mx-auto mb-0 ">
+                                        {% set page_nr = 1 %}
+                                        {% for event_nr in 1..event_count %}
+                                            {% if loop.first or loop.index0 is divisible by(10) %}
+                                                <li class="page-item">
+                                                    <a class="page-link border-top-0 border-bottom-0 {{ page == page_nr ? 'active' : '' }}" href="{{ url('event_index',{'page':page_nr}) }}">
+                                                        {{ page_nr }}
+                                                    </a>
+                                                </li>
+                                                {% set page_nr = page_nr + 1 %}
+                                            {% endif %}
+                                        {% endfor %}
+                                    </ul>
+                                </nav>
+                            </div>
 
-                <div class="row g-3 py-3 mb-3">
-                    <div class="col-12">
-                        <nav aria-label="Page Navigation" class="card d-flex justify-content-center">
-                            <ul class="pagination mx-auto mb-0">
-                                {% set page_nr = 1 %}
-                                {% for event_nr in 1..event_count %}
-                                    {% if loop.first or loop.index0 is divisible by(10) %}
-                                        <li class="page-item">
-                                            <a class="page-link border-top-0 border-bottom-0 {{ page == page_nr ? 'active' : '' }}" href="{{ url('event_index',{'page':page_nr}) }}">
-                                                {{ page_nr }}
-                                            </a>
-                                        </li>
-                                        {% set page_nr = page_nr + 1 %}
-                                    {% endif %}
-                                {% endfor %}
-                            </ul>
-                        </nav>
+                        </div>
                     </div>
                 </div>
 
