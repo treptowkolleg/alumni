@@ -6,6 +6,7 @@
  * which should already be in your base.html.twig.
  */
 import './styles/app.scss';
+import './styles/nav.scss';
 
 import * as bootstrap from 'bootstrap';
 import Core from "./app/core.js";
