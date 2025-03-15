@@ -12,10 +12,13 @@
 
 {% block main %}
 
-    <div class="h5 border-bottom pb-2 mb-3">Change-Log</div>
-    <ul class="list-group">
-        <li class="list-group-item"><strong>15.03.2025</strong> Design-Anpassungen: keine Ränder in Handy-Ansicht, subtile Rundung der Cards.</li>
-    </ul>
+    <div class="mb-3">
+        <div class="h5 border-bottom pb-2 mb-3">Change-Log</div>
+        <ul class="list-group">
+            <li class="list-group-item"><strong>15.03.2025</strong> Design-Anpassungen: keine Ränder in Handy-Ansicht, subtile Rundung der Cards.</li>
+        </ul>
+    </div>
+
 
     {% if is_granted('ROLE_AUTHOR') %}
         <div class="h5 border-bottom pb-2 mb-3">Meine aktiven Beiträge</div>
