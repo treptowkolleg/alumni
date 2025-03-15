@@ -97,13 +97,13 @@
                 <div class="col-12 order-3">
                     <div class="card bg-white">
                         <div class="card-body  border-bottom border-primary">
-                            <h3 class="h5 text-center text-lg-start">Stellenangebote <span class="badge text-bg-success rounded fw-normal">wird gerade entwickelt</span></h3>
-                            <p class="card-text text-center text-lg-start">Sichtbar für passende Schulen</p>
+                            <h3 class="h5 text-center text-lg-start mb-0">Aktuelle Stellenangebote <span class=" ms-2 badge bg-warning-subtle text-warning rounded fw-normal">dev</span></h3>
+                            <p class="card-text text-center fw-bolder text-lg-start text-primary">In meiner Stadt</p>
                         </div>
-                        <div class="card-body">
-                            <p class="card-text">
-                                Meldet sich eine Schule auf dein Angebot, bekommst du eine E-Mail mit allen Informationen.
-                            </p>
+                        <div class="list-group list-group-flush">
+                            {% for offer in offers %}
+                                {{ include('component/_offer_fav_list.html.twig') }}
+                            {% endfor %}
                         </div>
                     </div>
                 </div>

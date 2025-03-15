@@ -12,6 +12,7 @@ use App\Form\UserprofileFormType;
 use App\Operator\SoundExpression;
 use App\Repository\ChatRepository;
 use App\Repository\NewsletterRepository;
+use App\Repository\PersonOfferRepository;
 use App\Repository\SchoolRepository;
 use App\Repository\UserProfileRepository;
 use App\Repository\UserRepository;
@@ -36,11 +37,22 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 class ProfileController extends AbstractController
 {
     #[Route('', name: 'index')]
-    public function index(Request $request, UserProfileRepository $userProfileRepository, ChatRepository $chatRepository, NewsletterRepository $newsletterRepository, EntityManagerInterface $entityManager): Response
+    public function index(Request $request, UserProfileRepository $userProfileRepository, ChatRepository $chatRepository, NewsletterRepository $newsletterRepository, PersonOfferRepository $offerRepository, EntityManagerInterface $entityManager): Response
     {
-        $userProfile = $userProfileRepository->findBy(['user' => $this->getUser()]);
+        $userProfile = $userProfileRepository->findOneBy(['user' => $this->getUser()]);
         $newsletter = $newsletterRepository->findOneBy(['email' => $this->getUser()->getUserIdentifier()]);
         $chats = $chatRepository->findAllChats($this->getUser());
+
+        $offers = [];
+
+        if($userProfile) {
+            $user = $userProfile->getUser();
+            $offers = $offerRepository->findBy([
+                'city' => $user->getSchool()->getCity(),
+                'active' => true
+            ]);
+        }
+
 
         $form = $this->createForm(NewsLetterToggleFormType::class);
         $form->handleRequest($request);
@@ -64,6 +76,7 @@ class ProfileController extends AbstractController
             'user_profile' => $userProfile,
             'has_newsletter' => $newsletter,
             'chats' => $chats,
+            'offers' => $offers,
         ]);
     }
 

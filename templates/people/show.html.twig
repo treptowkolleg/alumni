@@ -160,25 +160,35 @@
                                 <div class="">
                                     <form method="post">
                                         <label class="d-flex justify-content-between align-items-center w-100">
-                                            <input class="form-control bg-light ps-3" required name="comment" placeholder="Notiz hinterlassen">
-                                            <button class="btn btn-primary border-top-0" type="submit"><i class="ti ti-pin"></i></button>
+                                            <textarea maxlength="500" id="emoji-textarea" class="form-control bg-light ps-3 w-100 rounded-0 border-0" rows="5" required name="comment" placeholder="Notiz hinterlassen (max. 500 Zeichen)"></textarea>
                                         </label>
+                                        <button class="btn btn-primary border-top-0" type="submit"><i class="ti ti-pin me-1"></i>Anpinnen</button>
                                         <input type="hidden" name="token" value="{{ csrf_token('pinboard-comment') }}">
                                     </form>
+                                    <script>
+                                        $(document).ready(function() {
+                                            $("#emoji-textarea").emojioneArea({
+                                                pickerPosition: "bottom",  // Emoji-Picker unterhalb öffnen
+                                                tonesStyle: "bullet",      // Hautton-Auswahl als Punkte
+                                                filtersPosition: "bottom", // Kategorien unten anzeigen
+                                                autocomplete: true
+                                            });
+                                        });
+                                    </script>
                                 </div>
                                 {% endif %}
-                                <div class="list-group list-group-flush border-top-0">
+                                <div class="list-group list-group-flush border-top-1">
                                     {% for entry in pinboard_entries %}
                                     <div class="list-group-item">
                                         <div class="">
                                             {% if (entry.writer.networkState == 'public') or (app.user and entry.writer.networkState == 'registered') %}
                                             <a href="{{ url('people_show',{'slug':entry.writer.user.slug}) }}" class="me-1 text-nowrap">{{ entry.writer }}</a>
+                                                <div class="small text-muted">{{ entry.created|ago }}</div>
                                             {% else %}
                                                 <div class="me-1">######</div>
                                             {% endif %}
-                                            <span class="">{{ entry.content }}</span>
+                                            <p class="mb-0">{{ entry.content|nl2br }}</p>
                                         </div>
-                                        <div class="small text-muted">{{ entry.created|ago }}</div>
                                     </div>
                                     {% else %}
                                         <div class="list-group-item">

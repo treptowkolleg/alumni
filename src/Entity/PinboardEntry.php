@@ -18,7 +18,7 @@ class PinboardEntry
     #[ORM\ManyToOne(inversedBy: 'pinboardEntries')]
     private ?UserProfile $userProfile = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $content = null;
 
     #[ORM\ManyToOne(inversedBy: 'writtenPinnboardEntries')]
