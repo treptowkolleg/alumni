@@ -4,28 +4,43 @@
     </div>
     <ul class="nav nav-pills nav-sidebar flex-column mb-auto">
         <li class="nav-item">
-            <a href="{{ url('app_index') }}" class="nav-link {{ selected == 'main' ? 'active' : '' }}"><i class="ti ti-news me-2"></i>Magazin</a>
+            <a href="{{ url('app_index') }}" class="nav-link rounded rounded-2 {{ selected == 'main' ? 'active' : '' }}"><i class="ti ti-news me-2"></i>Magazin
+                <div class="small opacity-75">Alles auf einen Blick</div>
+            </a>
         </li>
         <li class="nav-item">
-            <a href="{{ url('people_index') }}" class="nav-link {{ selected == 'people' ? 'active' : '' }}"><i class="ti ti-users me-2"></i>Alumni finden</a>
+            <a href="{{ url('people_index') }}" class="nav-link rounded rounded-2 {{ selected == 'people' ? 'active' : '' }}"><i class="ti ti-users me-2"></i>Alumni finden
+                <div class="small opacity-75">Alle Schulen und Bekannte</div>
+            </a>
         </li>
         <li class="nav-item">
-            <a href="{{ url('event_index') }}" class="nav-link {{ selected == 'events' ? 'active' : '' }}"><i class="ti ti-calendar-event me-2"></i>Veranstaltungen</a>
+            <a href="#" class="nav-link rounded rounded-2 text-off"><i class="ti ti-users-group me-2"></i>Gruppen<span class="ms-2 badge bg-warning-subtle text-warning rounded fw-normal">dev</span>
+                <div class="small opacity-75">Interessengruppen, Orga-Gruppen</div>
+            </a>
         </li>
         <li class="nav-item">
-            <a href="{{ url('blog_news_index') }}" class="nav-link {{ selected == 'news' ? 'active' : '' }}"><i class="ti ti-news me-2"></i>Aktuelles</a>
+            <a href="{{ url('event_index') }}" class="nav-link rounded rounded-2 {{ selected == 'events' ? 'active' : '' }}"><i class="ti ti-calendar-event me-2"></i>Veranstaltungen
+                <div class="small opacity-75">Jahrestreffen, Schulfeste und mehr</div>
+            </a>
         </li>
         <li class="nav-item">
-            <a href="{{ url('blog_index') }}" class="nav-link {{ selected == 'blog' ? 'active' : '' }}"><i class="ti ti-article me-2"></i>Themen</a>
+            <a href="{{ url('blog_news_index') }}" class="nav-link rounded rounded-2 {{ selected == 'news' ? 'active' : '' }}"><i class="ti ti-news me-2"></i>Aktuelles
+                <div class="small opacity-75">Nachrichten, Pressemitteilungen, Verein</div>
+            </a>
         </li>
         <li class="nav-item">
-            <a href="{{ url('app_about_index') }}" class="nav-link {{ selected == 'about' ? 'active' : '' }}"><i class="ti ti-info-circle me-2"></i>Über uns</a>
+            <a href="{{ url('blog_index') }}" class="nav-link rounded rounded-2 {{ selected == 'blog' ? 'active' : '' }}"><i class="ti ti-article me-2"></i>Themen
+                <div class="small opacity-75">Blog, Interviews und mehr</div>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{ url('app_about_index') }}" class="nav-link rounded rounded-2 {{ selected == 'about' ? 'active' : '' }}"><i class="ti ti-info-circle me-2"></i>Über uns</a>
         </li>
     </ul>
     <ul class="nav nav-pills nav-sidebar flex-column mt-auto">
         {% if is_granted('ROLE_AUTHOR') or is_granted('ROLE_PLANNER') %}
             <li class="nav-item">
-                <a href="{{ path('admin') }}" class="nav-link {{ selected == 'admin-user-roles' ? 'active' : '' }}" target="_blank">
+                <a href="{{ path('admin') }}" class="nav-link rounded rounded-2 {{ selected == 'admin-user-roles' ? 'active' : '' }}" target="_blank">
                     <i class="fa-solid fa-fw fa-dashboard me-2"></i>
                     Administration
                 </a>

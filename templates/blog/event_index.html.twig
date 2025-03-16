@@ -10,13 +10,12 @@
 
 {% block page_header %}
 <section class="py-3">
-    <div class="container">
-
+    <div class="container px-0">
+        <div class="mb-5 px-3 px-sm-0">
         {{ include('component/event_subbar.html.twig',{'selected':'index'}) }}
 
-    </div>
-    <div class="container px-0">
-        <div class="mb-5 px-3 px-sm-0">{{ include('component/_event_filter.html.twig') }}</div>
+
+        {{ include('component/_event_filter.html.twig') }}</div>
 
         <div class="row g-3">
             <div class="col-12">

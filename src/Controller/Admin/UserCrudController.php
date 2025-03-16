@@ -62,6 +62,7 @@ class UserCrudController extends AbstractCrudController
                 'ROLE_SUPER_EDITOR' => 'ROLE_SUPER_EDITOR',
                 'ROLE_MODERATION' => 'ROLE_MODERATION',
                 'ROLE_SUPER_MODERATION' => 'ROLE_SUPER_MODERATION',
+                'ROLE_PROMOTER' => 'ROLE_PROMOTER',
                 'ROLE_SCHOOL' => 'ROLE_SCHOOL',
                 'ROLE_ADMIN' => 'ROLE_ADMIN',
             ])->allowMultipleChoices(),

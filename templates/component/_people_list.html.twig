@@ -1,0 +1,85 @@
+<div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3 g-3 align-content-stretch py-3">
+    {% for person in people %}
+        {% if loop.index <= 9 %}
+            {% if (app.user and  person.networkState == 'registered') or person.networkState == 'public' or (filter in ['school','freunde'] and person.networkState == 'private') %}
+                <div class="col mb-0">
+                    <div class="card border-0 rounded rounded-2 shadow-sm text-bg-white align-self-stretch">
+                        <div class="row g-0">
+                            <div class="col-3 col-lg-4">
+                                <a href="{{ url('people_show',{'slug':person.user.slug }) }}">
+                                    {% if person.user.image.name %}
+                                        <img src="{{ vich_uploader_asset(person.user)|imagine_filter('avatar')  }}" class="rounded-top img-fluid w-100" alt="..." style="border-top-right-radius:0!important">
+                                    {% else %}
+                                        <img src="{{ asset('images/avatar_no_text.svg') }}" class="img-fluid w-100" alt="..." style="border-top-right-radius:0!important">
+                                    {% endif %}
+                                </a>
+                            </div>
+                            <div class="col-9 col-lg-8">
+                                <div class="card-body d-flex flex-column h-100">
+                                    <div class="d-flex align-items-start justify-content-between">
+                                        <a href="{{ url('people_show',{'slug':person.user.slug }) }}" class="h6 mb-0 text-decoration-none  text-truncate">{{ person }}</a>
+                                    </div>
+
+                                    {% if person.user.hasSchool %}
+                                        <div class="text-truncate text-primary small mb-1">
+                                            <a href="{{ url('people_school',{'bsn':person.user.school.bsn }) }}" class="text-decoration-none">{{ person.user.school }}</a>
+                                        </div>
+                                        <div class="text-truncate small mb-0">{{ person.inYear }} - {{ person.outYear }}</div>
+                                    {% endif %}
+                                    <div  class="d-none d-lg-block text-off small mt-auto">{{ person.examType|trans }}</div>
+                                </div>
+                            </div>
+                        </div>
+                        {% if app.user %}
+                            <div class="card-body rounded-bottom d-flex bg-light-subtle align-items-center">
+                                {% if app.user.userProfiles.count > 0 %}
+                                    {% if person.user != app.user %}
+                                        <div>
+                                            <span class="d-none small me-1 like-number-{{ person.id }}">{{ person.friends.count }}</span>
+                                            <div class="text-off spinner-border spinner-border-sm d-none like-loader-{{ person.id }}" role="status" style="margin-right: 2px"></div>
+                                            {% set like_icon = 'fa-regular fa-star' %}
+                                            {% if app.user.userProfiles.0 in person.friends %}
+                                                {% set like_icon = 'fa-solid fa-star' %}
+                                            {% endif %}
+                                            <a href="#" class="like-button  me-2" data-url="{{ path('api_add_like') }}" data-value="{{ person.id }}"><i class="link-secondary like-icon-{{ person.id }} {{ like_icon }}"></i></a>
+                                        </div>
+                                        <div class="me-2">
+                                            <small class="text-muted" id="like-match-{{ person.id }}">
+                                                {% if app.user.userProfiles.first in person.userProfiles and person in app.user.userProfiles.first.userProfiles %}
+                                                    Ihr kennt euch
+                                                {% endif %}
+                                            </small>
+                                        </div>
+                                        <div class="">
+                                            {% if person.user.isContactable %}
+                                                <a href="{{ url('chat_start',{'slug':person.user.slug}) }}" class="text-decoration-none">
+                                                    <i class="link-primary ti ti-message-2 me-1"></i>
+                                                    <small>Nachricht</small>
+                                                </a>
+                                            {% else %}
+                                                <a href="javascript:void(0)" class="text-muted text-decoration-none disabled">
+                                                    <i class="link-muted ti ti-message-2-off me-1"></i>
+                                                    <small></small>
+                                                </a>
+                                            {% endif %}
+                                        </div>
+                                    {% else %}
+                                        <div>
+                                            <i class="link-primary ti ti-user me-2"></i>
+                                            <small class="text-muted">Das bist du</small>
+                                        </div>
+                                    {% endif %}
+                                {% else %}
+                                    <div>
+                                        <i class="link-primary fa-solid fa-user-plus me-2"></i>
+                                        <a href="{{ url('profile_profile_new') }}" class="text-decoration-none small">Profil anlegen, um Freunde hinzuzufügen</a>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+</div>

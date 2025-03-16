@@ -1,0 +1,19 @@
+<div class="row">
+    <div class="col-12">
+        <nav aria-label="Page Navigation" class="rounded rounded-2 bg-light-subtle shadow-sm d-flex justify-content-center">
+            <ul class="pagination mx-auto mb-0">
+                {% set page_nr = 1 %}
+                {% for person in 1..people_count %}
+                    {% if loop.first or loop.index0 is divisible by(9) %}
+                        <li class="page-item">
+                            <a class="page-link border-top-0 border-bottom-0 {{ page == page_nr ? 'active' : '' }}" href="{{ url('people_index',{'filter':filter,'page':page_nr}) }}">
+                                {{ page_nr }}
+                            </a>
+                        </li>
+                        {% set page_nr = page_nr + 1 %}
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </nav>
+    </div>
+</div>
