@@ -8,6 +8,7 @@ use App\Entity\Event;
 use App\Entity\EventType;
 use App\Entity\Inbound;
 use App\Entity\Newsletter;
+use App\Entity\NewsletterTemplate;
 use App\Entity\OfferType;
 use App\Entity\PersonOffer;
 use App\Entity\PinboardEntry;
@@ -53,7 +54,7 @@ class DashboardController extends AbstractDashboardController
 
 
             foreach ($users as $targetUser) {
-                if ($targetUser->getUserIdentifier() !== $user->getUserIdentifier() and $this->isGranted('ROLE_DASHBOARD',$targetUser) and !in_array('ROLE_ADMIN', $targetUser->getRoles())) {
+                if ($targetUser->getUserIdentifier() !== $user->getUserIdentifier() and count($targetUser->getRoles()) > 1 and !in_array('ROLE_ADMIN', $targetUser->getRoles())) {
                     $userMenu->addMenuItems([
                         MenuItem::linkToUrl(
                         $targetUser->getFullname(),
@@ -163,6 +164,10 @@ class DashboardController extends AbstractDashboardController
 
         if($this->isGranted('ROLE_SCHOOL')) {
             yield MenuItem::section('Newsletter');
+            yield MenuItem::linkToCrud('Strukturvorlagen', 'ti ti-news',NewsletterTemplate::class)
+                ->setCssClass('moderation-link')
+                ->setPermission('ROLE_SCHOOL')
+            ;
 
             yield MenuItem::section('Angebote');
             yield MenuItem::linkToCrud('Angebote', 'ti ti-school',PersonOffer::class)

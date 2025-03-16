@@ -84,12 +84,19 @@ class School
     #[ORM\OneToMany(targetEntity: PersonOffer::class, mappedBy: 'school')]
     private Collection $personOffers;
 
+    /**
+     * @var Collection<int, NewsletterTemplate>
+     */
+    #[ORM\ManyToMany(targetEntity: NewsletterTemplate::class, mappedBy: 'school')]
+    private Collection $newsletterTemplates;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
         $this->events = new ArrayCollection();
         $this->newsletters = new ArrayCollection();
         $this->personOffers = new ArrayCollection();
+        $this->newsletterTemplates = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -376,6 +383,33 @@ class School
             if ($personOffer->getSchool() === $this) {
                 $personOffer->setSchool(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, NewsletterTemplate>
+     */
+    public function getNewsletterTemplates(): Collection
+    {
+        return $this->newsletterTemplates;
+    }
+
+    public function addNewsletterTemplate(NewsletterTemplate $newsletterTemplate): static
+    {
+        if (!$this->newsletterTemplates->contains($newsletterTemplate)) {
+            $this->newsletterTemplates->add($newsletterTemplate);
+            $newsletterTemplate->addSchool($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNewsletterTemplate(NewsletterTemplate $newsletterTemplate): static
+    {
+        if ($this->newsletterTemplates->removeElement($newsletterTemplate)) {
+            $newsletterTemplate->removeSchool($this);
         }
 
         return $this;

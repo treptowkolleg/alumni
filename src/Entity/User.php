@@ -142,6 +142,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
     #[ORM\OneToMany(targetEntity: PersonOffer::class, mappedBy: 'user')]
     private Collection $personOffers;
 
+    /**
+     * @var Collection<int, NewsletterTemplate>
+     */
+    #[ORM\OneToMany(targetEntity: NewsletterTemplate::class, mappedBy: 'user')]
+    private Collection $newsletterTemplates;
+
     public function __construct()
     {
         $this->blogPosts = new ArrayCollection();
@@ -152,6 +158,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
         $this->newsletters = new ArrayCollection();
         $this->followedEvents = new ArrayCollection();
         $this->personOffers = new ArrayCollection();
+        $this->newsletterTemplates = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -732,6 +739,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
             // set the owning side to null (unless already changed)
             if ($personOffer->getUser() === $this) {
                 $personOffer->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, NewsletterTemplate>
+     */
+    public function getNewsletterTemplates(): Collection
+    {
+        return $this->newsletterTemplates;
+    }
+
+    public function addNewsletterTemplate(NewsletterTemplate $newsletterTemplate): static
+    {
+        if (!$this->newsletterTemplates->contains($newsletterTemplate)) {
+            $this->newsletterTemplates->add($newsletterTemplate);
+            $newsletterTemplate->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNewsletterTemplate(NewsletterTemplate $newsletterTemplate): static
+    {
+        if ($this->newsletterTemplates->removeElement($newsletterTemplate)) {
+            // set the owning side to null (unless already changed)
+            if ($newsletterTemplate->getUser() === $this) {
+                $newsletterTemplate->setUser(null);
             }
         }
 
