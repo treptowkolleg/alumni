@@ -16,9 +16,6 @@ class LinkifyExtension extends AbstractExtension
 
     public function linkify($text): array|string|null
     {
-        public function linkify($text)
-    {
-        // Regex für http://, https:// oder www. und optionales Satzzeichen am Ende des Links
         return preg_replace_callback('~(?<!href=["\'])((https?://)?(www\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}[^\s<]*)([.,!?])?~i', function($matches) {
             // Falls der Link mit www. beginnt, füge "http://" hinzu
             if (empty($matches[2])) {
@@ -43,6 +40,5 @@ class LinkifyExtension extends AbstractExtension
             // Wenn kein Satzzeichen, gebe nur den Link aus
             return $finalLink;
         }, $text);
-    }
     }
 }
