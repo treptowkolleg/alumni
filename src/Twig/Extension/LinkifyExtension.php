@@ -16,10 +16,9 @@ class LinkifyExtension extends AbstractExtension
 
     public function linkify($text): array|string|null
     {
-        return preg_replace(
-            '~(https?://[^\s]+)~',
-            '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>',
-            $text
-        );
+        $pattern = '~(?<!href=["\'])(https?://[^\s<]+)~i';
+        $replacement = '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>';
+
+        return preg_replace($pattern, $replacement, $text);
     }
 }
