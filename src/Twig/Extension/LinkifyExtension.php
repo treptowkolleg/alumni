@@ -16,7 +16,7 @@ class LinkifyExtension extends AbstractExtension
 
     public function linkify($text): array|string|null
     {
-        return preg_replace_callback('~(?<!href=["\'])((https?://)?(www\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}[^\s<]*)([.,!?]*)~i', function($matches) {
+        return preg_replace_callback('~(?<!href=["\'])((https?://)?(www\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}[^\s<]*)([.,!?])?~i', function($matches) {
             // Falls der Link mit www. beginnt, füge "http://" hinzu
             if (empty($matches[2])) {
                 $url = 'http://' . $matches[1];
@@ -31,7 +31,7 @@ class LinkifyExtension extends AbstractExtension
             $linkTextWithoutPunctuation = rtrim($linkText, '.,!?');
 
             // Gib den Link ohne das Satzzeichen aus, aber behalte es im href
-            return '<a href="' . $url . '" target="_blank" rel="noopener noreferrer">' . $linkTextWithoutPunctuation . '</a>' . $matches[4];
+            return '<a href="' . $url . '" target="_blank" rel="noopener noreferrer">' . $linkTextWithoutPunctuation . '</a>' . ($matches[4] ? $matches[4] : '');
         }, $text);
     }
 }
