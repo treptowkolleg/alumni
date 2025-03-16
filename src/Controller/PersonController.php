@@ -129,6 +129,7 @@ class PersonController extends AbstractController
                     $entityManager->persist($pinBoardEntry);
                     $entityManager->flush();
                     $this->addFlash("success","Nachricht angepinnt");
+                    return $this->redirectToRoute('people_show', ['slug' => $profile->getSlug()]);
                 }
 
                 $pinBoardEntries = $entryRepository->findBy(['userProfile' => $profile]);
