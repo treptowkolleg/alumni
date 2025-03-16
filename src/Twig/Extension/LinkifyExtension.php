@@ -27,7 +27,7 @@ class LinkifyExtension extends AbstractExtension
             // Entferne den http:// oder https:// Teil aus dem Text
             $linkText = preg_replace('~https?://~', '', $matches[1]);
 
-            // Entferne das letzte Satzzeichen aus dem Linktext
+            // Entferne das letzte Satzzeichen aus dem Linktext, falls es vorhanden ist
             $linkTextWithoutPunctuation = rtrim($linkText, '.,!?');
 
             // Gib den Link ohne das Satzzeichen aus, aber behalte es im href
