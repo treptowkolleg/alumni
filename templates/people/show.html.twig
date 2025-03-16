@@ -189,7 +189,7 @@
                                             {% else %}
                                                 <div class="me-1">######</div>
                                             {% endif %}
-                                            <p class="mb-0">{{ entry.content|nl2br }}</p>
+                                            <p class="mb-0">{{ entry.content|nl2br|linkify }}</p>
                                         </div>
                                     </div>
                                     {% else %}
@@ -198,7 +198,9 @@
                                         </div>
                                     {% endfor %}
                                 </div>
-                                <div class="card-body"></div>
+                                <div class="card-body">
+                                    <small>Vor dem Anpinnen von Beiträgen bitte unsere <a href="{{ url('app_terms') }}" target="_blank">Nutzungsbedingungen</a> beachten.</small>
+                                </div>
                             </div>
                         </div>
                     {% endif %}
