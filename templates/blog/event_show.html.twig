@@ -17,12 +17,12 @@
         <div class="row g-3">
 
             <div class="col-12">
-                <div class="card">
-                    <div class="card-body bg-white border-0 border-bottom border-primary">
-                        <h3 class="h5 mb-0 text-center text-lg-start">Details</h3>
+                <div class="card shadow-sm border-0 rounded rounded-2">
+                    <div class="card-body border-bottom border-primary">
+                        <h3 class="h6 mb-0 text-center text-lg-start">Details</h3>
                         <div class="text-center text-lg-start fw-bolder text-primary text-truncate">{{ post }}</div>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body bg-white">
                         <div class="row row-cols-1 row-cols-lg-3 g-3 align-content-stretch mb-3">
                             <div class="col">
                                     <div class="h6 text-primary">Datum und Uhrzeit</div>
@@ -67,11 +67,11 @@
             </div>
 
             <div class="col-12">
-                <div class="card">
-                    <div class="card-body bg-white border-0 border-bottom border-primary">
-                        <h3 class="h5 mb-0 text-center text-lg-start">Teilnehmende Schulen</h3>
+                <div class="card shadow-sm border-0 rounded rounded-2">
+                    <div class="card-body border-bottom border-primary">
+                        <h3 class="h6 mb-0 text-center text-lg-start">Teilnehmende Schulen</h3>
                     </div>
-                    <div class="list-group list-group-flush">
+                    <div class="list-group list-group-flush bg-white border-bottom">
                         {% for school in post.school|sort((a,b) => a.title <=> b.title) %}
                             <div class="list-group-item p-0">
                                 <a href="{{ url('people_school',{'bsn':school.bsn}) }}" class="ripplelink swipe-link-start d-flex justify-content-between align-items-center p-3">
@@ -82,6 +82,7 @@
 
                         {% endfor %}
                     </div>
+                    <div class="card-body"></div>
                 </div>
             </div>
 
