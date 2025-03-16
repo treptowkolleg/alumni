@@ -29,7 +29,9 @@ class LinkifyExtension extends AbstractExtension
 
             // Gib den Link ohne http:// oder https:// aus, aber behalte es im href
             // Entferne Satzzeichen nach dem Link
-            return '<a href="' . $url . '" target="_blank" rel="noopener noreferrer">' . $linkText . '</a>' . $matches[4];
+            $linkTextWithoutPunctuation = rtrim($linkText, '.,!?');
+
+            return '<a href="' . $url . '" target="_blank" rel="noopener noreferrer">' . $linkTextWithoutPunctuation . '</a>' . $matches[4];
         }, $text);
     }
 }
