@@ -16,16 +16,19 @@ class LinkifyExtension extends AbstractExtension
 
     public function linkify($text): array|string|null
     {
-        $pattern = '~(?<!href=["\'])((https?://)?(www\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}[^\s<]*)~i';
-        $replacement = '<a href="http${2}${3}$1" target="_blank" rel="noopener noreferrer">$1</a>';
-
-        return preg_replace_callback($pattern, function($matches) {
+        return preg_replace_callback('~(?<!href=["\'])((https?://)?(www\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}[^\s<]*)~i', function($matches) {
             // Falls der Link mit www. beginnt, füge "http://" hinzu
             if (empty($matches[2])) {
-                return '<a href="http://' . $matches[1] . '" target="_blank" rel="noopener noreferrer">' . $matches[1] . '</a>';
+                $url = 'http://' . $matches[1];
+            } else {
+                $url = $matches[0];
             }
-            // Ansonsten behalte das bestehende Protokoll
-            return '<a href="' . $matches[0] . '" target="_blank" rel="noopener noreferrer">' . $matches[0] . '</a>';
+
+            // Entferne den http:// oder https:// Teil aus dem Text
+            $linkText = preg_replace('~https?://~', '', $matches[1]);
+
+            // Gib den Link ohne http:// oder https:// aus, aber behalte es im href
+            return '<a href="' . $url . '" target="_blank" rel="noopener noreferrer">' . $linkText . '</a>';
         }, $text);
     }
 }
