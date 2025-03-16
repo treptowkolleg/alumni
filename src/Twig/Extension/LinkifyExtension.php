@@ -32,7 +32,7 @@ class LinkifyExtension extends AbstractExtension
             // Erstelle den Link-Tag mit der URL ohne Satzzeichen
             $finalLink = '<a href="' . $urlWithoutPunctuation . '" target="_blank" rel="noopener noreferrer">' . $linkTextWithoutPunctuation . '</a>';
 
-            // Wenn es ein Satzzeichen gab, hänge es an das Ende des Links an (im Text)
+            // Wenn es ein Satzzeichen gab, hänge es nach dem Link-Tag an den Text
             if ($matches[4]) {
                 return $finalLink . $matches[4];
             }
