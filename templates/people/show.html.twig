@@ -16,114 +16,124 @@
         <div class="row g-3">
 
             <div class="col-lg-3">
-                {% if person.user.image.name %}
-                    <img src="{{ vich_uploader_asset(person.user)|imagine_filter('avatar')  }}" class="img-fluid d-none d-lg-block img-thumbnail w-100" alt="...">
-                    <img src="{{ vich_uploader_asset(person.user)|imagine_filter('avatar_sm')  }}" class="img-fluid d-lg-none d-block img-thumbnail w-100" alt="...">
-                {% else %}
-                    <img src="{{ asset('images/avatar_no_text.svg') }}" class="img-thumbnail d-none d-lg-block img-fluid w-100" alt="...">
-                {% endif %}
+
+
+                <div class="card border-0 shadow-sm rounded rounded-2 sticky-top" style="top:100px; z-index: 1;">
+                    <div class="card-body">
+                        <h3 class="h6 mb-0 text-center text-lg-start">{{ person }}<small class="text-muted ms-1">({{ person.user.userType|trans }})</small></h3>
+                        <div class="mb-0 text-center text-lg-start"><a href="{{ url('people_school',{'bsn':person.user.school.bsn}) }}" class="text-decoration-none">{{ person.user.school }}</a></div>
+                    </div>
+                    {% if person.user.image.name %}
+                        <img src="{{ vich_uploader_asset(person.user)|imagine_filter('avatar')  }}" class="card-img-top  d-none d-lg-block w-100" alt="...">
+                        <img src="{{ vich_uploader_asset(person.user)|imagine_filter('avatar_sm')  }}" class="card-img-top  d-lg-none d-block  w-100" alt="...">
+                    {% else %}
+                        <img src="{{ asset('images/avatar_no_text.svg') }}" class="card-img-top d-none d-lg-block w-100" alt="...">
+                    {% endif %}
+                    <div class="list-group list-group-flush bg-white">
+                        {% if person.user.userType == 'Student' %}
+                            <div class="list-group-item">
+                                <div class="small fw-bold">Abschluss</div>
+                                <div>{{ person.examType|trans }} ({% if person.outYear != "" %}{{ person.outYear }}{% else %}immatrikuliert{% endif %})</div>
+                            </div>
+                        {% endif %}
+                        <div class="list-group-item">
+                            <div class="small fw-bold">Leistungskurse</div>
+                            <ul class="list-inline mb-0">
+                                {% for item in person.performanceCourse %}
+                                    <li class="list-inline-item"><span class="badge text-bg-secondary">{{ item|trans }}</span></li>
+                                {% else %}
+                                    <li class="list-inline-item">unbekannt</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="list-group-item rounded-bottom">
+                            <div class="small fw-bold">Lieblingsfächer</div>
+                            <ul class="list-inline mb-0">
+                                {% for item in person.favoriteSchoolSubjects %}
+                                    <li class="list-inline-item"><span class="badge text-bg-primary">{{ item|trans }}</span></li>
+                                {% else %}
+                                    <li class="list-inline-item">unbekannt</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                    {% if app.user %}
+                        <div class="card-body d-flex bg-light-subtle rounded-bottom align-items-center">
+                            {% if app.user.userProfiles.count > 0 %}
+                                {% if person.user != app.user %}
+                                    <div>
+                                        <span class="d-none small me-1 like-number-{{ person.id }}">{{ person.friends.count }}</span>
+                                        <div class="text-off spinner-border spinner-border-sm d-none like-loader-{{ person.id }}" role="status" style="margin-right: 2px"></div>
+                                        {% set like_icon = 'fa-regular fa-star' %}
+                                        {% if app.user.userProfiles.0 in person.friends %}
+                                            {% set like_icon = 'fa-solid fa-star' %}
+                                        {% endif %}
+                                        <a href="#" class="like-button  me-2" data-url="{{ path('api_add_like') }}" data-value="{{ person.id }}"><i class="link-secondary like-icon-{{ person.id }} {{ like_icon }}"></i></a>
+                                    </div>
+                                    <div class="me-2">
+                                        <small class="text-muted" id="like-match-{{ person.id }}">
+                                            {% if app.user.userProfiles.first in person.userProfiles and person in app.user.userProfiles.first.userProfiles %}
+                                                Ihr kennt euch
+                                            {% endif %}
+                                        </small>
+                                    </div>
+                                    <div class="">
+                                        {% if person.user.isContactable %}
+                                            <a href="{{ url('chat_start',{'slug':person.user.slug}) }}" class="text-decoration-none">
+                                                <i class="link-primary ti ti-message-2 me-1"></i>
+                                                <small>Nachricht</small>
+                                            </a>
+                                        {% else %}
+                                            <a href="javascript:void(0)" class="text-muted text-decoration-none disabled">
+                                                <i class="link-muted ti ti-message-2-off me-1"></i>
+                                                <small></small>
+                                            </a>
+                                        {% endif %}
+                                    </div>
+                                {% else %}
+                                    <div>
+                                        <i class="link-primary ti ti-user me-2"></i><small class="text-muted">Das bist du</small>
+                                    </div>
+                                {% endif %}
+                            {% else %}
+                                <div>
+                                    <i class="link-primary fa-solid fa-user-plus me-2"></i>
+                                    <a href="{{ url('profile_profile_new') }}" class="text-decoration-none small">Profil anlegen, um Freunde hinzuzufügen</a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                </div>
+
             </div>
 
             <div class="col-lg-9">
                 <div class="row g-3">
                     <div class="col-lg-12" id="section-school">
-                        <div class="card bg-white">
+                        <div class="card bg-light-subtle border-0 rounded rounded-2 shadow-sm">
                             <div class="card-body  border-bottom border-primary">
-                                <h3 class="h5 mb-0 text-center text-lg-start">{{ person }}<small class="text-muted ms-1">({{ person.user.userType|trans }})</small></h3>
-                                <div class="mb-0 text-center text-lg-start"><a href="{{ url('people_school',{'bsn':person.user.school.bsn}) }}">{{ person.user.school }}</a></div>
+                                <h3 class="h6 mb-0 text-center text-lg-start">Über {{ person }}</h3>
                             </div>
-                            <div class="list-group list-group-flush">
-                                {% if person.user.userType == 'Student' %}
-                                    <div class="list-group-item">
-                                        <div class="small text-primary">Abschluss</div>
-                                        <div>{{ person.examType|trans }} ({% if person.outYear != "" %}{{ person.outYear }}{% else %}immatrikuliert{% endif %})</div>
-                                    </div>
-                                {% endif %}
-                                <div class="list-group-item">
-                                    <div class="small text-primary">Leistungskurse</div>
-                                    <ul class="list-inline mb-0">
-                                        {% for item in person.performanceCourse %}
-                                            <li class="list-inline-item"><span class="badge text-bg-secondary">{{ item|trans }}</span></li>
-                                        {% else %}
-                                            <li class="list-inline-item">unbekannt</li>
-                                        {% endfor %}
-                                    </ul>
-                                </div>
-                                <div class="list-group-item">
-                                    <div class="small text-primary">Lieblingsfächer</div>
-                                    <ul class="list-inline mb-0">
-                                        {% for item in person.favoriteSchoolSubjects %}
-                                            <li class="list-inline-item"><span class="badge text-bg-primary">{{ item|trans }}</span></li>
-                                        {% else %}
-                                            <li class="list-inline-item">unbekannt</li>
-                                        {% endfor %}
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="card-body">
+
+                            <div class="card-body bg-white">
                                 <p class="card-text">
                                     {{ person.about|default('Es wurde keine Vita hinterlegt.')|striptags|nl2br }}
                                 </p>
                             </div>
                             {% if person.portfolioLink %}
-                                <div class="list-group list-group-flush">
-                                    <a class="list-group-item list-group-item-action" href="{{ person.portfolioLink }}" target="_blank"><i class="text-primary ti ti-external-link me-2"></i>Portfolio-Website</a>
+                                <div class="list-group list-group-flush bg-white">
+                                    <a class="list-group-item border-top border-bottom list-group-item-action ripplelink swipe-link-start" href="{{ person.portfolioLink }}" target="_blank"><i class="text-primary ti ti-external-link me-2"></i>Portfolio-Website</a>
                                 </div>
                             {% endif %}
-                            {% if app.user %}
-                                <div class=" pt-2 pb-2 card-body d-flex bg-light-subtle align-items-center">
-                                    {% if app.user.userProfiles.count > 0 %}
-                                        {% if person.user != app.user %}
-                                            <div>
-                                                <span class="d-none small me-1 like-number-{{ person.id }}">{{ person.friends.count }}</span>
-                                                <div class="text-off spinner-border spinner-border-sm d-none like-loader-{{ person.id }}" role="status" style="margin-right: 2px"></div>
-                                                {% set like_icon = 'fa-regular fa-star' %}
-                                                {% if app.user.userProfiles.0 in person.friends %}
-                                                    {% set like_icon = 'fa-solid fa-star' %}
-                                                {% endif %}
-                                                <a href="#" class="like-button  me-2" data-url="{{ path('api_add_like') }}" data-value="{{ person.id }}"><i class="link-secondary like-icon-{{ person.id }} {{ like_icon }}"></i></a>
-                                            </div>
-                                            <div class="me-2">
-                                                <small class="text-muted" id="like-match-{{ person.id }}">
-                                                    {% if app.user.userProfiles.first in person.userProfiles and person in app.user.userProfiles.first.userProfiles %}
-                                                        Ihr kennt euch
-                                                    {% endif %}
-                                                </small>
-                                            </div>
-                                            <div class="">
-                                                {% if person.user.isContactable %}
-                                                    <a href="{{ url('chat_start',{'slug':person.user.slug}) }}" class="text-decoration-none">
-                                                        <i class="link-primary ti ti-message-2 me-1"></i>
-                                                        <small>Nachricht</small>
-                                                    </a>
-                                                {% else %}
-                                                    <a href="javascript:void(0)" class="text-muted text-decoration-none disabled">
-                                                        <i class="link-muted ti ti-message-2-off me-1"></i>
-                                                        <small></small>
-                                                    </a>
-                                                {% endif %}
-                                            </div>
-                                        {% else %}
-                                            <div>
-                                                <i class="link-primary ti ti-user me-2"></i><small class="text-muted">Das bist du</small>
-                                            </div>
-                                        {% endif %}
-                                    {% else %}
-                                        <div>
-                                            <i class="link-primary fa-solid fa-user-plus me-2"></i>
-                                            <a href="{{ url('profile_profile_new') }}" class="text-decoration-none small">Profil anlegen, um Freunde hinzuzufügen</a>
-                                        </div>
-                                    {% endif %}
-                                </div>
-                            {% endif %}
+                            <div class="card-body"></div>
                         </div>
                     </div>
                     <div class="col-12">
-                        <div class="card bg-white">
+                        <div class="card bg-light-subtle border-0 rounded rounded-2 shadow-sm">
                             <div class="card-body border-bottom border-primary">
-                                <h3 class="h5 mb-0 text-center text-lg-start">Nimmt teil</h3>
+                                <h3 class="h6 mb-0 text-center text-lg-start">Nimmt teil</h3>
                             </div>
-                            <div class="list-group list-group-flush border-bottom-0">
+                            <div class="list-group list-group-flush border-bottom-0 bg-white">
                                 {% if person.user.isEventsVisible %}
                                     {% for post in person.user.followedEvents|sort((a, b) => a.startDate <=> b.startDate) %}
                                         {% if post.endDate|date('Ymd') >= date('now')|date('Ymd')%}
@@ -141,43 +151,35 @@
                                 {% endif %}
                             </div>
                             <div class="h-100"></div>
-                            <div class="list-group list-group-flush">
-                                <a href="{{ url('event_index') }}" class="list-group-item list-group-item-action link-primary d-flex align-items-center justify-content-between">
+                            <div class="list-group list-group-flush bg-white">
+                                <a href="{{ url('event_index') }}" class="ripplelink swipe-link-start border-bottom border-top list-group-item list-group-item-action link-primary d-flex align-items-center justify-content-between">
                                     <div>weitere Termine finden</div>
                                     <i class="ti ti-chevron-right"></i>
                                 </a>
                             </div>
+                            <div class="card-body"></div>
                         </div>
                     </div>
 
                     {% if person.user.hasPinnboard %}
                         <div class="col-12">
-                            <div class="card bg-white">
+                            <div class="card bg-light-subtle border-0 rounded rounded-2 shadow-sm">
                                 <div class="card-body border-bottom border-primary">
-                                    <h3 class="h5 mb-0 text-center text-lg-start">Pinnwand</h3>
+                                    <h3 class="h6 mb-0 text-center text-lg-start">Pinnwand</h3>
                                 </div>
                                 {% if app.user %}
-                                <div class="">
-                                    <form method="post">
-                                        <label class="d-flex justify-content-between align-items-center w-100">
-                                            <textarea maxlength="500" id="emoji-textarea" class="form-control bg-light ps-3 w-100 rounded-0 border-0" rows="5" required name="comment" placeholder="Notiz hinterlassen (max. 500 Zeichen)"></textarea>
-                                        </label>
-                                        <button class="btn btn-primary border-top-0" type="submit"><i class="ti ti-pin me-1"></i>Anpinnen</button>
-                                        <input type="hidden" name="token" value="{{ csrf_token('pinboard-comment') }}">
-                                    </form>
-                                    <script>
-                                        $(document).ready(function() {
-                                            $("#emoji-textarea").emojioneArea({
-                                                pickerPosition: "bottom",  // Emoji-Picker unterhalb öffnen
-                                                tonesStyle: "bullet",      // Hautton-Auswahl als Punkte
-                                                filtersPosition: "bottom", // Kategorien unten anzeigen
-                                                autocomplete: true
-                                            });
-                                        });
-                                    </script>
-                                </div>
+                                    <div class="card-body p-0">
+                                        <form method="post" class="needs-validation" novalidate>
+                                            <input type="file" class="form-control" disabled />
+                                            <label class="d-flex justify-content-between align-items-center w-100">
+                                                <textarea maxlength="500" class="form-control bg-light ps-3 w-100 rounded-0 border-0" rows="5" required name="comment" placeholder="Notiz hinterlassen (max. 500 Zeichen)"></textarea>
+                                            </label>
+                                            <button class="btn btn-primary border-top-0" type="submit"><i class="ti ti-pin me-1"></i>Anpinnen</button>
+                                            <input type="hidden" name="token" value="{{ csrf_token('pinboard-comment') }}">
+                                        </form>
+                                    </div>
                                 {% endif %}
-                                <div class="list-group list-group-flush border-top-1">
+                                <div class="list-group list-group-flush bg-white border-top border-bottom">
                                     {% for entry in pinboard_entries %}
                                     <div class="list-group-item">
                                         <div class="">
@@ -196,7 +198,7 @@
                                         </div>
                                     {% endfor %}
                                 </div>
-
+                                <div class="card-body"></div>
                             </div>
                         </div>
                     {% endif %}
