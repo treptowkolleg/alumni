@@ -27,10 +27,10 @@ class LinkifyExtension extends AbstractExtension
             // Entferne den http:// oder https:// Teil aus dem Text
             $linkText = preg_replace('~https?://~', '', $matches[1]);
 
-            // Gib den Link ohne http:// oder https:// aus, aber behalte es im href
-            // Entferne Satzzeichen nach dem Link
+            // Entferne das Satzzeichen direkt am Ende des Links
             $linkTextWithoutPunctuation = rtrim($linkText, '.,!?');
 
+            // Gib den Link ohne das Satzzeichen aus, aber behalte es im href
             return '<a href="' . $url . '" target="_blank" rel="noopener noreferrer">' . $linkTextWithoutPunctuation . '</a>' . $matches[4];
         }, $text);
     }
