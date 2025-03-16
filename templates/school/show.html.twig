@@ -23,9 +23,8 @@
 
 {% block page_header %}
 <section class="py-3">
-    <div class="container px-0">
+    <div class="container">
 
-        <div class="mb-3 px-3 px-sm-0">
             <div class="nav nav-underline mb-0">
                 <a href="javascript:void(0)" onclick="history.back()" class="nav-item nav-link {{ selected|default() == 'index' ? 'active' : '' }} text-nowrap">
                     <i class="ri-arrow-left-double-line text-primary"></i>
@@ -42,7 +41,6 @@
                     </a>
                 {% endif %}
             </div>
-        </div>
 
         <div class="row g-3">
             <div class="col-lg-12" id="section-school">
