@@ -14,6 +14,8 @@
 
         {{ include('component/news_subbar.html.twig',{'selected':'index'}) }}
 
+        {{ include('component/_pagination.html.twig',{'route_url':'blog_news_index', 'post_count':post_count, 'cut': 10}) }}
+
         <div class="row g-3">
 
             <div class="col-lg-12">
@@ -21,11 +23,12 @@
                     {% if loop.index <= 10 %}
                         {% if post.isPublished %}
                             <div class="col">
-                                <div class="card border-0 mb-3 border-bottom h-100">
+                                <div class="card shadow-sm rounded rounded-2 mb-3 border-0 h-100">
                                     <div class="row g-1">
                                         {% if post.blogPostImage %}
                                             <div class="col-12 col-lg-3 order-1 order-lg-0">
-                                                <img src="{{ asset(post.blogPostImageUrl)|imagine_filter('post_thumbnail')  }}" alt="{{ post }}" class="img-fluid">
+                                                <img src="{{ asset(post.blogPostImageUrl)|imagine_filter('post_thumbnail')  }}" alt="{{ post }}" class="d-none d-lg-block rounded-start img-fluid">
+                                                <img src="{{ asset(post.blogPostImageUrl)|imagine_filter('post_thumbnail')  }}" alt="{{ post }}" class="d-block d-lg-none img-fluid">
                                             </div>
                                             <div class="col-12 col-lg-9 order-0 order-lg-2">
                                                 <div class="card-body">
