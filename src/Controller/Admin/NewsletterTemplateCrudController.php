@@ -99,16 +99,16 @@ class NewsletterTemplateCrudController extends AbstractCrudController
                 'yearly' => 'y',
             ]),
             FormField::addColumn('col-xl-12'),
-            BooleanField::new('useAllReceivers')
+            BooleanField::new('useAllReceivers')->onlyOnForms()
                 ->setPermission('ROLE_ADMIN')
                 ->setHelp('Nur für Admins sichtbar. Sendet an alle Empfänger.'),
 
-            FormField::addTab('Optionen')->onlyOnForms(),
-            BooleanField::new('showRecentPins'),
-            BooleanField::new('showEvents'),
-            BooleanField::new('showRecentPosts'),
-            BooleanField::new('showRecentNews'),
-            BooleanField::new('showOffers'),
+            FormField::addTab('Optionen'),
+            BooleanField::new('showRecentPins')->onlyOnForms(),
+            BooleanField::new('showEvents')->onlyOnForms(),
+            BooleanField::new('showRecentPosts')->onlyOnForms(),
+            BooleanField::new('showRecentNews')->onlyOnForms(),
+            BooleanField::new('showOffers')->onlyOnForms(),
 
 
         ];
