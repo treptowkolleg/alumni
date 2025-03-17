@@ -1,0 +1,148 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36" version="26.1.0">
+  <diagram name="Seite-1" id="PDeIzRHSFNC1ZrDU0zI0">
+    <mxGraphModel dx="1434" dy="1915" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="EgKI8YaGob8pg07PiZ9z-48" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="EgKI8YaGob8pg07PiZ9z-1" target="EgKI8YaGob8pg07PiZ9z-29">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="EgKI8YaGob8pg07PiZ9z-1" value="Start" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.start_2;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="90" y="-200" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="EgKI8YaGob8pg07PiZ9z-5" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="EgKI8YaGob8pg07PiZ9z-2" target="EgKI8YaGob8pg07PiZ9z-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="EgKI8YaGob8pg07PiZ9z-2" value="Empfängerliste erstellen" style="whiteSpace=wrap;html=1;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="280" y="220" width="240" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="EgKI8YaGob8pg07PiZ9z-7" value="ja" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="EgKI8YaGob8pg07PiZ9z-4" target="EgKI8YaGob8pg07PiZ9z-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="EgKI8YaGob8pg07PiZ9z-14" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="EgKI8YaGob8pg07PiZ9z-4" target="EgKI8YaGob8pg07PiZ9z-13">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="EgKI8YaGob8pg07PiZ9z-15" value="nein" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="EgKI8YaGob8pg07PiZ9z-14">
+          <mxGeometry x="-0.032" y="1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="EgKI8YaGob8pg07PiZ9z-4" value="ungesendete&lt;div&gt;Adressen?&lt;/div&gt;" style="rhombus;whiteSpace=wrap;html=1;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="330" y="290" width="140" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="EgKI8YaGob8pg07PiZ9z-9" value="Versand dokumentieren" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="EgKI8YaGob8pg07PiZ9z-6" target="EgKI8YaGob8pg07PiZ9z-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="EgKI8YaGob8pg07PiZ9z-42" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="EgKI8YaGob8pg07PiZ9z-6" target="EgKI8YaGob8pg07PiZ9z-41">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="EgKI8YaGob8pg07PiZ9z-6" value="100 Nachrichten senden" style="whiteSpace=wrap;html=1;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="280" y="500" width="240" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="EgKI8YaGob8pg07PiZ9z-8" value="" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.database;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="730" y="490" width="60" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="EgKI8YaGob8pg07PiZ9z-13" value="Ende" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="720" y="320" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="EgKI8YaGob8pg07PiZ9z-16" value="&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;Eigener E-Mail-Server erlaubt 500 E-Mails/Stunde.&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;Zur Sicherheit würde ich aber nur 100 E-Mails/Stunde senden.&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;SendGrid erlaubt kostenfrei nur 100/Tag. Daher würde ich SendGrid fallen lassen.&lt;br&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;Denn: E-Mail-Versand funktioniert inzwischen ohne Mail-Drop oder SPAM-Alert.&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;E-Mails sollen generell nur zwischen 8 und 20 Uhr gesendet werden.&lt;br&gt;&lt;/div&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.annotation_1;align=left;pointerEvents=1;" vertex="1" parent="1">
+          <mxGeometry x="90" y="840" width="50" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="EgKI8YaGob8pg07PiZ9z-23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="EgKI8YaGob8pg07PiZ9z-21" target="EgKI8YaGob8pg07PiZ9z-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="EgKI8YaGob8pg07PiZ9z-24" value="ja" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="EgKI8YaGob8pg07PiZ9z-23">
+          <mxGeometry x="-0.2286" y="2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="EgKI8YaGob8pg07PiZ9z-51" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="EgKI8YaGob8pg07PiZ9z-21">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="760" y="80" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="EgKI8YaGob8pg07PiZ9z-52" value="nein" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="EgKI8YaGob8pg07PiZ9z-51">
+          <mxGeometry x="0.0293" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="EgKI8YaGob8pg07PiZ9z-21" value="Versand für&lt;div&gt;heute&lt;div&gt;geplant?&lt;/div&gt;&lt;/div&gt;" style="rhombus;whiteSpace=wrap;html=1;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="330" y="10" width="140" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="EgKI8YaGob8pg07PiZ9z-30" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="EgKI8YaGob8pg07PiZ9z-29" target="EgKI8YaGob8pg07PiZ9z-21">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="EgKI8YaGob8pg07PiZ9z-31" value="ja" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="EgKI8YaGob8pg07PiZ9z-30">
+          <mxGeometry x="-0.12" y="1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="EgKI8YaGob8pg07PiZ9z-49" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="EgKI8YaGob8pg07PiZ9z-29" target="EgKI8YaGob8pg07PiZ9z-13">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="EgKI8YaGob8pg07PiZ9z-50" value="nein" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="EgKI8YaGob8pg07PiZ9z-49">
+          <mxGeometry x="-0.5974" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="EgKI8YaGob8pg07PiZ9z-29" value="Ein neuer&lt;div&gt;Tag?&lt;/div&gt;" style="rhombus;whiteSpace=wrap;html=1;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="330" y="-230" width="140" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="EgKI8YaGob8pg07PiZ9z-36" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="EgKI8YaGob8pg07PiZ9z-35" target="EgKI8YaGob8pg07PiZ9z-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="EgKI8YaGob8pg07PiZ9z-37" value="Vorlage holen" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="EgKI8YaGob8pg07PiZ9z-36">
+          <mxGeometry x="-0.5529" y="4" relative="1" as="geometry">
+            <mxPoint x="41" y="4" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="EgKI8YaGob8pg07PiZ9z-35" value="" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.database;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="90" y="210" width="60" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="EgKI8YaGob8pg07PiZ9z-38" value="" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.database;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="650" y="210" width="60" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="EgKI8YaGob8pg07PiZ9z-39" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="EgKI8YaGob8pg07PiZ9z-2" target="EgKI8YaGob8pg07PiZ9z-38">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="EgKI8YaGob8pg07PiZ9z-40" value="Liste speichern" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="EgKI8YaGob8pg07PiZ9z-39">
+          <mxGeometry x="0.0615" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="EgKI8YaGob8pg07PiZ9z-43" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="EgKI8YaGob8pg07PiZ9z-41">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="400" y="580" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="560" y="680" />
+              <mxPoint x="560" y="580" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="EgKI8YaGob8pg07PiZ9z-44" value="nein" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="EgKI8YaGob8pg07PiZ9z-43">
+          <mxGeometry x="-0.2057" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="EgKI8YaGob8pg07PiZ9z-45" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="EgKI8YaGob8pg07PiZ9z-41" target="EgKI8YaGob8pg07PiZ9z-4">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="200" y="360" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="400" y="800" />
+              <mxPoint x="200" y="800" />
+              <mxPoint x="200" y="360" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="EgKI8YaGob8pg07PiZ9z-47" value="ja" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="EgKI8YaGob8pg07PiZ9z-45">
+          <mxGeometry x="-0.6634" y="3" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="EgKI8YaGob8pg07PiZ9z-41" value="eine Stunde&lt;div&gt;vergangen?&lt;/div&gt;" style="rhombus;whiteSpace=wrap;html=1;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="330" y="610" width="140" height="140" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

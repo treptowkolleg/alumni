@@ -180,7 +180,7 @@
                                     </div>
                                 {% endif %}
                                 <div class="list-group list-group-flush bg-white border-top border-bottom">
-                                    {% for entry in pinboard_entries %}
+                                    {% for entry in pinboard_entries|sort((a, b) => b.created <=> a.created) %}
                                     <div class="list-group-item">
                                         <div class="">
                                             {% if (entry.writer.networkState == 'public') or (app.user and entry.writer.networkState == 'registered') %}
