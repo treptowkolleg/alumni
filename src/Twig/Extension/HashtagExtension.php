@@ -19,9 +19,9 @@ class HashtagExtension extends AbstractExtension
     public function hashtagFilter($text): array|string|null
     {
         // Regex für Hashtags
-        return preg_replace_callback('/#(\w+)/', function($matches) {
+        return preg_replace_callback('/#([\p{L}\p{N}_-]+)/u', function($matches) {
             // Verlinkt den Hashtag zu einer Seite (z. B. /hashtag/{Hashtag})
-            return '<a href="#' . $matches[1] . '">#' . $matches[1] . '</a>';
+            return '<a href="#' . urlencode($matches[1]) . '">#' . htmlspecialchars($matches[1]) . '</a>';
         }, $text);
     }
 
