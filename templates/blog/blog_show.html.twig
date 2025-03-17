@@ -26,7 +26,7 @@
                         {% if post.imageCityUrl %}
                             <span class=" fst-italic"><strong><a href="{{ post.imageCityUrl }}" target="_blank">{{ post.imageCite ? post.imageCite : '' }}</a></strong></span>
                             {% else %}
-                                <span class="fst-italic"><strong>{{ post.imageCite ? 'Foto: ' ~ post.imageCite : '' }}</strong></span>
+                                <span class="fst-italic"><strong>{{ post.imageCite ? post.imageCite : '' }}</strong></span>
                         {% endif %}
                         </div>
                     {% endif %}
