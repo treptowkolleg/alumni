@@ -104,11 +104,11 @@ class BlogPostCrudController extends AbstractCrudController
 
             FormField::addTab('Beitragsbild')->onlyOnForms(),
             FormField::addColumn('col-xl-9'),
-            ImageField::new('blogPostImage')->onlyOnForms()
+            ImageField::new('blogPostImage')->setRequired(true)->onlyOnForms()
                 ->setBasePath('images/blogpost')
                 ->setUploadDir('public/images/blogpost')
                 ->setUploadedFileNamePattern('[slug]-[timestamp].[extension]'),
-            TextField::new('imageCite')->onlyOnForms(),
+            TextField::new('imageCite')->setRequired(true)->onlyOnForms(),
             TextField::new('imageCityUrl')->onlyOnForms(),
 
 
