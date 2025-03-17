@@ -23,9 +23,9 @@
                         {% if loop.index <= 6 %}
                             {% if post.isPublished %}
                                 <div class="col">
-                                    <div class="card text-white bg-white border-primary h-100">
+                                    <div class="card text-white bg-white border-0 shadow-sm rounded rounded-2 h-100">
                                         {% if post.blogPostImage %}
-                                            <img class="card-img" src="{{ asset(post.blogPostImageUrl)|imagine_filter('post_thumbnail')  }}" alt="{{ post }}" style="filter: brightness(60%);">
+                                            <img class="card-img rounded rounded-2" src="{{ asset(post.blogPostImageUrl)|imagine_filter('post_thumbnail')  }}" alt="{{ post }}" style="filter: brightness(60%);">
                                         {% else %}
                                             <img class="card-img" src="https://dummyimage.com/800x480/294a70/294a70&text=Preview" alt="{{ post }}" style="filter: brightness(60%);">
                                         {% endif %}
@@ -48,18 +48,18 @@
             </div>
 
             <div class="col-lg-3">
-                <div class="card bg-white">
-                    <div class="card-body  border-bottom border-primary">
-                        <h3 class="h5 mb-0 text-center text-lg-start">Dein Beitrag</h3>
+                <div class="card bg-light-subtle border-0 shadow-sm rounded rounded-2">
+                    <div class="card-body border-bottom border-primary">
+                        <h3 class="h6 mb-0 text-center text-lg-start">Dein Beitrag</h3>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body bg-white">
                         <p>
                             Reiche einen eigenen Artikel zur Veröffentlichung im Themen-Blog ein. Beachte dabei unsere
                             Richtlinien für Veröffentlichungen von Beiträgen.
                         </p>
                         <a href="#"><i class="fa-regular fa-fw fa-file-pdf me-2"></i>Leitfaden - Community-Beiträge</a>
                         <p class="pt-3">
-                            Sende deinen Beitrag an <a href="#">redaktion@treptowkolleg.de</a>.
+                            Sende deinen Beitrag an <a href="mailto:service@alumni-portal.org">service@alumni-portal.org</a>.
                         </p>
                         <p class="mb-0">
                             Unter bestimmten Voraussetzungen kann für dich das <strong>Authoring</strong> freigeschaltet
@@ -67,6 +67,7 @@
                             gelten auch hier.
                         </p>
                     </div>
+                    <div class="card-body"></div>
                 </div>
             </div>
 
