@@ -13,7 +13,7 @@
         <div class="row g-3 align-content-stretch">
             {% if not app.user.isVerified or not app.user.userProfiles.count > 0 %}
                 <div class="col-12">
-                    <div class="card bg-white">
+                    <div class="card bg-light-subtle border-0 shadow-sm rounded rounded-2">
                         <div class="card-body  border-bottom border-primary">
                             <h3 class="h5 text-center text-lg-start">Erste Schritte</h3>
                             <p class="card-text">Bitte richte deinen Account vollständig ein, um alle Bereiche des Alumni-Portals nutzen zu können.</p>
@@ -33,9 +33,9 @@
             {% endif %}
             {% if app.user.isVerified and app.user.userProfiles.count > 0 %}
                 <div class="col-lg-4 order-3 order-lg-0">
-                    <div class="card bg-white h-100">
+                    <div class="card bg-light-subtle border-0 shadow-sm rounded rounded-2 h-100">
                         <div class="card-body  border-bottom border-primary">
-                            <h3 class="h5 mb-0 text-center text-lg-start">Kontakte</h3>
+                            <h3 class="h6 mb-0 text-center text-lg-start">Kontakte</h3>
                         </div>
                         <div class="list-group list-group-flush border-bottom-0">
                             {% for chat in chats|sort %}
@@ -59,19 +59,20 @@
                             {% endfor %}
                         </div>
                         <div class="h-100"></div>
-                        <div class="list-group list-group-flush">
+                        <div class="list-group list-group-flush border-top border-bottom">
                             <a href="{{ url('people_index') }}" class="list-group-item list-group-item-action link-primary d-flex align-items-center justify-content-between">
                                 <div>weitere Personen finden</div>
                                 <i class="ti ti-chevron-right"></i>
                             </a>
                         </div>
+                        <div class="card-body"></div>
                     </div>
                 </div>
 
                 <div class="col-lg-8 order-0 order-lg-3">
-                    <div class="card bg-white">
+                    <div class="card bg-light-subtle border-0 shadow-sm rounded rounded-2">
                         <div class="card-body border-bottom border-primary">
-                            <h3 class="h5 mb-0 text-center text-lg-start">Veranstaltungen</h3>
+                            <h3 class="h6 mb-0 text-center text-lg-start">Veranstaltungen</h3>
                         </div>
                         <div class="list-group list-group-flush border-bottom-0">
                             {% for post in app.user.followedEvents|sort((a, b) => a.startDate <=> b.startDate) %}
@@ -85,26 +86,28 @@
                             {% endfor %}
                         </div>
                         <div class="h-100"></div>
-                        <div class="list-group list-group-flush">
+                        <div class="list-group list-group-flush border-top border-bottom">
                             <a href="{{ url('event_index') }}" class="list-group-item list-group-item-action link-primary d-flex align-items-center justify-content-between">
                                 <div>weitere Termine finden</div>
                                 <i class="ti ti-chevron-right"></i>
                             </a>
                         </div>
+                        <div class="card-body"></div>
                     </div>
                 </div>
 
                 <div class="col-12 order-3">
-                    <div class="card bg-white">
+                    <div class="card bg-light-subtle border-0 shadow-sm rounded rounded-2">
                         <div class="card-body  border-bottom border-primary">
-                            <h3 class="h5 text-center text-lg-start mb-0">Aktuelle Stellenangebote <span class=" ms-2 badge bg-warning-subtle text-warning rounded fw-normal">dev</span></h3>
+                            <h3 class="h6 text-center text-lg-start mb-0">Aktuelle Stellenangebote <span class=" ms-2 badge bg-warning-subtle text-warning rounded fw-normal">dev</span></h3>
                             <p class="card-text text-center fw-bolder text-lg-start text-primary">In meiner Stadt</p>
                         </div>
-                        <div class="list-group list-group-flush">
+                        <div class="list-group list-group-flush border-bottom">
                             {% for offer in offers %}
                                 {{ include('component/_offer_fav_list.html.twig') }}
                             {% endfor %}
                         </div>
+                        <div class="card-body"></div>
                     </div>
                 </div>
 
