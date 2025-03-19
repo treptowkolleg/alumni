@@ -234,3 +234,9 @@ daily: Tage
 weekly: Wochen
 monthly: Monate
 yearly: Jahre
+NewsletterTemplate: Vorlage
+NewsletterQueue: Warteschlange
+Receiver Email: Empfänger
+Send Date: Versand am
+Send: Gesendet
+Template: Vorlage

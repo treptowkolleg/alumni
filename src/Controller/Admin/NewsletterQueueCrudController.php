@@ -33,6 +33,10 @@ class NewsletterQueueCrudController extends AbstractCrudController
     {
         return $actions
             ->setPermission(Action::INDEX, 'ROLE_ADMIN')
+            ->setPermission(Action::NEW, 'ROLE_NONE')
+            ->setPermission(Action::EDIT, 'ROLE_NONE')
+            ->setPermission(Action::DELETE, 'ROLE_NONE')
+            ->setPermission(Action::BATCH_DELETE, 'ROLE_ADMIN')
             ;
     }
 
