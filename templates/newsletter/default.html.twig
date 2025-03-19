@@ -1,39 +1,162 @@
-<p>Hallo {{ user.fullname }},</p>
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Alumni-Portal Newsletter - {{ config.title }}</title>
+    <style>
+        body, html {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: rgb(248, 249, 250);
+        }
 
-{{ config.description|raw }}
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
 
-{% if user %}
-    <h2>Folgende Updates gibt es:</h2>
-    <h3>{{ user.school.title }}</h3>
-    <p>
-        Aktuell sind <b>{{ user.school.users.count }}</b> Alumni deiner Schule registriert.
-    </p>
+        .header {
+            border-bottom: 3px solid rgb(41, 74, 112);
+            margin-bottom: 1rem;
+            padding: .5rem 0;
+            background-color: #ffffff;
+        }
 
-    <h3>Kommende Veranstaltungen</h3>
-    <ul>
-        {% for event in user.school.events %}
-            {% if event.endDate|date('Ymd') >= date('now')|date('Ymd')%}
-                <li>{{ event.title }} am {{ event.startDate|date('d.m.Y') }}</li>
-            {% endif %}
-        {% else %}
-            <li>Keine Veranstaltungen geplant</li>
-        {% endfor %}
-    </ul>
+        .content {
+            padding: 1rem 0;
+        }
 
-    <h3>Aktuelle Stellenangebote</h3>
-    <ul>
-        {% for offer in user.school.personOffers %}
-            <li>{{ offer.title }} ({{ offer.type.title }})</li>
-        {% else %}
-            <li>Keine Stellen offen</li>
-        {% endfor %}
-    </ul>
+        .card {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            border-radius: 4px;
+            background-color: #ffffff;
+            margin-bottom: 1.5rem;
+        }
 
-    <p>
-        Mit besten Grüßen<br>
-        Dein Alumni-Portal
-    </p>
+        .card-body:not(:last-child) {
+            border-bottom: 1px solid rgb(229, 229, 234);
+        }
 
-    <small>Dies ist ein Systemtest.</small>
+        .card-body, .card-header {
+            display: block;
+            padding: 1rem;
+            text-decoration: none;
+        }
 
-{% endif %}
+        .card-header {
+            background-color: rgba(229, 229, 234,.25);
+            border-bottom: 1px solid rgb(41, 74, 112);
+        }
+
+        .footer {
+            background-color: rgba(199, 199, 204,.25);
+            padding: 1rem 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo > img {
+            padding: .5rem;
+            margin-right: .5rem;
+            border-right: 3px solid rgb(41, 74, 112);
+        }
+
+        h1 {
+            font-size: 1.25rem;
+            font-weight: normal;
+            margin: 0;
+        }
+
+        h2, h3, h4, h5 {
+            font-size: 1rem;
+            font-weight: bolder;
+            margin: 0;
+            color: rgb(41, 74, 112);
+        }
+
+        a {
+            color: rgb(41, 74, 112)!important;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div class="container">
+        <div class="logo">
+            <img src="{{ svg_base64 }}" onerror="this.src='{{ absolute_url(logo_url) }}'" height="24" class="" alt="logo">
+            <div>
+                <h1>Alumni Portal</h1>
+                <h2>Newsletter</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="content">
+    <div class="container">
+        <p>Hallo {{ user.fullname }},</p>
+        {{ config.description|raw }}
+        <p></p>
+
+        {% if user %}
+            <div class="card">
+                <div class="card-header">
+                    <h3>{{ user.school.title }}</h3>
+                </div>
+                <div class="card-body">Aktuell sind <b>{{ user.school.users.count }}</b> Alumni deiner Schule registriert.</div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3>Kommende Veranstaltungen</h3>
+                </div>
+                {% for event in user.school.events %}
+                    {% if event.endDate|date('Ymd') >= date('now')|date('Ymd')%}
+                        <a href="{{ url('event_show',{'slug':event.slug}) }}" class="card-body">
+                            <div>{{ event.title }}</div>
+                            <small>{{ event.startDate|date('d.m.Y') }}</small>
+                        </a>
+                    {% endif %}
+                {% else %}
+                    <div class="card-body">Keine Veranstaltungen geplant</div>
+                {% endfor %}
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3>Aktuelle Stellenangebote</h3>
+                </div>
+                {% for offer in user.school.personOffers %}
+                    <div class="card-body">
+                        <div>{{ offer.title }}</div>
+                        <small>{{ offer.type.title }}</small>
+                    </div>
+                {% else %}
+                    <div class="card-body">Keine offenen Stellen.</div>
+                {% endfor %}
+            </div>
+
+        {% endif %}
+
+        <p>Vielen Dank für deine Unterstzützung.</p>
+        <p>Dein Alumni-Portal</p>
+    </div>
+</div>
+
+<div class="footer">
+    <div class="container">
+        <p>
+            &copy; 2024 Alumni am Treptow-Kolleg Berlin<br>
+            <a href="https://www.alumni-portal.org/">www.alumni-portal.org</a>
+        </p>
+    </div>
+</div>
+
+</body>
+</html>

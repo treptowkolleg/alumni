@@ -11,6 +11,7 @@ use App\Repository\UserRepository;
 use DatePeriod;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\Asset\Packages;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -29,10 +30,13 @@ class NewsletterSendCommand extends Command
 {
     private EntityManagerInterface $em;
     private MailerInterface $mailer;
-    public function __construct(EntityManagerInterface $entityManager, MailerInterface $mailer)
+
+    private Packages $assets;
+    public function __construct(EntityManagerInterface $entityManager, MailerInterface $mailer, Packages $assets)
     {
         $this->em = $entityManager;
         $this->mailer = $mailer;
+        $this->assets = $assets;
         parent::__construct();
     }
 
@@ -49,12 +53,20 @@ class NewsletterSendCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $arg1 = $input->getArgument('arg1');
 
+        $logoUrl = $this->assets->getUrl('images/logo.svg');
+        $projectDir = $this->getApplication()->getKernel()->getProjectDir();
+        $logoPath = $projectDir . '/public' . parse_url($logoUrl, PHP_URL_PATH);
+
+        $svgBase64 = 'data:image/svg+xml;base64,' . base64_encode(file_get_contents($logoPath));
+
         $queue = $this->em->getRepository(NewsletterQueue::class)->findBy(['send' => false], orderBy: ['sendDate' => 'DESC'], limit: 100);
 
         foreach ($queue as $receiver) {
             $now = new \DateTimeImmutable();
             if($receiver->getSendDate() <= $now) {
                 $user = $this->em->getRepository(User::class)->findOneBy(['email' => $receiver->getReceiverEmail()]);
+
+
 
                 $email = (new TemplatedEmail())
                     ->from(new Address('service@alumni-portal.org', 'Alumni-Portal'))
@@ -63,7 +75,9 @@ class NewsletterSendCommand extends Command
                     ->htmlTemplate('newsletter/default.html.twig')
                     ->context([
                         'user' => $user,
-                        'config' => $receiver->getTemplate()
+                        'config' => $receiver->getTemplate(),
+                        'svg_base64' => $svgBase64,
+                        'logo_url' => $logoUrl // Fallback URL
                     ])
                 ;
 
