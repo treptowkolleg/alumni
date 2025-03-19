@@ -15,15 +15,13 @@
                                 </a>
                             </div>
                             <div class="col-9 col-lg-8">
-                                <div class="card-body d-flex flex-column h-100">
+                                <div class="card-body position-relative d-flex flex-column h-100">
                                     <div class="d-flex align-items-start justify-content-between">
-                                        <a href="{{ url('people_show',{'slug':person.user.slug }) }}" class="h6 mb-0 text-decoration-none  text-truncate">{{ person }}</a>
+                                        <a href="{{ url('people_show',{'slug':person.user.slug }) }}" class="mb-0 fw-bolder text-decoration-none stretched-link text-truncate">{{ person }}</a>
                                     </div>
 
                                     {% if person.user.hasSchool %}
-                                        <div class="text-truncate text-primary small mb-1">
-                                            <a href="{{ url('people_school',{'bsn':person.user.school.bsn }) }}" class="text-decoration-none">{{ person.user.school }}</a>
-                                        </div>
+                                        <a href="{{ url('people_school',{'bsn':person.user.school.bsn }) }}" class="text-decoration-none text-truncate d-block small mb-1" style="z-index: 50">{{ person.user.school }}</a>
                                         <div class="text-truncate small mb-0">{{ person.inYear }} - {{ person.outYear }}</div>
                                     {% endif %}
                                     <div  class="d-none d-lg-block text-off small mt-auto">{{ person.examType|trans }}</div>
