@@ -171,7 +171,7 @@ class DashboardController extends AbstractDashboardController
             ;
             yield MenuItem::linkToCrud('Warteschlange', 'ti ti-clock-2',NewsletterQueue::class)
                 ->setCssClass('moderation-link')
-                ->setPermission('ROLE_SCHOOL')
+                ->setPermission('ROLE_ADMIN')
             ;
 
             yield MenuItem::section('Angebote');
