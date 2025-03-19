@@ -17,7 +17,7 @@ class HashtagExtension extends AbstractExtension
     }
 
     // Der Filter, der die Hashtags im Text verarbeitet
-    public function hashtagFilter($text, UrlGeneratorInterface $urlGenerator): array|string|null
+    public function hashtagFilter($text): array|string|null
     {
         // Regex für Hashtags
         $decodedText = html_entity_decode($text);
