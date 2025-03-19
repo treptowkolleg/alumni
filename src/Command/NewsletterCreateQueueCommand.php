@@ -46,20 +46,21 @@ class NewsletterCreateQueueCommand extends Command
         $templates = $this->templateRepository->findAll();
         $today = new \DateTimeImmutable();
         $today = $today->setTime(18,0,0);
-        $output->writeln($today->format('Y-m-d H:i:s'));
 
         foreach ($templates as $template) {
             if ($this->isSendDateToday($template->getStartDate(), $template->getPeriod(), $template->getPeriodUnit())) {
                 $schools = $template->getSchool();
                 foreach ($schools as $school) {
                     foreach($school->getNewsletters() as $newsletter) {
-                        $queue = new NewsletterQueue();
-                        $queue->setTemplate($template);
-                        $queue->setReceiverEmail($newsletter->getEmail());
-                        $queue->setSendDate($today);
-                        $queue->setSend(false);
-                        $queue->setUserCount($school->getUsers()->count());
-                        $this->em->persist($queue);
+                        if(!$this->em->getRepository(NewsletterQueue::class)->findOneBy(['receiverEmail' => $newsletter->getEmail()])) {
+                            $queue = new NewsletterQueue();
+                            $queue->setTemplate($template);
+                            $queue->setReceiverEmail($newsletter->getEmail());
+                            $queue->setSendDate($today);
+                            $queue->setSend(false);
+                            $queue->setUserCount($school->getUsers()->count());
+                            $this->em->persist($queue);
+                        }
                     }
                 }
             }

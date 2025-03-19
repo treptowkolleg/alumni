@@ -49,27 +49,28 @@ class NewsletterSendCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $arg1 = $input->getArgument('arg1');
 
-        $queue = $this->em->getRepository(NewsletterQueue::class)->findBy(['send' => false], limit: 100);
+        $queue = $this->em->getRepository(NewsletterQueue::class)->findBy(['send' => false], orderBy: ['sendDate' => 'DESC'], limit: 100);
 
         foreach ($queue as $receiver) {
+            $now = new \DateTimeImmutable();
+            if($receiver->getSendDate() <= $now) {
+                $user = $this->em->getRepository(User::class)->findOneBy(['email' => $receiver->getReceiverEmail()]);
 
-            $user = $this->em->getRepository(User::class)->findOneBy(['email' => $receiver->getReceiverEmail()]);
+                $email = (new TemplatedEmail())
+                    ->from(new Address('service@alumni-portal.org', 'Alumni-Portal'))
+                    ->to((string) $receiver->getReceiverEmail())
+                    ->subject($receiver->getTemplate()->getTitle())
+                    ->htmlTemplate('newsletter/default.html.twig')
+                    ->context([
+                        'user' => $user,
+                        'config' => $receiver->getTemplate()
+                    ])
+                ;
 
-            $email = (new TemplatedEmail())
-                ->from(new Address('service@alumni-portal.org', 'Alumni-Portal'))
-                ->to((string) $receiver->getReceiverEmail())
-                ->subject($receiver->getTemplate()->getTitle())
-                ->htmlTemplate('newsletter/default.html.twig')
-                ->context([
-                    'user' => $user,
-                    'config' => $receiver->getTemplate()
-                ])
-            ;
-
-            $this->mailer->send($email);
-
-            $receiver->setSend(true);
-            $this->em->persist($receiver);
+                $this->mailer->send($email);
+                $receiver->setSend(true);
+                $this->em->persist($receiver);
+            }
         }
         $this->em->flush();
 
