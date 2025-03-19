@@ -49,7 +49,7 @@ class NewsletterSendCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $arg1 = $input->getArgument('arg1');
 
-        $queue = $this->em->getRepository(NewsletterQueue::class)->findBy(['send' => false]);
+        $queue = $this->em->getRepository(NewsletterQueue::class)->findBy(['send' => false], limit: 100);
 
         foreach ($queue as $receiver) {
 
