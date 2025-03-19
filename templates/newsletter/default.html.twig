@@ -1,0 +1,41 @@
+<h1>Hallo {{ user.fullname }},</h1>
+
+
+{{ config.description|raw }}
+
+
+{% if user %}
+    <h2>Folgende Updates gibt es:</h2>
+    <h3>{{ user.school.title }}</h3>
+    <p>
+        Aktuell sind <b>{{ user.school.users.count }}</b> Alumni deiner Schule registriert.
+    </p>
+
+    <h3>Kommende Veranstaltungen</h3>
+    <ul>
+        {% for event in user.school.events %}
+            {% if event.endDate|date('Ymd') >= date('now')|date('Ymd')%}
+                <li>{{ event.title }} am {{ event.startDate|date('d.m.Y') }}</li>
+            {% endif %}
+        {% else %}
+            <li>Keine Veranstaltungen geplant</li>
+        {% endfor %}
+    </ul>
+
+    <h3>Aktuelle Stellenangebote</h3>
+    <ul>
+        {% for offer in user.school.personOffers %}
+            <li>{{ offer.title }} ({{ offer.type.title }})</li>
+        {% else %}
+            <li>Keine Stellen offen</li>
+        {% endfor %}
+    </ul>
+
+    <p>
+        Mit besten Grüßen<br>
+        Dein Alumni-Portal
+    </p>
+
+    <small>Dies ist ein Systemtest.</small>
+
+{% endif %}

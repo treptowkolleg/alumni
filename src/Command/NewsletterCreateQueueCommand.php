@@ -45,20 +45,14 @@ class NewsletterCreateQueueCommand extends Command
 
         $templates = $this->templateRepository->findAll();
         $today = new \DateTimeImmutable();
-        $today->setTime(18,0,0);
+        $today = $today->setTime(18,0,0);
+        $output->writeln($today->format('Y-m-d H:i:s'));
 
         foreach ($templates as $template) {
-            $output->writeln("Template: " . $template->getTitle());
-
-            if ($this->isSendDateToday($template->getStartDate(), $template->getPeriod(), $template->getPeriodUnit(), $output)) {
-                $output->writeln("Sende Newsletter: " . $template->getId());
+            if ($this->isSendDateToday($template->getStartDate(), $template->getPeriod(), $template->getPeriodUnit())) {
                 $schools = $template->getSchool();
                 foreach ($schools as $school) {
-                    $output->writeln("Schule: " . $school->getTitle());
-
                     foreach($school->getNewsletters() as $newsletter) {
-                        $output->writeln("Sende Newsletter: " . $newsletter->getEmail());
-
                         $queue = new NewsletterQueue();
                         $queue->setTemplate($template);
                         $queue->setReceiverEmail($newsletter->getEmail());
@@ -67,7 +61,6 @@ class NewsletterCreateQueueCommand extends Command
                         $queue->setUserCount($school->getUsers()->count());
                         $this->em->persist($queue);
                     }
-
                 }
             }
         }
@@ -76,7 +69,7 @@ class NewsletterCreateQueueCommand extends Command
         return Command::SUCCESS;
     }
 
-    public function isSendDateToday(\DateTimeInterface $startDate, int $period, string $periodUnit, OutputInterface $output): bool
+    public function isSendDateToday(\DateTimeInterface $startDate, int $period, string $periodUnit): bool
     {
         $intervalSpec = match ($periodUnit) {
             'd' => "P{$period}D",
@@ -92,7 +85,6 @@ class NewsletterCreateQueueCommand extends Command
         $period = new \DatePeriod($startDate, $interval, $today);
 
         foreach ($period as $date) {
-            $output->writeln("Datum: " . $date->format('Y-m-d'));
             if ($date->format('Y-m-d') === (new \DateTime())->format('Y-m-d')) {
                 return true;
             }
