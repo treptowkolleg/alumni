@@ -8,6 +8,7 @@ use App\Entity\Event;
 use App\Entity\EventType;
 use App\Entity\Inbound;
 use App\Entity\Newsletter;
+use App\Entity\NewsletterQueue;
 use App\Entity\NewsletterTemplate;
 use App\Entity\OfferType;
 use App\Entity\PersonOffer;
@@ -165,6 +166,10 @@ class DashboardController extends AbstractDashboardController
         if($this->isGranted('ROLE_SCHOOL')) {
             yield MenuItem::section('Newsletter');
             yield MenuItem::linkToCrud('Strukturvorlagen', 'ti ti-news',NewsletterTemplate::class)
+                ->setCssClass('moderation-link')
+                ->setPermission('ROLE_SCHOOL')
+            ;
+            yield MenuItem::linkToCrud('Warteschlange', 'ti ti-clock-2',NewsletterQueue::class)
                 ->setCssClass('moderation-link')
                 ->setPermission('ROLE_SCHOOL')
             ;

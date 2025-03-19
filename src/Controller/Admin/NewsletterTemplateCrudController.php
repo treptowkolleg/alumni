@@ -72,7 +72,7 @@ class NewsletterTemplateCrudController extends AbstractCrudController
     {
         return [
 
-            FormField::addTab('Allgemein')->onlyOnForms(),
+            FormField::addTab('Allgemein'),
             TextField::new('title')->setHelp('Für den einleitenden Block im Newsletter.'),
             TextEditorField::new('description')->hideOnIndex()->setHelp('Für den einleitenden Block im Newsletter.'),
             AssociationField::new('school')->setRequired(true)->setLabel('schools')->onlyOnForms()
@@ -86,7 +86,7 @@ class NewsletterTemplateCrudController extends AbstractCrudController
                 ])->setPermission('ROLE_ADMIN')
             ->setHelp('Nur für Admins sichtbar. Ansonsten immer die eigene Schule.'),
 
-            FormField::addTab('Versand')->onlyOnForms(),
+            FormField::addTab('Versand'),
             FormField::addColumn('col-xl-12'),
             DateTimeField::new('startDate')->setHelp('Erstmaliger Versand.'),
             FormField::addColumn('col-xl-2'),
