@@ -58,9 +58,16 @@ class NewsletterTemplate
     #[ORM\ManyToOne(inversedBy: 'newsletterTemplates')]
     private ?User $user = null;
 
+    /**
+     * @var Collection<int, NewsletterQueue>
+     */
+    #[ORM\OneToMany(targetEntity: NewsletterQueue::class, mappedBy: 'template')]
+    private Collection $newsletterQueues;
+
     public function __construct()
     {
         $this->school = new ArrayCollection();
+        $this->newsletterQueues = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -232,6 +239,36 @@ class NewsletterTemplate
     public function setUser(?User $user): static
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, NewsletterQueue>
+     */
+    public function getNewsletterQueues(): Collection
+    {
+        return $this->newsletterQueues;
+    }
+
+    public function addNewsletterQueue(NewsletterQueue $newsletterQueue): static
+    {
+        if (!$this->newsletterQueues->contains($newsletterQueue)) {
+            $this->newsletterQueues->add($newsletterQueue);
+            $newsletterQueue->setTemplate($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNewsletterQueue(NewsletterQueue $newsletterQueue): static
+    {
+        if ($this->newsletterQueues->removeElement($newsletterQueue)) {
+            // set the owning side to null (unless already changed)
+            if ($newsletterQueue->getTemplate() === $this) {
+                $newsletterQueue->setTemplate(null);
+            }
+        }
 
         return $this;
     }
