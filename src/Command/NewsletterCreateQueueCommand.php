@@ -52,7 +52,7 @@ class NewsletterCreateQueueCommand extends Command
                 $schools = $template->getSchool();
                 foreach ($schools as $school) {
                     foreach($school->getNewsletters() as $newsletter) {
-                        if(!$this->em->getRepository(NewsletterQueue::class)->findOneBy(['receiverEmail' => $newsletter->getEmail()])) {
+                        if(!$this->em->getRepository(NewsletterQueue::class)->findOneBy(['receiverEmail' => $newsletter->getEmail(),'send' => false])) {
                             $queue = new NewsletterQueue();
                             $queue->setTemplate($template);
                             $queue->setReceiverEmail($newsletter->getEmail());
