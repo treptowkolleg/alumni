@@ -5,49 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Alumni-Portal Newsletter - {{ config.title }}</title>
     <style>
-        body, html {
-            margin: 0;
-            font-family: Arial, Helvetica, sans-serif;
-            background-color: rgb(248, 249, 250);
-        }
+        @import url("https://use.typekit.net/dcz3wfu.css");
+        @import url("https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css");
 
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 0 1rem;
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #fafafa;
         }
 
         .header {
             border-bottom: 3px solid rgb(41, 74, 112);
             margin-bottom: 1rem;
             padding: .5rem 0;
-            background-color: #ffffff;
+            background-color: #fff;
         }
 
         .content {
             padding: 1rem 0;
-        }
-
-        .card {
-            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-            border-radius: 4px;
-            background-color: #ffffff;
-            margin-bottom: 1.5rem;
-        }
-
-        .card-body:not(:last-child) {
-            border-bottom: 1px solid rgb(229, 229, 234);
-        }
-
-        .card-body, .card-header {
-            display: block;
-            padding: 1rem;
-            text-decoration: none;
-        }
-
-        .card-header {
-            background-color: rgba(229, 229, 234,.25);
-            border-bottom: 1px solid rgb(41, 74, 112);
         }
 
         .footer {
@@ -82,6 +56,17 @@
         a {
             color: rgb(41, 74, 112)!important;
         }
+
+        h1,h2,h3,h4,h5,h6{
+            font-family: sofia-pro, sans-serif!important;
+            line-height: 1!important;
+            font-weight: 400!important;
+        }
+        p,a{
+            font-family: sofia-pro, sans-serif!important;
+            line-height: 1.6!important;
+            font-weight: 300!important;
+        }
     </style>
 </head>
 <body>
@@ -105,41 +90,47 @@
         <p></p>
 
         {% if user %}
-            <div class="card">
+            <div class="card mb-3">
                 <div class="card-header">
                     <h3>{{ user.school.title }}</h3>
                 </div>
                 <div class="card-body">Aktuell sind <b>{{ user.school.users.count }}</b> Alumni deiner Schule registriert.</div>
             </div>
 
-            <div class="card">
+            <div class="card mb-3">
                 <div class="card-header">
                     <h3>Kommende Veranstaltungen</h3>
                 </div>
-                {% for event in user.school.events %}
-                    {% if event.endDate|date('Ymd') >= date('now')|date('Ymd')%}
-                        <a href="{{ url('event_show',{'slug':event.slug}) }}" class="card-body">
-                            <div>{{ event.title }}</div>
-                            <small>{{ event.startDate|date('d.m.Y') }}</small>
-                        </a>
-                    {% endif %}
-                {% else %}
-                    <div class="card-body">Keine Veranstaltungen geplant</div>
-                {% endfor %}
+                <div class="list-group list-group-flush">
+                    {% for event in user.school.events %}
+                        {% if event.endDate|date('Ymd') >= date('now')|date('Ymd')%}
+                            <a href="{{ url('event_show',{'slug':event.slug}) }}" class="list-group-item list-group-item-action">
+                                <div>{{ event.title }}</div>
+                                <small>{{ event.startDate|date('d.m.Y') }}</small>
+                            </a>
+                        {% endif %}
+                    {% else %}
+                        <div class="list-group-item">Keine Veranstaltungen geplant</div>
+                    {% endfor %}
+                </div>
+                <div class="card-body"></div>
             </div>
 
-            <div class="card">
+            <div class="card mb-3">
                 <div class="card-header">
                     <h3>Aktuelle Stellenangebote</h3>
                 </div>
-                {% for offer in user.school.personOffers %}
-                    <div class="card-body">
-                        <div>{{ offer.title }}</div>
-                        <small>{{ offer.type.title }}</small>
-                    </div>
-                {% else %}
-                    <div class="card-body">Keine offenen Stellen.</div>
-                {% endfor %}
+                <div class="list-group list-group-flush">
+                    {% for offer in user.school.personOffers %}
+                        <div class="list-group-item">
+                            <div>{{ offer.title }}</div>
+                            <small>{{ offer.type.title }}</small>
+                        </div>
+                    {% else %}
+                        <div class="list-group-item">Keine offenen Stellen.</div>
+                    {% endfor %}
+                </div>
+                <div class="card-body"></div>
             </div>
 
         {% endif %}
