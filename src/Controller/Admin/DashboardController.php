@@ -82,6 +82,7 @@ class DashboardController extends AbstractDashboardController
             'title' => 'test',
             'posts' => $posts,
             'news_articles' => $newsPosts,
+            'server_time' => date("Y-m-d H:i:s")
         ]);
 
         // Option 1. You can make your dashboard redirect to some common page of your backend
