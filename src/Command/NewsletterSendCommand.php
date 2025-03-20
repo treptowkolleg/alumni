@@ -53,6 +53,8 @@ class NewsletterSendCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $arg1 = $input->getArgument('arg1');
 
+        date_default_timezone_set('Europe/Berlin');
+
         $logoUrl = $this->assets->getUrl('images/logo.svg');
         $projectDir = $this->getApplication()->getKernel()->getProjectDir();
         $logoPath = $projectDir . '/public' . parse_url($logoUrl, PHP_URL_PATH);
@@ -63,6 +65,9 @@ class NewsletterSendCommand extends Command
 
         foreach ($queue as $receiver) {
             $now = new \DateTimeImmutable();
+            $output->writeln($now->format('Y-m-d H:i:s'));
+            $output->writeln($receiver->getSendDate()->format('Y-m-d H:i:s'));
+            $output->writeln($receiver->getSendDate() <= $now ? 'true' : 'false');
             if($receiver->getSendDate() <= $now) {
                 $user = $this->em->getRepository(User::class)->findOneBy(['email' => $receiver->getReceiverEmail()]);
 
