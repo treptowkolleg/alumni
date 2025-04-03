@@ -22,12 +22,12 @@
             </div>
 
             <div class="col-lg-12">
-                <div class="card bg-white">
+                <div class="card bg-light-subtle border-0 rounded-2 shadow-sm">
                     <div class="card-body  border-bottom border-primary">
                         <h3 class="h5 mb-0 text-center text-lg-start text-truncate">{{ message.subject }}</h3>
                         <div class="text-center text-lg-start fw-bolder text-primary text-truncate"><a href="{{ url('people_show',{'slug':partner.slug}) }}" class=" text-decoration-none"><i class="bx bx-user me-1"></i>{{ partner.userprofiles.first }}</a></div>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body bg-white">
                         <div class="pb-3 mb-3 border-bottom">{{ message.message|striptags|nl2br }}</div>
                         <div class="d-flex justify-content-between align-items-center">
                             {% if message.sender != app.user %}
