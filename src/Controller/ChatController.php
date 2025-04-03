@@ -74,7 +74,7 @@ class ChatController extends AbstractController
         if($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($message);
             $entityManager->flush();
-            $this->addFlash('success', 'Message was sent!');
+            $this->addFlash('success', 'Deine Nachricht wurde verschickt.');
             return $this->redirectToRoute('chat_start',['slug' => $partner->getSlug()]);
         }
 
