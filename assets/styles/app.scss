@@ -43,7 +43,7 @@ $black:		    rgba( 32, 32, 32,1);
 $white:		    rgba(255,255,255,1);
 
 
-$body-bg:       lighten($systemGray6,3);
+$body-bg:       lighten($systemGray6,1);
 $body-color:    rgba($black,.9);
 $table-striped-bg: lighten($systemGray6,1.5);
 $list-group-hover-bg: rgb(248,249,250) !important;

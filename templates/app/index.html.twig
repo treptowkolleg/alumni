@@ -11,7 +11,8 @@
         {% if lead %}
                 <div class="card text-white border-0">
                     {% if lead.blogPostImage %}
-                    <img class="card-img" src="{{ asset(lead.blogPostImageUrl)|imagine_filter('lead_thumbnail')  }}" alt="{{ lead }}">
+                    <img class="card-img d-none d-lg-block" src="{{ asset(lead.blogPostImageUrl)|imagine_filter('lead_thumbnail')  }}" alt="{{ lead }}">
+                    <img class="card-img d-block d-lg-none" src="{{ asset(lead.blogPostImageUrl)|imagine_filter('post_thumbnail')  }}" alt="{{ lead }}">
                     {% endif %}
                     <div class="text-bg-primary border-0">
                         <div class="container">
@@ -40,26 +41,26 @@
         <div class="row row-cols-1 row-cols-lg-3 g-3 align-content-stretch">
 
                 <div class="col">
-                    <div class="card card-body shadow-sm bg-white border-primary h-100">
+                    <div class="card card-body shadow-sm rounded rounded-2 bg-white  h-100">
                         <div class="text-uppercase small">Alumni-Portal</div>
                         <h4 class="h4 text-primary fw-normal">Jetzt durchstarten</h4>
                         <p>Finde ehemalige Kommilitonen und Lehrkräfte deiner Bildungseinrichtung des zweiten Bildungsweges.</p>
-                        <a href="{{ path('people_index') }}" class="card-link stretched-link text-decoration-none link-black mt-auto fs-5">Alumni finden <i class="ri-arrow-right-s-line"></i></a>
+                        <a href="{{ path('people_index') }}" class="card-link stretched-link text-decoration-none  mt-auto fs-5">Alumni finden <i class="ri-arrow-right-s-line"></i></a>
                     </div>
                 </div>
             {% if interview %}
                 <div class="col">
-                    <div class="card card-body shadow-sm bg-white border-primary h-100">
+                    <div class="card card-body shadow-sm bg-white rounded rounded-2 h-100">
                         <div class="text-uppercase small">{{ interview.type }}</div>
                         <h4 class="h4 text-primary fw-normal">{{ interview.title }}</h4>
                         <p>{{ interview.title }}</p>
-                        <a href="{{ path('blog_show',{'slug':interview.slug}) }}" class="card-link stretched-link text-decoration-none link-black mt-auto fs-5">lesen <i class="fas fa-chevron-right"></i></a>
+                        <a href="{{ path('blog_show',{'slug':interview.slug}) }}" class="card-link stretched-link text-decoration-none mt-auto fs-5">lesen <i class="fas fa-chevron-right"></i></a>
                     </div>
                 </div>
             {% endif %}
             {% if blog_post %}
                 <div class="col">
-                    <div class="card card-body shadow-sm text-bg-primary border-0 h-100">
+                    <div class="card card-body shadow-sm text-bg-primary border-0 rounded rounded-2 h-100">
                         <div class="text-uppercase small">{{ blog_post.type }}</div>
                         <h4 class="h4 text-light fw-normal">{{ blog_post.title }}</h4>
                         <p>Aktueller Themenbeitrag</p>
@@ -76,15 +77,15 @@
                     {% for post in posts %}
                         {% if post.isPublished %}
                         <div class="col">
-                            <div class="card bg-transparent h-100">
+                            <div class="card bg-transparent rounded border-0 rounded-2 shadow-sm h-100">
                                 {% if post.blogPostImage %}
-                                    <img src="{{ asset(post.blogPostImageUrl)|imagine_filter('post_thumbnail')  }}" alt="{{ post }}" class="img-fluid">
-                                    <div class="px-3 py-2 bg-white h-100">
+                                    <img src="{{ asset(post.blogPostImageUrl)|imagine_filter('post_thumbnail')  }}" alt="{{ post }}" class="img-fluid card-img-top rounded-top">
+                                    <div class="px-3 py-2 bg-white h-100 rounded-bottom">
                                         <div class="mb-0"><span class="fw-bold">{{ post.updatedAt|date('d.m.Y') }}</span> <span class="text-uppercase">{{ post.type }}</span></div>
                                         <a href="{{ path('blog_news_show',{'slug':post.slug}) }}" class="fs-5 card-link stretched-link text-decoration-none">{{ post }}</a>
                                     </div>
                                 {% else %}
-                                    <div class="px-3 py-2 bg-white h-100">
+                                    <div class="px-3 py-2 bg-white h-100 rounded-bottom">
                                         <a href="{{ path('blog_news_show',{'slug':post.slug}) }}" class="fs-5 card-link stretched-link text-decoration-none">{{ post }}</a>
                                         <div class="mb-0"><span class="fw-bold">{{ post.updatedAt|date('d.m.Y') }}</span> {{ post.type }}</div>
                                         <div class="d-block text-truncate text-wrap">{{ post.subtitle }}</div>
@@ -99,18 +100,27 @@
                         </div>
                     {% endfor %}
                 </div>
-                <a href="{{ url('blog_news_index') }}" class="btn btn-outline-primary mt-3">Weitere Meldungen</a>
+                <a href="{{ url('blog_news_index') }}" class="btn btn-outline-primary rounded-2 mt-3">Weitere Meldungen</a>
             </div>
             <div class="col-lg-4">
                 <h3 class="mb-3 mt-5 fs-4 fw-light text-muted">Nächste Veranstaltungen</h3>
-                <div class="list-group">
-                    {% for post in events|sort((a, b) => a.startDate <=> b.startDate) %}
-                        {% if post.endDate|date('Ymd') >= date('now')|date('Ymd')%}
-                            {{ include('component/_event_list_next.html.twig') }}
-                        {% endif %}
-                    {% endfor %}
+                <div class="card  bg-light-subtle shadow-sm border-0 rounded-2">
+                    <div class="card-body  rounded-top">
+
+                    </div>
+                    <div class="list-group list-group-flush">
+                        {% for post in events|sort((a, b) => a.startDate <=> b.startDate) %}
+                            {% if post.endDate|date('Ymd') >= date('now')|date('Ymd')%}
+                                {{ include('component/_event_list_next.html.twig') }}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    <div class="card-body rounded-bottom">
+
+                    </div>
                 </div>
-                <a href="{{ url('event_index') }}" class="btn btn-outline-primary mt-3">Weitere Termine</a>
+
+                <a href="{{ url('event_index') }}" class="btn btn-outline-primary rounded-2 mt-3">Weitere Termine</a>
             </div>
          </div>
     </div>

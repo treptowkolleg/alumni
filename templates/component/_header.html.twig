@@ -21,7 +21,7 @@
                                 <span id="unread-count" data-id="{{ app.user.id }}" class="d-none small badge text-bg-secondary rounded fw-normal align-self-center" style="font-size: .6rem;"></span>
                             {% endif %}
                         </a>
-                        <ul class="dropdown-menu">
+                        <ul class="dropdown-menu rounded rounded-2 shadow border-0 bg-white">
                             <li><h6 class="dropdown-header">Alumni-Portal</h6></li>
                             <li><a class="dropdown-item" href="{{ url('profile_index') }}"><i class="ri-layout-2-line ri-fw me-2"></i>Mein Portal</a></li>
                             <li><a class="dropdown-item" href="{{ url('chat_index') }}"><i class="ri-contacts-book-2-line ri-fw me-2" id="mail-marker"></i><span>Kontakte</span></a></li>
@@ -66,7 +66,7 @@
     </div>
 </div>
 
-<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+<div class="offcanvas offcanvas-end bg-white" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
     <div class="offcanvas-header">
         <div class="h5 offcanvas-title" id="offcanvasRightLabel">
             <div class="d-flex align-items-center">
