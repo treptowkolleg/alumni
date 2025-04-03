@@ -59,7 +59,8 @@ if(tableElement) {
 
 
     $('tbody').on('click', 'tr', function() {
-        window.location.href = $(this).data('url')
+        if($(this).data('url') !== undefined && $(this).data('url') !== "")
+            window.location.href = $(this).data('url')
     });
 }
 
