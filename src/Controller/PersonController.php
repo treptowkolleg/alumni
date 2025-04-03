@@ -55,6 +55,29 @@ class PersonController extends AbstractController
 
         $usedDates = $repository->findExamDates();
 
+        $names = [
+            "Anna Müller",
+            "Carlos Rodríguez",
+            "Fatima Al-Mansouri",
+            "Yuki Tanaka",
+            "Liam O'Connor",
+            "Sophia Rossi",
+            "Ivan Petrov",
+            "Chen Wei",
+            "Aisha Ndiaye",
+            "Jakub Kowalski",
+            "Emily Johnson",
+            "Hassan Ahmed",
+            "Leila Dupont",
+            "Mateo Fernández",
+            "Zhang Xiaoming",
+            "Katarina Novak",
+            "Raj Patel",
+            "Mehmet Yılmaz",
+            "Olga Ivanova",
+            "Gustav Svensson"
+        ];
+
         if($filter == 'all') {
             $people = $repository->findBySearchQuery($name, $firstname, $schools, $courses, $startDate, $endDate, offset: $page);
             $peopleCount = count($repository->findBySearchQuery($name, $firstname, $schools, $courses, $startDate, $endDate));
@@ -103,6 +126,7 @@ class PersonController extends AbstractController
             'schools' => $schoolRepository->findAll(),
             'dates' => $usedDates,
             'courses' => PerformanceCourseEnum::cases(),
+            'name' => $names[array_rand($names)],
         ]);
     }
 

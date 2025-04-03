@@ -301,6 +301,29 @@ class ProfileController extends AbstractController
             return $this->redirectToRoute('people_index');
         }
 
+        $names = [
+            "Anna Müller",
+            "Carlos Rodríguez",
+            "Fatima Al-Mansouri",
+            "Yuki Tanaka",
+            "Liam O'Connor",
+            "Sophia Rossi",
+            "Ivan Petrov",
+            "Chen Wei",
+            "Aisha Ndiaye",
+            "Jakub Kowalski",
+            "Emily Johnson",
+            "Hassan Ahmed",
+            "Leila Dupont",
+            "Mateo Fernández",
+            "Zhang Xiaoming",
+            "Katarina Novak",
+            "Raj Patel",
+            "Mehmet Yılmaz",
+            "Olga Ivanova",
+            "Gustav Svensson"
+        ];
+
 
         return $this->render('people/school.html.twig', [
             'filterValues' => $request->getSession()->get('filter_school'),
@@ -311,6 +334,7 @@ class ProfileController extends AbstractController
             'schools' => $schoolRepository->findAll(),
             'dates' => $usedDates,
             'courses' => PerformanceCourseEnum::cases(),
+            'name' => $names[array_rand($names)],
         ]);
     }
 
