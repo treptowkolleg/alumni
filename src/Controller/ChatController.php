@@ -89,7 +89,7 @@ class ChatController extends AbstractController
     {
         $partner = $message->getChat()->getOwner()->getUserIdentifier() === $this->getUser()->getUserIdentifier() ? $message->getChat()->getParticipant() : $message->getChat()->getOwner();
 
-        if(!$message->isRead()) {
+        if(!$message->isRead() and $message->getSender() !== $this->getUser()) {
             $message->setRead(true);
             $entityManager->persist($message);
             $entityManager->flush();

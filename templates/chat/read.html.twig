@@ -16,8 +16,8 @@
 
             <div class="col-lg-12">
                 <div class="d-flex flex-column flex-lg-row">
-                    <a class="{{ partner.isContactable ?: 'disabled' }} btn btn-primary mb-3 mb-lg-0 me-0 me-lg-2" href="{{ url('chat_new',{'id':message.chat.id}) }}"><i class="ri-chat-4-line me-2"></i>Neue Nachricht</a>
-                    <a class="btn btn-light"  href="{{ url('chat_start',{'slug':partner.slug}) }}"><i class="fas fa-chevron-left me-2 text-primary"></i>Zurück zum Postfach</a>
+                    <a class="{{ partner.isContactable ?: 'disabled' }} btn btn-primary rounded-2 mb-3 mb-lg-0 me-0 me-lg-2" href="{{ url('chat_new',{'id':message.chat.id}) }}"><i class="ri-chat-4-line me-2"></i>Neue Nachricht</a>
+                    <a class="btn btn-light rounded-2"  href="{{ url('chat_start',{'slug':partner.slug}) }}"><i class="fas fa-chevron-left me-2 text-primary"></i>Zurück zum Postfach</a>
                 </div>
             </div>
 
@@ -28,10 +28,12 @@
                         <div class="text-center text-lg-start fw-bolder text-primary text-truncate"><a href="{{ url('people_show',{'slug':partner.slug}) }}" class=" text-decoration-none"><i class="bx bx-user me-1"></i>{{ partner.userprofiles.first }}</a></div>
                     </div>
                     <div class="card-body bg-white">
-                        <div class="pb-3 mb-3 border-bottom">{{ message.message|striptags|nl2br }}</div>
+                        <div class="pb-3 mb-3">{{ message.message|striptags|nl2br }}</div>
+                    </div>
+                    <div class="card-body border-top rounded-bottom py-2">
                         <div class="d-flex justify-content-between align-items-center">
                             {% if message.sender != app.user %}
-                                <a class="{{ partner.isContactable ?: 'disabled' }} btn btn-sm btn-light"  href="{{ url('chat_new',{'id':message.chat.id,'subject':message.subject}) }}"><i class="fa-solid fa-reply text-primary"></i><span class="ms-2 d-none d-lg-inline">Antworten</span></a>
+                                <a class="{{ partner.isContactable ?: 'disabled' }} btn btn-sm btn-light rounded-2"  href="{{ url('chat_new',{'id':message.chat.id,'subject':message.subject}) }}"><i class="fa-solid fa-reply text-primary"></i><span class="ms-2 d-none d-lg-inline">Antworten</span></a>
                             {% else %}
                                 <div>
                                     Von dir
