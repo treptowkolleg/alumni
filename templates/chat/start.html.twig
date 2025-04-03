@@ -44,7 +44,7 @@
                                 </thead>
                                 <tbody>
                                 {% for message in chat.messages|sort((b, a) => a.created <=> b.created) %}
-                                        <tr class="{{ message.isRead ? '' : 'fw-bold' }}" style="cursor: pointer;" data-url="{{ url('chat_read',{'id':message.id}) }}">
+                                        <tr class="{% if message.sender != app.user %}{{ message.isRead ? '' : 'fw-bold' }}{% endif %}" style="cursor: pointer;" data-url="{{ url('chat_read',{'id':message.id}) }}">
                                             <td>
                                                 {% if message.sender != app.user %}
                                                     <div class="d-block d-flex justify-content-start align-items-center text-primary"><i class="ti ti-user  me-1"></i>{{ message.sender.userProfiles.first }}</div>
