@@ -34,11 +34,11 @@ if(tableElement) {
         dom: '<"top"l><"datatable-wrapper"t><"bottom"p><"clear">',
         pageLength: 25,
         lengthChange: false,
-        order: [[2, 'desc']],
+        order: [[2, 'DESC']],
         "language": tableOptions,
         columnDefs: [
             { width: '70%', targets: 1 },
-            { type: 'date-de', targets: 2 }
+            { type: 'date', targets: 2 }
         ]
     });
 

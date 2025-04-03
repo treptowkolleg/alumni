@@ -43,17 +43,32 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {% for message in chat.messages %}
+                                {% for message in chat.messages|sort((b, a) => a.created <=> b.created) %}
                                         <tr class="{{ message.isRead ? '' : 'fw-bold' }}" style="cursor: pointer;" data-url="{{ url('chat_read',{'id':message.id}) }}">
                                             <td>
                                                 {% if message.sender != app.user %}
-                                                {{ message.sender.userProfiles.first }}
+                                                    <div class="d-block d-flex justify-content-start align-items-center text-primary"><i class="ti ti-user  me-1"></i>{{ message.sender.userProfiles.first }}</div>
+
                                                 {% else %}
-                                                    <div class="d-block text-end"><i class="ti ti-user me-1"></i> gesendet</div>
+                                                    <div class="d-block d-flex justify-content-start align-items-center text-muted"><i class="ti ti-send me-1"></i> von dir gesendet</div>
                                                 {% endif %}
                                             </td>
-                                            <td>{{ message.subject }}</td>
-                                            <td class="text-end">{{ message.created|date('d.m.Y H:i') }}</td>
+                                            <td>
+                                                {% if message.sender != app.user %}
+                                                    <div class="text-primary">{{ message.subject }}</div>
+                                                {% else %}
+                                                    {{ message.subject }}
+                                                {% endif %}
+                                            </td>
+                                            {% if message.sender != app.user %}
+                                                <td class="text-end text-primary">
+                                                    {{ message.created|date('d.m.Y H:i') }}
+                                                </td>
+                                            {% else %}
+                                                <td class="text-end">
+                                                    {{ message.created|date('d.m.Y H:i') }}
+                                                </td>
+                                            {% endif %}
                                         </tr>
                                 {% endfor %}
                                 </tbody>
