@@ -1,0 +1,51 @@
+<form method="post" id="filter_form" class="">
+    <div class="row g-1 mb-3 align-content-stretch">
+
+        <div class="col-12 col-lg-4 bg-white">
+            <div class="slim-form mt-4 h-100">
+                <label class="pt-2" for="county_select">Bundesland</label>
+                <select name="county[]" class="slim-select-multi-school custom-select" multiple id="county_select">
+                    {% for county in counties|sort() %}
+                        <option {{ county in filterValues.county|default() ? 'selected' : '' }} value="{{ county }}">
+                            {{ county }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div class="col-12 col-lg-4 bg-white">
+            <div class="slim-form mt-4 h-100">
+                <label for="city_select" class="pt-2">Stadt</label>
+                <select name="city[]" class="slim-select-multi-school custom-select" multiple id="city_select">
+                    {% for city in cities|sort() %}
+                        <option {{ city in filterValues.city|default() ? 'selected' : '' }} value="{{ city }}">
+                            {{ city }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div class="col-12 col-lg-4 bg-white">
+            <div class="slim-form mt-4 h-100">
+                <label for="type_select" class="pt-2">Stellentyp</label>
+                <select name="type[]" class="slim-select-multi-school custom-select" multiple id="type_select">
+                    {% for type in types|sort() %}
+                        <option {{ type in filterValues.type|default() ? 'selected' : '' }} value="{{ type }}">
+                            {{ type }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div class="col-lg-3 mt-lg-3 mt-2">
+            <button class="btn btn-primary rounded rounded-2 w-100" form="filter_form" type="submit">
+                <i class="bx bx-filter-alt me-2"></i>
+                <span>Filtern</span>
+            </button>
+        </div>
+
+    </div>
+</form>

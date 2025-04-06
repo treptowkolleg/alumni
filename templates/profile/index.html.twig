@@ -37,7 +37,7 @@
                         <div class="card-body  border-bottom border-primary">
                             <h3 class="h6 mb-0 text-center text-lg-start">Kontakte</h3>
                         </div>
-                        <div class="list-group list-group-flush border-bottom-0">
+                        <div class="list-group list-group-flush bg-white border-bottom-0">
                             {% for chat in chats|sort %}
                                 {% set message_unread = 0 %}
                                 {% for message in chat.messages %}
@@ -58,7 +58,7 @@
                                 <div class="list-group-item">Noch keine Konversationen vorhanden.</div>
                             {% endfor %}
                         </div>
-                        <div class="h-100"></div>
+                        <div class="h-100 bg-white"></div>
                         <div class="list-group list-group-flush border-top border-bottom">
                             <a href="{{ url('people_index') }}" class="list-group-item list-group-item-action link-primary d-flex align-items-center justify-content-between">
                                 <div>weitere Personen finden</div>
@@ -70,11 +70,11 @@
                 </div>
 
                 <div class="col-lg-8 order-0 order-lg-3">
-                    <div class="card bg-light-subtle border-0 shadow-sm rounded rounded-2">
+                    <div class="card bg-light-subtle border-0 shadow-sm rounded rounded-2 h-100">
                         <div class="card-body border-bottom border-primary">
                             <h3 class="h6 mb-0 text-center text-lg-start">Veranstaltungen</h3>
                         </div>
-                        <div class="list-group list-group-flush border-bottom-0">
+                        <div class="list-group list-group-flush border-bottom-0 bg-white">
                             {% for post in app.user.followedEvents|sort((a, b) => a.startDate <=> b.startDate) %}
                                 {% if post.endDate|date('Ymd') >= date('now')|date('Ymd')%}
                                     {{ include('component/_event_list.html.twig') }}
@@ -85,7 +85,7 @@
                                 </div>
                             {% endfor %}
                         </div>
-                        <div class="h-100"></div>
+                        <div class="h-100 bg-white"></div>
                         <div class="list-group list-group-flush border-top border-bottom">
                             <a href="{{ url('event_index') }}" class="list-group-item list-group-item-action link-primary d-flex align-items-center justify-content-between">
                                 <div>weitere Termine finden</div>
@@ -102,10 +102,16 @@
                             <h3 class="h6 text-center text-lg-start mb-0">Aktuelle Stellenangebote <span class=" ms-2 badge bg-warning-subtle text-warning rounded fw-normal">dev</span></h3>
                             <p class="card-text text-center fw-bolder text-lg-start text-primary">In meiner Stadt</p>
                         </div>
-                        <div class="list-group list-group-flush border-bottom">
+                        <div class="list-group list-group-flush bg-white">
                             {% for offer in offers %}
                                 {{ include('component/_offer_fav_list.html.twig') }}
                             {% endfor %}
+                        </div>
+                        <div class="list-group list-group-flush border-top border-bottom">
+                            <a href="{{ url('profile_offer_index') }}" class="list-group-item list-group-item-action link-primary d-flex align-items-center justify-content-between">
+                                <div>weitere Stellen finden</div>
+                                <i class="ti ti-chevron-right"></i>
+                            </a>
                         </div>
                         <div class="card-body"></div>
                     </div>

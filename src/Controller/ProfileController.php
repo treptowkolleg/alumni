@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Newsletter;
+use App\Entity\PersonOffer;
 use App\Entity\User;
 use App\Entity\UserProfile;
 use App\Enums\PerformanceCourseEnum;
@@ -257,6 +258,30 @@ class ProfileController extends AbstractController
             'meta_subtitle' => $subtitle,
             'sidebar' => 'profile-index',
             'form' => $form,
+        ]);
+    }
+
+    #[Route('/offers/{page}', name: 'offer_index')]
+    public function offerIndex(Request $request, PersonOfferRepository $offerRepository, int $page = 1): Response
+    {
+        $offers = $offerRepository->findBy(['active' => true]);
+        $counties = [];
+        $cities = [];
+        $types = [];
+
+        foreach ($offers as $offer) {
+            $counties[$offer->getCounty()] = $offer->getCounty();
+            $cities[$offer->getCity()] = $offer->getCity();
+            $types[$offer->getType()->getTitle()] = $offer->getType()->getTitle();
+        }
+
+
+        return $this->render('offer/index.html.twig', [
+            'offers' => $offers,
+            'counties' => $counties,
+            'cities' => $cities,
+            'types' => $types,
+            'page' => $page,
         ]);
     }
 

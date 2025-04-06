@@ -1,0 +1,12 @@
+<div class="mb-3">
+    <ul class="nav nav-underline mb-4">
+        {% if filter|default() == 'details' %}
+            <a href="{{ url('profile_offer_index') }}" class="nav-item nav-link {{ selected|default() == 'index' ? 'active' : '' }} text-nowrap">
+                <i class="ri-arrow-left-double-line text-primary"></i>
+                <span class="ms-1">Zurück</span>
+            </a>
+        {% else %}
+
+        {% endif %}
+    </ul>
+</div>
