@@ -211,6 +211,39 @@
                 </div>
             </div>
 
+            <div class="row g-3 mb-5">
+                <div class="col-12">
+                    <h3 class="mb-3 mt-5 fs-5 fw-light text-muted">Pressemeldungen</h3>
+                    <div class="row row-cols-1 row-cols-lg-2 g-3 align-content-stretch">
+                        {% for post in posts %}
+                            {% if post.isPublished %}
+                                <div class="col">
+                                    <div class="card bg-transparent rounded border-0 rounded-2 shadow-sm h-100">
+                                        {% if post.blogPostImage %}
+                                            <img src="{{ asset(post.blogPostImageUrl)|imagine_filter('post_thumbnail')  }}" alt="{{ post }}" class="img-fluid card-img-top rounded-top">
+                                            <div class="px-3 py-2 bg-white h-100 rounded-bottom">
+                                                <div class="mb-0 small"><span class="fw-bold">{{ post.updatedAt|date('d.m.Y') }}</span> <span class="text-uppercase">{{ post.type }}</span></div>
+                                                <a href="{{ path('blog_news_show',{'slug':post.slug}) }}" class="fs-6 card-link stretched-link text-decoration-none">{{ post }}</a>
+                                            </div>
+                                        {% else %}
+                                            <div class="px-3 py-2 bg-white h-100 rounded-bottom">
+                                                <a href="{{ path('blog_news_show',{'slug':post.slug}) }}" class="fs-6 card-link stretched-link text-decoration-none">{{ post }}</a>
+                                                <div class="mb-0 small"><span class="fw-bold">{{ post.updatedAt|date('d.m.Y') }}</span> {{ post.type }}</div>
+                                                <div class="d-block text-truncate text-wrap">{{ post.subtitle }}</div>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% else %}
+                            <div class="col">
+                                Aktuell sind keine Meldungen vorhanden
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
             <h4>Kontakt für Medien & Kooperationen</h4>
             <p>
                 Benjamin Wagner<br>

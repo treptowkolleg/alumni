@@ -61,9 +61,12 @@ class AppController extends AbstractController
     }
 
     #[Route('/about/allgemein', name: 'about_index')]
-    public function aboutIndex(): Response
+    public function aboutIndex(BlogPostRepository $postRepository): Response
     {
-        return $this->render('app/about.html.twig');
+        $blogPost = $postRepository->findLatestByType('Pressemitteilung');
+        return $this->render('app/about.html.twig',[
+            'posts' => $blogPost
+        ]);
     }
 
     #[Route('/rechtliches/datenschutz', name: 'privacy')]
