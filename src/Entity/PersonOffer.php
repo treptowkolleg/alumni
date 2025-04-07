@@ -69,6 +69,12 @@ class PersonOffer
     #[ORM\Column(nullable: true)]
     private ?bool $active = null;
 
+    #[ORM\ManyToOne(inversedBy: 'personOffers')]
+    private ?JobType $jobType = null;
+
+    #[ORM\ManyToOne(inversedBy: 'personOffers')]
+    private ?SalaryLevel $salaryLevel = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -256,6 +262,30 @@ class PersonOffer
     public function setActive(?bool $active): static
     {
         $this->active = $active;
+
+        return $this;
+    }
+
+    public function getJobType(): ?JobType
+    {
+        return $this->jobType;
+    }
+
+    public function setJobType(?JobType $jobType): static
+    {
+        $this->jobType = $jobType;
+
+        return $this;
+    }
+
+    public function getSalaryLevel(): ?SalaryLevel
+    {
+        return $this->salaryLevel;
+    }
+
+    public function setSalaryLevel(?SalaryLevel $salaryLevel): static
+    {
+        $this->salaryLevel = $salaryLevel;
 
         return $this;
     }

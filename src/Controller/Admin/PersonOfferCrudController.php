@@ -90,6 +90,8 @@ class PersonOfferCrudController extends AbstractCrudController
         return [
             TextField::new('title')->setRequired(true),
             AssociationField::new('type')->setRequired(true),
+            AssociationField::new('jobType')->setRequired(true),
+            AssociationField::new('salaryLevel')->setRequired(true),
             TextField::new('department'),
             DateTimeField::new('startDate')
                 ->setHelp('Erster Arbeitstag.')

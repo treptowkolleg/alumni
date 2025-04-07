@@ -7,12 +7,14 @@ use App\Entity\BlogType;
 use App\Entity\Event;
 use App\Entity\EventType;
 use App\Entity\Inbound;
+use App\Entity\JobType;
 use App\Entity\Newsletter;
 use App\Entity\NewsletterQueue;
 use App\Entity\NewsletterTemplate;
 use App\Entity\OfferType;
 use App\Entity\PersonOffer;
 use App\Entity\PinboardEntry;
+use App\Entity\SalaryLevel;
 use App\Entity\School;
 use App\Entity\User;
 use App\Entity\UserProfile;
@@ -193,6 +195,14 @@ class DashboardController extends AbstractDashboardController
                 ->setPermission('ROLE_ADMIN')
             ;
             yield MenuItem::linkToCrud('Angebotstypen', 'ti ti-school',OfferType::class)
+                ->setCssClass('admin-link')
+                ->setPermission('ROLE_ADMIN')
+            ;
+            yield MenuItem::linkToCrud('JobTypen', 'ti ti-briefcase',JobType::class)
+                ->setCssClass('admin-link')
+                ->setPermission('ROLE_ADMIN')
+            ;
+            yield MenuItem::linkToCrud('SalaryLevels', 'ti ti-cash-register',SalaryLevel::class)
                 ->setCssClass('admin-link')
                 ->setPermission('ROLE_ADMIN')
             ;
