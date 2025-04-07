@@ -64,8 +64,8 @@ class AppController extends AbstractController
     #[Route('/about/allgemein', name: 'about_index')]
     public function aboutIndex(BlogPostRepository $postRepository, BlogTypeRepository $blogTypeRepository): Response
     {
-        $blogType = $blogTypeRepository->findBy(['title' => 'Pressemitteilung','isPublished' => true],orderBy: ['updated' => 'DESC'], limit: 6);
-        $blogPost = $postRepository->findBy(['type' => $blogType]);
+        $blogType = $blogTypeRepository->findBy(['title' => 'Pressemitteilung']);
+        $blogPost = $postRepository->findBy(['type' => $blogType,'isPublished' => true],orderBy: ['updatedAt' => 'DESC'], limit: 6);
         return $this->render('app/about.html.twig',[
             'posts' => $blogPost
         ]);
