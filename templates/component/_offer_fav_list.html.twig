@@ -1,14 +1,14 @@
 <div class="list-group-item  d-flex align-items-center p-0">
     <a href="{{ url('blog_news_offer_show',{'id':offer.id}) }}" class="ripplelink swipe-link-start w-100 d-flex align-items-center justify-content-between p-3 text-decoration-none">
         <div class="d-flex flex-column">
-            <div class="d-inline-block fw-bolder text-wrap">{{ offer.type }}</div>
+            <div class="d-inline-block fw-bolder text-wrap">{{ offer.title }}, {{ offer.jobType.label }}</div>
             <div class="me-2 d-block d-lg-none">{{ offer.created|date('d.m.Y') }}</div>
-            <div class="text-muted text-truncate" style="max-width: 250px">{{ offer.title }}</div>
+            <div class="text-muted text-truncate" style="max-width: 250px">{{ offer.department }}</div>
             <div class="small text-muted text-truncate" style="max-width: 250px">{{ offer.school }}, {{ offer.city }}</div>
 
         </div>
         <div class="d-flex align-items-center">
-            <div class="d-none d-lg-block badge text-bg-light rounded-pill fw-normal me-1">{{ offer.created|date('d.m.Y') }}</div>
+            <div class="d-none d-lg-block badge text-bg-light rounded-pill fw-normal me-1">{{ offer.startDate|date('d.m.Y') }}</div>
             <i class="ti ti-chevron-right"></i>
         </div>
     </a>

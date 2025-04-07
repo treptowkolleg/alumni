@@ -50,7 +50,7 @@
                         <h3 class="h6 mb-0">Stellenbeschreibung</h3>
                     </div>
                     <div class="card-body bg-white">
-                        <h5 class="card-title">{{ offer.title }}</h5>
+                        <h4 class="card-title text-primary">{{ offer.title }}</h4>
                         <h6 class="card-subtitle mb-2 text-muted">
                             {{ offer.school.title ?? 'Schule unbekannt' }} &bull; {{ offer.city }}, {{ offer.county }}
                         </h6>
@@ -60,7 +60,12 @@
                         {% endif %}
 
                         {% if offer.type %}
-                            <p class="mb-1"><strong>Art der Stelle:</strong> {{ offer.type.title }}</p>
+                            <p class="mb-0"><strong>Art der Stelle:</strong> {{ offer.type.title }}</p>
+                            <p class=""><strong>Arbeitsmodell:</strong> {{ offer.jobType.label }}</p>
+                        {% endif %}
+
+                        {% if offer.salaryLevel %}
+                            <p class=""><strong>Entgeltstufe:</strong> {{ offer.salaryLevel.code }}</p>
                         {% endif %}
 
                         {% if offer.startDate %}
