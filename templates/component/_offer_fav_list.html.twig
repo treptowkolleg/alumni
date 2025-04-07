@@ -1,5 +1,5 @@
 <div class="list-group-item  d-flex align-items-center p-0">
-    <a href="#" class="ripplelink swipe-link-start w-100 d-flex align-items-center justify-content-between p-3 text-decoration-none">
+    <a href="{{ url('blog_news_offer_show',{'id':offer.id}) }}" class="ripplelink swipe-link-start w-100 d-flex align-items-center justify-content-between p-3 text-decoration-none">
         <div class="d-flex flex-column">
             <div class="d-inline-block fw-bolder text-wrap">{{ offer.type }}</div>
             <div class="me-2 d-block d-lg-none">{{ offer.created|date('d.m.Y') }}</div>

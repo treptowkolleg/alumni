@@ -1,0 +1,103 @@
+{% extends '_full.html.twig' %}
+
+{% set meta_title = 'Stellenangebote' %}
+{% set meta_subtitle = 'Details' %}
+{% set meta_description = 'Bewerbe dich als Lehrkrfat auf offene Stellen im Zweiten Bildungsweg und engagiere dich für Bildung und Lernen.' %}
+
+{% set seo_title = offer.title %}
+
+{% set sidebar = 'offers' %}
+
+{% block page_header %}
+    <section class="py-3">
+        <div class="container">
+
+            {{ include('component/offer_subbar.html.twig',{'filter':'details'}) }}
+
+            {% if offer.contactEmail %}
+                {% set subject = 'Bewerbung als ' ~ offer.type.title ~ ' für ' ~ offer.title %}
+                {% if offer.contactPerson %}
+                    {% set greeting = 'Guten Tag ' ~ offer.contactPerson %}
+                {% else %}
+                    {% set greeting = 'Sehr geehrte Damen und Herren' %}
+                {% endif %}
+                {% if app.user %}
+                    {% set userName = app.user.fullname %}
+                {% else %}
+                    {% set userName = '[Dein Name]' %}
+                {% endif %}
+
+                {% set body = greeting ~ ',%0D%0A%0D%0A' ~
+                    'ich bewerbe mich auf die ausgeschriebene Stelle als ' ~ offer.type.title ~ '.%0D%0A%0D%0A' ~
+                    'Anbei finden Sie meine Bewerbungsunterlagen. Für Rückfragen stehe ich Ihnen gerne zur Verfügung.%0D%0A%0D%0A' ~
+                    'Mit freundlichen Grüßen,%0D%0A%0D%0A' ~ userName %}
+            {% endif %}
+
+            <div class="col-lg-12 mb-3">
+                <div class="d-flex flex-column flex-lg-row">
+                    {% if offer.contactEmail %}
+                        <a class="btn btn-primary rounded-2 mb-3 mb-lg-0 me-0 me-lg-2" href="mailto:{{ offer.contactEmail }}?subject={{ subject|url_encode }}&body={{ body }}">
+                            <i class="ti ti-pencil me-2"></i>Jetzt bewerben
+                        </a>
+                    {% endif %}
+                    <a class="btn btn-light rounded-2"  href="#"><i class="ti ti-star me-2 text-primary"></i>Merken</a>
+                </div>
+            </div>
+
+            <div class="col-12 order-3">
+                <div class="card bg-light-subtle border-0 shadow-sm rounded rounded-2">
+                    <div class="card-body  border-bottom border-primary">
+                        <h3 class="h6 mb-0">Stellenbeschreibung</h3>
+                    </div>
+                    <div class="card-body bg-white">
+                        <h5 class="card-title">{{ offer.title }}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">
+                            {{ offer.school.title ?? 'Schule unbekannt' }} &bull; {{ offer.city }}, {{ offer.county }}
+                        </h6>
+
+                        {% if offer.department %}
+                            <p class="mb-1"><strong>Fach:</strong> {{ offer.department }}</p>
+                        {% endif %}
+
+                        {% if offer.type %}
+                            <p class="mb-1"><strong>Art der Stelle:</strong> {{ offer.type.title }}</p>
+                        {% endif %}
+
+                        {% if offer.startDate %}
+                            <p class="mb-1"><strong>Startdatum:</strong> {{ offer.startDate|date('d.m.Y') }}</p>
+                        {% endif %}
+
+                        {% if offer.endDate %}
+                            <p class="mb-1"><strong>Enddatum:</strong> {{ offer.endDate|date('d.m.Y') }}</p>
+                        {% endif %}
+
+                        {% if offer.description %}
+                            <p class="mt-3">{{ offer.description|raw }}</p>
+                        {% endif %}
+
+                        <hr>
+
+                        <p class="mb-1"><strong>Kontakt:</strong> {{ offer.contactPerson ?? 'n/a' }}</p>
+                        <p class="mb-1">
+                            {% if offer.contactEmail %}
+                                <a href="mailto:{{ offer.contactEmail }}?subject={{ subject|url_encode }}&body={{ body }}">
+                                    {{ offer.contactEmail }}
+                                </a><br>
+                            {% endif %}
+                            {% if offer.ContactPhone %}
+                                <span>Tel: {{ offer.ContactPhone }}</span>
+                            {% endif %}
+                        </p>
+                    </div>
+                    <div class="card-body"></div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+{% endblock %}
+
+{% block body %}{% endblock %}
+
+{% block aside %}{% endblock %}

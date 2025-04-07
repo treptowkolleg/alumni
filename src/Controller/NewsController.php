@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\BlogPost;
+use App\Entity\PersonOffer;
 use App\Repository\BlogPostRepository;
 use App\Repository\PersonOfferRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -69,6 +70,14 @@ class NewsController extends AbstractController
             'cities' => $cities,
             'types' => $types,
             'page' => $page,
+        ]);
+    }
+
+    #[Route('/stellenangebote/{id}/show', name: 'offer_show')]
+    public function offerShow(PersonOffer $offer): Response
+    {
+        return $this->render('offer/show.html.twig', [
+            'offer' => $offer,
         ]);
     }
 
