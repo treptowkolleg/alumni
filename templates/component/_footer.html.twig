@@ -4,7 +4,7 @@
 <footer class="pb-3 bg-off bg-opacity-25" style="background-color: #294a7010!important;">
 
     <div class="container">
-        <h6 class="text-muted mt-3 mb-4 fw-normal small">Teilnehmende Kollegs und Abendgymnasien</h6>
+        <h6 class="text-muted mt-3 mb-4 fw-normal small">eingetragene Kollegs und Abendgymnasien</h6>
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4">
             {{ render(controller('App\\Controller\\ApiController::getSchools')) }}
         </div>
@@ -93,7 +93,7 @@
         <div class="d-flex flex-column flex-lg-row justify-content-between align-items-center">
 
             <div class="me-lg-auto mb-3 mb-lg-0 small">
-                &copy;2024 Alumni am Treptow-Kolleg Berlin
+                &copy;2024-{{ "now"|date('Y')}} Alumni am Treptow-Kolleg Berlin
             </div>
             <div class="text-center">
                 <ul class="list-inline mb-0 small">
