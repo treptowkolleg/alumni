@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Entity\BlogPost;
 use App\Repository\BlogPostRepository;
+use App\Repository\PersonOfferRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -45,4 +47,29 @@ class NewsController extends AbstractController
             'next_post' => $nextPost
         ]);
     }
+
+    #[Route('/stellenangebote/{page}', name: 'offer_index')]
+    public function offerIndex(Request $request, PersonOfferRepository $offerRepository, int $page = 1): Response
+    {
+        $offers = $offerRepository->findBy(['active' => true]);
+        $counties = [];
+        $cities = [];
+        $types = [];
+
+        foreach ($offers as $offer) {
+            $counties[$offer->getCounty()] = $offer->getCounty();
+            $cities[$offer->getCity()] = $offer->getCity();
+            $types[$offer->getType()->getTitle()] = $offer->getType()->getTitle();
+        }
+
+
+        return $this->render('offer/index.html.twig', [
+            'offers' => $offers,
+            'counties' => $counties,
+            'cities' => $cities,
+            'types' => $types,
+            'page' => $page,
+        ]);
+    }
+
 }

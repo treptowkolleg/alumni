@@ -13,6 +13,7 @@ use App\Operator\SoundExpression;
 use App\Repository\BlogPostRepository;
 use App\Repository\EventRepository;
 use App\Repository\EventTypeRepository;
+use App\Repository\PersonOfferRepository;
 use App\Repository\PinboardEntryRepository;
 use App\Repository\SchoolRepository;
 use App\Repository\UserProfileRepository;
@@ -171,10 +172,13 @@ class PersonController extends AbstractController
     }
 
     #[Route('/alumni/schule/{bsn}', name: 'school')]
-    public function school(School $school): Response
+    public function school(School $school, PersonOfferRepository $offerRepository): Response
     {
+        $offers = $offerRepository->findBy(['school' => $school]);
+
         return $this->render('school/show.html.twig', [
             'school' => $school,
+            'offers' => $offers,
         ]);
     }
 }

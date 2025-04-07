@@ -24,6 +24,10 @@
                     <div class="list-group list-group-flush border-bottom bg-white">
                         {% for offer in offers %}
                             {{ include('component/_offer_fav_list.html.twig') }}
+                        {% else %}
+                            <div class="list-group-item d-flex justify-content-center align-items-center">
+                                <span class="py-3">Aktuell sind keine Stellen offen.</span>
+                            </div>
                         {% endfor %}
                     </div>
                     <div class="card-body"></div>

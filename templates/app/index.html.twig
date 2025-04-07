@@ -40,34 +40,34 @@
                         <i class="ti ti-users display-1 text-off opacity-50"></i>
                         <div class="text-uppercase small">Alumni-Portal</div>
                         <h4 class="h4 text-primary fw-normal">Jetzt durchstarten</h4>
-                        <p class=" opacity-75">Finde ehemalige Kommilitonen und Lehrkräfte deiner Bildungseinrichtung des zweiten Bildungsweges.</p>
+                        <p class=" opacity-75">Finde ehemalige Lernende und Lehrkräfte deiner Bildungseinrichtung des zweiten Bildungsweges.</p>
                         <a href="{{ path('people_index') }}" class="stretched-link text-decoration-none d-flex align-items-center mt-auto">
                             <span class="fs-5 me-1">Alumni finden</span>
                             <i class="fa-solid fa-chevron-right"></i>
                         </a>
                     </div>
                 </div>
-            {% if interview %}
+
                 <div class="col">
                     <div class="card card-body shadow-sm bg-white rounded rounded-2 h-100">
-                        <i class="ti ti-news display-1 text-off opacity-50"></i>
-                        <div class="text-uppercase small">{{ interview.type }}</div>
-                        <h4 class="h4 text-primary fw-normal">{{ interview.title }}</h4>
-                        <p class=" opacity-75">{{ interview.subtitle }}</p>
-                        <a href="{{ path('blog_show',{'slug':interview.slug}) }}" class="card-link stretched-link text-decoration-none d-flex align-items-center  mt-auto">
-                            <span class="fs-5 me-1">lesen</span>
+                        <i class="ti ti-briefcase display-1 text-off opacity-50"></i>
+                        <div class="text-uppercase small">Stellenangebote</div>
+                        <h4 class="h4 text-primary fw-normal">Jobbörse</h4>
+                        <p class=" opacity-75">Engagiere dich im zweiten Bildungsweg.</p>
+                        <a href="{{ path('blog_news_offer_index') }}" class="card-link stretched-link text-decoration-none d-flex align-items-center  mt-auto">
+                            <span class="fs-5 me-1">bewerben</span>
                             <i class="fa-solid fa-chevron-right"></i>
                         </a>
                     </div>
                 </div>
-            {% endif %}
+
             {% if blog_post %}
                 <div class="col">
                     <div class="card card-body shadow-sm text-bg-primary border-0 rounded rounded-2 h-100">
                         <i class="ti ti-rss display-1 text-white opacity-50"></i>
                         <div class="text-uppercase small">{{ blog_post.type }}</div>
                         <h4 class="h4 text-light fw-normal">{{ blog_post.title }}</h4>
-                        <p class=" opacity-75">{{ blog_post.subtitle }}</p>
+                        <p class=" opacity-75">{{ blog_post.subtitle }}.</p>
                         <a href="{{ path('blog_show',{'slug':blog_post.slug}) }}" class="card-link stretched-link text-decoration-none d-flex align-items-center  link-white mt-auto">
                             <span class="fs-5 me-1">lesen</span>
                             <i class="fa-solid fa-chevron-right"></i>
