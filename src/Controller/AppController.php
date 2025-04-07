@@ -6,6 +6,7 @@ use App\Entity\Newsletter;
 use App\Form\GlobalSearchType;
 use App\Form\NewsletterType;
 use App\Repository\BlogPostRepository;
+use App\Repository\BlogTypeRepository;
 use App\Repository\EventRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Exception\ORMException;
@@ -61,9 +62,10 @@ class AppController extends AbstractController
     }
 
     #[Route('/about/allgemein', name: 'about_index')]
-    public function aboutIndex(BlogPostRepository $postRepository): Response
+    public function aboutIndex(BlogPostRepository $postRepository, BlogTypeRepository $blogTypeRepository): Response
     {
-        $blogPost = $postRepository->findLatestByType('Pressemitteilung');
+        $blogType = $blogTypeRepository->findOneBy(['title' => 'Pressemitteilung']);
+        $blogPost = $postRepository->findBy(['type' => $blogType]);
         return $this->render('app/about.html.twig',[
             'posts' => $blogPost
         ]);
