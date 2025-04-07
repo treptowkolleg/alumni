@@ -18,13 +18,23 @@
             {% if app.user %}
                 <form id="event-toggle" method="post"></form>
                 {% if post in app.user.followedEvents %}
-                    <a href="#" class="nav-link dropdown-toggle ms-auto" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-star text-secondary me-2"></i>Du nimmst teil</a>
-                    <ul class="dropdown-menu dropdown-menu-end">
-                        <li><button type="submit" form="event-toggle" class="dropdown-item" href="#"><i class="bx bx-block me-2"></i>Nicht mehr teilnehmen</button></li>
-                    </ul>
-
+                    {% if post.endDate|date('Ymd') >= date('now')|date('Ymd') %}
+                        <a href="#" class="nav-link dropdown-toggle ms-auto" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-star text-secondary me-2"></i>Du nimmst teil</a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li>
+                                <button type="submit" form="event-toggle" class="dropdown-item" href="#"><i class="bx bx-block me-2"></i>Nicht mehr teilnehmen</button>
+                            </li>
+                        </ul>
+                    {% else %}
+                        <a href="#" class="nav-link ms-auto disabled"><i class="fa-solid fa-star text-off me-2"></i>Teilgenommen</a>
+                    {% endif %}
                 {% else %}
-                    <button type="submit" form="event-toggle" class="nav-link ms-auto" href="#"><i class="fa-regular fa-star text-secondary me-2"></i>Teilnehmen</button>
+                    {% if post.endDate|date('Ymd') >= date('now')|date('Ymd') %}
+                        <button type="submit" form="event-toggle" class="nav-link ms-auto" href="#"><i class="fa-regular fa-star text-secondary me-2"></i>Teilnehmen</button>
+                    {% else %}
+                        <a href="#" class="nav-link ms-auto disabled"><i class="fa-solid fa-star text-off me-2"></i>Teilnehmen</a>
+                    {% endif %}
+
                 {% endif %}
             {% endif %}
         {% endif %}

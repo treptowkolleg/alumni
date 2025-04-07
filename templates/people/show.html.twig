@@ -160,14 +160,13 @@
                             <div class="card-body"></div>
                         </div>
                     </div>
-
                     {% if person.user.hasPinnboard %}
                         <div class="col-12">
                             <div class="card bg-light-subtle border-0 rounded rounded-2 shadow-sm">
                                 <div class="card-body border-bottom border-primary">
                                     <h3 class="h6 mb-0 text-center text-lg-start">Pinnwand</h3>
                                 </div>
-                                {% if app.user %}
+                                {% if app.user and app.user.userProfiles.count > 0 %}
                                     <div class="card-body p-0">
                                         <form method="post" class="needs-validation" novalidate>
                                             <input type="file" class="form-control" disabled />
