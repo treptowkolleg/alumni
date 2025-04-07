@@ -11,7 +11,7 @@
                     <div class="accordion-body px-0">
                         <ul class="nav flex-column small">
                             {% for school in schools|sort((a, b) => a.title <=> b.title) %}
-                            <li class="nav-item p-1"><a href="{{ url('people_school',{'bsn':school.bsn}) }}" class="nav-link p-0 text-body-secondary">{{ school.title }}</a></li>
+                            <li class="nav-item p-1"><a href="{{ url('people_school',{'bsn':school.bsn}) }}" class="nav-link p-0 text-body-secondary footer-link">{{ school.title }}</a></li>
                             {% endfor %}
                         </ul>
                     </div>
