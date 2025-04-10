@@ -7,14 +7,13 @@ use App\Entity\Interest;
 use App\Entity\University;
 use App\Entity\UserProfile;
 use App\Enums\PerformanceCourseEnum;
+use App\Repository\HobbyRepository;
+use App\Repository\InterestRepository;
+use App\Repository\UniversityRepository;
 use App\Transformer\CourseTransformer;
-use App\Transformer\HobbyTransformer;
-use App\Transformer\TagTransformer;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -22,120 +21,12 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class UserprofileFormType extends AbstractType
 {
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $interests = [
-            'Sprachen und Literatur' => [
-                'Lesen' => 'reading',
-                'Kreatives Schreiben' => 'creative_writing',
-                'Debattieren' => 'debating',
-                'Fremdsprachen' => 'foreign_languages',
-                'Literaturanalyse' => 'literature_analysis',
-            ],
-            'Naturwissenschaften und Technik' => [
-                'Physik' => 'physics',
-                'Chemie' => 'chemistry',
-                'Biologie' => 'biology',
-                'Astronomie' => 'astronomy',
-                'Robotik' => 'robotics',
-                'Programmieren' => 'coding',
-                'Umweltforschung' => 'environmental_science',
-            ],
-            'Mathematik und Logik' => [
-                'Mathematik-Wettbewerbe' => 'math_competitions',
-                'Statistik' => 'statistics',
-                'Logikspiele' => 'logic_games',
-                'Finanzbildung' => 'financial_literacy',
-                'Geometrie' => 'geometry',
-            ],
-            'Kunst und Design' => [
-                'Malen und Zeichnen' => 'painting_drawing',
-                'Fotografie' => 'photography',
-                'Grafikdesign' => 'graphic_design',
-                'Skulptur' => 'sculpture',
-                'Mode-Design' => 'fashion_design',
-            ],
-            'Musik und darstellende Kuenste' => [
-                'Musikinstrumente spielen' => 'playing_instruments',
-                'Gesang' => 'singing',
-                'Tanzen' => 'dancing',
-                'Theater und Schauspiel' => 'theater_acting',
-                'Chor' => 'choir',
-                'Musikproduktion' => 'music_production',
-            ],
-            'Gesellschaft und Kultur' => [
-                'Geschichte' => 'history',
-                'Philosophie' => 'philosophy',
-                'Sozialwissenschaften' => 'social_sciences',
-                'Politik und Debatten' => 'politics_debating',
-                'Kulturelle Studien' => 'cultural_studies',
-            ],
-            'Sport und Gesundheit' => [
-                'Teamsportarten' => 'team_sports',
-                'Einzelsportarten' => 'individual_sports',
-                'Fitness' => 'fitness',
-                'Yoga und Meditation' => 'yoga_meditation',
-                'Ernaehrungswissenschaft' => 'nutrition',
-            ],
-            'Medien und Kommunikation' => [
-                'Film und Videoproduktion' => 'film_video_production',
-                'Journalismus' => 'journalism',
-                'Podcasting' => 'podcasting',
-                'Social Media Management' => 'social_media_management',
-                'Fotobearbeitung' => 'photo_editing',
-            ],
-            'Freizeit und Outdoor' => [
-                'Wandern' => 'hiking',
-                'Camping' => 'camping',
-                'Gaertnern' => 'gardening',
-                'Vogelbeobachtung' => 'birdwatching',
-                'Reisen' => 'traveling',
-                'Angeln' => 'fishing',
-            ],
-            'Praktische Fertigkeiten und Handwerk' => [
-                'Kochen und Backen' => 'cooking_baking',
-                'Schreinern und Bauen' => 'woodworking',
-                'Elektronikbasteln' => 'electronics',
-                'Naehen und Textilarbeiten' => 'sewing_textiles',
-                'DIY-Projekte' => 'diy_projects',
-            ],
-        ];
-
-        $choices = [
-        'Berufsbereiche' => [
-            'IT und Softwareentwicklung' => 'it_softwareentwicklung',
-            'Marketing und Werbung' => 'marketing_werbung',
-            'Vertrieb und Verkauf' => 'vertrieb_verkauf',
-            'Personal und HR' => 'personal_hr',
-            'Finanzen und Buchhaltung' => 'finanzen_buchhaltung',
-            'Beratung und Consulting' => 'beratung_consulting',
-            'Gesundheitswesen und Pflege' => 'gesundheitswesen_pflege',
-            'Recht und Verwaltung' => 'recht_verwaltung',
-        ],
-        'Berufliche Weiterentwicklung' => [
-            'Fuehrungskompetenzen' => 'fuehrungskompetenzen',
-            'Projektmanagement' => 'projektmanagement',
-            'Entrepreneurship' => 'entrepreneurship',
-            'Weiterbildung und Training' => 'weiterbildung_training',
-            'Karriereplanung und Coaching' => 'karriereplanung_coaching',
-            'Kommunikationsfaehigkeiten' => 'kommunikationsfaehigkeiten',
-        ],
-        'Berufliche Taetigkeiten' => [
-            'Teamarbeit' => 'teamarbeit',
-            'Selbststaendigkeit' => 'selbststaendigkeit',
-            'Verhandlungen und Vertragsabschluesse' => 'verhandlungen_vertragsabschluesse',
-            'Rekrutierung und Mitarbeiterfuehrung' => 'rekrutierung_mitarbeiterfuehrung',
-            'Strategische Planung' => 'strategische_planung',
-            'Kundenbetreuung und -beratung' => 'kundenbetreuung_beratung',
-            'Datenanalyse und Forschung' => 'datenanalyse_forschung',
-            'Marktforschung und Analyse' => 'marktforschung_analyse',
-        ],
-    ];
 
         $builder
             ->add('inYear',NumberType::class,[
@@ -187,10 +78,18 @@ class UserprofileFormType extends AbstractType
             ->add('userHobbies', EntityType::class, [
                 'row_attr' => ['class' => 'slim-form'],
                 'attr' => ['class' => 'slim-select-multi-exam-type'],
+                'query_builder' => function (HobbyRepository $er) {
+                    return $er->createQueryBuilder('e')
+                        ->leftJoin('e.category', 'c')
+                        ->orderBy('c.label', 'ASC')
+                        ->addOrderBy('e.label', 'ASC');
+                },
                 'class' => Hobby::class,
                 'multiple' => true,
                 'expanded' => false,
-                'group_by' => fn(Hobby $cat) => $cat->getCategory(),
+                'group_by' => function($choice) {
+                    return $choice->getCategory();
+                },
             ])
             ->add('about', TextareaType::class, [
                 'row_attr' => ['class' => 'form-floating mb-3'],
@@ -206,11 +105,19 @@ class UserprofileFormType extends AbstractType
                 'class' => University::class,
                 'row_attr' => ['class' => 'slim-form mb-3'],
                 'attr' => ['class' => 'slim-select-multi-university', 'data-max' => 1],
+                'query_builder' => function (UniversityRepository $er) {
+                    return $er->createQueryBuilder('e')
+                        ->orderBy('e.county', 'ASC')
+                        ->addOrderBy('e.city', 'ASC')
+                        ->addOrderBy('e.shortTitle', 'ASC');
+                },
                 'placeholder' => "auswählen",
                 'empty_data' => null,
                 'multiple' => false,
                 'expanded' => false,
-                'group_by' => fn(University $cat) => $cat->getCounty(),
+                'group_by' => function($choice) {
+                    return $choice->getCounty();
+                },
             ])
             ->add('currentProfession', TextType::class, [
                 'row_attr' => ['class' => 'form-floating mb-3'],
@@ -228,10 +135,18 @@ class UserprofileFormType extends AbstractType
             ->add('userInterests', EntityType::class, [
                 'row_attr' => ['class' => 'slim-form mb-3'],
                 'attr' => ['class' => 'slim-select-multi-interests'],
+                'query_builder' => function (InterestRepository $er) {
+                    return $er->createQueryBuilder('e')
+                        ->leftJoin('e.category', 'c')
+                        ->orderBy('c.label', 'ASC')
+                        ->addOrderBy('e.label', 'ASC');
+                },
                 'class' => Interest::class,
                 'multiple' => true,
                 'expanded' => false,
-                'group_by' => fn(Interest $cat) => $cat->getCategory(),
+                'group_by' => function($choice) {
+                    return $choice->getCategory();
+                },
             ])
         ;
 
