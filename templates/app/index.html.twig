@@ -40,7 +40,7 @@
                             <i class="ti ti-user text-primary me-2"></i>
                             {% if "now"|date('H') < 10 and "now"|date('H') >= 4 %}Guten Morgen, {{ app.user.fullname }}!{% endif %}
                             {% if "now"|date('H') < 18 and "now"|date('H') >= 10 %}Guten Tag, {{ app.user.fullname }}!{% endif %}
-                            {% if "now"|date('H') < 4 and "now"|date('H') >= 18 %}Guten Abend, {{ app.user.fullname }}!{% endif %}
+                            {% if "now"|date('H') < 4 or "now"|date('H') >= 18 %}Guten Abend, {{ app.user.fullname }}!{% endif %}
 
                             <i class="ti ti-chevron-right ms-auto"></i>
                         </a>
