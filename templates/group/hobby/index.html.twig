@@ -13,9 +13,39 @@
         <div class="container py-5">
 
             <div class="row g-3">
+
+                <div class="col-12 mb-3">
+                    <div class="card bg-light-subtle border-warning shadow-sm rounded rounded-2">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center justify-content-start fs-4">
+                                <i class="ti ti-info-circle-filled me-1 text-warning"></i>
+                                Hinweis
+                            </div>
+                            <p class="card-text">
+                                Findet und vernetzt euch mit Gleichgesinnten. Erstellt Untergruppen und organisiert und tauscht euch aus.
+                                <span class="fst-italic text-warning">Noch ist dieser Bereich in Entwicklung. Daher sind noch nicht alle Funktionen verfügbar.</span>
+                            </p>
+                            <p class="card-text">
+                                <span class="ms-auto badge fw-normal text-dark-emphasis bg-secondary-subtle rounded-2 align-items-center me-2">
+                                    4
+                                    <i class="ti ti-users ms-1"></i>
+                                </span>
+                                gibt an, wie viele Alumni dem jeweiligen Interesse nachgehen.
+                            </p>
+                            <p class="card-text">
+                                <span class="badge fw-normal text-primary bg-primary-subtle rounded-2 align-items-center me-2">
+                                    19
+                                    <i class="ti ti-message-2 ms-1"></i>
+                                </span>
+                                gibt an, wie viele Unterhaltungen gestartet worden sind.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="col-12 mb-3">
                     <div class="card bg-light-subtle border-0 shadow-sm rounded rounded-2">
-                        <div class="card-body  border-bottom border-primary">
+                        <div class="card-body">
                             <h3 class="h6 mb-0">Hobbies</h3>
                         </div>
                         <div class="list-group list-group-flush border-bottom bg-white">
@@ -24,16 +54,22 @@
                                 {% for hobby in category.hobbies|sort((a,b) => a.label <=> b.label) %}
                                     {% if hobby.userProfiles.count > 0 %}
                                         {% if x == 0 %}
-                                            <div class="list-group-item bg-light-subtle">
+                                            <div class="list-group-item bg-light-subtle border-bottom border-primary">
                                                 <span class="text-primary">{{ category }}</span>
                                             </div>
                                             {% set x = 1 %}
                                         {% endif %}
                                         <a href="#" class="list-group-item ripplelink swipe-link-start list-group-item-action d-flex justify-content-start align-items-center py-3">
-                                            <i class="ti ti-activity text-primary me-2"></i>
-                                            <span>{{ hobby }}</span>
-                                            <span class="ms-auto badge fw-normal text-primary bg-primary-subtle rounded-2">{{ hobby.userProfiles.count }}</span>
-                                            <i class="ti ti-chevron-right ms-2"></i>
+                                            <i class="ti ti-roller-skating text-primary me-2"></i>
+                                            <div class="text-truncate">{{ hobby }}</div>
+                                            <span class="ms-auto badge fw-normal text-dark-emphasis bg-secondary-subtle rounded-start-2 d-flex align-items-center">
+                                                {{ hobby.userProfiles.count }}
+                                                <i class="ti ti-users ms-1"></i>
+                                            </span>
+                                            <span class="badge fw-normal text-primary bg-primary-subtle rounded-end-2 d-flex align-items-center">
+                                                0
+                                                <i class="ti ti-message-2 ms-1"></i>
+                                            </span>
                                         </a>
                                     {% endif %}
                                 {% endfor %}
@@ -45,7 +81,7 @@
 
                 <div class="col-12 mb-3">
                     <div class="card bg-light-subtle border-0 shadow-sm rounded rounded-2">
-                        <div class="card-body  border-bottom border-primary">
+                        <div class="card-body">
                             <h3 class="h6 mb-0">Berufliche Interessen</h3>
                         </div>
                         <div class="list-group list-group-flush border-bottom bg-white">
@@ -54,16 +90,22 @@
                                 {% for hobby in category.interests|sort((a,b) => a.label <=> b.label) %}
                                     {% if hobby.userProfiles.count > 0 %}
                                         {% if x == 0 %}
-                                            <div class="list-group-item bg-light-subtle">
+                                            <div class="list-group-item bg-light-subtle border-bottom border-primary">
                                                 <span class="text-primary">{{ category }}</span>
                                             </div>
                                             {% set x = 1 %}
                                         {% endif %}
                                         <a href="#" class="list-group-item ripplelink swipe-link-start list-group-item-action d-flex justify-content-start align-items-center py-3">
-                                            <i class="ti ti-activity text-primary me-2"></i>
-                                            <span>{{ hobby }}</span>
-                                            <span class="ms-auto badge fw-normal text-primary bg-primary-subtle rounded-2">{{ hobby.userProfiles.count }}</span>
-                                            <i class="ti ti-chevron-right ms-2"></i>
+                                            <i class="ti ti-briefcase text-primary me-2"></i>
+                                            <div class="text-truncate">{{ hobby }}</div>
+                                            <span class="ms-auto badge fw-normal text-dark-emphasis bg-secondary-subtle rounded-start-2 d-flex align-items-center">
+                                                {{ hobby.userProfiles.count }}
+                                                <i class="ti ti-users ms-1"></i>
+                                            </span>
+                                            <span class="badge fw-normal text-primary bg-primary-subtle rounded-end-2 d-flex align-items-center">
+                                                0
+                                                <i class="ti ti-message-2 ms-1"></i>
+                                            </span>
                                         </a>
                                     {% endif %}
                                 {% endfor %}

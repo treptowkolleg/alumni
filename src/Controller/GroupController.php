@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class GroupController extends AbstractController
 {
 
-    #[Route('/hobbies', name: 'hobby_index')]
+    #[Route('', name: 'hobby_index')]
     public function hobby_index(HobbyCategoryRepository $hobbyCategoryRepository, InterestCategoryRepository $interestCategoryRepository): Response
     {
         $hobbyCategories = $hobbyCategoryRepository->findAll();
