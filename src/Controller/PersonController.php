@@ -13,6 +13,7 @@ use App\Operator\SoundExpression;
 use App\Repository\BlogPostRepository;
 use App\Repository\EventRepository;
 use App\Repository\EventTypeRepository;
+use App\Repository\HobbyCategoryRepository;
 use App\Repository\PersonOfferRepository;
 use App\Repository\PinboardEntryRepository;
 use App\Repository\SchoolRepository;
