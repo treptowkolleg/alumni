@@ -52,6 +52,11 @@ class University
         $this->userProfiles = new ArrayCollection();
     }
 
+    public function __toString(): string
+    {
+        return $this->shortTitle;
+    }
+
     public function getId(): ?int
     {
         return $this->id;

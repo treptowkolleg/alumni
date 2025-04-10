@@ -34,6 +34,11 @@ class InterestCategory
         $this->interests = new ArrayCollection();
     }
 
+    public function __toString(): string
+    {
+        return $this->label;
+    }
+
     public function getId(): ?int
     {
         return $this->id;

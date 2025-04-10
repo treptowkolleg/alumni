@@ -205,7 +205,9 @@ class UserprofileFormType extends AbstractType
             ->add('userUniversity', EntityType::class, [
                 'class' => University::class,
                 'row_attr' => ['class' => 'slim-form mb-3'],
-                'attr' => ['class' => 'slim-select-single-university'],
+                'attr' => ['class' => 'slim-select-multi-university', 'data-max' => 1],
+                'placeholder' => "auswählen",
+                'empty_data' => null,
                 'multiple' => false,
                 'expanded' => false,
                 'group_by' => fn(University $cat) => $cat->getCounty(),
