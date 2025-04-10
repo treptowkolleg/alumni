@@ -50,7 +50,7 @@
                             <div class="card-body">
                                 <div class="row row-cols-1 g-3 mb-3">
                                     {{ form_row(form.about) }}
-                                    {{ form_row(form.hobbies) }}
+                                    {{ form_row(form.userHobbies) }}
                                     {{ form_row(form.portfolioLink) }}
                                 </div>
                             </div>
@@ -63,9 +63,9 @@
                                 <h3 class="h5 mb-0 text-center text-lg-start">Studium</h3>
                             </div>
                             <div class="card-body">
-                                <div class="row row-cols-1 row-cols-lg-2 g-3">
+                                <div class="row row-cols-1 row-cols-lg-1 g-3">
                                     {{ form_row(form.studium) }}
-                                    {{ form_row(form.university) }}
+                                    {{ form_row(form.userUniversity) }}
                                 </div>
                             </div>
                         </div>
@@ -81,7 +81,7 @@
                                     {{ form_row(form.currentProfession) }}
                                     {{ form_row(form.currentCompany) }}
                                 </div>
-                                {{ form_row(form.interests) }}
+                                {{ form_row(form.userInterests) }}
                             </div>
                         </div>
                     </div>

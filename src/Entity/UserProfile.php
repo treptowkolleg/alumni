@@ -109,6 +109,21 @@ class UserProfile
     #[ORM\OneToMany(targetEntity: PinboardEntry::class, mappedBy: 'writer')]
     private Collection $writtenPinnboardEntries;
 
+    /**
+     * @var Collection<int, Hobby>
+     */
+    #[ORM\ManyToMany(targetEntity: Hobby::class, inversedBy: 'userProfiles')]
+    private Collection $userHobbies;
+
+    /**
+     * @var Collection<int, Interest>
+     */
+    #[ORM\ManyToMany(targetEntity: Interest::class, inversedBy: 'userProfiles')]
+    private Collection $userInterests;
+
+    #[ORM\ManyToOne(inversedBy: 'userProfiles')]
+    private ?University $userUniversity = null;
+
     public function __construct()
     {
         $this->image = new EmbeddedFile();
@@ -116,6 +131,8 @@ class UserProfile
         $this->userProfiles = new ArrayCollection();
         $this->pinboardEntries = new ArrayCollection();
         $this->writtenPinnboardEntries = new ArrayCollection();
+        $this->userHobbies = new ArrayCollection();
+        $this->userInterests = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -479,6 +496,66 @@ class UserProfile
                 $writtenPinnboardEntry->setWriter(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Hobby>
+     */
+    public function getUserHobbies(): Collection
+    {
+        return $this->userHobbies;
+    }
+
+    public function addUserHobby(Hobby $userHobby): static
+    {
+        if (!$this->userHobbies->contains($userHobby)) {
+            $this->userHobbies->add($userHobby);
+        }
+
+        return $this;
+    }
+
+    public function removeUserHobby(Hobby $userHobby): static
+    {
+        $this->userHobbies->removeElement($userHobby);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Interest>
+     */
+    public function getUserInterests(): Collection
+    {
+        return $this->userInterests;
+    }
+
+    public function addUserInterest(Interest $userInterest): static
+    {
+        if (!$this->userInterests->contains($userInterest)) {
+            $this->userInterests->add($userInterest);
+        }
+
+        return $this;
+    }
+
+    public function removeUserInterest(Interest $userInterest): static
+    {
+        $this->userInterests->removeElement($userInterest);
+
+        return $this;
+    }
+
+    public function getUserUniversity(): ?University
+    {
+        return $this->userUniversity;
+    }
+
+    public function setUserUniversity(?University $userUniversity): static
+    {
+        $this->userUniversity = $userUniversity;
 
         return $this;
     }

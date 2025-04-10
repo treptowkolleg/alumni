@@ -2,14 +2,14 @@
 
 namespace App\Entity;
 
-use App\Repository\HobbyRepository;
+use App\Repository\InterestRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
-#[ORM\Entity(repositoryClass: HobbyRepository::class)]
-class Hobby
+#[ORM\Entity(repositoryClass: InterestRepository::class)]
+class Interest
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -23,23 +23,18 @@ class Hobby
     #[Gedmo\Slug(fields: ['label'])]
     private $slug;
 
-    #[ORM\ManyToOne(inversedBy: 'hobbies')]
-    private ?HobbyCategory $category = null;
+    #[ORM\ManyToOne(inversedBy: 'interests')]
+    private ?InterestCategory $category = null;
 
     /**
      * @var Collection<int, UserProfile>
      */
-    #[ORM\ManyToMany(targetEntity: UserProfile::class, mappedBy: 'userHobbies')]
+    #[ORM\ManyToMany(targetEntity: UserProfile::class, mappedBy: 'userInterests')]
     private Collection $userProfiles;
 
     public function __construct()
     {
         $this->userProfiles = new ArrayCollection();
-    }
-
-    public function __toString(): string
-    {
-        return $this->label;
     }
 
     public function getId(): ?int
@@ -67,12 +62,12 @@ class Hobby
         return $this->slug;
     }
 
-    public function getCategory(): ?HobbyCategory
+    public function getCategory(): ?InterestCategory
     {
         return $this->category;
     }
 
-    public function setCategory(?HobbyCategory $category): static
+    public function setCategory(?InterestCategory $category): static
     {
         $this->category = $category;
 
@@ -91,7 +86,7 @@ class Hobby
     {
         if (!$this->userProfiles->contains($userProfile)) {
             $this->userProfiles->add($userProfile);
-            $userProfile->addUserHobby($this);
+            $userProfile->addUserInterest($this);
         }
 
         return $this;
@@ -100,7 +95,7 @@ class Hobby
     public function removeUserProfile(UserProfile $userProfile): static
     {
         if ($this->userProfiles->removeElement($userProfile)) {
-            $userProfile->removeUserHobby($this);
+            $userProfile->removeUserInterest($this);
         }
 
         return $this;

@@ -6,7 +6,11 @@ use App\Entity\BlogPost;
 use App\Entity\BlogType;
 use App\Entity\Event;
 use App\Entity\EventType;
+use App\Entity\Hobby;
+use App\Entity\HobbyCategory;
 use App\Entity\Inbound;
+use App\Entity\Interest;
+use App\Entity\InterestCategory;
 use App\Entity\JobType;
 use App\Entity\Newsletter;
 use App\Entity\NewsletterQueue;
@@ -16,6 +20,7 @@ use App\Entity\PersonOffer;
 use App\Entity\PinboardEntry;
 use App\Entity\SalaryLevel;
 use App\Entity\School;
+use App\Entity\University;
 use App\Entity\User;
 use App\Entity\UserProfile;
 use App\Repository\BlogPostRepository;
@@ -194,6 +199,25 @@ class DashboardController extends AbstractDashboardController
                 ->setCssClass('admin-link')
                 ->setPermission('ROLE_ADMIN')
             ;
+
+            yield MenuItem::linkToCrud('Hobbies', 'ti ti-roller-skating',Hobby::class)
+                ->setCssClass('admin-link')
+                ->setPermission('ROLE_ADMIN')
+            ;
+            yield MenuItem::linkToCrud('Hobby Categories', 'ti ti-category',HobbyCategory::class)
+                ->setCssClass('admin-link')
+                ->setPermission('ROLE_ADMIN')
+            ;
+            yield MenuItem::linkToCrud('Interests', 'ti ti-template',Interest::class)
+                ->setCssClass('admin-link')
+                ->setPermission('ROLE_ADMIN')
+            ;
+            yield MenuItem::linkToCrud('Interest Categories', 'ti ti-category',InterestCategory::class)
+                ->setCssClass('admin-link')
+                ->setPermission('ROLE_ADMIN')
+            ;
+
+
             yield MenuItem::linkToCrud('Angebotstypen', 'ti ti-school',OfferType::class)
                 ->setCssClass('admin-link')
                 ->setPermission('ROLE_ADMIN')
@@ -207,6 +231,10 @@ class DashboardController extends AbstractDashboardController
                 ->setPermission('ROLE_ADMIN')
             ;
             yield MenuItem::linkToCrud('Schulen', 'ti ti-school',School::class)
+                ->setCssClass('admin-link')
+                ->setPermission('ROLE_ADMIN')
+            ;
+            yield MenuItem::linkToCrud('University', 'ti ti-school',University::class)
                 ->setCssClass('admin-link')
                 ->setPermission('ROLE_ADMIN')
             ;

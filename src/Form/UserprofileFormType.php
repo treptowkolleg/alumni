@@ -2,10 +2,15 @@
 
 namespace App\Form;
 
+use App\Entity\Hobby;
+use App\Entity\Interest;
+use App\Entity\University;
 use App\Entity\UserProfile;
 use App\Enums\PerformanceCourseEnum;
 use App\Transformer\CourseTransformer;
+use App\Transformer\HobbyTransformer;
 use App\Transformer\TagTransformer;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -101,6 +106,37 @@ class UserprofileFormType extends AbstractType
             ],
         ];
 
+        $choices = [
+        'Berufsbereiche' => [
+            'IT und Softwareentwicklung' => 'it_softwareentwicklung',
+            'Marketing und Werbung' => 'marketing_werbung',
+            'Vertrieb und Verkauf' => 'vertrieb_verkauf',
+            'Personal und HR' => 'personal_hr',
+            'Finanzen und Buchhaltung' => 'finanzen_buchhaltung',
+            'Beratung und Consulting' => 'beratung_consulting',
+            'Gesundheitswesen und Pflege' => 'gesundheitswesen_pflege',
+            'Recht und Verwaltung' => 'recht_verwaltung',
+        ],
+        'Berufliche Weiterentwicklung' => [
+            'Fuehrungskompetenzen' => 'fuehrungskompetenzen',
+            'Projektmanagement' => 'projektmanagement',
+            'Entrepreneurship' => 'entrepreneurship',
+            'Weiterbildung und Training' => 'weiterbildung_training',
+            'Karriereplanung und Coaching' => 'karriereplanung_coaching',
+            'Kommunikationsfaehigkeiten' => 'kommunikationsfaehigkeiten',
+        ],
+        'Berufliche Taetigkeiten' => [
+            'Teamarbeit' => 'teamarbeit',
+            'Selbststaendigkeit' => 'selbststaendigkeit',
+            'Verhandlungen und Vertragsabschluesse' => 'verhandlungen_vertragsabschluesse',
+            'Rekrutierung und Mitarbeiterfuehrung' => 'rekrutierung_mitarbeiterfuehrung',
+            'Strategische Planung' => 'strategische_planung',
+            'Kundenbetreuung und -beratung' => 'kundenbetreuung_beratung',
+            'Datenanalyse und Forschung' => 'datenanalyse_forschung',
+            'Marktforschung und Analyse' => 'marktforschung_analyse',
+        ],
+    ];
+
         $builder
             ->add('inYear',NumberType::class,[
                 'row_attr' => ['class' => 'form-floating mb-3'],
@@ -148,21 +184,13 @@ class UserprofileFormType extends AbstractType
                 'multiple' => true,
                 'expanded' => false,
             ])
-            ->add('hobbies', ChoiceType::class, [
+            ->add('userHobbies', EntityType::class, [
                 'row_attr' => ['class' => 'slim-form'],
                 'attr' => ['class' => 'slim-select-multi-exam-type'],
-                'choices' => $interests,
-                'multiple' => true,  // Mehrfachauswahl moeglich
-                'expanded' => false,  // Checkboxen statt Dropdown
-                'group_by' => function ($choice, $key, $value) use ($interests) {
-                    // Gruppierung nach Hauptkategorien
-                    foreach ($interests as $group => $items) {
-                        if (in_array($value, $items, true)) {
-                            return $group; // Rueckgabe der Gruppe
-                        }
-                    }
-                    return 'Andere';
-                },
+                'class' => Hobby::class,
+                'multiple' => true,
+                'expanded' => false,
+                'group_by' => fn(Hobby $cat) => $cat->getCategory(),
             ])
             ->add('about', TextareaType::class, [
                 'row_attr' => ['class' => 'form-floating mb-3'],
@@ -174,8 +202,13 @@ class UserprofileFormType extends AbstractType
             ->add('studium', TextType::class, [
                 'row_attr' => ['class' => 'form-floating mb-3'],
             ])
-            ->add('university', TextType::class, [
-                'row_attr' => ['class' => 'form-floating mb-3'],
+            ->add('userUniversity', EntityType::class, [
+                'class' => University::class,
+                'row_attr' => ['class' => 'slim-form mb-3'],
+                'attr' => ['class' => 'slim-select-single-university'],
+                'multiple' => false,
+                'expanded' => false,
+                'group_by' => fn(University $cat) => $cat->getCounty(),
             ])
             ->add('currentProfession', TextType::class, [
                 'row_attr' => ['class' => 'form-floating mb-3'],
@@ -190,47 +223,19 @@ class UserprofileFormType extends AbstractType
                 'multiple' => false,
                 'expanded' => false,
             ])
-            ->add('interests', ChoiceType::class, [
+            ->add('userInterests', EntityType::class, [
                 'row_attr' => ['class' => 'slim-form mb-3'],
-                'attr' => ['class' => 'slim-select-multi-favorite-school-subjects'],
-                'choices' => [
-                    'Berufsbereiche' => [
-                        'IT und Softwareentwicklung' => 'it_softwareentwicklung',
-                        'Marketing und Werbung' => 'marketing_werbung',
-                        'Vertrieb und Verkauf' => 'vertrieb_verkauf',
-                        'Personal und HR' => 'personal_hr',
-                        'Finanzen und Buchhaltung' => 'finanzen_buchhaltung',
-                        'Beratung und Consulting' => 'beratung_consulting',
-                        'Gesundheitswesen und Pflege' => 'gesundheitswesen_pflege',
-                        'Recht und Verwaltung' => 'recht_verwaltung',
-                    ],
-                    'Berufliche Weiterentwicklung' => [
-                        'Fuehrungskompetenzen' => 'fuehrungskompetenzen',
-                        'Projektmanagement' => 'projektmanagement',
-                        'Entrepreneurship' => 'entrepreneurship',
-                        'Weiterbildung und Training' => 'weiterbildung_training',
-                        'Karriereplanung und Coaching' => 'karriereplanung_coaching',
-                        'Kommunikationsfaehigkeiten' => 'kommunikationsfaehigkeiten',
-                    ],
-                    'Berufliche Taetigkeiten' => [
-                        'Teamarbeit' => 'teamarbeit',
-                        'Selbststaendigkeit' => 'selbststaendigkeit',
-                        'Verhandlungen und Vertragsabschluesse' => 'verhandlungen_vertragsabschluesse',
-                        'Rekrutierung und Mitarbeiterfuehrung' => 'rekrutierung_mitarbeiterfuehrung',
-                        'Strategische Planung' => 'strategische_planung',
-                        'Kundenbetreuung und -beratung' => 'kundenbetreuung_beratung',
-                        'Datenanalyse und Forschung' => 'datenanalyse_forschung',
-                        'Marktforschung und Analyse' => 'marktforschung_analyse',
-                    ],
-                ],
-                'expanded' => false, // optional, wenn du Checkboxen oder Radios moechtest
-                'multiple' => true, // optional, wenn du mehrere Optionen auswaehlen lassen moechtest
-                'label' => 'Berufliche Interessen',
+                'attr' => ['class' => 'slim-select-multi-interests'],
+                'class' => Interest::class,
+                'multiple' => true,
+                'expanded' => false,
+                'group_by' => fn(Interest $cat) => $cat->getCategory(),
             ])
         ;
 
         $builder->get('favoriteSchoolSubjects')->addModelTransformer(new CourseTransformer());
         $builder->get('performanceCourse')->addModelTransformer(new CourseTransformer());
+
     }
 
     public function configureOptions(OptionsResolver $resolver): void
