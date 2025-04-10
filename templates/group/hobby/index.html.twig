@@ -19,9 +19,9 @@
                             <h3 class="h6 mb-0">Hobbies</h3>
                         </div>
                         <div class="list-group list-group-flush border-bottom bg-white">
-                            {% for category in hobby_categories %}
+                            {% for category in hobby_categories|sort((a,b) => a.label <=> b.label) %}
                                 {% set x = 0 %}
-                                {% for hobby in category.hobbies %}
+                                {% for hobby in category.hobbies|sort((a,b) => a.label <=> b.label) %}
                                     {% if hobby.userProfiles.count > 0 %}
                                         {% if x == 0 %}
                                             <div class="list-group-item bg-light-subtle">
@@ -49,9 +49,9 @@
                             <h3 class="h6 mb-0">Berufliche Interessen</h3>
                         </div>
                         <div class="list-group list-group-flush border-bottom bg-white">
-                            {% for category in interest_categories %}
+                            {% for category in interest_categories|sort((a,b) => a.label <=> b.label) %}
                                 {% set x = 0 %}
-                                {% for hobby in category.interests %}
+                                {% for hobby in category.interests|sort((a,b) => a.label <=> b.label) %}
                                     {% if hobby.userProfiles.count > 0 %}
                                         {% if x == 0 %}
                                             <div class="list-group-item bg-light-subtle">
