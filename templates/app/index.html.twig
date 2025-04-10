@@ -32,6 +32,20 @@
 
     <div class="container mb-5 mt-3">
 
+        {% if app.user %}
+            <div class="col-12 mt-3">
+                <div class="card bg-light-subtle border-0 shadow-sm rounded rounded-2">
+                    <div class="card-body">
+                        <a href="{{ url('profile_index')}}" class="stretched-link text-decoration-none d-flex align-items-center">
+                            <i class="ti ti-user text-primary me-2"></i>
+                            Mein Portal anzeigen
+                            <i class="ti ti-chevron-right ms-auto"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
 
         <div class="row row-cols-1 row-cols-lg-3 g-3 mt-3 align-content-stretch">
 
