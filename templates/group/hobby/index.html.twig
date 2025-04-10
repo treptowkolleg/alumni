@@ -54,7 +54,7 @@
                                 {% for hobby in category.hobbies|sort((a,b) => a.label <=> b.label) %}
                                     {% if hobby.userProfiles.count > 0 %}
                                         {% if x == 0 %}
-                                            <div class="list-group-item bg-light-subtle border-bottom border-primary">
+                                            <div class="list-group-item bg-light-subtle border-bottom border-primary pt-3">
                                                 <span class="text-primary">{{ category }}</span>
                                             </div>
                                             {% set x = 1 %}
@@ -90,7 +90,7 @@
                                 {% for hobby in category.interests|sort((a,b) => a.label <=> b.label) %}
                                     {% if hobby.userProfiles.count > 0 %}
                                         {% if x == 0 %}
-                                            <div class="list-group-item bg-light-subtle border-bottom border-primary">
+                                            <div class="list-group-item bg-light-subtle border-bottom border-primary pt-3">
                                                 <span class="text-primary">{{ category }}</span>
                                             </div>
                                             {% set x = 1 %}
