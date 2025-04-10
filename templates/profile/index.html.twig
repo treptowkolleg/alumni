@@ -32,6 +32,19 @@
                 </div>
             {% endif %}
             {% if app.user.isVerified and app.user.userProfiles.count > 0 %}
+
+                <div class="col-12 order-0">
+                    <div class="card bg-light-subtle border-0 shadow-sm rounded rounded-2">
+                        <div class="card-body">
+                            <a href="{{ url('people_show',{'slug':app.user.slug}) }}" class="stretched-link text-decoration-none d-flex align-items-center">
+                                <i class="ti ti-user text-primary me-2"></i>
+                                Mein Profil anzeigen
+                                <i class="ti ti-chevron-right ms-auto"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="col-lg-4 order-3 order-lg-0">
                     <div class="card bg-light-subtle border-0 shadow-sm rounded rounded-2 h-100">
                         <div class="card-body  border-bottom border-primary">
