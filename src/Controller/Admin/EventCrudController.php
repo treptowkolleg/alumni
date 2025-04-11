@@ -6,6 +6,8 @@ use App\Entity\BlogPost;
 use App\Entity\Event;
 use App\Repository\BlogTypeRepository;
 use App\Repository\EventTypeRepository;
+use App\Repository\HobbyRepository;
+use App\Repository\InterestRepository;
 use App\Repository\SchoolRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -129,14 +131,32 @@ class EventCrudController extends AbstractCrudController
             FormField::addColumn('col-xl-9'),
             AssociationField::new('hobbies')->onlyOnForms()
                 ->setFormTypeOptions([
-                'multiple' => true,
-                'by_reference' => false,
+                    'multiple' => true,
+                    'by_reference' => false,
+                    'query_builder' => function (HobbyRepository $er) {
+                        return $er->createQueryBuilder('e')
+                            ->leftJoin('e.category', 'c')
+                            ->orderBy('c.label', 'ASC')
+                            ->addOrderBy('e.label', 'ASC');
+                    },
+                    'group_by' => function($choice) {
+                        return $choice->getCategory();
+                    },
                     ])
                 ->setCrudController(HobbyCrudController::class),
             AssociationField::new('interests')->onlyOnForms()
                 ->setFormTypeOptions([
-                'multiple' => true,
-                'by_reference' => false,
+                    'multiple' => true,
+                    'by_reference' => false,
+                    'query_builder' => function (InterestRepository $er) {
+                        return $er->createQueryBuilder('e')
+                            ->leftJoin('e.category', 'c')
+                            ->orderBy('c.label', 'ASC')
+                            ->addOrderBy('e.label', 'ASC');
+                    },
+                    'group_by' => function($choice) {
+                        return $choice->getCategory();
+                    },
                     ])
                 ->setCrudController(InterestCrudController::class),
         ];
