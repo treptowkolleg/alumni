@@ -21,6 +21,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
@@ -107,6 +108,19 @@ class PersonOfferCrudController extends AbstractCrudController
             TextField::new('contactPerson')->setRequired(true),
             EmailField::new('contactEmail')->setRequired(true),
             TextField::new('contactPhone')->hideOnIndex(),
+
+            AssociationField::new('hobbies')->onlyOnForms()
+                ->setFormTypeOptions([
+                    'multiple' => true,
+                    'by_reference' => false,
+                ])
+                ->setCrudController(HobbyCrudController::class),
+            AssociationField::new('interests')->onlyOnForms()
+                ->setFormTypeOptions([
+                    'multiple' => true,
+                    'by_reference' => false,
+                ])
+                ->setCrudController(InterestCrudController::class),
         ];
     }
 

@@ -32,9 +32,23 @@ class Hobby
     #[ORM\ManyToMany(targetEntity: UserProfile::class, mappedBy: 'userHobbies')]
     private Collection $userProfiles;
 
+    /**
+     * @var Collection<int, PersonOffer>
+     */
+    #[ORM\ManyToMany(targetEntity: PersonOffer::class, mappedBy: 'hobbies')]
+    private Collection $personOffers;
+
+    /**
+     * @var Collection<int, Event>
+     */
+    #[ORM\ManyToMany(targetEntity: Event::class, mappedBy: 'hobbies')]
+    private Collection $events;
+
     public function __construct()
     {
         $this->userProfiles = new ArrayCollection();
+        $this->personOffers = new ArrayCollection();
+        $this->events = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -101,6 +115,60 @@ class Hobby
     {
         if ($this->userProfiles->removeElement($userProfile)) {
             $userProfile->removeUserHobby($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PersonOffer>
+     */
+    public function getPersonOffers(): Collection
+    {
+        return $this->personOffers;
+    }
+
+    public function addPersonOffer(PersonOffer $personOffer): static
+    {
+        if (!$this->personOffers->contains($personOffer)) {
+            $this->personOffers->add($personOffer);
+            $personOffer->addHobby($this);
+        }
+
+        return $this;
+    }
+
+    public function removePersonOffer(PersonOffer $personOffer): static
+    {
+        if ($this->personOffers->removeElement($personOffer)) {
+            $personOffer->removeHobby($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Event>
+     */
+    public function getEvents(): Collection
+    {
+        return $this->events;
+    }
+
+    public function addEvent(Event $event): static
+    {
+        if (!$this->events->contains($event)) {
+            $this->events->add($event);
+            $event->addHobby($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEvent(Event $event): static
+    {
+        if ($this->events->removeElement($event)) {
+            $event->removeHobby($this);
         }
 
         return $this;

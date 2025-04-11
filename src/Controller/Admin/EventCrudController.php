@@ -124,6 +124,21 @@ class EventCrudController extends AbstractCrudController
 
             DateTimeField::new('startDate')->onlyOnForms(),
             DateTimeField::new('endDate')->onlyOnForms(),
+
+            FormField::addTab('Interessen')->onlyOnForms(),
+            FormField::addColumn('col-xl-9'),
+            AssociationField::new('hobbies')->onlyOnForms()
+                ->setFormTypeOptions([
+                'multiple' => true,
+                'by_reference' => false,
+                    ])
+                ->setCrudController(HobbyCrudController::class),
+            AssociationField::new('interests')->onlyOnForms()
+                ->setFormTypeOptions([
+                'multiple' => true,
+                'by_reference' => false,
+                    ])
+                ->setCrudController(InterestCrudController::class),
         ];
     }
 

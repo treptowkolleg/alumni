@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PersonOfferRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -74,6 +76,24 @@ class PersonOffer
 
     #[ORM\ManyToOne(inversedBy: 'personOffers')]
     private ?SalaryLevel $salaryLevel = null;
+
+    /**
+     * @var Collection<int, Hobby>
+     */
+    #[ORM\ManyToMany(targetEntity: Hobby::class, inversedBy: 'personOffers')]
+    private Collection $hobbies;
+
+    /**
+     * @var Collection<int, Interest>
+     */
+    #[ORM\ManyToMany(targetEntity: Interest::class, inversedBy: 'personOffers')]
+    private Collection $interests;
+
+    public function __construct()
+    {
+        $this->hobbies = new ArrayCollection();
+        $this->interests = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -286,6 +306,54 @@ class PersonOffer
     public function setSalaryLevel(?SalaryLevel $salaryLevel): static
     {
         $this->salaryLevel = $salaryLevel;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Hobby>
+     */
+    public function getHobbies(): Collection
+    {
+        return $this->hobbies;
+    }
+
+    public function addHobby(Hobby $hobby): static
+    {
+        if (!$this->hobbies->contains($hobby)) {
+            $this->hobbies->add($hobby);
+        }
+
+        return $this;
+    }
+
+    public function removeHobby(Hobby $hobby): static
+    {
+        $this->hobbies->removeElement($hobby);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Interest>
+     */
+    public function getInterests(): Collection
+    {
+        return $this->interests;
+    }
+
+    public function addInterest(Interest $interest): static
+    {
+        if (!$this->interests->contains($interest)) {
+            $this->interests->add($interest);
+        }
+
+        return $this;
+    }
+
+    public function removeInterest(Interest $interest): static
+    {
+        $this->interests->removeElement($interest);
 
         return $this;
     }

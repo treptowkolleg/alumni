@@ -33,6 +33,20 @@
                                 gibt an, wie viele Alumni dem jeweiligen Interesse nachgehen.
                             </p>
                             <p class="card-text">
+                                <span class="ms-auto badge fw-normal text-dark-emphasis bg-secondary-subtle rounded-2 align-items-center me-2">
+                                    7
+                                    <i class="ti ti-calendar-event ms-1"></i>
+                                </span>
+                                gibt an, wie viele Veranstaltungen zum Interesse passen.
+                            </p>
+                            <p class="card-text">
+                                <span class="ms-auto badge fw-normal text-dark-emphasis bg-secondary-subtle rounded-2 align-items-center me-2">
+                                    4
+                                    <i class="ti ti-briefcase ms-1"></i>
+                                </span>
+                                gibt an, wie viele Stellenangebote zum Interesse passen.
+                            </p>
+                            <p class="card-text">
                                 <span class="badge fw-normal text-primary bg-primary-subtle rounded-2 align-items-center me-2">
                                     19
                                     <i class="ti ti-message-2 ms-1"></i>
@@ -52,7 +66,7 @@
                             {% for category in hobby_categories|sort((a,b) => a.label <=> b.label) %}
                                 {% set x = 0 %}
                                 {% for hobby in category.hobbies|sort((a,b) => a.label <=> b.label) %}
-                                    {% if hobby.userProfiles.count > 0 %}
+                                    {% if hobby.userProfiles.count > 0 or hobby.events.count > 0 or hobby.personOffers.count > 0 %}
                                         {% if x == 0 %}
                                             <div class="list-group-item bg-light-subtle border-bottom border-primary pt-3">
                                                 <span class="text-primary">{{ category }}</span>
@@ -65,6 +79,14 @@
                                             <span class="ms-auto badge fw-normal text-dark-emphasis bg-secondary-subtle rounded-start-2 d-flex align-items-center">
                                                 {{ hobby.userProfiles.count }}
                                                 <i class="ti ti-users ms-1"></i>
+                                            </span>
+                                            <span class="badge fw-normal text-dark-emphasis bg-secondary-subtle d-flex align-items-center">
+                                                {{ hobby.events.count }}
+                                                <i class="ti ti-calendar-event ms-1"></i>
+                                            </span>
+                                            <span class="badge fw-normal text-dark-emphasis bg-secondary-subtle d-flex align-items-center">
+                                                {{ hobby.personOffers.count }}
+                                                <i class="ti ti-briefcase ms-1"></i>
                                             </span>
                                             <span class="badge fw-normal text-primary bg-primary-subtle rounded-end-2 d-flex align-items-center">
                                                 0
@@ -88,7 +110,7 @@
                             {% for category in interest_categories|sort((a,b) => a.label <=> b.label) %}
                                 {% set x = 0 %}
                                 {% for hobby in category.interests|sort((a,b) => a.label <=> b.label) %}
-                                    {% if hobby.userProfiles.count > 0 %}
+                                    {% if hobby.userProfiles.count > 0 or hobby.events.count > 0 or hobby.personOffers.count > 0 %}
                                         {% if x == 0 %}
                                             <div class="list-group-item bg-light-subtle border-bottom border-primary pt-3">
                                                 <span class="text-primary">{{ category }}</span>
@@ -101,6 +123,14 @@
                                             <span class="ms-auto badge fw-normal text-dark-emphasis bg-secondary-subtle rounded-start-2 d-flex align-items-center">
                                                 {{ hobby.userProfiles.count }}
                                                 <i class="ti ti-users ms-1"></i>
+                                            </span>
+                                            <span class="badge fw-normal text-dark-emphasis bg-secondary-subtle d-flex align-items-center">
+                                                {{ hobby.events.count }}
+                                                <i class="ti ti-calendar-event ms-1"></i>
+                                            </span>
+                                            <span class="badge fw-normal text-dark-emphasis bg-secondary-subtle d-flex align-items-center">
+                                                {{ hobby.personOffers.count }}
+                                                <i class="ti ti-briefcase ms-1"></i>
                                             </span>
                                             <span class="badge fw-normal text-primary bg-primary-subtle rounded-end-2 d-flex align-items-center">
                                                 0

@@ -63,10 +63,24 @@ class Event
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'followedEvents')]
     private Collection $followers;
 
+    /**
+     * @var Collection<int, Hobby>
+     */
+    #[ORM\ManyToMany(targetEntity: Hobby::class, inversedBy: 'events')]
+    private Collection $hobbies;
+
+    /**
+     * @var Collection<int, Interest>
+     */
+    #[ORM\ManyToMany(targetEntity: Interest::class, inversedBy: 'events')]
+    private Collection $interests;
+
     public function __construct()
     {
         $this->school = new ArrayCollection();
         $this->followers = new ArrayCollection();
+        $this->hobbies = new ArrayCollection();
+        $this->interests = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -249,6 +263,54 @@ class Event
     public function removeFollower(User $follower): static
     {
         $this->followers->removeElement($follower);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Hobby>
+     */
+    public function getHobbies(): Collection
+    {
+        return $this->hobbies;
+    }
+
+    public function addHobby(Hobby $hobby): static
+    {
+        if (!$this->hobbies->contains($hobby)) {
+            $this->hobbies->add($hobby);
+        }
+
+        return $this;
+    }
+
+    public function removeHobby(Hobby $hobby): static
+    {
+        $this->hobbies->removeElement($hobby);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Interest>
+     */
+    public function getInterests(): Collection
+    {
+        return $this->interests;
+    }
+
+    public function addInterest(Interest $interest): static
+    {
+        if (!$this->interests->contains($interest)) {
+            $this->interests->add($interest);
+        }
+
+        return $this;
+    }
+
+    public function removeInterest(Interest $interest): static
+    {
+        $this->interests->removeElement($interest);
 
         return $this;
     }
