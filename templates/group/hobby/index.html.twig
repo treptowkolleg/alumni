@@ -1,7 +1,7 @@
 {% extends '_full.html.twig' %}
 
 {% set meta_title = 'Gruppen' %}
-{% set meta_subtitle = 'Interessen' %}
+{% set meta_subtitle = 'Überblick' %}
 {% set meta_description = 'Finde und vernetze dich mit Alumni und den ehemaligen Lehrkräften der teilnehmenden Schulen und Kollegs des zweiten Bildungsweges.' %}
 
 {% set seo_title = 'Vernetze dich mit anderen Personen' %}
@@ -15,8 +15,9 @@
             <div class="row g-3">
 
                 <div class="col-12 mb-3">
-                    <div class="card bg-light-subtle border-warning shadow-sm rounded rounded-2">
-                        <div class="card-body">
+                    <div class="card bg-light-subtle border-0 shadow-sm rounded rounded-2">
+
+                        <div class="card-body bg-white rounded-bottom-2">
                             <div class="d-flex align-items-center justify-content-start fs-4">
                                 <i class="ti ti-info-circle-filled me-1 text-warning"></i>
                                 Hinweis
@@ -73,7 +74,7 @@
                                             </div>
                                             {% set x = 1 %}
                                         {% endif %}
-                                        <a href="#" class="list-group-item ripplelink swipe-link-start list-group-item-action d-flex justify-content-start align-items-center py-3">
+                                        <a href="{{ url('group_hobby_show',{'slug':hobby.slug}) }}" class="list-group-item ripplelink swipe-link-start list-group-item-action d-flex justify-content-start align-items-center py-3">
                                             <i class="ti ti-roller-skating text-primary me-2"></i>
                                             <div class="text-truncate">{{ hobby }}</div>
                                             <span class="ms-auto badge fw-normal text-dark-emphasis bg-secondary-subtle rounded-start-2 d-flex align-items-center">
@@ -117,7 +118,7 @@
                                             </div>
                                             {% set x = 1 %}
                                         {% endif %}
-                                        <a href="#" class="list-group-item ripplelink swipe-link-start list-group-item-action d-flex justify-content-start align-items-center py-3">
+                                        <a href="{{ url('group_interest_show',{'slug':hobby.slug}) }}" class="list-group-item ripplelink swipe-link-start list-group-item-action d-flex justify-content-start align-items-center py-3">
                                             <i class="ti ti-briefcase text-primary me-2"></i>
                                             <div class="text-truncate">{{ hobby }}</div>
                                             <span class="ms-auto badge fw-normal text-dark-emphasis bg-secondary-subtle rounded-start-2 d-flex align-items-center">

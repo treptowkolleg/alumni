@@ -1,0 +1,105 @@
+{% extends '_full.html.twig' %}
+
+{% set meta_title = 'Gruppen' %}
+{% set meta_subtitle = 'Hobbys' %}
+{% set meta_description = 'Finde und vernetze dich mit Alumni und den ehemaligen Lehrkräften der teilnehmenden Schulen und Kollegs des zweiten Bildungsweges.' %}
+
+{% set seo_title = 'Vernetze dich mit anderen Personen' %}
+
+{% set sidebar = 'groups' %}
+
+{% block page_header %}
+    <section class="py-3">
+        <div class="container">
+
+            <div class="row g-3">
+
+                <div class="col-12 mt-3">
+                    <div class="card bg-light-subtle border-0 shadow-sm rounded rounded-2">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center">
+                                <i class="ti ti-layout text-primary me-2"></i>{{ element }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 mb-3">
+                    <div class="card bg-light-subtle border-0 shadow-sm rounded rounded-2">
+                        <div class="card-header bg-light-subtle rounded-top-2">
+                            <ul class="nav nav-tabs card-header-tabs" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active rounded-top-2" data-bs-toggle="tab" href="#a">
+                                        <i class="ti ti-message-2 text-primary"></i>
+                                        <span class="ms-1 d-none d-lg-inline">Themen</span>
+                                        <span class="ms-1 small badge fw-normal text-bg-light border border-dark-subtle rounded-2">0</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link rounded-top-2" data-bs-toggle="tab" href="#b">
+                                        <i class="ti ti-calendar-event text-primary"></i>
+                                        <span class="ms-1 d-none d-lg-inline">Veranstaltungen</span>
+                                        <span class="ms-1 small badge fw-normal text-bg-light border border-dark-subtle rounded-2">{{ element.events.count ?? 0 }}</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link rounded-top-2" data-bs-toggle="tab" href="#c">
+                                        <i class="ti ti-briefcase text-primary"></i>
+                                        <span class="ms-1 d-none d-lg-inline">Stellenangebote</span>
+                                        <span class="ms-1 small badge fw-normal text-bg-light border border-dark-subtle rounded-2">{{ element.personOffers.count ?? 0 }}</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="a">
+                                <div class="card-body bg-white">
+                                    <p class="card-text text-center">
+                                        Dieser Tab ist noch nicht verfügbar.<br>
+                                        <small class="fst-italic">Für {{ element }} interessieren sich jedoch {{ element.userProfiles.count }} Personen.</small>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="b">
+                                <div class="list-group list-group-flush">
+                                    {% for post in element.events|sort((a, b) => b.startDate <=> a.startDate) %}
+                                        {% if post.endDate|date('Ymd') >= date('now')|date('Ymd')%}
+                                            {{ include('component/_event_list.html.twig') }}
+                                        {% endif %}
+                                        {% if post.endDate|date('Ymd') <= date('-1 days')|date('Ymd')%}
+                                            {{ include('component/_event_list_old.html.twig') }}
+                                        {% endif %}
+                                    {% else %}
+                                        <div class="list-group-item py-3 d-flex justify-content-center align-items-center">
+                                            Keine Elemente vorhanden
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="c">
+                                <div class="list-group list-group-flush">
+                                    {% for offer in element.personOffers %}
+                                        {{ include('component/_offer_fav_list.html.twig') }}
+                                    {% else %}
+                                        <div class="list-group-item d-flex justify-content-center align-items-center">
+                                            <span class="py-2">Keine Elemente vorhanden</span>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body border-top"></div>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+    </section>
+
+{% endblock %}
+
+{% block body %}{% endblock %}
+
+{% block aside %}{% endblock %}
