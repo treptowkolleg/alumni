@@ -82,7 +82,35 @@
                     </div>
                 </div>
 
-                <div class="col-lg-8 order-0 order-lg-3">
+                <div class="col-12 col-lg-8 order-0 order-lg-3">
+                    <div class="card bg-light-subtle border-0 shadow-sm rounded rounded-2 h-100">
+                        <div class="card-body  border-bottom border-primary">
+                            <h3 class="h6 text-center text-lg-start mb-0">Meine Gruppen <span class=" ms-2 badge bg-warning-subtle text-warning rounded fw-normal">dev</span></h3>
+                        </div>
+                        <div class="list-group list-group-flush bg-white">
+                            {% for subject in app.user.groupSubjects %}
+                                <a href="#" class="list-group-item list-group-item-action ripplelink swipe-link-start py-3">
+                                    <span class="text-primary">{{ subject }}</span><br>
+                                    <small>{{ subject.description }}</small>
+                                </a>
+                            {% else %}
+                                <div class="list-group-item py-3 d-flex justify-content-center align-items-center">
+                                    Keine Elemente vorhanden
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <div class="h-100 bg-white"></div>
+                        <div class="list-group list-group-flush border-top border-bottom">
+                            <a href="{{ url('group_hobby_index') }}" class="list-group-item list-group-item-action link-primary d-flex align-items-center justify-content-between">
+                                <div>weitere Gruppen finden</div>
+                                <i class="ti ti-chevron-right"></i>
+                            </a>
+                        </div>
+                        <div class="card-body"></div>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 order-3">
                     <div class="card bg-light-subtle border-0 shadow-sm rounded rounded-2 h-100">
                         <div class="card-body border-bottom border-primary">
                             <h3 class="h6 mb-0 text-center text-lg-start">Veranstaltungen</h3>
@@ -109,34 +137,7 @@
                     </div>
                 </div>
 
-                <div class="col-12 order-3">
-                    <div class="card bg-light-subtle border-0 shadow-sm rounded rounded-2">
-                        <div class="card-body  border-bottom border-primary">
-                            <h3 class="h6 text-center text-lg-start mb-0">Meine Gruppen <span class=" ms-2 badge bg-warning-subtle text-warning rounded fw-normal">dev</span></h3>
-                        </div>
-                        <div class="list-group list-group-flush bg-white">
-                            {% for subject in app.user.groupSubjects %}
-                                <a href="#" class="list-group-item list-group-item-action ripplelink swipe-link-start py-3">
-                                    <span class="text-primary">{{ subject }}</span><br>
-                                    <small>{{ subject.description }}</small>
-                                </a>
-                            {% else %}
-                                <div class="list-group-item py-3 d-flex justify-content-center align-items-center">
-                                    Keine Elemente vorhanden
-                                </div>
-                            {% endfor %}
-                        </div>
-                        <div class="list-group list-group-flush border-top border-bottom">
-                            <a href="{{ url('group_hobby_index') }}" class="list-group-item list-group-item-action link-primary d-flex align-items-center justify-content-between">
-                                <div>weitere Gruppen finden</div>
-                                <i class="ti ti-chevron-right"></i>
-                            </a>
-                        </div>
-                        <div class="card-body"></div>
-                    </div>
-                </div>
-
-                <div class="col-12 order-3">
+                <div class="col-12  order-3">
                     <div class="card bg-light-subtle border-0 shadow-sm rounded rounded-2">
                         <div class="card-body  border-bottom border-primary">
                             <h3 class="h6 text-center text-lg-start mb-0">Aktuelle Stellenangebote <span class=" ms-2 badge bg-warning-subtle text-warning rounded fw-normal">dev</span></h3>
