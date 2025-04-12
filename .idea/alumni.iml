@@ -191,5 +191,10 @@
     <orderEntry type="library" name="leaflet" level="application" />
     <orderEntry type="library" name="@gstat/leaflet-gesture-handling" level="application" />
     <orderEntry type="library" name="leaflet-gesture-handling" level="application" />
+    <orderEntry type="library" name="tinymce" level="application" />
+    <orderEntry type="library" name="ckeditor" level="application" />
+    <orderEntry type="library" name="quill.snow" level="application" />
+    <orderEntry type="library" name="quill" level="application" />
+    <orderEntry type="library" name="summernote" level="application" />
   </component>
 </module>
