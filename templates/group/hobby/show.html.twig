@@ -136,7 +136,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light rounded-2" data-bs-dismiss="modal">Abbrechen</button>
-                    <button type="submit" class="btn btn-primary rounded-2">Speichern</button>
+                    <button type="submit" class="btn btn-primary rounded-2" onclick="this.disabled=true; this.innerHTML='Bitte warten... '; this.innerHTML += '<span class=\'spinner-border spinner-border-sm\' role=\'status\' aria-hidden=\'true\'></span>';this.form.submit();">Speichern</button>
                 </div>
                 {{ form_end(form) }}
             </div>
