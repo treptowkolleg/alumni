@@ -1,0 +1,74 @@
+{% extends '_full.html.twig' %}
+
+{% set meta_title = 'Plausch' %}
+{% set meta_subtitle = 'Austauschen' %}
+{% set meta_description = 'Finde und vernetze dich mit Alumni und den ehemaligen Lehrkräften der teilnehmenden Schulen und Kollegs des zweiten Bildungsweges.' %}
+
+{% set seo_title = 'Vernetze dich mit anderen Personen' %}
+
+{% set sidebar = 'group' %}
+
+{% block page_header %}
+    <section class="py-3">
+        <div class="container">
+
+            {{ include('component/group_post_subbar.html.twig',{'selected':'show'}) }}
+
+            <div class="row g-3">
+
+                <div class="col-12 mt-3">
+                    <div class="card bg-light-subtle border-0 shadow-sm rounded rounded-2">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center">
+                                <i class="ti ti-message-2 text-primary me-2"></i>{{ element }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 mt-3">
+                    <div class="card bg-light-subtle border-0 shadow-sm rounded-2">
+                        <div class="card-body border-bottom border-primary">
+                            Beitrag erstellen
+                        </div>
+                        <div class="card-body bg-white">
+                            {{ form_start(form) }}
+                            {{ form_row(form.text) }}
+                            <button type="submit" class="btn btn-primary rounded-2">Speichern</button>
+                            {{ form_end(form) }}
+                        </div>
+                        <div class="list-group list-group-flush bg-white border-top border-bottom">
+                            {% for entry in element.subjectPosts|sort((a, b) => b.created <=> a.created) %}
+                                <div class="list-group-item">
+                                    <div class="">
+                                        {% if (entry.owner.userProfiles.first.networkState == 'public') or (app.user and entry.writer.networkState == 'registered') %}
+                                            <a href="{{ url('people_show',{'slug':entry.owner.slug}) }}" class="me-1 text-nowrap">{{ entry.owner.userProfiles.first }}</a>
+                                            <div class="small text-muted">{{ entry.created|ago }}</div>
+                                        {% else %}
+                                            <div class="me-1">######</div>
+                                        {% endif %}
+                                        <p class="mb-0">{{ entry.text|striptags|nl2br|linkify|hashtag|raw }}</p>
+                                    </div>
+                                </div>
+                            {% else %}
+                                <div class="list-group-item">
+                                    Die Pinnwand ist noch leer.
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <div class="card-body">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+{% endblock %}
+
+{% block body %}{% endblock %}
+
+{% block aside %}
+{% endblock %}

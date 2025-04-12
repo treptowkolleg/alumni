@@ -154,6 +154,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
     #[ORM\OneToMany(targetEntity: GroupSubject::class, mappedBy: 'owner')]
     private Collection $groupSubjects;
 
+    /**
+     * @var Collection<int, SubjectPost>
+     */
+    #[ORM\OneToMany(targetEntity: SubjectPost::class, mappedBy: 'owner')]
+    private Collection $subjectPosts;
+
     public function __construct()
     {
         $this->blogPosts = new ArrayCollection();
@@ -166,6 +172,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
         $this->personOffers = new ArrayCollection();
         $this->newsletterTemplates = new ArrayCollection();
         $this->groupSubjects = new ArrayCollection();
+        $this->subjectPosts = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -806,6 +813,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
             // set the owning side to null (unless already changed)
             if ($groupSubject->getOwner() === $this) {
                 $groupSubject->setOwner(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, SubjectPost>
+     */
+    public function getSubjectPosts(): Collection
+    {
+        return $this->subjectPosts;
+    }
+
+    public function addSubjectPost(SubjectPost $subjectPost): static
+    {
+        if (!$this->subjectPosts->contains($subjectPost)) {
+            $this->subjectPosts->add($subjectPost);
+            $subjectPost->setOwner($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSubjectPost(SubjectPost $subjectPost): static
+    {
+        if ($this->subjectPosts->removeElement($subjectPost)) {
+            // set the owning side to null (unless already changed)
+            if ($subjectPost->getOwner() === $this) {
+                $subjectPost->setOwner(null);
             }
         }
 

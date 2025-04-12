@@ -1,0 +1,17 @@
+<div class="mb-3">
+    <div class="nav nav-underline">
+        {% if selected|default() == 'show' %}
+            {% if element.hobby is not null %}
+                <a href="{{ url('group_hobby_show',{'slug':element.hobby.slug}) }}" class="nav-item nav-link {{ selected|default() == 'index' ? 'active' : '' }} text-nowrap">
+                    <i class="ti ti-chevrons-left text-primary"></i>
+                    <span class="ms-1">Zurück</span>
+                </a>
+            {% elseif element.interest is not null %}
+                <a href="{{ url('group_interest_show',{'slug':element.interest.slug}) }}" class="nav-item nav-link {{ selected|default() == 'index' ? 'active' : '' }} text-nowrap">
+                    <i class="ti ti-chevrons-left text-primary"></i>
+                    <span class="ms-1">Zurück</span>
+                </a>
+            {% endif %}
+        {% endif %}
+    </div>
+</div>

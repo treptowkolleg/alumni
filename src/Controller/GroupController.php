@@ -5,7 +5,9 @@ namespace App\Controller;
 use App\Entity\GroupSubject;
 use App\Entity\Hobby;
 use App\Entity\Interest;
+use App\Entity\SubjectPost;
 use App\Form\GroupSubjectType;
+use App\Form\SubjectPostType;
 use App\Repository\HobbyCategoryRepository;
 use App\Repository\InterestCategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -74,6 +76,30 @@ class GroupController extends AbstractController
 
         return $this->render('group/hobby/show.html.twig', [
             'element' => $interest,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    #[Route('/plausch/{slug}', name: 'talk_show')]
+    public function talkShow(Request $request, GroupSubject $subject, EntityManagerInterface $entityManager): Response
+    {
+        $subjectPost = new SubjectPost();
+        $form = $this->createForm(SubjectPostType::class, $subjectPost);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $subjectPost->setOwner($this->getUser());
+            $subjectPost->setSubject($subject);
+            $subjectPost->setParent(null);
+
+            $entityManager->persist($subjectPost);
+            $entityManager->flush();
+            $this->addFlash('success', 'Beitrag wurde erfolgreich veröffentlicht.');
+            return $this->redirectToRoute('group_talk_show', ['slug' => $subject->getSlug()]);
+        }
+
+        return $this->render('group/subject/show.html.twig', [
+            'element' => $subject,
             'form' => $form->createView(),
         ]);
     }

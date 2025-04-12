@@ -6,7 +6,7 @@
 
 {% set seo_title = 'Vernetze dich mit anderen Personen' %}
 
-{% set sidebar = 'groups' %}
+{% set sidebar = 'group' %}
 
 {% block page_header %}
     <section class="py-3">
@@ -62,7 +62,7 @@
                                 {% endif %}
                                 <div class="list-group list-group-flush bg-white">
                                     {% for subject in element.groupSubjects %}
-                                        <a href="#" class="list-group-item list-group-item-action ripplelink swipe-link-start py-3">
+                                        <a href="{{ url('group_talk_show',{'slug':subject.slug}) }}" class="list-group-item list-group-item-action ripplelink swipe-link-start py-3">
                                             <span class="text-primary">{{ subject }}</span><br>
                                             <small>{{ subject.description }}</small>
                                         </a>

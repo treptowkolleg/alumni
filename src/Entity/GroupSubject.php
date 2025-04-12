@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\GroupSubjectRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -57,6 +59,17 @@ class GroupSubject
 
     #[ORM\ManyToOne(inversedBy: 'groupSubjects')]
     private ?Interest $interest = null;
+
+    /**
+     * @var Collection<int, SubjectPost>
+     */
+    #[ORM\OneToMany(targetEntity: SubjectPost::class, mappedBy: 'subject')]
+    private Collection $subjectPosts;
+
+    public function __construct()
+    {
+        $this->subjectPosts = new ArrayCollection();
+    }
 
     public function __toString(): string
     {
@@ -178,6 +191,36 @@ class GroupSubject
     public function setInterest(?Interest $interest): static
     {
         $this->interest = $interest;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, SubjectPost>
+     */
+    public function getSubjectPosts(): Collection
+    {
+        return $this->subjectPosts;
+    }
+
+    public function addSubjectPost(SubjectPost $subjectPost): static
+    {
+        if (!$this->subjectPosts->contains($subjectPost)) {
+            $this->subjectPosts->add($subjectPost);
+            $subjectPost->setSubject($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSubjectPost(SubjectPost $subjectPost): static
+    {
+        if ($this->subjectPosts->removeElement($subjectPost)) {
+            // set the owning side to null (unless already changed)
+            if ($subjectPost->getSubject() === $this) {
+                $subjectPost->setSubject(null);
+            }
+        }
 
         return $this;
     }
