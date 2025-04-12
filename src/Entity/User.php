@@ -148,6 +148,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
     #[ORM\OneToMany(targetEntity: NewsletterTemplate::class, mappedBy: 'user')]
     private Collection $newsletterTemplates;
 
+    /**
+     * @var Collection<int, GroupSubject>
+     */
+    #[ORM\OneToMany(targetEntity: GroupSubject::class, mappedBy: 'owner')]
+    private Collection $groupSubjects;
+
     public function __construct()
     {
         $this->blogPosts = new ArrayCollection();
@@ -159,6 +165,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
         $this->followedEvents = new ArrayCollection();
         $this->personOffers = new ArrayCollection();
         $this->newsletterTemplates = new ArrayCollection();
+        $this->groupSubjects = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -769,6 +776,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
             // set the owning side to null (unless already changed)
             if ($newsletterTemplate->getUser() === $this) {
                 $newsletterTemplate->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, GroupSubject>
+     */
+    public function getGroupSubjects(): Collection
+    {
+        return $this->groupSubjects;
+    }
+
+    public function addGroupSubject(GroupSubject $groupSubject): static
+    {
+        if (!$this->groupSubjects->contains($groupSubject)) {
+            $this->groupSubjects->add($groupSubject);
+            $groupSubject->setOwner($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGroupSubject(GroupSubject $groupSubject): static
+    {
+        if ($this->groupSubjects->removeElement($groupSubject)) {
+            // set the owning side to null (unless already changed)
+            if ($groupSubject->getOwner() === $this) {
+                $groupSubject->setOwner(null);
             }
         }
 

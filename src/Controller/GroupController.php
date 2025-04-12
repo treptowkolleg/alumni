@@ -2,11 +2,15 @@
 
 namespace App\Controller;
 
+use App\Entity\GroupSubject;
 use App\Entity\Hobby;
 use App\Entity\Interest;
+use App\Form\GroupSubjectType;
 use App\Repository\HobbyCategoryRepository;
 use App\Repository\InterestCategoryRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -27,18 +31,50 @@ class GroupController extends AbstractController
     }
 
     #[Route('/hobby/{slug}', name: 'hobby_show')]
-    public function hobbyShow(Hobby $hobby): Response
+    public function hobbyShow(Request $request, Hobby $hobby, EntityManagerInterface $entityManager): Response
     {
+        $groupSubject = new GroupSubject();
+        $form = $this->createForm(GroupSubjectType::class, $groupSubject);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $groupSubject->setOwner($this->getUser());
+            $groupSubject->setPrivate(false);
+            $groupSubject->setHobby($hobby);
+
+            $entityManager->persist($groupSubject);
+            $entityManager->flush();
+            $this->addFlash('success', 'Thema wurde erfolgreich erstellt.');
+            return $this->redirectToRoute('group_hobby_show', ['slug' => $hobby->getSlug()]);
+        }
+
         return $this->render('group/hobby/show.html.twig', [
             'element' => $hobby,
+            'form' => $form->createView(),
         ]);
     }
 
     #[Route('/interesse/{slug}', name: 'interest_show')]
-    public function interestShow(Interest $interest): Response
+    public function interestShow(Request $request, Interest $interest, EntityManagerInterface $entityManager): Response
     {
+        $groupSubject = new GroupSubject();
+        $form = $this->createForm(GroupSubjectType::class, $groupSubject);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $groupSubject->setOwner($this->getUser());
+            $groupSubject->setPrivate(false);
+            $groupSubject->setInterest($interest);
+
+            $entityManager->persist($groupSubject);
+            $entityManager->flush();
+            $this->addFlash('success', 'Thema wurde erfolgreich erstellt.');
+            return $this->redirectToRoute('group_interest_show', ['slug' => $interest->getSlug()]);
+        }
+
         return $this->render('group/hobby/show.html.twig', [
             'element' => $interest,
+            'form' => $form->createView(),
         ]);
     }
 

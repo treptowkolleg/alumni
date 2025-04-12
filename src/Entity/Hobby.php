@@ -44,11 +44,18 @@ class Hobby
     #[ORM\ManyToMany(targetEntity: Event::class, mappedBy: 'hobbies')]
     private Collection $events;
 
+    /**
+     * @var Collection<int, GroupSubject>
+     */
+    #[ORM\OneToMany(targetEntity: GroupSubject::class, mappedBy: 'hobby')]
+    private Collection $groupSubjects;
+
     public function __construct()
     {
         $this->userProfiles = new ArrayCollection();
         $this->personOffers = new ArrayCollection();
         $this->events = new ArrayCollection();
+        $this->groupSubjects = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -169,6 +176,36 @@ class Hobby
     {
         if ($this->events->removeElement($event)) {
             $event->removeHobby($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, GroupSubject>
+     */
+    public function getGroupSubjects(): Collection
+    {
+        return $this->groupSubjects;
+    }
+
+    public function addGroupSubject(GroupSubject $groupSubject): static
+    {
+        if (!$this->groupSubjects->contains($groupSubject)) {
+            $this->groupSubjects->add($groupSubject);
+            $groupSubject->setHobby($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGroupSubject(GroupSubject $groupSubject): static
+    {
+        if ($this->groupSubjects->removeElement($groupSubject)) {
+            // set the owning side to null (unless already changed)
+            if ($groupSubject->getHobby() === $this) {
+                $groupSubject->setHobby(null);
+            }
         }
 
         return $this;

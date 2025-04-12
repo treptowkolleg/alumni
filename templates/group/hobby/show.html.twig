@@ -33,7 +33,7 @@
                                 <li class="nav-item">
                                     <a class="nav-link active rounded-top-2" data-bs-toggle="tab" href="#a">
                                         <i class="ti ti-message-2 text-primary"></i>
-                                        <span class="ms-1 d-none d-lg-inline">Themen</span>
+                                        <span class="ms-1 d-none d-lg-inline">Plausche</span>
                                         <span class="ms-1 small badge fw-normal text-bg-light border border-dark-subtle rounded-2">0</span>
                                     </a>
                                 </li>
@@ -55,11 +55,27 @@
                         </div>
                         <div class="tab-content">
                             <div class="tab-pane active" id="a">
-                                <div class="card-body bg-white">
-                                    <p class="card-text text-center">
-                                        Dieser Tab ist noch nicht verfügbar.<br>
-                                        <small class="fst-italic">Für {{ element }} interessieren sich jedoch {{ element.userProfiles.count }} Personen.</small>
-                                    </p>
+                                {% if app.user and app.user.userProfiles is not empty and (element in app.user.userProfiles.first.userHobbies or element in app.user.userProfiles.first.userInterests) %}
+                                    <div class="card-body border-bottom">
+                                        <a href="#" class="btn btn-primary btn-sm rounded-2" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="ti ti-plus me-1"></i>Plausch erstellen</a>
+                                    </div>
+                                {% endif %}
+                                <div class="list-group list-group-flush bg-white">
+                                    {% for subject in element.groupSubjects %}
+                                        <a href="#" class="list-group-item list-group-item-action ripplelink swipe-link-start py-3">
+                                            <span class="text-primary">{{ subject }}</span><br>
+                                            <small>{{ subject.description }}</small>
+                                        </a>
+                                    {% else %}
+                                        <div class="list-group-item py-3 d-flex justify-content-center align-items-center">
+                                            Keine Elemente vorhanden
+                                        </div>
+                                    {% endfor %}
+                                    <div class="card-body">
+                                        <p class="card-text small">
+                                            Das Anzeigen der Plausche ist noch nicht implementiert.
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                             <div class="tab-pane" id="b">
@@ -104,4 +120,26 @@
 
 {% block body %}{% endblock %}
 
-{% block aside %}{% endblock %}
+{% block aside %}
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content rounded-2 border-0 bg-white shadow">
+                {{ form_start(form) }}
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Plausch erstellen</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    {{ form_row(form.title) }}
+                    {{ form_row(form.description) }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light rounded-2" data-bs-dismiss="modal">Abbrechen</button>
+                    <button type="submit" class="btn btn-primary rounded-2">Speichern</button>
+                </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
