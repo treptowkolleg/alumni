@@ -77,7 +77,7 @@ class UserprofileFormType extends AbstractType
             ])
             ->add('userHobbies', EntityType::class, [
                 'row_attr' => ['class' => 'slim-form'],
-                'attr' => ['class' => 'slim-select-multi-exam-type'],
+                'attr' => ['class' => 'slim-select-multi-exam-type', 'data-max' => 13],
                 'query_builder' => function (HobbyRepository $er) {
                     return $er->createQueryBuilder('e')
                         ->leftJoin('e.category', 'c')

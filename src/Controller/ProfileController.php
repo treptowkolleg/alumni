@@ -106,6 +106,7 @@ class ProfileController extends AbstractController
     public function imageUpload(Request $request, UserRepository $userRepository, EntityManagerInterface $entityManager): Response
     {
         $user = $userRepository->find($this->getUser());
+        $image = $user;
         $form = $this->createForm(UserImageType::class, $user);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
