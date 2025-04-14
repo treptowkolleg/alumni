@@ -132,15 +132,8 @@
                                 </p>
                             </div>
                             {% if person.portfolioLink %}
-                                {% if person.portfolioLink|slice:":8" != "https://" and person.portfolioLink|slice:":7" != "http://" %}
-                                    {% set formattedLink = "https://" + person.portfolioLink %}
-                                {% else %}
-                                    {% set formattedLink = person.portfolioLink %}
-                                {% endif %}
                                 <div class="list-group list-group-flush bg-white">
-                                    <a class="list-group-item border-top border-bottom list-group-item-action ripplelink swipe-link-start" href="{{ formattedLink }}" target="_blank">
-                                        <i class="text-primary ti ti-external-link me-2"></i>Portfolio-Website
-                                    </a>
+                                    <a class="list-group-item border-top border-bottom list-group-item-action ripplelink swipe-link-start" href="{{ person.portfolioLink }}" target="_blank"><i class="text-primary ti ti-external-link me-2"></i>Portfolio-Website</a>
                                 </div>
                             {% endif %}
                             <div class="card-body"></div>

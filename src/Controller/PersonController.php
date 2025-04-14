@@ -160,6 +160,19 @@ class PersonController extends AbstractController
 
                 $pinBoardEntries = $entryRepository->findBy(['userProfile' => $profile]);
 
+                $link = $profile->getPortfolioLink();
+
+                if ($link) {
+                    // Überprüfen, ob der Link bereits mit http:// oder https:// beginnt
+                    if (strpos($link, 'http://') !== 0 && strpos($link, 'https://') !== 0) {
+                        // Wenn nicht, füge https:// hinzu
+                        $link = 'https://' . $link;
+                    }
+
+                    // Setze den korrigierten Link zurück
+                    $profile->setPortfolioLink($link);
+                }
+
                 return $this->render('people/show.html.twig', [
                     'person' => $profile,
                     'pinboard_entries' => $pinBoardEntries,
