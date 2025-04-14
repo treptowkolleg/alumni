@@ -18,13 +18,13 @@
             <div class="col-lg-3">
 
                 {% if app.user and person.user.isContactable %}
-                    <a href="{{ url('chat_start',{'slug':person.user.slug}) }}" class="btn btn-primary rounded-2 mb-3">
-                        <i class="link-primary ti ti-message-2 me-1"></i>
+                    <a href="{{ url('chat_start',{'slug':person.user.slug}) }}" class="btn btn-primary w-100 rounded-2 mb-3">
+                        <i class="ti ti-message-2 me-1"></i>
                         <small>Nachricht</small>
                     </a>
                 {% else %}
-                    <a href="javascript:void(0)" class="btn btn-primary rounded-2 mb-3 disabled">
-                        <i class="link-muted ti ti-message-2-off me-1"></i>
+                    <a href="javascript:void(0)" class="btn btn-primary w-100 rounded-2 mb-3 disabled">
+                        <i class="ti ti-message-2-off me-1"></i>
                         <small></small>
                     </a>
                 {% endif %}
