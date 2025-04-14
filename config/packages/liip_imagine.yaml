@@ -28,8 +28,8 @@ liip_imagine:
         avatar:
             quality: 25
             filters:
-                thumbnail: { size: [ 500, 500 ], mode: outbound, position: [50%, 40%] }
+                thumbnail: { size: [ 500, 500 ], mode: outbound, position: [50%, 30%] }
         avatar_sm:
             quality: 25
             filters:
-                thumbnail: { size: [ 600, 450 ], mode: outbound, position: [50%, 40%] }
+                thumbnail: { size: [ 600, 450 ], mode: outbound, position: [50%, 30%] }
