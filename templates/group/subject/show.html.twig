@@ -82,7 +82,7 @@
                                             <a href="{{ url('people_show',{'slug':entry.owner.slug}) }}" class="me-1 text-nowrap">{{ entry.owner.userProfiles.first }}</a>
                                             <div class="small text-muted">{{ entry.created|ago }}</div>
                                         {% else %}
-                                            <div class="me-1">######</div>
+                                            <div class="me-1">**Alumnymous**</div>
                                         {% endif %}
                                         <p class="mb-0">{{ entry.text|raw }}</p>
                                     </div>
