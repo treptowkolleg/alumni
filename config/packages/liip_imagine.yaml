@@ -28,7 +28,7 @@ liip_imagine:
         avatar:
             quality: 25
             filters:
-                thumbnail: { size: [ 600, 600 ], mode: outbound }
+                thumbnail: { size: [ 500, 500 ], mode: outbound }
         avatar_sm:
             quality: 25
             filters:
