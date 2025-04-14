@@ -10,26 +10,36 @@ liip_imagine:
         post_thumbnail:
             quality: 75
             filters:
-                thumbnail: { size: [800, 480], mode: outbound, position: [50%, 40%] }
+                relative_resize:
+                    heighten: 580
+                thumbnail: { size: [800, 480], mode: outbound }
                 scale:
                     dim: [ 800, 480 ]
         lead_thumbnail:
             quality: 75
             filters:
-                thumbnail: { size: [ 1440, 480 ], mode: outbound, position: [50%, 40%] }
+                relative_resize:
+                    heighten: 580
+                thumbnail: { size: [ 1440, 480 ], mode: outbound }
                 scale:
                     dim: [ 1440, 480 ]
         lead_mobile_thumbnail:
             quality: 75
             filters:
-                thumbnail: { size: [ 800, 600 ], mode: outbound, position: [50%, 40%] }
+                relative_resize:
+                    heighten: 700
+                thumbnail: { size: [ 800, 600 ], mode: outbound }
                 scale:
                     dim: [ 800, 600 ]
         avatar:
             quality: 25
             filters:
-                thumbnail: { size: [ 500, 500 ], mode: outbound, position: [50%, 30%] }
+                relative_resize:
+                    heighten: 550
+                thumbnail: { size: [ 500, 500 ], mode: outbound }
         avatar_sm:
             quality: 25
             filters:
-                thumbnail: { size: [ 600, 450 ], mode: outbound, position: [50%, 30%] }
+                relative_resize:
+                    heighten: 500
+                thumbnail: { size: [ 600, 450 ], mode: outbound }
