@@ -65,6 +65,11 @@ class NewsletterTemplateCrudController extends AbstractCrudController
             $entityInstance->addSchool($user->getSchool());
         }
 
+        if($entityInstance instanceof NewsletterTemplate and $entityInstance->isUseAllReceivers()) {
+            $user = $this->userRepository->find($this->getUser());
+            $entityInstance->addSchool($user->getSchool());
+        }
+
         parent::persistEntity($entityManager, $entityInstance);
     }
 

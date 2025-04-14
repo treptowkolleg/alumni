@@ -4,6 +4,7 @@ namespace App\Command;
 
 use App\Entity\NewsletterQueue;
 use App\Entity\NewsletterTemplate;
+use App\Repository\NewsletterRepository;
 use App\Repository\NewsletterTemplateRepository;
 use DatePeriod;
 use Doctrine\ORM\EntityManagerInterface;
@@ -23,10 +24,12 @@ class NewsletterCreateQueueCommand extends Command
 {
     private EntityManagerInterface $em;
     private NewsletterTemplateRepository $templateRepository;
-    public function __construct(EntityManagerInterface $entityManager, NewsletterTemplateRepository $templateRepository)
+    private NewsletterRepository $newsletterRepository;
+    public function __construct(EntityManagerInterface $entityManager, NewsletterTemplateRepository $templateRepository, NewsletterRepository $newsletterRepository)
     {
         $this->em = $entityManager;
         $this->templateRepository = $templateRepository;
+        $this->newsletterRepository = $newsletterRepository;
         parent::__construct();
     }
 
@@ -48,7 +51,7 @@ class NewsletterCreateQueueCommand extends Command
         $today = $today->setTime(18,0,0);
 
         foreach ($templates as $template) {
-            if ($this->isSendDateToday($template->getStartDate(), $template->getPeriod(), $template->getPeriodUnit())) {
+            if ($this->isSendDateToday($template->getStartDate(), $template->getPeriod(), $template->getPeriodUnit()) and !$template->isUseAllReceivers()) {
                 $schools = $template->getSchool();
                 foreach ($schools as $school) {
                     foreach($school->getNewsletters() as $newsletter) {
@@ -63,6 +66,10 @@ class NewsletterCreateQueueCommand extends Command
                         }
                     }
                 }
+            }
+
+            if ($template->isUseAllReceivers()) {
+                // für alle Newsletter ohne hasSchool
             }
         }
         $this->em->flush();
