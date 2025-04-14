@@ -89,7 +89,9 @@
                         </div>
                         <div class="list-group list-group-flush bg-white">
                             {% for subject in app.user.groupSubjects %}
-                                <a href="#" class="list-group-item list-group-item-action ripplelink swipe-link-start py-3">
+                                {% if subject.interest is not null %}{% set route = 'group_interest_show' %}{% endif %}
+                                {% if subject.hobby is not null %}{% set route = 'group_hobby_show' %}{% endif %}
+                                <a href="{{ url(route,{'slug':subject.slug}) }}" class="list-group-item list-group-item-action ripplelink swipe-link-start py-3">
                                     <span class="text-primary">{{ subject }}</span><br>
                                     <small>{{ subject.description }}</small>
                                 </a>
