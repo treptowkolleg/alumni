@@ -92,7 +92,9 @@
                             <div class="tab-pane" id="c">
                                 <div class="list-group list-group-flush">
                                     {% for offer in element.personOffers %}
-                                        {{ include('component/_offer_fav_list.html.twig') }}
+                                        {% if offer.active %}
+                                            {{ include('component/_offer_fav_list.html.twig') }}
+                                        {% endif %}
                                     {% else %}
                                         <div class="list-group-item d-flex justify-content-center align-items-center">
                                             <span class="py-2">Keine Elemente vorhanden</span>

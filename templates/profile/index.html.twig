@@ -166,7 +166,9 @@
                         </div>
                         <div class="list-group list-group-flush bg-white">
                             {% for offer in offers %}
-                                {{ include('component/_offer_fav_list.html.twig') }}
+                                {% if offer.active %}
+                                    {{ include('component/_offer_fav_list.html.twig') }}
+                                {% endif %}
                             {% else %}
                                 <div class="list-group-item d-flex justify-content-center align-items-center">
                                     <span>Aktuell sind keine Stellen offen.</span>
