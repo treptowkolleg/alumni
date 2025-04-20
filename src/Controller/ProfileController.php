@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\GroupSubject;
 use App\Entity\Newsletter;
 use App\Entity\PersonOffer;
 use App\Entity\User;
@@ -12,9 +13,11 @@ use App\Form\UserImageType;
 use App\Form\UserprofileFormType;
 use App\Operator\SoundExpression;
 use App\Repository\ChatRepository;
+use App\Repository\GroupSubjectRepository;
 use App\Repository\NewsletterRepository;
 use App\Repository\PersonOfferRepository;
 use App\Repository\SchoolRepository;
+use App\Repository\SubjectPostRepository;
 use App\Repository\UserProfileRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -38,11 +41,19 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 class ProfileController extends AbstractController
 {
     #[Route('', name: 'index')]
-    public function index(Request $request, UserProfileRepository $userProfileRepository, ChatRepository $chatRepository, NewsletterRepository $newsletterRepository, PersonOfferRepository $offerRepository, EntityManagerInterface $entityManager): Response
+    public function index(Request $request, UserProfileRepository $userProfileRepository, ChatRepository $chatRepository, NewsletterRepository $newsletterRepository, SubjectPostRepository $subjectPostRepository, PersonOfferRepository $offerRepository, EntityManagerInterface $entityManager): Response
     {
         $userProfile = $userProfileRepository->findOneBy(['user' => $this->getUser()]);
         $newsletter = $newsletterRepository->findOneBy(['email' => $this->getUser()->getUserIdentifier()]);
         $chats = $chatRepository->findAllChats($this->getUser());
+
+        $posts = $subjectPostRepository->findBy(['owner' => $this->getUser()]);
+
+        $groups = [];
+        foreach ($posts as $post)
+        {
+            $groups[$post->getSubject()->getId()] = $post->getSubject();
+        }
 
         $offers = [];
 
@@ -78,6 +89,7 @@ class ProfileController extends AbstractController
             'has_newsletter' => $newsletter,
             'chats' => $chats,
             'offers' => $offers,
+            'groups' => $groups,
         ]);
     }
 
