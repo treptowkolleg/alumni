@@ -12,6 +12,33 @@
 {{ parent() }}
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote.min.css" rel="stylesheet">
+    <style>
+        .ck-editor__editable {
+            border: none!important;         /* Entfernt den Rahmen */
+            border-radius: 0!important;
+            outline: none!important;
+            box-shadow: none!important;/* Entfernt die abgerundeten Ecken */
+            border-bottom: 1px solid var(--bs-off)!important;
+            padding-left: 1rem!important;
+            padding-right: 1rem!important;
+        }
+
+        /* Falls du auch den gesamten Editor-Container anpassen willst */
+        .ck-editor__top {
+            border: none!important;         /* Entfernt den Rahmen */
+            border-radius: 0!important;
+            outline: none!important;
+            box-shadow: none!important;/* Entfernt die abgerundeten Ecken */
+        }
+
+        .ck-sticky-panel__content {
+            border: none!important;         /* Entfernt den Rahmen */
+            border-radius: 0!important;
+            outline: none!important;
+            box-shadow: none!important;/* Entfernt die abgerundeten Ecken */
+
+        }
+    </style>
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
@@ -56,13 +83,15 @@
                             Beiträge
                         </div>
                         {% if app.user %}
-                            <div class="card-body bg-white">
+
                             {{ form_start(form, {'attr': {'id': 'main-send'}}) }}
                             {{ form_row(form.text) }}
                                 <input type="hidden" name="inhalt" id="helper-input">
-                            <button type="submit" class="btn btn-primary rounded-2">Beitrag senden</button>
+                            <div class="px-3">
+                                <button type="submit" class="btn btn-primary w-100 rounded-2 mb-3">Beitrag senden</button>
+                            </div>
                             {{ form_end(form) }}
-                        </div>
+
                             <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/45.0.0/ckeditor5.css" />
                             <script src="https://cdn.ckeditor.com/ckeditor5/45.0.0/ckeditor5.umd.js"></script>
                             <script>
