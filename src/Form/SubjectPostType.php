@@ -16,7 +16,7 @@ class SubjectPostType extends AbstractType
     {
         $builder
             ->add('text',TextAreaType::class,[
-                'required'=>true,
+                'required'=>false,
             ])
         ;
     }

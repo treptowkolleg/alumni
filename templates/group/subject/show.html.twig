@@ -57,14 +57,18 @@
                         </div>
                         {% if app.user %}
                             <div class="card-body bg-white">
-                            {{ form_start(form) }}
+                            {{ form_start(form, {'attr': {'id': 'main-send'}}) }}
                             {{ form_row(form.text) }}
+                                <input type="hidden" name="inhalt" id="helper-input">
                             <button type="submit" class="btn btn-primary rounded-2">Beitrag senden</button>
                             {{ form_end(form) }}
                         </div>
                             <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/45.0.0/ckeditor5.css" />
                             <script src="https://cdn.ckeditor.com/ckeditor5/45.0.0/ckeditor5.umd.js"></script>
                             <script>
+
+                                let editor;
+
                                 const {
                                     ClassicEditor,
                                     Essentials,
@@ -83,8 +87,23 @@
                                             'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor',
                                         ]
                                     } )
-                                    .then( /* ... */ )
-                                    .catch( /* ... */ );
+                                    .then(newEditor => {
+                                        editor = newEditor;
+                                    })
+                                    .catch(error => {
+                                        console.error(error);
+                                    });
+
+                                document.getElementById('main-send').addEventListener('submit', function (e) {
+                                    e.preventDefault();
+                                    let value = editor.getData();
+                                    if (value) {
+                                        document.getElementById('helper-input').value = value;
+                                        this.submit();
+                                    }
+
+                                });
+
                             </script>
                         {% endif %}
                         <div class="list-group list-group-flush bg-white border-top border-bottom" id="content">
