@@ -6,6 +6,7 @@ enum PerformanceCourseEnum: string
 {
     case bi = "bi";
     case ch = "ch";
+    case de = "de";
     case ds = "ds";
     case en = "en";
     case fr = "fr";
