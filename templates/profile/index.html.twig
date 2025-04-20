@@ -114,12 +114,6 @@
                                         </div>
                                     {% endfor %}
                                 </div>
-                                <div class="list-group list-group-flush border-top">
-                                    <a href="{{ url('group_hobby_index') }}" class="list-group-item list-group-item-action link-primary d-flex align-items-center justify-content-between">
-                                        <div>weitere Gruppen finden</div>
-                                        <i class="ti ti-chevron-right"></i>
-                                    </a>
-                                </div>
                             </div>
                             <div class="tab-pane" id="b">
                                 {{ include('component/_hobby_list.html.twig',{'item':app.user.userProfiles.first}) }}
@@ -127,6 +121,12 @@
                             </div>
                         </div>
                         <div class="h-100 bg-white"></div>
+                        <div class="list-group list-group-flush border-top">
+                            <a href="{{ url('group_hobby_index') }}" class="list-group-item list-group-item-action link-primary d-flex align-items-center justify-content-between">
+                                <div>weitere Gruppen finden</div>
+                                <i class="ti ti-chevron-right"></i>
+                            </a>
+                        </div>
                         <div class="card-body border-top"></div>
                     </div>
                 </div>
