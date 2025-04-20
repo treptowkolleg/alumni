@@ -66,13 +66,13 @@
                 <div class="col-12 mt-3">
                     <div class="card bg-light-subtle border-0 shadow-sm rounded-2">
                         <div class="card-body border-bottom border-primary">
-                            Beitrag erstellen
+                            Beiträge
                         </div>
                         {% if app.user %}
                             <div class="card-body bg-white">
                             {{ form_start(form) }}
                             {{ form_row(form.text) }}
-                            <button type="submit" class="btn btn-primary rounded-2">Speichern</button>
+                            <button type="submit" class="btn btn-primary rounded-2">Beitrag senden</button>
                             {{ form_end(form) }}
                         </div>
                         {% endif %}
