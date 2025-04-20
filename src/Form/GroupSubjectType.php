@@ -22,10 +22,12 @@ class GroupSubjectType extends AbstractType
             ->add('title',TextType::class,[
                 'row_attr' => ['class' => 'form-floating mb-3'],
                 'attr' => ['placeholder' => 'title'],
+                'required' => true,
             ])
             ->add('description',TextType::class,[
                 'row_attr' => ['class' => 'form-floating mb-3'],
                 'attr' => ['placeholder' => 'description'],
+                'required' => true,
             ])
         ;
     }

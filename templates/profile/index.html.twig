@@ -84,29 +84,50 @@
 
                 <div class="col-12 col-lg-8 order-0 order-lg-3">
                     <div class="card bg-light-subtle border-0 shadow-sm rounded rounded-2 h-100">
-                        <div class="card-body  border-bottom border-primary">
-                            <h3 class="h6 text-center text-lg-start mb-0">Meine Gruppen <span class=" ms-2 badge bg-warning-subtle text-warning rounded fw-normal">dev</span></h3>
+                        <div class="card-header bg-light-subtle rounded-top-2">
+                            <ul class="nav nav-tabs card-header-tabs" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active rounded-top-2" data-bs-toggle="tab" href="#a">
+                                        <i class="ti ti-message-2 text-primary"></i>
+                                        <span class="ms-1 d-none d-lg-inline">Plausche</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link rounded-top-2" data-bs-toggle="tab" href="#b">
+                                        <i class="ti ti-roller-skating text-primary"></i>
+                                        <span class="ms-1 d-none d-lg-inline">Hobbys</span>
+                                    </a>
+                                </li>
+                            </ul>
                         </div>
-                        <div class="list-group list-group-flush bg-white">
-                            {% for subject in app.user.groupSubjects %}
-                                <a href="{{ url('group_talk_show',{'slug':subject.slug}) }}" class="list-group-item list-group-item-action ripplelink swipe-link-start py-3">
-                                    <span class="text-primary">{{ subject }}</span><br>
-                                    <small>{{ subject.description }}</small>
-                                </a>
-                            {% else %}
-                                <div class="list-group-item py-3 d-flex justify-content-center align-items-center">
-                                    Keine Elemente vorhanden
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="a">
+                                <div class="list-group list-group-flush bg-white">
+                                    {% for subject in app.user.groupSubjects %}
+                                        <a href="{{ url('group_talk_show',{'slug':subject.slug}) }}" class="list-group-item list-group-item-action ripplelink swipe-link-start py-3">
+                                            <span class="text-primary">{{ subject }}</span><br>
+                                            <small>{{ subject.description }}</small>
+                                        </a>
+                                    {% else %}
+                                        <div class="list-group-item py-3 d-flex justify-content-center align-items-center">
+                                            Keine Elemente vorhanden
+                                        </div>
+                                    {% endfor %}
                                 </div>
-                            {% endfor %}
+                                <div class="list-group list-group-flush border-top">
+                                    <a href="{{ url('group_hobby_index') }}" class="list-group-item list-group-item-action link-primary d-flex align-items-center justify-content-between">
+                                        <div>weitere Gruppen finden</div>
+                                        <i class="ti ti-chevron-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="b">
+                                {{ include('component/_hobby_list.html.twig',{'item':app.user.userProfiles.first}) }}
+
+                            </div>
                         </div>
                         <div class="h-100 bg-white"></div>
-                        <div class="list-group list-group-flush border-top border-bottom">
-                            <a href="{{ url('group_hobby_index') }}" class="list-group-item list-group-item-action link-primary d-flex align-items-center justify-content-between">
-                                <div>weitere Gruppen finden</div>
-                                <i class="ti ti-chevron-right"></i>
-                            </a>
-                        </div>
-                        <div class="card-body"></div>
+                        <div class="card-body border-top"></div>
                     </div>
                 </div>
 
