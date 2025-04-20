@@ -1,6 +1,6 @@
 <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3 g-3 align-content-stretch py-3">
     {% for person in people|shuffle %}
-            {% if (app.user and  person.networkState == 'registered') or person.networkState == 'public' or (filter in ['school','freunde'] and person.networkState == 'private') %}
+            {% if ((app.user and  person.networkState == 'registered') or person.networkState == 'public' or (filter in ['school','freunde'] and person.networkState == 'private')) and app.user != person.user %}
                 <div class="col mb-0">
                     <div class="card border-0 rounded rounded-2 shadow-sm text-bg-white align-self-stretch">
                         <div class="row g-0">
