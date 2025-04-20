@@ -8,6 +8,8 @@ use App\Form\NewsletterType;
 use App\Repository\BlogPostRepository;
 use App\Repository\BlogTypeRepository;
 use App\Repository\EventRepository;
+use App\Repository\UserProfileRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Exception\ORMException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -62,12 +64,14 @@ class AppController extends AbstractController
     }
 
     #[Route('/about/allgemein', name: 'about_index')]
-    public function aboutIndex(BlogPostRepository $postRepository, BlogTypeRepository $blogTypeRepository): Response
+    public function aboutIndex(BlogPostRepository $postRepository, BlogTypeRepository $blogTypeRepository, UserRepository $userRepository): Response
     {
+        $users = count($userRepository->findAll());
         $blogType = $blogTypeRepository->findBy(['title' => 'Pressemitteilung']);
         $blogPost = $postRepository->findBy(['type' => $blogType,'isPublished' => true],orderBy: ['updatedAt' => 'DESC'], limit: 6);
         return $this->render('app/about.html.twig',[
-            'posts' => $blogPost
+            'posts' => $blogPost,
+            'users' => $users,
         ]);
     }
 
