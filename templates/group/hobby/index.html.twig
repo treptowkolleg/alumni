@@ -23,7 +23,7 @@
                             {% for category in hobby_categories|sort((a,b) => a.label <=> b.label) %}
                                 {% set x = 0 %}
                                 {% for hobby in category.hobbies|sort((a,b) => a.label <=> b.label) %}
-                                    {% if hobby.userProfiles.count > 0 or hobby.events.count > 0 or hobby.personOffers.count > 0 or hobby.groupSubjects.count > 0 %}
+                                    {% if hobby.userProfiles.count > 0 or hobby.events.count > 0 or hobby.personOffers|filter(item => item.active == true)|length > 0 or hobby.groupSubjects.count > 0 %}
                                         {% if x == 0 %}
                                             <div class="list-group-item bg-light-subtle border-bottom border-primary pt-3">
                                                 <span class="text-primary">{{ category }}</span>
@@ -45,7 +45,7 @@
                                                     <i class="ti ti-calendar-event ms-1"></i>
                                                 </span>
                                                 <span class="badge fw-normal text-dark-emphasis bg-secondary-subtle d-flex align-items-center">
-                                                    {{ hobby.personOffers.count }}
+                                                    {{ hobby.personOffers|filter(item => item.active == true)|length }}
                                                     <i class="ti ti-briefcase ms-1"></i>
                                                 </span>
                                                 <span class="badge fw-normal text-primary bg-primary-subtle rounded-end-2 d-flex align-items-center">
@@ -71,7 +71,7 @@
                             {% for category in interest_categories|sort((a,b) => a.label <=> b.label) %}
                                 {% set x = 0 %}
                                 {% for hobby in category.interests|sort((a,b) => a.label <=> b.label) %}
-                                    {% if hobby.userProfiles.count > 0 or hobby.events.count > 0 or hobby.personOffers.count > 0 or hobby.groupSubjects.count > 0 %}
+                                    {% if hobby.userProfiles.count > 0 or hobby.events.count > 0 or hobby.personOffers|filter(item => item.active == true)|length > 0 or hobby.groupSubjects.count > 0 %}
                                         {% if x == 0 %}
                                             <div class="list-group-item bg-light-subtle border-bottom border-primary pt-3">
                                                 <span class="text-primary">{{ category }}</span>
@@ -93,7 +93,7 @@
                                                     <i class="ti ti-calendar-event ms-1"></i>
                                                 </span>
                                                 <span class="badge fw-normal text-dark-emphasis bg-secondary-subtle d-flex align-items-center">
-                                                    {{ hobby.personOffers.count }}
+                                                    {{ hobby.personOffers|filter(item => item.active == true)|length }}
                                                     <i class="ti ti-briefcase ms-1"></i>
                                                 </span>
                                                 <span class="badge fw-normal text-primary bg-primary-subtle rounded-end-2 d-flex align-items-center">

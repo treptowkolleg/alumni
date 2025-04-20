@@ -15,7 +15,7 @@
                                         <i class="ti ti-calendar-event ms-1"></i>
                                     </span>
                 <span class="badge fw-normal text-dark-emphasis bg-secondary-subtle d-flex align-items-center">
-                                        {{ hobby.personOffers.count }}
+                                        {{ hobby.personOffers|filter(item => item.active == true)|length }}
                                         <i class="ti ti-briefcase ms-1"></i>
                                     </span>
                 <span class="badge fw-normal text-primary bg-primary-subtle rounded-end-2 d-flex align-items-center">

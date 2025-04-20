@@ -48,7 +48,7 @@
                                     <a class="nav-link rounded-top-2" data-bs-toggle="tab" href="#c">
                                         <i class="ti ti-briefcase text-primary"></i>
                                         <span class="ms-1 d-none d-lg-inline">Stellenangebote</span>
-                                        <span class="ms-1 small badge fw-normal text-bg-light border border-dark-subtle rounded-2">{{ element.personOffers.count ?? 0 }}</span>
+                                        <span class="ms-1 small badge fw-normal text-bg-light border border-dark-subtle rounded-2">{{ element.personOffers|filter(item => item.active == true)|length }}</span>
                                     </a>
                                 </li>
                             </ul>
