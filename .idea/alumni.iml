@@ -196,5 +196,7 @@
     <orderEntry type="library" name="quill.snow" level="application" />
     <orderEntry type="library" name="quill" level="application" />
     <orderEntry type="library" name="summernote" level="application" />
+    <orderEntry type="library" name="ckeditor5.umd" level="application" />
+    <orderEntry type="library" name="ckeditor5" level="application" />
   </component>
 </module>
