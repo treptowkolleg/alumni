@@ -198,5 +198,7 @@
     <orderEntry type="library" name="summernote" level="application" />
     <orderEntry type="library" name="ckeditor5.umd" level="application" />
     <orderEntry type="library" name="ckeditor5" level="application" />
+    <orderEntry type="library" name="de" level="application" />
+    <orderEntry type="library" name="de.umd" level="application" />
   </component>
 </module>
