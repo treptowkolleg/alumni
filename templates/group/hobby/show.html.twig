@@ -26,7 +26,7 @@
                     </div>
                 </div>
 
-                <div class="col-12 mb-3">
+                <div class="col-12">
                     <div class="card bg-light-subtle border-0 shadow-sm rounded rounded-2">
                         <div class="card-header bg-light-subtle rounded-top-2">
                             <ul class="nav nav-tabs card-header-tabs" role="tablist">
@@ -104,9 +104,10 @@
                         <div class="card-body border-top"></div>
                     </div>
                 </div>
+
             </div>
 
-
+            {{ include('component/_people_list_short.html.twig',{'people':element.userProfiles}) }}
 
         </div>
     </section>
