@@ -61,7 +61,7 @@ class NewsletterTemplate
     /**
      * @var Collection<int, NewsletterQueue>
      */
-    #[ORM\OneToMany(targetEntity: NewsletterQueue::class, mappedBy: 'template')]
+    #[ORM\OneToMany(targetEntity: NewsletterQueue::class, mappedBy: 'template',cascade: ['remove'], orphanRemoval: true)]
     private Collection $newsletterQueues;
 
     public function __construct()
