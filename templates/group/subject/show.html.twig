@@ -68,12 +68,14 @@
                         <div class="card-body border-bottom border-primary">
                             Beitrag erstellen
                         </div>
-                        <div class="card-body bg-white">
+                        {% if app.user %}
+                            <div class="card-body bg-white">
                             {{ form_start(form) }}
                             {{ form_row(form.text) }}
                             <button type="submit" class="btn btn-primary rounded-2">Speichern</button>
                             {{ form_end(form) }}
                         </div>
+                        {% endif %}
                         <div class="list-group list-group-flush bg-white border-top border-bottom" id="content">
                             {% for entry in element.subjectPosts|sort((a, b) => b.created <=> a.created) %}
                                 <div class="list-group-item">
