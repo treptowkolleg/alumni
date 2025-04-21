@@ -9,7 +9,7 @@
                                     {% if person.user.image.name %}
                                         <img src="{{ vich_uploader_asset(person.user)|imagine_filter('avatar')  }}" class="rounded-top img-fluid w-100" alt="..." style="border-top-right-radius:0!important">
                                     {% else %}
-                                        <img src="{{ asset('images/avatar_no_text.svg') }}" class="img-fluid w-100" alt="..." style="border-top-right-radius:0!important">
+                                        <img src="https://api.dicebear.com/9.x/lorelei/svg?seed={{ person }}" class="img-fluid w-100" alt="..." style="border-top-right-radius:0!important">
                                     {% endif %}
                                 </a>
                             </div>

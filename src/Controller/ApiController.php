@@ -57,6 +57,21 @@ class ApiController extends AbstractController
     {
         $survey = $repository->findOneByOpen($this->getUser());
 
+        $globalHolidays = [
+            ['month' => 1,  'day' => 1,   'name' => 'Neujahr'], // 🎉 Feuerwerk, Uhr auf Mitternacht
+            ['month' => 2,  'day' => 14,  'name' => 'Valentinstag'], // ❤️ Herzen, Rosen
+            ['month' => 3,  'day' => 8,   'name' => 'Internationaler Frauentag'], // ♀️ Venus-Symbol, Blume
+            ['month' => 4,  'day' => 22,  'name' => 'Tag der Erde'], // 🌍 Erde mit Pflanze
+            ['month' => 5,  'day' => 1,   'name' => 'Tag der Arbeit'], // 🔧 Hammer, Banner
+            ['month' => 6,  'day' => 1,   'name' => 'Weltkindertag'], // 🧸 Ballons, Kindersymbole
+            ['month' => 6,  'day' => 5,   'name' => 'Weltumwelttag'], // 🌱 Blatt, Baum
+            ['month' => 9,  'day' => 21,  'name' => 'Internationaler Friedenstag'], // 🕊️ Taube, Olivenzweig
+            ['month' => 10, 'day' => 31,  'name' => 'Halloween'], // 🎃 Kürbis, Fledermäuse
+            ['month' => 12, 'day' => 24,  'name' => 'Heiligabend'], // 🎄 Baum, Lichter
+            ['month' => 12, 'day' => 25,  'name' => 'Weihnachten'], // 🎁 Geschenke, Stern
+            ['month' => 12, 'day' => 31,  'name' => 'Silvester'], // 🎆 Feuerwerk, Uhr
+        ];
+
         return $this->render('component/_survey.html.twig', [
             'survey' => $survey,
             'ref_route' => $ref_route,
