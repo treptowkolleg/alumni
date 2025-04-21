@@ -2,11 +2,14 @@
 
 namespace App\Controller;
 
+use App\Entity\Survey;
+use App\Entity\SurveyAnswer;
 use App\Entity\User;
 use App\Entity\UserProfile;
 use App\Repository\ChatRepository;
 use App\Repository\EventRepository;
 use App\Repository\SchoolRepository;
+use App\Repository\SurveyRepository;
 use App\Repository\UserProfileRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -47,6 +50,40 @@ class ApiController extends AbstractController
         return $this->render('component/_footer_schools.html.twig', [
             'items' => $counties
         ]);
+    }
+
+    #[Route('/surveys', name: 'survey_index', methods: ['GET'])]
+    public function getSurveys(SurveyRepository $repository, string $ref_route = null, array $ref_params = []): Response
+    {
+        $survey = $repository->findOneByOpen($this->getUser());
+
+        return $this->render('component/_survey.html.twig', [
+            'survey' => $survey,
+            'ref_route' => $ref_route,
+            'ref_params' => $ref_params,
+        ]);
+    }
+
+    #[Route('/survey/{id}', name: 'survey_submit', methods: ['POST'])]
+    public function submitSurveyAnswer(Survey $survey, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $data = json_decode($request->request->get('ref_data'), true);
+        $answer = $request->request->get('answer'); // 'y' oder 'n'
+
+        $surveyAnswer = new SurveyAnswer();
+        $surveyAnswer->setSurvey($survey);
+        $surveyAnswer->setUser($this->getUser());
+        if ($answer === 'y') {
+            $surveyAnswer->setAnswer(true);
+        } elseif ($answer === 'n') {
+            $surveyAnswer->setAnswer(false);
+        }
+        $entityManager->persist($surveyAnswer);
+        $entityManager->flush();
+
+        $this->addFlash('success','Vielen Dank fürs Abstimmen.');
+
+        return $this->redirectToRoute($data['route'], $data['params']);
     }
 
     #[Route('/cookie-consent', name: 'cookie_consent', methods: ['POST'])]

@@ -20,10 +20,12 @@ use App\Entity\PersonOffer;
 use App\Entity\PinboardEntry;
 use App\Entity\SalaryLevel;
 use App\Entity\School;
+use App\Entity\Survey;
 use App\Entity\University;
 use App\Entity\User;
 use App\Entity\UserProfile;
 use App\Repository\BlogPostRepository;
+use App\Repository\SurveyRepository;
 use App\Repository\UserRepository;
 use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminDashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
@@ -48,6 +50,7 @@ class DashboardController extends AbstractDashboardController
     public function __construct(
         private BlogPostRepository $repository,
         private UserRepository $userRepository,
+        private SurveyRepository $surveyRepository,
     )
     {
     }
@@ -83,10 +86,12 @@ class DashboardController extends AbstractDashboardController
     {
         $posts = $this->repository->findPublishedBlogPosts(user: $this->getUser());
         $newsPosts = $this->repository->findPublishedNews(user: $this->getUser());
+        $surveys = $this->surveyRepository->findBy(['active' => true]);
 
 
         return $this->render('admin/dashboard.html.twig', [
             'title' => 'test',
+            'surveys' => $surveys,
             'posts' => $posts,
             'news_articles' => $newsPosts,
             'server_time' => new \DateTimeImmutable("now")
@@ -196,6 +201,10 @@ class DashboardController extends AbstractDashboardController
                 ->setPermission('ROLE_ADMIN')
             ;
             yield MenuItem::linkToCrud('E-Mail-Adressen', 'ti ti-mail',Newsletter::class)
+                ->setCssClass('admin-link')
+                ->setPermission('ROLE_ADMIN')
+            ;
+            yield MenuItem::linkToCrud('Surveys', 'ti ti-question-mark',Survey::class)
                 ->setCssClass('admin-link')
                 ->setPermission('ROLE_ADMIN')
             ;

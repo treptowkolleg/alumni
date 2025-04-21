@@ -7,6 +7,37 @@
 {% set seo_title = person %}
 {% set sidebar = 'people' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .ck-editor__editable {
+            border: none!important;         /* Entfernt den Rahmen */
+            border-radius: 0!important;
+            outline: none!important;
+            box-shadow: none!important;/* Entfernt die abgerundeten Ecken */
+            border-bottom: 1px solid var(--bs-off)!important;
+            padding-left: 1rem!important;
+            padding-right: 1rem!important;
+        }
+
+        /* Falls du auch den gesamten Editor-Container anpassen willst */
+        .ck-editor__top {
+            border: none!important;         /* Entfernt den Rahmen */
+            border-radius: 0!important;
+            outline: none!important;
+            box-shadow: none!important;/* Entfernt die abgerundeten Ecken */
+        }
+
+        .ck-sticky-panel__content {
+            border: none!important;         /* Entfernt den Rahmen */
+            border-radius: 0!important;
+            outline: none!important;
+            box-shadow: none!important;/* Entfernt die abgerundeten Ecken */
+
+        }
+    </style>
+{% endblock %}
+
 {% block page_header %}
 <section class="py-3">
     <div class="container">
@@ -197,16 +228,56 @@
                                     <h3 class="h6 mb-0 text-center text-lg-start">Pinnwand<span class="ms-2 badge bg-warning-subtle text-warning rounded fw-normal">dev</span></h3>
                                 </div>
                                 {% if app.user and app.user.userProfiles.count > 0 %}
-                                    <div class="card-body p-0">
-                                        <form method="post" class="needs-validation" novalidate>
-                                            <input type="file" class="form-control" disabled />
-                                            <label class="d-flex justify-content-between align-items-center w-100">
-                                                <textarea maxlength="500" class="form-control bg-light ps-3 w-100 rounded-0 border-0" rows="5" required name="comment" placeholder="Notiz hinterlassen (max. 500 Zeichen)"></textarea>
-                                            </label>
-                                            <button class="btn btn-primary border-top-0" type="submit"><i class="ti ti-pin me-1"></i>Anpinnen</button>
-                                            <input type="hidden" name="token" value="{{ csrf_token('pinboard-comment') }}">
-                                        </form>
-                                    </div>
+                                    <form method="post" id="main-send" class="needs-validation" novalidate>
+                                        <textarea maxlength="500" class="form-control" rows="5" id="pinboard-text" name="comment" placeholder="Notiz hinterlassen"></textarea>
+
+                                        <input type="hidden" name="inhalt" id="helper-input">
+                                        <button class="btn btn-light border-0 w-100" type="submit"><i class="ti ti-pin me-1 text-primary"></i>Anpinnen</button>
+                                        <input type="hidden" name="token" value="{{ csrf_token('pinboard-comment') }}">
+                                    </form>
+                                    <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/45.0.0/ckeditor5.css" />
+                                    <script src="https://cdn.ckeditor.com/ckeditor5/45.0.0/ckeditor5.umd.js"></script>
+                                    <script src="https://cdn.ckeditor.com/ckeditor5/45.0.0/translations/de.umd.js"></script>
+                                    <script>
+
+                                        let editor;
+
+                                        const {
+                                            ClassicEditor,
+                                            Essentials,
+                                            Bold,
+                                            Italic,
+                                            Font,
+                                            Paragraph
+                                        } = CKEDITOR;
+
+                                        ClassicEditor
+                                            .create( document.querySelector( '#pinboard-text' ), {
+                                                licenseKey: 'eyJhbGciOiJFUzI1NiJ9.eyJleHAiOjE3NzY3Mjk1OTksImp0aSI6IjQzNTU5Y2Y5LTE4NTgtNGY3Mi05MTY4LWRjMjJiMzBhNmVhNyIsInVzYWdlRW5kcG9pbnQiOiJodHRwczovL3Byb3h5LWV2ZW50LmNrZWRpdG9yLmNvbSIsImRpc3RyaWJ1dGlvbkNoYW5uZWwiOlsiY2xvdWQiLCJkcnVwYWwiXSwiZmVhdHVyZXMiOlsiRFJVUCJdLCJ2YyI6IjJkM2QwZGNkIn0.ryf90wmooy8vzT9D7DPTPOXc-9YdErvKAO1EgiCfX8UxUr4X1GoqjKd_3M9Vb7P97m0zv-HCp2TFoheD1xjigQ',
+                                                plugins: [ Essentials, Bold, Italic, Font, Paragraph ],
+                                                toolbar: [
+                                                    'undo', 'redo', '|', 'bold', 'italic', '|',
+                                                    'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor',
+                                                ]
+                                            } )
+                                            .then(newEditor => {
+                                                editor = newEditor;
+                                            })
+                                            .catch(error => {
+                                                console.error(error);
+                                            });
+
+                                        document.getElementById('main-send').addEventListener('submit', function (e) {
+                                            e.preventDefault();
+                                            let value = editor.getData();
+                                            if (value) {
+                                                document.getElementById('helper-input').value = value;
+                                                this.submit();
+                                            }
+
+                                        });
+
+                                    </script>
                                 {% endif %}
                                 <div class="list-group list-group-flush bg-white border-top border-bottom">
                                     {% for entry in pinboard_entries|sort((a, b) => b.created <=> a.created) %}

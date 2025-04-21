@@ -1,0 +1,29 @@
+{% if survey %}
+    <section id="survey" class="alert alert-light border-0 mb-0 border-bottom shadow-sm">
+        <div class="container">
+            <div class="row row-cols-1 g-3 mb-3">
+                <div class="col text-center">
+                    <div class="fs-5">{{ survey }}</div>
+                </div>
+            </div>
+
+            <form method="POST" action="{{ url('api_survey_submit',{'id':survey.id}) }}">
+                <input type="hidden" name="ref_data" value='{{ {
+                    route: ref_route,
+                    params: ref_params
+                }|json_encode|e('html_attr') }}'>
+                <div class="row row-cols-2 g-3">
+                    <div class="col">
+                        <button type="submit" name="answer" value="y" class="btn btn-primary w-100 rounded-2">Ja</button>
+                    </div>
+                    <div class="col">
+                        <button type="submit" name="answer" value="n" class="btn btn-off w-100 rounded-2">Nein</button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </section>
+{% endif %}
+
+

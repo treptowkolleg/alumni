@@ -33,19 +33,49 @@
         </table>
     </div>
 
-    <div class="mb-5">
-        <div class="h5 border-bottom pb-2 mb-3">Change-Log</div>
-        <ul class="list-group">
-            <li class="list-group-item"><strong>15.03.2025</strong> Design-Anpassungen: subtile Rundung der Cards.</li>
-            <li class="list-group-item"><strong>16.03.2025</strong> Newsletter können jetzt konfiguriert und geplant werden.</li>
-            <li class="list-group-item"><strong>16.03.2025</strong> Alumni-Übersicht neu gestaltet.</li>
-            <li class="list-group-item"><strong>16.03.2025</strong> Navigationsmenü um Details erweitert.</li>
-            <li class="list-group-item"><strong>17.03.2025</strong> Sicherheitstest für Pinnwand abgeschlossen.</li>
-            <li class="list-group-item"><strong>19.03.2025</strong> Newsletter-Warteschlange wird täglich um 10 Uhr erstellt.</li>
-            <li class="list-group-item"><strong>19.03.2025</strong> Jede Stunde werden 100 Empfänger aus der Warteschlange abgearbeitet. Frühestens jedoch ab eingestellter Uhrzeit.</li>
-            <li class="list-group-item"><strong>10.04.2025</strong> Hochschulen, Interessen und Hobbies wurden "datenbankifiziert".</li>
-        </ul>
-    </div>
+    {% if is_granted('ROLE_ADMIN') %}
+
+        <div class="mb-5">
+            <div class="h5 border-bottom pb-2 mb-3">Umfrageergebnisse</div>
+            <table class="table table-striped table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">Umfrage</th>
+                    <th scope="col">Ja</th>
+                    <th scope="col">Nein</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for survey in surveys %}
+                    <tr>
+                        <td>{{ survey }}</td>
+                        <td>{{ survey.surveyAnswers|filter(a => a.answer == true)|length }}</td>
+                        <td>{{ survey.surveyAnswers|filter(a => a.answer == false)|length }}</td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="3" class="text-center">Keine aktiven Umfragen gefunden</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="mb-5">
+            <div class="h5 border-bottom pb-2 mb-3">Change-Log</div>
+            <ul class="list-group">
+                <li class="list-group-item"><strong>15.03.2025</strong> Design-Anpassungen: subtile Rundung der Cards.</li>
+                <li class="list-group-item"><strong>16.03.2025</strong> Newsletter können jetzt konfiguriert und geplant werden.</li>
+                <li class="list-group-item"><strong>16.03.2025</strong> Alumni-Übersicht neu gestaltet.</li>
+                <li class="list-group-item"><strong>16.03.2025</strong> Navigationsmenü um Details erweitert.</li>
+                <li class="list-group-item"><strong>17.03.2025</strong> Sicherheitstest für Pinnwand abgeschlossen.</li>
+                <li class="list-group-item"><strong>19.03.2025</strong> Newsletter-Warteschlange wird täglich um 10 Uhr erstellt.</li>
+                <li class="list-group-item"><strong>19.03.2025</strong> Jede Stunde werden 100 Empfänger aus der Warteschlange abgearbeitet. Frühestens jedoch ab eingestellter Uhrzeit.</li>
+                <li class="list-group-item"><strong>10.04.2025</strong> Hochschulen, Interessen und Hobbies wurden "datenbankifiziert".</li>
+            </ul>
+        </div>
+
+    {% endif %}
 
 
     {% if is_granted('ROLE_AUTHOR') %}

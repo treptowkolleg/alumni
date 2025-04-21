@@ -36,19 +36,7 @@
                                                 <div class="text-truncate">{{ hobby }}</div>
                                             </div>
                                             <div class="d-flex align-items-center">
-                                                <span class="ms-auto badge fw-normal text-dark-emphasis bg-secondary-subtle rounded-start-2 d-flex align-items-center">
-                                                    {{ hobby.userProfiles.count }}
-                                                    <i class="ti ti-users ms-1"></i>
-                                                </span>
-                                                <span class="badge fw-normal text-dark-emphasis bg-secondary-subtle d-flex align-items-center">
-                                                    {{ hobby.events.count }}
-                                                    <i class="ti ti-calendar-event ms-1"></i>
-                                                </span>
-                                                <span class="badge fw-normal text-dark-emphasis bg-secondary-subtle d-flex align-items-center">
-                                                    {{ hobby.personOffers|filter(item => item.active == true)|length }}
-                                                    <i class="ti ti-briefcase ms-1"></i>
-                                                </span>
-                                                <span class="badge fw-normal text-primary bg-primary-subtle rounded-end-2 d-flex align-items-center">
+                                                <span class="badge fw-normal text-primary bg-primary-subtle rounded-2 d-flex align-items-center">
                                                     {{ hobby.groupSubjects.count }}
                                                     <i class="ti ti-message-2 ms-1"></i>
                                                 </span>
@@ -84,19 +72,7 @@
                                                 <div class="text-truncate">{{ hobby }}</div>
                                             </div>
                                             <div class="d-flex align-items-center">
-                                                <span class="ms-auto badge fw-normal text-dark-emphasis bg-secondary-subtle rounded-start-2 d-flex align-items-center">
-                                                    {{ hobby.userProfiles.count }}
-                                                    <i class="ti ti-users ms-1"></i>
-                                                </span>
-                                                <span class="badge fw-normal text-dark-emphasis bg-secondary-subtle d-flex align-items-center">
-                                                    {{ hobby.events.count }}
-                                                    <i class="ti ti-calendar-event ms-1"></i>
-                                                </span>
-                                                <span class="badge fw-normal text-dark-emphasis bg-secondary-subtle d-flex align-items-center">
-                                                    {{ hobby.personOffers|filter(item => item.active == true)|length }}
-                                                    <i class="ti ti-briefcase ms-1"></i>
-                                                </span>
-                                                <span class="badge fw-normal text-primary bg-primary-subtle rounded-end-2 d-flex align-items-center">
+                                                <span class="badge fw-normal text-primary bg-primary-subtle rounded-2 d-flex align-items-center">
                                                     {{ hobby.groupSubjects.count }}
                                                     <i class="ti ti-message-2 ms-1"></i>
                                                 </span>

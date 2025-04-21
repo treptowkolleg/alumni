@@ -3,6 +3,12 @@
 {% block header %}{{ include('component/_header.html.twig') }}{% endblock %}
 
 {% block page %}
+    {% if app.user %}
+        {{ render(controller('App\\Controller\\ApiController::getSurveys',{
+            'ref_route': app.request.attributes.get('_route'),
+            'ref_params': app.request.attributes.get('_route_params')
+        })) }}
+    {% endif %}
     {% block page_header %}{% endblock %}
     {% block body %}{% endblock %}
 

@@ -160,6 +160,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
     #[ORM\OneToMany(targetEntity: SubjectPost::class, mappedBy: 'owner')]
     private Collection $subjectPosts;
 
+    /**
+     * @var Collection<int, SurveyAnswer>
+     */
+    #[ORM\OneToMany(targetEntity: SurveyAnswer::class, mappedBy: 'user')]
+    private Collection $surveyAnswers;
+
     public function __construct()
     {
         $this->blogPosts = new ArrayCollection();
@@ -173,6 +179,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
         $this->newsletterTemplates = new ArrayCollection();
         $this->groupSubjects = new ArrayCollection();
         $this->subjectPosts = new ArrayCollection();
+        $this->surveyAnswers = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -843,6 +850,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
             // set the owning side to null (unless already changed)
             if ($subjectPost->getOwner() === $this) {
                 $subjectPost->setOwner(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, SurveyAnswer>
+     */
+    public function getSurveyAnswers(): Collection
+    {
+        return $this->surveyAnswers;
+    }
+
+    public function addSurveyAnswer(SurveyAnswer $surveyAnswer): static
+    {
+        if (!$this->surveyAnswers->contains($surveyAnswer)) {
+            $this->surveyAnswers->add($surveyAnswer);
+            $surveyAnswer->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSurveyAnswer(SurveyAnswer $surveyAnswer): static
+    {
+        if ($this->surveyAnswers->removeElement($surveyAnswer)) {
+            // set the owning side to null (unless already changed)
+            if ($surveyAnswer->getUser() === $this) {
+                $surveyAnswer->setUser(null);
             }
         }
 
