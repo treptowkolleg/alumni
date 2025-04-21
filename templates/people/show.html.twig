@@ -84,7 +84,7 @@
                         <img src="{{ vich_uploader_asset(person.user)|imagine_filter('avatar')  }}" class="card-img-top  d-none d-lg-block w-100" alt="...">
                         <img src="{{ vich_uploader_asset(person.user)|imagine_filter('avatar_sm')  }}" class="card-img-top  d-lg-none d-block  w-100" alt="...">
                     {% else %}
-                        <img src="https://api.dicebear.com/9.x/lorelei/svg?seed={{ person }}" class="card-img-top bg-white d-none d-lg-block w-100" alt="...">
+                        <img src="https://api.dicebear.com/9.x/pixel-art/svg?seed={{ person }}" class="card-img-top bg-white d-none d-lg-block w-100" alt="...">
                     {% endif %}
                     <div class="list-group list-group-flush bg-white">
                         {% if person.user.userType == 'Student' %}
