@@ -1,18 +1,21 @@
 <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3 g-3 align-content-stretch py-3">
     {% for person in people %}
         {% if loop.index <= 9 %}
-            {% if (app.user and  person.networkState == 'registered') or person.networkState == 'public' or (filter in ['school','freunde'] and person.networkState == 'private') %}
                 <div class="col mb-0">
                     <div class="card border-0 rounded rounded-2 shadow-sm text-bg-white align-self-stretch">
                         <div class="row g-0">
                             <div class="col-3 col-lg-4">
-                                <a href="{{ url('people_show',{'slug':person.user.slug }) }}">
-                                    {% if person.user.image.name %}
-                                        <img src="{{ vich_uploader_asset(person.user)|imagine_filter('avatar')  }}" class="rounded-top img-fluid w-100" alt="..." style="border-top-right-radius:0!important">
-                                    {% else %}
-                                        <img src="https://api.dicebear.com/9.x/pixel-art/svg?seed={{ person }}" class="img-fluid w-100" alt="..." style="border-top-right-radius:0!important">
-                                    {% endif %}
-                                </a>
+                                {% if (app.user and  person.networkState == 'registered') or person.networkState == 'public'  or (filter in ['school','freunde'] and person.networkState == 'private') %}
+                                    <a href="{{ url('people_show',{'slug':person.user.slug }) }}">
+                                        {% if person.user.image.name %}
+                                            <img src="{{ vich_uploader_asset(person.user)|imagine_filter('avatar')  }}" class="rounded-top img-fluid w-100" alt="..." style="border-top-right-radius:0!important">
+                                        {% else %}
+                                            <img src="https://api.dicebear.com/9.x/pixel-art/svg?seed={{ person }}" class="img-fluid w-100" alt="..." style="border-top-right-radius:0!important">
+                                        {% endif %}
+                                    </a>
+                                {% else %}
+                                    <img src="https://api.dicebear.com/9.x/pixel-art/svg?seed={{ person }}" class="img-fluid w-100" alt="..." style="border-top-right-radius:0!important">
+                                {% endif %}
                             </div>
                             <div class="col-9 col-lg-8">
                                 <div class="card-body pt-2 position-relative d-flex flex-column h-100">
@@ -21,9 +24,33 @@
                                         <div class="text-truncate small mb-0">{{ person.inYear }} - {{ person.outYear }}</div>
                                     {% endif %}
                                     <div class="d-flex align-items-start justify-content-between">
-                                        <a href="{{ url('people_show',{'slug':person.user.slug }) }}" class="mb-0 fw-bolder text-decoration-none stretched-link text-truncate">{{ person }}</a>
+                                        {% if (app.user and  person.networkState == 'registered') or person.networkState == 'public'  or (filter in ['school','freunde'] and person.networkState == 'private') %}
+                                            <a href="{{ url('people_show',{'slug':person.user.slug }) }}" class="mb-0 fw-bolder text-decoration-none stretched-link text-truncate">{{ person }}</a>
+                                        {% else %}
+                                            {% set blocks = ['▒', '░'] %}
+                                            <div class="mb-0 text-dark text-truncate">
+                                                <span class="pixelate">
+                                                    <span class="blurred-name bg-light">
+                                                        {% for i in 0..person|length - 1 %}{{ random(blocks) }}{% endfor %}
+                                                    </span>
+                                                </span>
+                                            </div>
+                                        {% endif %}
                                     </div>
-                                    <div  class="d-none d-lg-block text-off small mt-auto">{{ person.examType|trans }}</div>
+                                    <div  class="d-none d-lg-block text-off small mt-auto">
+                                        {% if (app.user and  person.networkState == 'registered') or person.networkState == 'public'  or (filter in ['school','freunde'] and person.networkState == 'private') %}
+                                        {{ person.examType|trans }}
+                                        {% else %}
+                                            {% set blocks = ['▒', '░'] %}
+                                            <div class="mb-0 text-dark text-truncate">
+                                                <span class="pixelate" style="height:1rem!important;">
+                                                    <span class="blurred-name bg-light">
+                                                        {% for i in 0..person.examType|trans|length - 1 %}{{ random(blocks) }}{% endfor %}
+                                                    </span>
+                                                </span>
+                                            </div>
+                                        {% endif %}
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -31,6 +58,7 @@
                             <div class="card-body rounded-bottom d-flex bg-light-subtle align-items-center">
                                 {% if app.user.userProfiles.count > 0 %}
                                     {% if person.user != app.user %}
+                                        {% if person.networkState == 'registered' or person.networkState == 'public'  or (filter in ['school','freunde'] and person.networkState == 'private') %}
                                         <div>
                                             <span class="d-none small me-1 like-number-{{ person.id }}">{{ person.friends.count }}</span>
                                             <div class="text-off spinner-border spinner-border-sm d-none like-loader-{{ person.id }}" role="status" style="margin-right: 2px"></div>
@@ -60,6 +88,12 @@
                                                 </a>
                                             {% endif %}
                                         </div>
+                                        {% else %}
+                                            <div>
+                                                <i class="link-primary ti ti-eye-off me-2"></i>
+                                                <small class="text-muted">nicht öffentliches Profil</small>
+                                            </div>
+                                        {% endif %}
                                     {% else %}
                                         <div>
                                             <i class="link-primary ti ti-user me-2"></i>
@@ -76,7 +110,6 @@
                         {% endif %}
                     </div>
                 </div>
-            {% endif %}
         {% endif %}
     {% endfor %}
 </div>
