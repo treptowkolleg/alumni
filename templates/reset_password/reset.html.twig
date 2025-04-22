@@ -1,12 +1,13 @@
-{% extends 'base.html.twig' %}
+{% extends '_empty.html.twig' %}
 
-{% block title %}Reset your password{% endblock %}
+{% set meta_title = 'Passwort zurücksetzen' %}
+
 
 {% block body %}
-    <h1>Reset your password</h1>
+    <h1>Passwort aktualisieren</h1>
 
     {{ form_start(resetForm) }}
         {{ form_row(resetForm.plainPassword) }}
-        <button class="btn btn-primary">Reset password</button>
+        <button class="btn btn-primary">Neues Passwort speichern</button>
     {{ form_end(resetForm) }}
 {% endblock %}
