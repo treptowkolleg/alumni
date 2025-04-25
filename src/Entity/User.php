@@ -166,6 +166,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
     #[ORM\OneToMany(targetEntity: SurveyAnswer::class, mappedBy: 'user')]
     private Collection $surveyAnswers;
 
+    /**
+     * @var Collection<int, DirectMessage>
+     */
+    #[ORM\OneToMany(targetEntity: DirectMessage::class, mappedBy: 'sender')]
+    private Collection $sendDirectMessages;
+
     public function __construct()
     {
         $this->blogPosts = new ArrayCollection();
@@ -180,6 +186,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
         $this->groupSubjects = new ArrayCollection();
         $this->subjectPosts = new ArrayCollection();
         $this->surveyAnswers = new ArrayCollection();
+        $this->sendDirectMessages = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -880,6 +887,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
             // set the owning side to null (unless already changed)
             if ($surveyAnswer->getUser() === $this) {
                 $surveyAnswer->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, DirectMessage>
+     */
+    public function getSendDirectMessages(): Collection
+    {
+        return $this->sendDirectMessages;
+    }
+
+    public function addSendDirectMessage(DirectMessage $sendDirectMessage): static
+    {
+        if (!$this->sendDirectMessages->contains($sendDirectMessage)) {
+            $this->sendDirectMessages->add($sendDirectMessage);
+            $sendDirectMessage->setSender($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSendDirectMessage(DirectMessage $sendDirectMessage): static
+    {
+        if ($this->sendDirectMessages->removeElement($sendDirectMessage)) {
+            // set the owning side to null (unless already changed)
+            if ($sendDirectMessage->getSender() === $this) {
+                $sendDirectMessage->setSender(null);
             }
         }
 

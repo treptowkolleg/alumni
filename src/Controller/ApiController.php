@@ -7,6 +7,7 @@ use App\Entity\SurveyAnswer;
 use App\Entity\User;
 use App\Entity\UserProfile;
 use App\Repository\ChatRepository;
+use App\Repository\DirectMessageRepository;
 use App\Repository\EventRepository;
 use App\Repository\SchoolRepository;
 use App\Repository\SurveyRepository;
@@ -209,14 +210,15 @@ class ApiController extends AbstractController
     }
 
     #[Route('/unread-messages', name: 'check_messages', methods: ['POST','GET'])]
-    public function getUnreadMessages(Request $request, ChatRepository $chatRepository, UserRepository $userRepository): JsonResponse
+    public function getUnreadMessages(Request $request, DirectMessageRepository $chatRepository, UserRepository $userRepository): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
-        $userId = $data['userId'] ?? 19;
+        $userId = $data['userId'] ?? 2;
 
         $user = $userRepository->find($userId);
 
         $initialCount = $chatRepository->countUnreadMessages($user);
+
 
         if($initialCount > 0) {
             return new JsonResponse($initialCount);

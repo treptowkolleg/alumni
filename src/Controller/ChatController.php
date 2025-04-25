@@ -7,6 +7,7 @@ use App\Entity\ChatMessage;
 use App\Entity\User;
 use App\Form\ChatMessageType;
 use App\Repository\ChatRepository;
+use App\Repository\DirectMessageRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,41 +18,18 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/profile/chat', name: 'chat_')]
 class ChatController extends AbstractController
 {
-    #[Route('', name: 'index')]
-    public function index(ChatRepository $chatRepository): Response
+
+    #[Route('', name: 'start')]
+    public function chat(UserRepository $userRepository, DirectMessageRepository $messageRepository, EntityManagerInterface $entityManager): Response
     {
 
-        $chats = $chatRepository->findAllChats($this->getUser());
-        return $this->render('chat/index.html.twig', [
-            'chats' => $chats,
-        ]);
-    }
 
-    #[Route('/{slug}', name: 'start')]
-    public function chat(User $user, UserRepository $userRepository, ChatRepository $chatRepository, EntityManagerInterface $entityManager): Response
-    {
-
-        $self = $userRepository->find($this->getUser());
-
-        $owner = $user->getId() < $self->getId() ? $user : $self;
-        $participant = $user->getId() < $self->getId() ? $self : $user;
-
-        $chat = $chatRepository->findOneBy(['owner' => $owner, 'participant' => $participant]);
-
-        if(!$chat) {
-            $chat = new Chat();
-            $chat->setOwner($owner);
-            $chat->setParticipant($participant);
-            $entityManager->persist($chat);
-            $entityManager->flush();
-        }
-
-        $chats = $chatRepository->findAllChats($self);
+        $sendMessages = $messageRepository->findBy(['sender' => $this->getUser()]);
+        $receivedMessages = $messageRepository->findBy(['recipient' => $this->getUser()]);
 
         return $this->render('chat/start.html.twig', [
-            'partner' => $user,
-            'chats' => $chats,
-            'chat' => $chat,
+            'sendMessages' => $sendMessages,
+            'receivedMessages' => $receivedMessages,
         ]);
     }
 

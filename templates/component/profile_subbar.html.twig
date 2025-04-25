@@ -5,9 +5,9 @@
                 <i class="ri-layout-2-line text-primary"></i>
                 <span class="ms-1 d-none d-lg-inline">Übersicht</span>
             </a>
-            <a href="{{ path('chat_index') }}" class="nav-item nav-link {{ selected|default() == 'chat' ? 'active' : '' }} text-nowrap">
-                <i class="ri-contacts-book-2-line text-primary"></i>
-                <span class="ms-1 d-none d-lg-inline">Kontakte</span>
+            <a href="{{ path('chat_start') }}" class="nav-item nav-link {{ selected|default() == 'chat' ? 'active' : '' }} text-nowrap">
+                <i class="ti ti-message-2 text-primary"></i>
+                <span class="ms-1 d-none d-lg-inline">Nachrichten</span>
             </a>
             <a href="{{ url('profile_school') }}" class="nav-item nav-link {{ selected|default() == 'school' ? 'active' : '' }} text-nowrap">
                 <i class="ri-school-line text-primary"></i>

@@ -4,7 +4,7 @@
 {% set meta_subtitle = 'Postfach' %}
 {% set sidebar = 'profile-chat' %}
 
-{% set seo_title = 'Nachrichten mit ' ~ partner.userProfiles.first %}
+{% set seo_title = 'Postfachübersicht' %}
 
 {% block page_header %}
     <section class="py-3">
@@ -16,7 +16,7 @@
                 <div class="col-lg-12">
                     <div class="">
                         <div class="d-flex flex-column flex-lg-row">
-                            <a href="{{ url('chat_new',{'id':chat.id}) }}" class="{{ partner.isContactable ?: 'disabled' }} btn btn-primary rounded-2 flex-grow-1 flex-lg-grow-0"><i class="ri-chat-4-line me-2"></i>Neue Nachricht</a>
+                            <a href="#" class="btn btn-primary rounded-2 flex-grow-1 flex-lg-grow-0"><i class="ri-chat-4-line me-2"></i>Neue Nachricht</a>
                             <div class="ms-lg-3 mt-3 mt-lg-0 flex-grow-1 flex-lg-grow-1">
                                 <label for="table-search" class="visually-hidden" hidden="hidden">Filtern</label>
                                 <input type="search" class="form-control h-100" id="table-search" placeholder="Nachrichten filtern" aria-controls="datatable" style="height: 38px!important;">
@@ -30,8 +30,7 @@
                 <div class="col-lg-12">
                     <div class="card bg-light-subtle rounded-2 border-0 shadow-sm">
                         <div class="card-body  border-bottom border-primary">
-                            <h3 class="h5 mb-0 text-center text-lg-start">Nachrichten</h3>
-                            <div class="text-center fw-bolder text-lg-start text-primary text-truncate"><a href="{{ url('people_show',{'slug':partner.slug}) }}" class=" text-decoration-none"><i class="bx bx-user me-1"></i>{{ partner.userprofiles.first }}</a></div>
+                            <h3 class="h6 mb-0 text-center text-lg-start">Nachrichten</h3>
                         </div>
                         <div id="emails" class="table-responsive">
                             <table class="table table-hover nowrap" style="width: 100%" id="datatable">
@@ -40,47 +39,28 @@
                                     <th>Von</th>
                                     <th>Betreff</th>
                                     <th class="text-end">Datum</th>
+                                    <th class="text-end"></th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {% for message in chat.messages|sort((b, a) => a.created <=> b.created) %}
-                                        <tr class="{% if message.sender != app.user %}{{ message.isRead ? '' : 'fw-bold' }}{% endif %}" style="cursor: pointer;" data-url="{{ url('chat_read',{'id':message.id}) }}">
-                                            <td>
-                                                {% if message.sender != app.user %}
-                                                    <div class="d-block d-flex justify-content-start align-items-center text-primary"><i class="ti ti-user  me-1"></i>{{ message.sender.userProfiles.first }}</div>
-
-                                                {% else %}
-                                                    <div class="d-block d-flex justify-content-start align-items-center text-muted"><i class="ti ti-send me-1"></i> von dir gesendet</div>
-                                                {% endif %}
-                                            </td>
-                                            <td>
-                                                {% if message.sender != app.user %}
-                                                    <div class="text-primary">{{ message.subject }}</div>
-                                                {% else %}
-                                                    {{ message.subject }}
-                                                {% endif %}
-                                            </td>
-                                            {% if message.sender != app.user %}
-                                                <td class="text-end text-primary">
-                                                    {{ message.created|date('d.m.Y H:i') }}
-                                                </td>
-                                            {% else %}
-                                                <td class="text-end">
-                                                    {{ message.created|date('d.m.Y H:i') }}
-                                                </td>
-                                            {% endif %}
-                                        </tr>
+                                {% for message in receivedMessages|sort((b, a) => a.created <=> b.created) %}
+                                    <tr class="{{ message.isRead ? '' : 'fw-bold' }}">
+                                        <td>
+                                            <a href="#1" class="text-decoration-none d-flex justify-content-start align-items-center"><i class="ti ti-user text-primary me-1"></i>{{ message.sender.userProfiles.first }}</a>
+                                        </td>
+                                        <td>
+                                            <a href="#2" class="d-block text-decoration-none">{{ message.title }}</a>
+                                        </td>
+                                        <td class="text-end">
+                                            {{ message.created|date('d.m.Y H:i') }}
+                                        </td>
+                                        <td>
+                                            <a href="#" class="d-block text-decoration-none"><i class="ti ti-trash"></i></a>
+                                        </td>
+                                    </tr>
                                 {% endfor %}
                                 </tbody>
                             </table>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-12">
-                    <div class="card rounded-2 border-0 shadow-sm bg-white border-bottom border-danger">
-                        <div class="card-body   d-flex justify-content-center p-0">
-                            <button type="submit" onclick="confirm('Möchtest du wirklich eure gesamte Konversation löschen?')" class="btn btn-link"><i class="bx bx-trash text-danger me-1"></i>Konversation löschen</button>
                         </div>
                     </div>
                 </div>
