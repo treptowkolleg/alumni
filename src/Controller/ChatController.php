@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Chat;
 use App\Entity\ChatMessage;
+use App\Entity\DirectMessage;
 use App\Entity\User;
 use App\Form\ChatMessageType;
 use App\Repository\ChatRepository;
@@ -33,16 +34,15 @@ class ChatController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/write/{subject}', name: 'new')]
+    #[Route('/write/{subject}', name: 'new')]
     public function new(Request $request, Chat $chat, EntityManagerInterface $entityManager, ?string $subject = null): Response
     {
-        $message = new ChatMessage();
-        $message->setRead(false);
-        $message->setChat($chat);
+        $message = new DirectMessage();
+        $message->setIsRead(false);
         $message->setSender($this->getUser());
 
         if($subject !== null) {
-            $message->setSubject("RE: $subject");
+            $message->setTitle("RE: $subject");
         }
 
         $partner = $chat->getOwner()->getUserIdentifier() === $this->getUser()->getUserIdentifier() ? $chat->getParticipant() : $chat->getOwner();
@@ -63,12 +63,12 @@ class ChatController extends AbstractController
     }
 
     #[Route('/{id}/read', name: 'read')]
-    public function read(ChatMessage $message, EntityManagerInterface $entityManager): Response
+    public function read(DirectMessage $message, EntityManagerInterface $entityManager): Response
     {
-        $partner = $message->getChat()->getOwner()->getUserIdentifier() === $this->getUser()->getUserIdentifier() ? $message->getChat()->getParticipant() : $message->getChat()->getOwner();
+        $partner = $message->getSender();
 
         if(!$message->isRead() and $message->getSender() !== $this->getUser()) {
-            $message->setRead(true);
+            $message->setIsRead(true);
             $entityManager->persist($message);
             $entityManager->flush();
         }

@@ -14,6 +14,12 @@
             <div class="row g-3">
 
                 <div class="col-lg-12">
+                    <div class="alert alert-warning rounded-2 shadow-sm" role="alert">
+                        <span>Das Nachrichtensystem wird derzeit überarbeitet und ist aktuell nicht verfügbar.</span>
+                    </div>
+                </div>
+
+                <div class="col-lg-12">
                     <div class="">
                         <div class="d-flex flex-column flex-lg-row">
                             <a href="#" class="btn btn-primary rounded-2 flex-grow-1 flex-lg-grow-0"><i class="ri-chat-4-line me-2"></i>Neue Nachricht</a>
@@ -29,51 +35,92 @@
 
                 <div class="col-lg-12">
                     <div class="card bg-light-subtle rounded-2 border-0 shadow-sm">
-                        <div class="card-body  border-bottom border-primary">
-                            <h3 class="h6 mb-0 text-center text-lg-start">Nachrichten</h3>
+                        <div class="card-header bg-light-subtle rounded-top-2">
+                            <ul class="nav nav-tabs card-header-tabs" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active rounded-top-2" data-bs-toggle="tab" href="#a">
+                                        <i class="ti ti-inbox text-primary"></i>
+                                        <span class="ms-1">Eingang</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link rounded-top-2" data-bs-toggle="tab" href="#b">
+                                        <i class="ti ti-outbound text-primary"></i>
+                                        <span class="ms-1">Ausgang</span>
+                                    </a>
+                                </li>
+                            </ul>
                         </div>
-                        <div id="emails" class="table-responsive">
-                            <table class="table table-hover nowrap" style="width: 100%" id="datatable">
-                                <thead>
-                                <tr>
-                                    <th>Von</th>
-                                    <th>Betreff</th>
-                                    <th class="text-end">Datum</th>
-                                    <th class="text-end"></th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {% for message in receivedMessages|sort((b, a) => a.created <=> b.created) %}
-                                    <tr class="{{ message.isRead ? '' : 'fw-bold' }}">
-                                        <td>
-                                            <a href="#1" class="text-decoration-none d-flex justify-content-start align-items-center"><i class="ti ti-user text-primary me-1"></i>{{ message.sender.userProfiles.first }}</a>
-                                        </td>
-                                        <td>
-                                            <a href="#2" class="d-block text-decoration-none">{{ message.title }}</a>
-                                        </td>
-                                        <td class="text-end">
-                                            {{ message.created|date('d.m.Y H:i') }}
-                                        </td>
-                                        <td>
-                                            <a href="#" class="d-block text-decoration-none"><i class="ti ti-trash"></i></a>
-                                        </td>
-                                    </tr>
-                                {% endfor %}
-                                </tbody>
-                            </table>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="a">
+                                <div id="inbound" class="table-responsive">
+                                    <table class="table table-hover nowrap" style="width: 100%" id="datatable">
+                                        <thead>
+                                        <tr>
+                                            <th>Von</th>
+                                            <th>Betreff</th>
+                                            <th class="text-end">Datum</th>
+                                            <th class="text-end"></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for message in receivedMessages|sort((b, a) => a.created <=> b.created) %}
+                                            <tr class="{{ message.isRead ? '' : 'fw-bold' }}">
+                                                <td>
+                                                    <a href="#1" class="text-decoration-none d-flex justify-content-start align-items-center"><i class="ti ti-user text-primary me-1"></i>{{ message.sender.userProfiles.first }}</a>
+                                                </td>
+                                                <td>
+                                                    <a href="{{ url('chat_read',{'id':message.id}) }}" class="d-block text-decoration-none">{{ message.title }}</a>
+                                                </td>
+                                                <td class="text-end">
+                                                    {{ message.created|date('d.m.Y H:i') }}
+                                                </td>
+                                                <td>
+                                                    <a href="#" class="d-block text-decoration-none"><i class="ti ti-trash"></i></a>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="tab-pane active" id="b">
+                                <div id="outbound" class="table-responsive">
+                                    <table class="table table-hover nowrap" style="width: 100%" id="datatable-2">
+                                        <thead>
+                                        <tr>
+                                            <th>An</th>
+                                            <th>Betreff</th>
+                                            <th class="text-end">Datum</th>
+                                            <th class="text-end"></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for message in sendMessages|sort((b, a) => a.created <=> b.created) %}
+                                            <tr>
+                                                <td>
+                                                    <a href="#1" class="text-decoration-none d-flex justify-content-start align-items-center"><i class="ti ti-user text-primary me-1"></i>{{ message.recipient.userProfiles.first }}</a>
+                                                </td>
+                                                <td>
+                                                    <a href="{{ url('chat_read',{'id':message.id}) }}" class="d-block text-decoration-none">{{ message.title }}</a>
+                                                </td>
+                                                <td class="text-end">
+                                                    {{ message.created|date('d.m.Y H:i') }}
+                                                </td>
+                                                <td>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-
             </div>
-
         </div>
     </section>
-
-
-
-
-
 {% endblock %}
 
 {% block body %}

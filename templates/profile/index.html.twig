@@ -45,44 +45,8 @@
                     </div>
                 </div>
 
-                <div class="col-lg-4 order-3 order-lg-0">
-                    <div class="card bg-light-subtle border-0 shadow-sm rounded rounded-2 h-100">
-                        <div class="card-body  border-bottom border-primary">
-                            <h3 class="h6 mb-0 text-center text-lg-start">Kontakte</h3>
-                        </div>
-                        <div class="list-group list-group-flush bg-white border-bottom-0">
-                            {% for chat in chats|sort %}
-                                {% set message_unread = 0 %}
-                                {% for message in chat.messages %}
-                                    {% if message.sender != app.user and not message.isRead %}
-                                        {% set message_unread = message_unread + 1 %}
-                                    {% endif %}
-                                {% endfor %}
-                                {% if chat.owner == app.user %}
-                                    {% if chat.participant.isContactable %}
-                                        {{ include('component/_chat_list.html.twig',{'chat':chat, 'user':chat.participant, 'message':message_unread}) }}
-                                    {% endif %}
-                                {% else %}
-                                    {% if chat.owner.isContactable %}
-                                        {{ include('component/_chat_list.html.twig',{'chat':chat, 'user':chat.owner, 'message':message_unread}) }}
-                                    {% endif %}
-                                {% endif %}
-                            {% else %}
-                                <div class="list-group-item">Noch keine Konversationen vorhanden.</div>
-                            {% endfor %}
-                        </div>
-                        <div class="h-100 bg-white"></div>
-                        <div class="list-group list-group-flush border-top border-bottom">
-                            <a href="{{ url('people_index') }}" class="list-group-item list-group-item-action link-primary d-flex align-items-center justify-content-between">
-                                <div>weitere Personen finden</div>
-                                <i class="ti ti-chevron-right"></i>
-                            </a>
-                        </div>
-                        <div class="card-body"></div>
-                    </div>
-                </div>
 
-                <div class="col-12 col-lg-8 order-0 order-lg-3">
+                <div class="col-12 order-0 order-lg-3">
                     <div class="card bg-light-subtle border-0 shadow-sm rounded rounded-2 h-100">
                         <div class="card-header bg-light-subtle rounded-top-2">
                             <ul class="nav nav-tabs card-header-tabs" role="tablist">

@@ -25,6 +25,7 @@ let tableOptions = {
     "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
 }
 let tableElement = document.getElementById('datatable');
+let tableElement2 = document.getElementById('datatable-2');
 
 if(tableElement) {
     let table = new DataTable(tableElement, {
@@ -38,7 +39,12 @@ if(tableElement) {
         "language": tableOptions,
         columnDefs: [
             { width: '70%', targets: 1 },
-            { type: 'date', targets: 2 }
+            { type: 'date', targets: 2 },
+            {
+                targets: 3,  // 4. Spalte (Index beginnt bei 0)
+                orderable: false,
+                searchable: false
+            }
         ]
     });
 
@@ -50,18 +56,41 @@ if(tableElement) {
         });
     });
 
-    document.querySelector("tbody").addEventListener("click", function (event) {
-        const row = event.target.closest("tr");
-        if (row && row.dataset.url) {
-            window.location.href = row.dataset.url;
-        }
+}
+
+if(tableElement2) {
+    let table2 = new DataTable(tableElement2, {
+        fixedHeader: true,
+        responsive: true,
+        searching: true,
+        dom: '<"top"l><"datatable-wrapper"t><"bottom"p><"clear">',
+        pageLength: 25,
+        lengthChange: false,
+        order: [[2, 'DESC']],
+        "language": tableOptions,
+        columnDefs: [
+            { width: '70%', targets: 1 },
+            { type: 'date', targets: 2 },
+            {
+                targets: 3,  // 4. Spalte (Index beginnt bei 0)
+                orderable: false,
+                searchable: false
+            }
+        ]
     });
 
+    table2.on('init', function () {
+        let search = document.getElementById("table-search");
 
-    $('tbody').on('click', 'tr', function() {
-        if($(this).data('url') !== undefined && $(this).data('url') !== "")
-            window.location.href = $(this).data('url')
+        search.addEventListener("keyup", function () {
+            table2.search(search.value).draw();
+        });
     });
+
+    const tabB = document.querySelector("#b");
+    tabB.classList.remove('show', 'active');
+    tabB.style.display = "";
+
 }
 
 
