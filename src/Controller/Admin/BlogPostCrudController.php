@@ -102,7 +102,8 @@ class BlogPostCrudController extends AbstractCrudController
             BooleanField::new('isLeadPost')->onlyOnForms(),
 
 
-            FormField::addTab('Beitragsbild')->onlyOnForms(),
+            FormField::addTab('Beitragsbild')->onlyOnForms()->onlyWhenCreating()->setRequired(true),
+            FormField::addTab('Beitragsbild')->onlyOnForms()->onlyWhenUpdating()->setRequired(false),
             FormField::addColumn('col-xl-9'),
             ImageField::new('blogPostImage')->onlyOnForms()
                 ->setBasePath('images/blogpost')
