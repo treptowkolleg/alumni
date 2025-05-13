@@ -21,42 +21,45 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td>Systemzeit</td>
-                <td>{{ "now"|date }}</td>
-            </tr>
-            <tr>
-                <td>Server-Systemzeit</td>
-                <td>{{ server_time|date }}</td>
-            </tr>
-            <tr>
-                <td>PHP-Version</td>
-                <td>{{ php_version }}</td>
-            </tr>
-            <tr>
-                <td>Memory Limit</td>
-                <td>{{ memory_limit }}</td>
-            </tr>
-            <tr>
-                <td>Max Execution Time</td>
-                <td>{{ max_execution_time }} Sekunden</td>
-            </tr>
-            <tr>
-                <td>Symfony-Version</td>
-                <td>{{ symfony_version }}</td>
-            </tr>
-            <tr>
-                <td>Betriebssystem</td>
-                <td>{{ os }}</td>
-            </tr>
-            <tr>
-                <td>Systemlast (1 Min)</td>
-                <td>{{ load }}</td>
-            </tr>
-            <tr>
-                <td>Freier Speicherplatz</td>
-                <td>{{ disk_free }} MB</td>
-            </tr>
+                <tr>
+                    <td>Systemzeit</td>
+                    <td>{{ "now"|date }}</td>
+                </tr>
+                {% for key, value in serverStats %}
+                    <tr>
+                        <th class="text-nowrap">
+                            {{ key|replace({
+                                'server_time': 'Serverzeit',
+                                'php_version': 'PHP-Version',
+                                'symfony_version': 'Symfony-Version',
+                                'memory_limit': 'Memory-Limit',
+                                'upload_max_filesize': 'Upload-Limit',
+                                'post_max_size': 'POST-Limit',
+                                'max_execution_time': 'Max. Ausführungszeit',
+                                'os': 'Betriebssystem',
+                                'hostname': 'Hostname',
+                                'server_software': 'Server-Software',
+                                'server_ip': 'Server-IP',
+                                'timezone': 'Zeitzone',
+                                'sapi': 'PHP-SAPI',
+                                'load_1': 'Systemlast (1 Min)',
+                                'load_5': 'Systemlast (5 Min)',
+                                'load_15': 'Systemlast (15 Min)',
+                                'disk_free_mb': 'Freier Speicher (MB)',
+                                'disk_total_mb': 'Gesamtspeicher (MB)',
+                                'memory_usage_mb': 'RAM-Auslastung (MB)',
+                                'memory_peak_mb': 'RAM-Peak (MB)'
+                            }) }}
+                        </th>
+                        <td>
+                            {% if value is iterable %}
+                                {{ value|join(', ') }}
+                            {% else %}
+                                {{ value }}
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
             </tbody>
         </table>
     </div>

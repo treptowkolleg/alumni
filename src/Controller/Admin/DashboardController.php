@@ -89,14 +89,25 @@ class DashboardController extends AbstractDashboardController
         $surveys = $this->surveyRepository->findBy(['active' => true]);
 
         $serverStats = [
-            'server_time' => new \DateTime(),
             'php_version' => phpversion(),
-            'memory_limit' => ini_get('memory_limit'),
-            'max_execution_time' => ini_get('max_execution_time'),
             'symfony_version' => \Symfony\Component\HttpKernel\Kernel::VERSION,
+            'memory_limit' => ini_get('memory_limit'),
+            'upload_max_filesize' => ini_get('upload_max_filesize'),
+            'post_max_size' => ini_get('post_max_size'),
+            'max_execution_time' => ini_get('max_execution_time'),
             'os' => php_uname(),
-            'load' => function_exists('sys_getloadavg') ? sys_getloadavg()[0] : 'N/A',
-            'disk_free' => round(disk_free_space('/') / 1024 / 1024, 2),
+            'hostname' => gethostname(),
+            'server_software' => $_SERVER['SERVER_SOFTWARE'] ?? 'CLI',
+            'server_ip' => $_SERVER['SERVER_ADDR'] ?? 'N/A',
+            'timezone' => date_default_timezone_get(),
+            'sapi' => php_sapi_name(),
+            'load_1' => function_exists('sys_getloadavg') ? sys_getloadavg()[0] : 'N/A',
+            'load_5' => function_exists('sys_getloadavg') ? sys_getloadavg()[1] : 'N/A',
+            'load_15' => function_exists('sys_getloadavg') ? sys_getloadavg()[2] : 'N/A',
+            'disk_free_mb' => round(disk_free_space('/') / 1024 / 1024, 2),
+            'disk_total_mb' => round(disk_total_space('/') / 1024 / 1024, 2),
+            'memory_usage_mb' => round(memory_get_usage(true) / 1024 / 1024, 2),
+            'memory_peak_mb' => round(memory_get_peak_usage(true) / 1024 / 1024, 2),
         ];
 
         return $this->render('admin/dashboard.html.twig', [
@@ -104,14 +115,7 @@ class DashboardController extends AbstractDashboardController
             'surveys' => $surveys,
             'posts' => $posts,
             'news_articles' => $newsPosts,
-            'server_time' => $serverStats['server_time'],
-            'php_version' => $serverStats['php_version'],
-            'memory_limit' => $serverStats['memory_limit'],
-            'max_execution_time' => $serverStats['max_execution_time'],
-            'symfony_version' => $serverStats['symfony_version'],
-            'os' => $serverStats['os'],
-            'load' => $serverStats['load'],
-            'disk_free' => $serverStats['disk_free'],
+            'serverStats' => $serverStats,
         ]);
 
         // Option 1. You can make your dashboard redirect to some common page of your backend
