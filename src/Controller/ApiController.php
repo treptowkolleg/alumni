@@ -124,8 +124,6 @@ class ApiController extends AbstractController
         $gruschel->setIsRead(true);
         $entityManager->persist($gruschel);
         $entityManager->flush();
-
-        $this->addFlash('success','Gruschler wahrgenommen.');
         return $this->redirectToRoute($data['route'], $data['params']);
     }
 

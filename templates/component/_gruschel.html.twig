@@ -6,8 +6,16 @@
                     route: ref_route,
                     params: ref_params
                 }|json_encode|e('html_attr') }}'>
-                <div class="text-center mb-3">Du wurdest von {{ survey.getSendBy.userProfiles.first }} gegruschelt.</div>
-                <button type="submit" name="answer" value="n" class="btn btn-sm btn-off w-100 mb-0 rounded-2">OK</button>
+                <div class="text-center mb-3">Du wurdest von <a class="link-primary text-decoration-none" href="{{ url('people_show',{'slug':survey.getSendBy.slug}) }}">{{ survey.getSendBy.userProfiles.first }}</a> gegruschelt.</div>
+                <div class="row row-cols-2 g-3">
+                    <div class="col">
+                        <a class="btn btn-sm btn-primary w-100 mb-0 rounded-2" href="{{ url('people_show',{'slug':survey.getSendBy.slug}) }}">Zum Profil</a>
+                    </div>
+                    <div class="col">
+                        <button type="submit" name="answer" value="n" class="btn btn-sm btn-off w-100 mb-0 rounded-2">OK</button>
+                    </div>
+                </div>
+
             </form>
 
         </div>
