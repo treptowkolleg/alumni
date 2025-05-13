@@ -88,13 +88,30 @@ class DashboardController extends AbstractDashboardController
         $newsPosts = $this->repository->findPublishedNews(user: $this->getUser());
         $surveys = $this->surveyRepository->findBy(['active' => true]);
 
+        $serverStats = [
+            'server_time' => new \DateTime(),
+            'php_version' => phpversion(),
+            'memory_limit' => ini_get('memory_limit'),
+            'max_execution_time' => ini_get('max_execution_time'),
+            'symfony_version' => \Symfony\Component\HttpKernel\Kernel::VERSION,
+            'os' => php_uname(),
+            'load' => function_exists('sys_getloadavg') ? sys_getloadavg()[0] : 'N/A',
+            'disk_free' => round(disk_free_space('/') / 1024 / 1024, 2),
+        ];
 
         return $this->render('admin/dashboard.html.twig', [
             'title' => 'test',
             'surveys' => $surveys,
             'posts' => $posts,
             'news_articles' => $newsPosts,
-            'server_time' => new \DateTimeImmutable("now")
+            'server_time' => $serverStats['server_time'],
+            'php_version' => $serverStats['php_version'],
+            'memory_limit' => $serverStats['memory_limit'],
+            'max_execution_time' => $serverStats['max_execution_time'],
+            'symfony_version' => $serverStats['symfony_version'],
+            'os' => $serverStats['os'],
+            'load' => $serverStats['load'],
+            'disk_free' => $serverStats['disk_free'],
         ]);
 
         // Option 1. You can make your dashboard redirect to some common page of your backend
