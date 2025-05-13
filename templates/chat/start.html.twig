@@ -41,12 +41,14 @@
                                     <a class="nav-link active rounded-top-2" data-bs-toggle="tab" href="#a">
                                         <i class="ti ti-inbox text-primary"></i>
                                         <span class="ms-1">Eingang</span>
+                                        <span class="ms-1 small badge fw-normal text-bg-light border border-dark-subtle rounded-2">{{ receivedMessages|length }}</span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link rounded-top-2" data-bs-toggle="tab" href="#b">
                                         <i class="ti ti-outbound text-primary"></i>
                                         <span class="ms-1">Ausgang</span>
+                                        <span class="ms-1 small badge fw-normal text-bg-light border border-dark-subtle rounded-2">{{ sendMessages|length }}</span>
                                     </a>
                                 </li>
                             </ul>
