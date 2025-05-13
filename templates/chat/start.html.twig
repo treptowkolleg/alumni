@@ -67,7 +67,7 @@
                                         {% for message in receivedMessages|sort((b, a) => a.created <=> b.created) %}
                                             <tr class="{{ message.isRead ? '' : 'fw-bold' }}">
                                                 <td>
-                                                    <a href="#1" class="text-decoration-none d-flex justify-content-start align-items-center"><i class="ti ti-user text-primary me-1"></i>{{ message.sender.userProfiles.first }}</a>
+                                                    <a href="{{ url('people_show',{'slug':message.sender.slug}) }}" class="text-decoration-none d-flex justify-content-start align-items-center"><i class="ti ti-user text-primary me-1"></i>{{ message.sender.userProfiles.first }}</a>
                                                 </td>
                                                 <td>
                                                     <a href="{{ url('chat_read',{'id':message.id}) }}" class="d-block text-decoration-none">{{ message.title }}</a>
@@ -99,7 +99,7 @@
                                         {% for message in sendMessages|sort((b, a) => a.created <=> b.created) %}
                                             <tr>
                                                 <td>
-                                                    <a href="#1" class="text-decoration-none d-flex justify-content-start align-items-center"><i class="ti ti-user text-primary me-1"></i>{{ message.recipient.userProfiles.first }}</a>
+                                                    <a href="{{ url('people_show',{'slug':message.recipient.slug}) }}" class="text-decoration-none d-flex justify-content-start align-items-center"><i class="ti ti-user text-primary me-1"></i>{{ message.recipient.userProfiles.first }}</a>
                                                 </td>
                                                 <td>
                                                     <a href="{{ url('chat_read',{'id':message.id}) }}" class="d-block text-decoration-none">{{ message.title }}</a>
