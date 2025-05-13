@@ -79,11 +79,13 @@
                         <form method="post">
                             <input type="hidden" name="token" value="{{ csrf_token('gruscheln') }}">
                             <button type="submit" class="btn btn-secondary w-100 rounded-2 mb-3">
+                                <i class="ti ti-circle-letter-g me-1"></i>
                                 <span>Gruscheln</span>
                             </button>
                         </form>
                     {% else %}
                         <button type="submit" disabled class="btn btn-light w-100 rounded-2 mb-3">
+                            <i class="ti ti-circle-letter-g me-1"></i>
                             <span>bereits gegruschelt</span>
                         </button>
                     {% endif %}
