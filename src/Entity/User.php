@@ -179,6 +179,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
     #[ORM\Column(nullable: true)]
     private ?bool $notifyNewMail = null;
 
+    /**
+     * @var Collection<int, Gruschel>
+     */
+    #[ORM\OneToMany(targetEntity: Gruschel::class, mappedBy: 'user')]
+    private Collection $gruschels;
+
+    /**
+     * @var Collection<int, Gruschel>
+     */
+    #[ORM\OneToMany(targetEntity: Gruschel::class, mappedBy: 'sendBy')]
+    private Collection $sendGruschels;
+
     public function __construct()
     {
         $this->blogPosts = new ArrayCollection();
@@ -194,6 +206,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
         $this->subjectPosts = new ArrayCollection();
         $this->surveyAnswers = new ArrayCollection();
         $this->sendDirectMessages = new ArrayCollection();
+        $this->gruschels = new ArrayCollection();
+        $this->sendGruschels = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -951,6 +965,66 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
     public function setNotifyNewMail(?bool $notifyNewMail): static
     {
         $this->notifyNewMail = $notifyNewMail;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Gruschel>
+     */
+    public function getGruschels(): Collection
+    {
+        return $this->gruschels;
+    }
+
+    public function addGruschel(Gruschel $gruschel): static
+    {
+        if (!$this->gruschels->contains($gruschel)) {
+            $this->gruschels->add($gruschel);
+            $gruschel->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGruschel(Gruschel $gruschel): static
+    {
+        if ($this->gruschels->removeElement($gruschel)) {
+            // set the owning side to null (unless already changed)
+            if ($gruschel->getUser() === $this) {
+                $gruschel->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Gruschel>
+     */
+    public function getSendGruschels(): Collection
+    {
+        return $this->sendGruschels;
+    }
+
+    public function addSendGruschel(Gruschel $sendGruschel): static
+    {
+        if (!$this->sendGruschels->contains($sendGruschel)) {
+            $this->sendGruschels->add($sendGruschel);
+            $sendGruschel->setSendBy($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSendGruschel(Gruschel $sendGruschel): static
+    {
+        if ($this->sendGruschels->removeElement($sendGruschel)) {
+            // set the owning side to null (unless already changed)
+            if ($sendGruschel->getSendBy() === $this) {
+                $sendGruschel->setSendBy(null);
+            }
+        }
 
         return $this;
     }

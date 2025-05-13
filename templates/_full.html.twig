@@ -8,6 +8,10 @@
             'ref_route': app.request.attributes.get('_route'),
             'ref_params': app.request.attributes.get('_route_params')
         })) }}
+        {{ render(controller('App\\Controller\\ApiController::getGruschels',{
+            'ref_route': app.request.attributes.get('_route'),
+            'ref_params': app.request.attributes.get('_route_params')
+        })) }}
     {% endif %}
     {% block page_header %}{% endblock %}
     {% block body %}{% endblock %}

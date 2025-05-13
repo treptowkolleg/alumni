@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\BlogPost;
 use App\Entity\Event;
+use App\Entity\Gruschel;
 use App\Entity\PinboardEntry;
 use App\Entity\School;
 use App\Entity\User;
@@ -141,7 +142,24 @@ class PersonController extends AbstractController
             if(($this->getUser() and $profile->getNetworkState() == 'registered') or ($profile->getNetworkState() == 'public') or ($profile->getUser()->getSchool()->getTitle() === $userRepository->find($this->getUser())->getSchool()->getTitle())){
 
                 $submittedToken = $request->getPayload()->get('token');
+                $gruschelButton = true;
+                foreach ($user->getGruschels() as $gruschelElement) {
+                    if ($gruschelElement->getSendBy() === $this->getUser() and !$gruschelElement->isRead()) {
+                        $gruschelButton = false;
+                        break;
+                    }
+                }
 
+                if ($request->isMethod('post') && $this->isCsrfTokenValid('gruscheln', $submittedToken)) {
+                    $gruschel = new Gruschel();
+                    $gruschel->setUser($user);
+                    $gruschel->setSendBy($this->getUser());
+                    $gruschel->setIsRead(false);
+                    $entityManager->persist($gruschel);
+                    $entityManager->flush();
+                    $this->addFlash("success","Du hast {$user->getUserProfiles()->first()} gegruschelt.");
+                    return $this->redirectToRoute('people_show', ['slug' => $user->getSlug()]);
+                }
 
                 if ($request->isMethod('post') && $this->isCsrfTokenValid('pinboard-comment', $submittedToken)) {
 
@@ -174,6 +192,7 @@ class PersonController extends AbstractController
                 }
 
                 return $this->render('people/show.html.twig', [
+                    'gruschelButton' => $gruschelButton,
                     'person' => $profile,
                     'pinboard_entries' => $pinBoardEntries,
                 ]);

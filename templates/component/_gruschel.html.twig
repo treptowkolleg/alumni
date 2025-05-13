@@ -1,0 +1,17 @@
+{% if survey %}
+    <section id="survey" class="alert alert-light border-0 mb-0 border-bottom shadow-sm">
+        <div class="container">
+            <form method="POST" action="{{ url('api_gruschel_read',{'id':survey.id}) }}">
+                <input type="hidden" name="ref_data" value='{{ {
+                    route: ref_route,
+                    params: ref_params
+                }|json_encode|e('html_attr') }}'>
+                <div class="text-center mb-3">Du wurdest von {{ survey.getSendBy.userProfiles.first }} gegruschelt.</div>
+                <button type="submit" name="answer" value="n" class="btn btn-sm btn-off w-100 mb-0 rounded-2">OK</button>
+            </form>
+
+        </div>
+    </section>
+{% endif %}
+
+

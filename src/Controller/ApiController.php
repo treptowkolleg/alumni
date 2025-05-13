@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Gruschel;
 use App\Entity\Survey;
 use App\Entity\SurveyAnswer;
 use App\Entity\User;
@@ -9,6 +10,7 @@ use App\Entity\UserProfile;
 use App\Repository\ChatRepository;
 use App\Repository\DirectMessageRepository;
 use App\Repository\EventRepository;
+use App\Repository\GruschelRepository;
 use App\Repository\SchoolRepository;
 use App\Repository\SurveyRepository;
 use App\Repository\UserProfileRepository;
@@ -99,6 +101,31 @@ class ApiController extends AbstractController
 
         $this->addFlash('success','Vielen Dank fürs Abstimmen.');
 
+        return $this->redirectToRoute($data['route'], $data['params']);
+    }
+
+    #[Route('/gruschel', name: 'gruschel_index', methods: ['GET'])]
+    public function getGruschels(GruschelRepository $repository, string $ref_route = null, array $ref_params = []): Response
+    {
+        $survey = $repository->findOneBy(['user' => $this->getUser(),'isRead' => false]);
+
+        return $this->render('component/_gruschel.html.twig', [
+            'survey' => $survey,
+            'ref_route' => $ref_route,
+            'ref_params' => $ref_params,
+        ]);
+    }
+
+    #[Route('/gruschel/{id}', name: 'gruschel_read', methods: ['POST'])]
+    public function readGruschel(Gruschel $gruschel, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $data = json_decode($request->request->get('ref_data'), true);
+
+        $gruschel->setIsRead(true);
+        $entityManager->persist($gruschel);
+        $entityManager->flush();
+
+        $this->addFlash('success','Gruschler wahrgenommen.');
         return $this->redirectToRoute($data['route'], $data['params']);
     }
 

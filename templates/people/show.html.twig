@@ -74,6 +74,20 @@
                         <span></span>
                     </a>
                 {% endif %}
+                {% if app.user %}
+                    {% if gruschelButton %}
+                        <form method="post">
+                            <input type="hidden" name="token" value="{{ csrf_token('gruscheln') }}">
+                            <button type="submit" class="btn btn-secondary w-100 rounded-2 mb-3">
+                                <span>Gruscheln</span>
+                            </button>
+                        </form>
+                    {% else %}
+                        <button type="submit" disabled class="btn btn-light w-100 rounded-2 mb-3">
+                            <span>bereits gegruschelt</span>
+                        </button>
+                    {% endif %}
+                {% endif %}
 
                 <div class="card border-0 shadow-sm rounded rounded-2 sticky-top" style="top:100px; z-index: 1;">
                     <div class="card-body bg-light-subtle rounded-top">
