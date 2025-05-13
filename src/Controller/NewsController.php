@@ -9,6 +9,7 @@ use App\Repository\PersonOfferRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/aktuelles', name: 'blog_news_', methods: ['GET','POST'])]
@@ -35,8 +36,18 @@ class NewsController extends AbstractController
     }
 
     #[Route('/meldungen/details/{slug}', name: 'show')]
-    public function show(BlogPost $post, BlogPostRepository $repository): Response
+    public function show(string $slug, BlogPostRepository $repository): Response
     {
+
+        $post = $repository->findOneBy(['slug' => $slug]);
+
+        // Wenn der BlogPost nicht gefunden wurde, eine Fehlerseite anzeigen
+        if (!$post) {
+            return $this->render('bundles/TwigBundle/Exception/error404.html.twig', [
+                'message' => 'Die angeforderte Meldung wurde nicht gefunden.',
+            ], new Response('', Response::HTTP_NOT_FOUND));
+        }
+
         $types = ['Neuigkeiten', 'Pressemitteilung','Meldung'];
 
         $prevPost = $repository->findPreviousPost($post->getId(),$types);

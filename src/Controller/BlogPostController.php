@@ -34,8 +34,18 @@ class BlogPostController extends AbstractController
     }
 
     #[Route('/details/{slug}', name: 'show')]
-    public function show(BlogPost $post, BlogPostRepository $repository): Response
+    public function show(string $slug, BlogPostRepository $repository): Response
     {
+        $post = $repository->findOneBy(['slug' => $slug]);
+
+        // Wenn der BlogPost nicht gefunden wurde, eine Fehlerseite anzeigen
+        if (!$post) {
+            return $this->render('bundles/TwigBundle/Exception/error404.html.twig', [
+                'message' => 'Die angeforderte Meldung wurde nicht gefunden.',
+            ], new Response('', Response::HTTP_NOT_FOUND));
+        }
+
+
         $prevPost = $repository->findPreviousPost($post->getId());
         $nextPost = $repository->findNextPost($post->getId());
 
