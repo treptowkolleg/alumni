@@ -178,7 +178,6 @@ class ApiController extends AbstractController
                 'user' => $this->getUser()
             ]);
             $friendsUserprofile = $userProfileRepository->find($id);
-
             if(!$friendsUserprofile->getFriends()->contains($ownUserProfile))
             {
                 $friendsUserprofile->addFriend($ownUserProfile);

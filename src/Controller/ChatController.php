@@ -21,14 +21,30 @@ class ChatController extends AbstractController
 {
 
     #[Route('', name: 'start')]
-    public function chat(UserRepository $userRepository, DirectMessageRepository $messageRepository, EntityManagerInterface $entityManager): Response
+    public function chat(Request $request, UserRepository $userRepository, DirectMessageRepository $messageRepository, EntityManagerInterface $entityManager): Response
     {
+        $message = new DirectMessage();
+        $message->setIsRead(false);
+        $message->setSender($this->getUser());
+        $message->setIsDeleted(false);
+        $message->setIsPinned(false);
 
+        $form = $this->createForm(ChatMessageType::class, $message, [
+        'me' => $this->getUser(),
+        ]);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($message);
+            $entityManager->flush();
+            $this->addFlash('success', 'Deine Nachricht wurde verschickt.');
+            return $this->redirectToRoute('chat_start');
+        }
 
         $sendMessages = $messageRepository->findBy(['sender' => $this->getUser()]);
         $receivedMessages = $messageRepository->findBy(['recipient' => $this->getUser()]);
 
         return $this->render('chat/start.html.twig', [
+            'form' => $form,
             'sendMessages' => $sendMessages,
             'receivedMessages' => $receivedMessages,
         ]);
@@ -65,7 +81,6 @@ class ChatController extends AbstractController
     #[Route('/{id}/read', name: 'read')]
     public function read(DirectMessage $message, EntityManagerInterface $entityManager): Response
     {
-        $partner = $message->getSender();
 
         if(!$message->isRead() and $message->getSender() !== $this->getUser()) {
             $message->setIsRead(true);
@@ -75,7 +90,6 @@ class ChatController extends AbstractController
 
         return $this->render('chat/read.html.twig', [
             'message' => $message,
-            'partner' => $partner,
         ]);
     }
 }

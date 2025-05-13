@@ -7,6 +7,7 @@ use App\Entity\Newsletter;
 use App\Entity\PersonOffer;
 use App\Entity\User;
 use App\Entity\UserProfile;
+use App\Enums\MessageVisibilityScope;
 use App\Enums\PerformanceCourseEnum;
 use App\Form\NewsLetterToggleFormType;
 use App\Form\UserImageType;
@@ -23,6 +24,7 @@ use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -197,6 +199,24 @@ class ProfileController extends AbstractController
                     'label' => 'Nachrichtensystem aktivieren',
                     'help' => 'Deaktivieren, um keine Nachrichten von anderen erhalten zu können.',
                     ])
+                    ->add('messageVisibilityScope', ChoiceType::class, [
+                        'label' => 'Sichtbarkeit im Nachrichtensystem',
+                        'choices' => [
+                            MessageVisibilityScope::all->label() => MessageVisibilityScope::all,
+                            MessageVisibilityScope::SameSchool->label() => MessageVisibilityScope::SameSchool,
+                            MessageVisibilityScope::ContactsOnly->label() => MessageVisibilityScope::ContactsOnly,
+                            MessageVisibilityScope::Hidden->label() => MessageVisibilityScope::Hidden,
+                        ],
+                        'choice_label' => fn($choice, $key, $value) => $choice->label(),
+                        'choice_value' => fn(?MessageVisibilityScope $choice) => $choice?->value,
+                        'required' => true,
+                        'expanded' => true,
+                    ])
+                    ->add('notifyNewMail',CheckboxType::class,[
+                        'required' => false,
+                        'label' => 'Über neue Nachrichten informieren',
+                        'help' => 'Üblicherweise wirst du einmal wöchentlich informiert.',
+                    ])
                     ->add('hasPinnboard',CheckboxType::class,[
                         'required' => false,
                         'label' => 'Pinnwand aktivieren',
@@ -224,7 +244,7 @@ class ProfileController extends AbstractController
 
 
         $form->add('save', SubmitType::class, [
-            'label' => 'Aktualisieren','attr' => ['class' => 'btn btn-primary w-100 mt-3']
+            'label' => 'Aktualisieren','attr' => ['class' => 'btn btn-primary w-100 mt-3 rounded-2 shadow-sm']
         ]);
         $form = $form->getForm();
 

@@ -15,14 +15,14 @@
 
                 <div class="col-lg-12">
                     <div class="alert alert-warning rounded-2 shadow-sm" role="alert">
-                        <span>Das Nachrichtensystem wird derzeit überarbeitet und ist aktuell nicht verfügbar.</span>
+                        <span>Das Nachrichtensystem wird derzeit überarbeitet und kann eventuell Fehler erzeugen.</span>
                     </div>
                 </div>
 
                 <div class="col-lg-12">
                     <div class="">
                         <div class="d-flex flex-column flex-lg-row">
-                            <a href="#" class="btn btn-primary rounded-2 flex-grow-1 flex-lg-grow-0"><i class="ri-chat-4-line me-2"></i>Neue Nachricht</a>
+                            <a href="#" class="btn btn-primary rounded-2 flex-grow-1 flex-lg-grow-0" data-bs-toggle="modal" data-bs-target="#messageModal"><i class="ri-chat-4-line me-2"></i>Neue Nachricht</a>
                             <div class="ms-lg-3 mt-3 mt-lg-0 flex-grow-1 flex-lg-grow-1">
                                 <label for="table-search" class="visually-hidden" hidden="hidden">Filtern</label>
                                 <input type="search" class="form-control h-100" id="table-search" placeholder="Nachrichten filtern" aria-controls="datatable" style="height: 38px!important;">
@@ -127,9 +127,26 @@
 {% endblock %}
 
 {% block aside %}
-    <script>
-
-
-
-    </script>
+    <!-- Modal -->
+    <div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content rounded-2 border-0 bg-white shadow">
+                {{ form_start(form) }}
+                <div class="modal-header">
+                    <h1 class="modal-title fs-6" id="messageModalLabel">Neue Nachricht</h1>
+                    <button type="button" class="btn-close btn-sm" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    {{ form_row(form.recipient) }}
+                    {{ form_row(form.title) }}
+                    {{ form_row(form.content) }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light rounded-2" data-bs-dismiss="modal">Abbrechen</button>
+                    <button type="submit" class="btn btn-primary rounded-2">Senden</button>
+                </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
 {% endblock %}

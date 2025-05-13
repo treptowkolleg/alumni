@@ -14,6 +14,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Entity\File as EmbeddedFile;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use App\Enums\MessageVisibilityScope;
 
 #[Vich\Uploadable]
 #[ORM\Entity(repositoryClass: UserRepository::class)]
@@ -171,6 +172,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
      */
     #[ORM\OneToMany(targetEntity: DirectMessage::class, mappedBy: 'sender')]
     private Collection $sendDirectMessages;
+
+    #[ORM\Column(type: 'string', length: 20, options: ['default' => 'same_school'])]
+    private string $messageVisibilityScope = MessageVisibilityScope::SameSchool->value;
+
+    #[ORM\Column(nullable: true)]
+    private ?bool $notifyNewMail = null;
 
     public function __construct()
     {
@@ -919,6 +926,31 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
                 $sendDirectMessage->setSender(null);
             }
         }
+
+        return $this;
+    }
+
+    // Getter
+    public function getMessageVisibilityScope(): MessageVisibilityScope
+    {
+        return MessageVisibilityScope::from($this->messageVisibilityScope)
+            ?? MessageVisibilityScope::SameSchool;
+    }
+
+// Setter
+    public function setMessageVisibilityScope(MessageVisibilityScope $scope): void
+    {
+        $this->messageVisibilityScope = $scope->value;
+    }
+
+    public function isNotifyNewMail(): ?bool
+    {
+        return $this->notifyNewMail;
+    }
+
+    public function setNotifyNewMail(?bool $notifyNewMail): static
+    {
+        $this->notifyNewMail = $notifyNewMail;
 
         return $this;
     }

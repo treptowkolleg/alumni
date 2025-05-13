@@ -3,7 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\User;
+use App\Enums\MessageVisibilityScope;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -31,6 +33,34 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $user->setPassword($newHashedPassword);
         $this->getEntityManager()->persist($user);
         $this->getEntityManager()->flush();
+    }
+
+    public function createVisibleRecipientsQuery(User $me): QueryBuilder
+    {
+        return $this->createQueryBuilder('u')
+            ->addSelect('up')
+            ->join('u.userProfiles','up')
+            ->where('u != :me')
+            ->andWhere('u.isContactable = true')
+            ->andWhere('
+            u.messageVisibilityScope = :all
+            OR (u.messageVisibilityScope = :sameSchool AND u.school = :mySchool)
+            OR (
+                u.messageVisibilityScope = :known
+                AND EXISTS (
+                    SELECT 1 FROM App\Entity\UserProfile up2
+                    JOIN up2.friends f
+                    WHERE up2 = up AND f = :meProfile
+                )
+            )
+        ')
+            ->setParameter('me', $me)
+            ->setParameter('mySchool', $me->getSchool())
+            ->setParameter('meProfile', $me->getUserProfiles()->first())
+            ->setParameter('all', MessageVisibilityScope::all->value)
+            ->setParameter('sameSchool', MessageVisibilityScope::SameSchool->value)
+            ->setParameter('known', MessageVisibilityScope::ContactsOnly->value)
+            ->orderBy('u.lastname', 'ASC');
     }
 
 //    /**

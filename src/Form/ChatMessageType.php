@@ -4,7 +4,10 @@ namespace App\Form;
 
 use App\Entity\Chat;
 use App\Entity\ChatMessage;
+use App\Entity\DirectMessage;
 use App\Entity\User;
+use App\Entity\UserProfile;
+use App\Repository\UserRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -16,13 +19,24 @@ class ChatMessageType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $me = $options['me'];
+
         $builder
-            ->add('subject', TextType::class,[
+            ->add('recipient', EntityType::class, [
+                'choice_label' => fn(User $user) => $user->getUserProfiles()->first(),
+                'class' => User::class,
+                'query_builder' => function (UserRepository $repo) use ($me) {
+                    return $repo->createVisibleRecipientsQuery($me);
+                },
+            ])
+            ->add('title', TextType::class,[
+                'label' => "Subject",
                 'row_attr' => ['class' => 'form-floating mb-3'],
                 'attr' => ['placeholder' => 'Subject'],
                 'required' => true,
             ])
-            ->add('message', TextareaType::class,[
+            ->add('content', TextareaType::class,[
+                'label' => "Message",
                 'row_attr' => ['class' => 'form-floating mb-3'],
                 'required' => true,
                 'attr' => ['style' => 'min-height:250px','placeholder' => 'Message'],
@@ -33,7 +47,8 @@ class ChatMessageType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => ChatMessage::class,
+            'data_class' => DirectMessage::class,
+            'me' => null,
         ]);
     }
 }
