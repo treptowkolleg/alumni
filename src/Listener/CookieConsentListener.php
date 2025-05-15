@@ -7,10 +7,51 @@ use Symfony\Component\HttpKernel\Event\ResponseEvent;
 class CookieConsentListener
 {
 
+    private string $logFile;
+
+    public function __construct(string $logFile = null)
+    {
+        $this->logFile = $logFile ?? __DIR__ . '/../../var/log/url_tracking.csv';
+
+        // Falls Datei nicht existiert, Header schreiben
+        if (!file_exists($this->logFile)) {
+            file_put_contents($this->logFile, "user,timestamp,referer,target,method,status\n");
+        }
+    }
+
     public function onKernelResponse(ResponseEvent $event): void
     {
         $request = $event->getRequest();
         $response = $event->getResponse();
+
+        if ($event->isMainRequest()) {
+            $timestamp = (new \DateTime())->format('Y-m-d H:i:s');
+            $referer = str_replace(";", ",", $request->headers->get('referer', '')); // Semikolons ersetzen
+            $target = str_replace(";", ",", $request->getRequestUri());
+
+            $clientIp = $request->getClientIp();
+            $anonymizedIp = hash('sha256', $clientIp);
+
+            $method = $request->getMethod();
+            $status = $response->getStatusCode();
+
+            $refererPath = '';
+            if ($referer) {
+                $parts = parse_url($referer);
+                // Pfad und Query zusammensetzen
+                $refererPath = $parts['path'] ?? '';
+                if (isset($parts['query'])) {
+                    $refererPath .= '?' . $parts['query'];
+                }
+            }
+
+            if (!str_starts_with($target, '/_fragment') and $request->getMethod() !== 'POST') {
+                $line = "$anonymizedIp,$timestamp,$refererPath,$target,$method,$status\n";
+                file_put_contents($this->logFile, $line, FILE_APPEND);
+            }
+
+
+        }
 
         if (str_starts_with($request->getPathInfo(), '/media/cache/')) {
             $response = $event->getResponse();
