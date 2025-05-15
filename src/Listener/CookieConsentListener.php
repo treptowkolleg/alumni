@@ -15,7 +15,7 @@ class CookieConsentListener
 
         // Falls Datei nicht existiert, Header schreiben
         if (!file_exists($this->logFile)) {
-            file_put_contents($this->logFile, "user,timestamp,referer,target,method,status\n");
+            file_put_contents($this->logFile, "user;timestamp;referer;target;method;status\n");
         }
     }
 
@@ -46,7 +46,7 @@ class CookieConsentListener
             }
 
             if (!str_starts_with($target, '/_fragment') and $request->getMethod() !== 'POST') {
-                $line = "$anonymizedIp,$timestamp,$refererPath,$target,$method,$status\n";
+                $line = "$anonymizedIp;$timestamp;$refererPath;$target;$method;$status\n";
                 file_put_contents($this->logFile, $line, FILE_APPEND);
             }
 
