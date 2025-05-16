@@ -115,8 +115,10 @@ class DashboardController extends AbstractDashboardController
         $filename = $this->getParameter('kernel.project_dir') . '/var/log/url_tracking_'.$yearMonth.'.csv';
 
         $countsByDate = [];
+        $userPerDay = [];
 
         $stati = ["200","302","404","500"];
+
 
         $year = date('Y');
         $month = date('m');
@@ -126,6 +128,8 @@ class DashboardController extends AbstractDashboardController
             for ($day = 1; $day <= $daysInMonth; $day++) {
                 $dt = \DateTime::createFromFormat('Y-m-d', "$year-$month-$day");
                 $countsByDate[$dt->format('d.m.')][$state] = 0;
+                $userPerDay[$dt->format('d.m.')] = [];
+
             }
         }
 
@@ -137,8 +141,11 @@ class DashboardController extends AbstractDashboardController
 
             while (($data = fgetcsv($handle, 1000, ";")) !== false) {
                 // Beispiel: Timestamp in Spalte 1 (Index 0 oder 1 je nach CSV)
+                $clientIp = $data[0];
                 $timestamp = $data[1]; // oder z.B. $data[1], je nach Aufbau
                 $status = $data[5]; // oder z.B. $data[1], je nach Aufbau
+
+                $userPerDay[$day][$clientIp] = 0;
 
                 // Timestamp parsen: Format "d.m.Y H:i"
                 $dt = \DateTime::createFromFormat('Y-m-d H:i:s', $timestamp);
@@ -158,7 +165,12 @@ class DashboardController extends AbstractDashboardController
                 $countsByDate[$day][$status]++;
             }
             fclose($handle);
+            $usersPerDay = [];
+            foreach ($userPerDay as $day => $content) {
+                $usersPerDay[$day] = count(array_unique($content));
+            }
 
+            array_pop($usersPerDay);
             $labels = array_keys($countsByDate);
 
             $data = array_values($countsByDate);
@@ -190,6 +202,7 @@ class DashboardController extends AbstractDashboardController
             'stateNotFound' => $stateNotFound ?? [],
             'stateServerError' => $stateServerError ?? [],
             'stateRedirect' => $stateRedirect ?? [],
+            'userPerDay' => $usersPerDay ?? [],
         ]);
 
         // Option 1. You can make your dashboard redirect to some common page of your backend
