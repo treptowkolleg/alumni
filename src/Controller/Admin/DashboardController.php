@@ -182,12 +182,13 @@ class DashboardController extends AbstractDashboardController
         $stateNotFound = [];
         $stateServerError = [];
         $stateRedirect = [];
-
+        $sum = [];
         foreach ($data ?? [] as $date => $values) {
             $stateOk[$date] = $values["200"];
             $stateNotFound[$date] = $values["404"];
             $stateServerError[$date] = $values["500"];
             $stateRedirect[$date] = $values["302"];
+            $sum[$date] = $values["200"] + $values["404"] + $values["500"] + $values["302"];
         }
 
         return $this->render('admin/dashboard.html.twig', [
@@ -203,6 +204,7 @@ class DashboardController extends AbstractDashboardController
             'stateServerError' => $stateServerError ?? [],
             'stateRedirect' => $stateRedirect ?? [],
             'userPerDay' => $usersPerDay ?? [],
+            'sum' => $sum ?? [],
         ]);
 
         // Option 1. You can make your dashboard redirect to some common page of your backend

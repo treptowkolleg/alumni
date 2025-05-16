@@ -15,7 +15,7 @@
 
         <div class="mb-5">
             <div class="h5 border-bottom pb-2 mb-3">Aufrufe pro Tag für {{ "now"|format_datetime('full', 'none', 'MMMM Y', locale: 'de') }}</div>
-            <canvas id="botChart" width="800" height="200"></canvas>
+            <canvas id="botChart" width="800" height="300"></canvas>
 
             <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
             <script>
@@ -27,75 +27,94 @@
                         datasets: [
                             {
                                 type: 'line',
-                                label: 'eindeutige Nutzer',
-                                data: {{ userPerDay|json_encode|raw }},
-                                backgroundColor: 'rgba(255, 182, 193,0.8)',
-                                borderColor: 'rgba(255, 105, 180,0.4)',
-                                tension: 0.5,
+                                label: 'Anfragevolumen',
+                                data:{{ sum|json_encode|raw }},
+                                backgroundColor: 'rgba(138, 43, 226, 0.5)',
+                                borderColor: 'rgba(138, 43, 226, 0.5)',
                                 borderWidth: 4,
                                 pointRadius: 0,
+                                pointHoverRadius: 4,
+                                tension: 0.2,
                                 fill: false
                             },
                             {
                                 type: 'line',
-                                label: 'Anfragevolumen',
-                                data: [
-                                    {% for day in data %}
-                                        {{ day|reduce((carry, value) => carry + value, 0) }},
-                                    {% endfor %}
-                                ],
-                                backgroundColor: 'rgba(102, 178, 255, 0.8)',
-                                borderColor: 'rgba(102, 178, 255, 0.4)',
+                                label: 'eindeutige Nutzer',
+                                data: {{ userPerDay|json_encode|raw }},
+                                backgroundColor: 'rgba(30, 144, 255, 0.5)',
+                                borderColor: 'rgba(30, 144, 255, 0.5)',
+                                tension: 0.2,
                                 borderWidth: 4,
                                 pointRadius: 0,
-                                tension: 0.5,
-                                yAxisID: 'y',
+                                pointHoverRadius: 4,
+                                fill: false,
+                                stack: 'separat'
                             },
                             {
                                 label: 'fehlerfrei',
                                 data: {{ stateOk|json_encode|raw }},
-                                borderColor: '#4caf50',
-                                backgroundColor: '#81c784aa',
+                                borderColor: false,
+                                backgroundColor: 'rgba(50, 205, 50, 0.5)',
                                 tension: 0.1,
                                 fill: false
                             },
                             {
                                 label: 'Weiterleitung',
                                 data: {{ stateRedirect|json_encode|raw }},
-                                borderColor: '#2563eb',
-                                backgroundColor: '#3b82f6aa',
+                                borderColor: false,
+                                backgroundColor: 'rgba(0, 191, 255, 0.5)',
                                 tension: 0.1,
                                 fill: false
                             },
                             {
                                 label: 'nicht gefunden',
                                 data: {{ stateNotFound|json_encode|raw }},
-                                borderColor: '#f44336',
-                                backgroundColor: '#e57373aa',
+                                borderColor: false,
+                                backgroundColor: 'rgba(255, 215, 0, 0.5)',
                                 tension: 0.1,
                                 fill: false
                             },
                             {
                                 label: 'Serverfehler',
                                 data: {{ stateServerError|json_encode|raw }},
-                                borderColor: '#ff9800',
-                                backgroundColor: '#ffb74daa',
+                                borderColor: false,
+                                backgroundColor: 'rgba(255, 99, 71, 0.5)',
                                 tension: 0.1,
                                 fill: false
                             }
                         ]
                     },
                     options: {
+
                         plugins: {
                             title: {
                                 display: true,
                                 text: 'HTTP-Statusverteilung pro Tag'
                             },
+                            legend: {
+                                position: 'bottom', // Legende unten
+                                labels: {
+                                    color: '#000' // Optional: Textfarbe der Legende
+                                }
+                            },
                             tooltip: {
                                 mode: 'index',
-                                intersect: false
+                                intersect: false,
+                                backgroundColor: 'rgba(255, 255, 255, 0.9)', // heller weißer Hintergrund
+                                titleColor: '#000',    // schwarze Überschrift
+                                bodyColor: '#000',     // schwarze Textfarbe
+                                borderColor: '#ccc',   // optional: helle Rahmenfarbe
+                                borderWidth: 1,
+                                // Optional: Schatten entfernen oder anpassen
+                                boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+                                // Optional: Schriftgröße oder -art anpassen
+                                // font: { size: 14, family: 'Arial' }
                             },
                         },
+                        layout: {
+                            padding: 15 // optional, etwas Innenabstand
+                        },
+                        backgroundColor: 'rgba(136, 136, 136, 1)',
                         interaction: {
                             mode: 'index',
                             intersect: false
@@ -117,7 +136,17 @@
                                 beginAtZero: true
                             }
                         }
-                    }
+                    },
+                    plugins: [{
+                        id: 'customBackgroundColor',
+                        beforeDraw: (chart) => {
+                            const ctx = chart.ctx;
+                            ctx.save();
+                            ctx.fillStyle = 'rgba(136, 136, 136, .1)'; // mittleres Grau
+                            ctx.fillRect(0, 0, chart.width, chart.height);
+                            ctx.restore();
+                        }
+                    }]
                 });
             </script>
         </div>
