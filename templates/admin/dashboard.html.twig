@@ -38,7 +38,7 @@
                             },
                             {
                                 type: 'line',
-                                label: 'Gesamt',
+                                label: 'Anfragevolumen',
                                 data: [
                                     {% for day in data %}
                                         {{ day|reduce((carry, value) => carry + value, 0) }},
