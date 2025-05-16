@@ -91,22 +91,24 @@ class DashboardController extends AbstractDashboardController
         $filters = [
             '.php',
             '.txt',
-            'user',
+            '&',
             'force',
             'install',
             'setup',
             'config',
-            'register',
             'xmlrpc',
             'robots',
             'vendor',
+            'root',
+            'client',
+            'auth',
+            'lang',
             'wp-admin',
             'adminer',
             'admin-login',
             'administrator',
             'cpanel',
             'phpmyadmin',
-            'auth',
             'private',
             'backup',
             'temp',
@@ -146,6 +148,7 @@ class DashboardController extends AbstractDashboardController
             'bot',
             'crawler',
             'scanner',
+            '.'
         ];
 
         $serverStats = [
