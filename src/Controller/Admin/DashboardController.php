@@ -88,6 +88,21 @@ class DashboardController extends AbstractDashboardController
         $newsPosts = $this->repository->findPublishedNews(user: $this->getUser());
         $surveys = $this->surveyRepository->findBy(['active' => true]);
 
+        $filters = [
+            '.php',
+            '.txt',
+            'user',
+            'login',
+            'force',
+            'install',
+            'setup',
+            'config',
+            'register',
+            'xmlrpc',
+            'robots',
+            'vendor',
+        ];
+
         $serverStats = [
             'php_version' => phpversion(),
             'symfony_version' => \Symfony\Component\HttpKernel\Kernel::VERSION,
@@ -118,17 +133,21 @@ class DashboardController extends AbstractDashboardController
         $userPerDay = [];
 
         $stati = ["200","302","404","500"];
+        $targets = [];
 
 
         $year = date('Y');
         $month = date('m');
         $daysInMonth = (int)date('t');
+        $fraud = [];
 
         foreach ($stati as $state) {
             for ($day = 1; $day <= $daysInMonth; $day++) {
                 $dt = \DateTime::createFromFormat('Y-m-d', "$year-$month-$day");
                 $countsByDate[$dt->format('d.m.')][$state] = 0;
                 $userPerDay[$dt->format('d.m.')] = [];
+                $targets[$dt->format('d.m.')] = [];
+                $fraud[$dt->format('d.m.')] = 0;
 
             }
         }
@@ -144,6 +163,7 @@ class DashboardController extends AbstractDashboardController
                 $clientIp = $data[0];
                 $timestamp = $data[1]; // oder z.B. $data[1], je nach Aufbau
                 $status = $data[5]; // oder z.B. $data[1], je nach Aufbau
+                $target = $data[3];
 
                 $userPerDay[$day][$clientIp] = 0;
 
@@ -156,6 +176,7 @@ class DashboardController extends AbstractDashboardController
                 // Tag als Y-m-d (z.B. 2025-05-16)
                 $day = $dt->format('d.m.');
 
+
                 if (!isset($countsByDate[$day])) {
                     if (count($countsByDate) >= 30) {
                         break; // Abbruch, wenn schon 30 Tage gesammelt
@@ -163,6 +184,7 @@ class DashboardController extends AbstractDashboardController
                     $countsByDate[$day][$status] = 0;
                 }
                 $countsByDate[$day][$status]++;
+                $targets[$day][] = $target;
             }
             fclose($handle);
             $usersPerDay = [];
@@ -183,12 +205,32 @@ class DashboardController extends AbstractDashboardController
         $stateServerError = [];
         $stateRedirect = [];
         $sum = [];
+
+
         foreach ($data ?? [] as $date => $values) {
             $stateOk[$date] = $values["200"];
             $stateNotFound[$date] = $values["404"];
             $stateServerError[$date] = $values["500"];
             $stateRedirect[$date] = $values["302"];
             $sum[$date] = $values["200"] + $values["404"] + $values["500"] + $values["302"];
+            $fraud = [];
+
+            foreach ($targets as $datum => $targetList) {
+                $fraudCount = 0; // ← Zähler pro Tag zurücksetzen
+
+                foreach ($targetList as $value) {
+                    foreach ($filters as $filter) {
+                        if (str_contains($value, $filter)) {
+                            $fraudCount++;
+                            break; // nur einmal pro Treffer zählen
+                        }
+                    }
+                }
+
+                $fraud[$datum] = $fraudCount;
+            }
+
+
         }
 
         return $this->render('admin/dashboard.html.twig', [
@@ -205,6 +247,8 @@ class DashboardController extends AbstractDashboardController
             'stateRedirect' => $stateRedirect ?? [],
             'userPerDay' => $usersPerDay ?? [],
             'sum' => $sum ?? [],
+            'fraud' => $fraud ?? [],
+            'targets' => $targets ?? [],
         ]);
 
         // Option 1. You can make your dashboard redirect to some common page of your backend

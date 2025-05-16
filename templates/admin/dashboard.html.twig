@@ -15,6 +15,8 @@
 
         <div class="mb-5">
             <div class="h5 border-bottom pb-2 mb-3">Aufrufe pro Tag für {{ "now"|format_datetime('full', 'none', 'MMMM Y', locale: 'de') }}</div>
+            {{ dump(fraud) }}
+            {{ dump(targets) }}
             <canvas id="botChart" width="800" height="300"></canvas>
 
             <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -36,6 +38,19 @@
                                 pointHoverRadius: 4,
                                 tension: 0.2,
                                 fill: false
+                            },
+                            {
+                                type: 'line',
+                                label: 'Verdächtige Zugriffe',
+                                data: {{ fraud|json_encode|raw }},
+                                backgroundColor: 'rgba(255, 144, 30, 0.5)',
+                                borderColor: 'rgba(255, 144, 30, 0.5)',
+                                tension: 0.2,
+                                borderWidth: 4,
+                                pointRadius: 0,
+                                pointHoverRadius: 4,
+                                fill: false,
+                                stack: 'separat'
                             },
                             {
                                 type: 'line',
@@ -85,7 +100,6 @@
                         ]
                     },
                     options: {
-
                         plugins: {
                             title: {
                                 display: true,
