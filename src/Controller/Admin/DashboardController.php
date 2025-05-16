@@ -116,6 +116,15 @@ class DashboardController extends AbstractDashboardController
 
         $countsByDate = [];
 
+        $year = date('Y');
+        $month = date('m');
+        $daysInMonth = (int)date('t');
+
+        for ($day = 1; $day <= $daysInMonth; $day++) {
+            $dt = \DateTime::createFromFormat('Y-m-d', "$year-$month-$day");
+            $countsByDate[$dt->format('d.m.')] = 0;
+        }
+
         if (($handle = fopen($filename, "r")) !== false) {
             // Header auslesen, falls vorhanden
             $header = fgetcsv($handle, 1000, ";"); // oder "," je nach Trennzeichen
