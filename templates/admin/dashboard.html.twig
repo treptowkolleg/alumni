@@ -76,11 +76,11 @@
             <script>
                 const ctx = document.getElementById('botChart').getContext('2d');
                 const botChart = new Chart(ctx, {
-                    type: 'bar',
+                    type: 'line',
                     data: {
                         labels: {{ labels|json_encode|raw }},
                         datasets: [{
-                            label: 'Zugriffe pro Tag',
+                            label: 'Zugriffe pro Tag für {{ "now"|format_datetime('full', 'none', 'MMMM Y', locale: 'de') }}',
                             data: {{ data|json_encode|raw }},
                             fill: false,
                             borderColor: 'rgb(255, 99, 132)',
