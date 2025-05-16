@@ -11,7 +11,9 @@ class CookieConsentListener
 
     public function __construct(string $logFile = null)
     {
-        $this->logFile = $logFile ?? __DIR__ . '/../../var/log/url_tracking.csv';
+        $yearMonth = date('Y-m'); // z.B. "2025-05"
+
+        $this->logFile = $logFile ?? __DIR__ . '/../../var/log/url_tracking_'.$yearMonth.'.csv';
 
         // Falls Datei nicht existiert, Header schreiben
         if (!file_exists($this->logFile)) {

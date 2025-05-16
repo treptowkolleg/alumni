@@ -200,5 +200,6 @@
     <orderEntry type="library" name="ckeditor5" level="application" />
     <orderEntry type="library" name="de" level="application" />
     <orderEntry type="library" name="de.umd" level="application" />
+    <orderEntry type="library" name="chart.js" level="application" />
   </component>
 </module>

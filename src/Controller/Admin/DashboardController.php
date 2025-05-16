@@ -110,12 +110,54 @@ class DashboardController extends AbstractDashboardController
             'memory_peak_mb' => round(memory_get_peak_usage(true) / 1024 / 1024, 2),
         ];
 
+        $yearMonth = date('Y-m'); // z.B. "2025-05"
+
+        $filename = $this->getParameter('kernel.project_dir') . '/var/log/url_tracking_'.$yearMonth.'.csv';
+
+        $countsByDate = [];
+
+        if (($handle = fopen($filename, "r")) !== false) {
+            // Header auslesen, falls vorhanden
+            $header = fgetcsv($handle, 1000, ";"); // oder "," je nach Trennzeichen
+
+            while (($data = fgetcsv($handle, 1000, ";")) !== false) {
+                // Beispiel: Timestamp in Spalte 1 (Index 0 oder 1 je nach CSV)
+                $timestamp = $data[1]; // oder z.B. $data[1], je nach Aufbau
+
+                // Timestamp parsen: Format "d.m.Y H:i"
+                $dt = \DateTime::createFromFormat('Y-m-d H:i:s', $timestamp);
+                if (!$dt) {
+                    continue; // Ungültiges Datum überspringen
+                }
+
+                // Tag als Y-m-d (z.B. 2025-05-16)
+                $day = $dt->format('d.m.');
+
+                if (!isset($countsByDate[$day])) {
+                    if (count($countsByDate) >= 30) {
+                        break; // Abbruch, wenn schon 30 Tage gesammelt
+                    }
+                    $countsByDate[$day] = 0;
+                }
+                $countsByDate[$day]++;
+            }
+            fclose($handle);
+
+            $labels = array_keys($countsByDate);
+
+            $data = array_values($countsByDate);
+
+            array_multisort($labels, SORT_ASC, $data);
+        }
+
         return $this->render('admin/dashboard.html.twig', [
             'title' => 'test',
             'surveys' => $surveys,
             'posts' => $posts,
             'news_articles' => $newsPosts,
             'serverStats' => $serverStats,
+            'labels' => $labels ?? [],
+            'data' => $data ?? [],
         ]);
 
         // Option 1. You can make your dashboard redirect to some common page of your backend
