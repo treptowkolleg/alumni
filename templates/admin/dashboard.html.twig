@@ -82,6 +82,21 @@
                         labels: {{ labels|json_encode|raw }},
                         datasets: [
                             {
+                                type: 'line',
+                                label: 'Gesamt',
+                                data: [
+                                    {% for day in data %}
+                                        {{ day|reduce((carry, value) => carry + value, 0) }},
+                                    {% endfor %}
+                                ],
+                                borderColor: 'rgba(102, 178, 255, 0.8)',
+                                backgroundColor: 'rgba(102, 178, 255, 0.4)',
+                                borderWidth: 2,
+                                pointRadius: 0,
+                                tension: 0.3,
+                                yAxisID: 'y',
+                            },
+                            {
                                 label: 'fehlerfrei',
                                 data: {{ stateOk|json_encode|raw }},
                                 borderColor: '#4caf50',
@@ -116,6 +131,20 @@
                         ]
                     },
                     options: {
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'HTTP-Statusverteilung pro Tag'
+                            },
+                            tooltip: {
+                                mode: 'index',
+                                intersect: false
+                            },
+                        },
+                        interaction: {
+                            mode: 'index',
+                            intersect: false
+                        },
                         scales: {
                             x: {
                                 stacked: true,
