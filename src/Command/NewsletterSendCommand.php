@@ -68,10 +68,20 @@ class NewsletterSendCommand extends Command
             $output->writeln($now->format('Y-m-d H:i:s'));
             $output->writeln($receiver->getSendDate()->format('Y-m-d H:i:s'));
             $output->writeln($receiver->getSendDate() <= $now ? 'true' : 'false');
+
+            $showEvents = $receiver->getTemplate()->isShowEvents();
+            $showMessages = $receiver->getTemplate()->isShowRecentNews();
+
             if($receiver->getSendDate() <= $now) {
                 $user = $this->em->getRepository(User::class)->findOneBy(['email' => $receiver->getReceiverEmail()]);
 
-
+                $messages = $user->getSendDirectMessages();
+                $messageCount = 0;
+                foreach ($messages as $message) {
+                    if($message->getRecipient() == $user and !$message->isRead()) {
+                        $messageCount++;
+                    }
+                }
 
                 $email = (new TemplatedEmail())
                     ->from(new Address('service@alumni-portal.org', 'Alumni-Portal'))
@@ -82,7 +92,10 @@ class NewsletterSendCommand extends Command
                         'user' => $user,
                         'config' => $receiver->getTemplate(),
                         'svg_base64' => $svgBase64,
-                        'logo_url' => $logoUrl // Fallback URL
+                        'logo_url' => $logoUrl,
+                        'show_events' => $showEvents,
+                        'show_messages' => $showMessages,
+                        'message_count' => $messageCount,
                     ])
                 ;
 
