@@ -116,14 +116,20 @@ class DashboardController extends AbstractDashboardController
 
         $countsByDate = [];
 
+        $stati = ["200","404","500"];
+
         $year = date('Y');
         $month = date('m');
         $daysInMonth = (int)date('t');
 
-        for ($day = 1; $day <= $daysInMonth; $day++) {
-            $dt = \DateTime::createFromFormat('Y-m-d', "$year-$month-$day");
-            $countsByDate[$dt->format('d.m.')] = 0;
+        foreach ($stati as $state) {
+            for ($day = 1; $day <= $daysInMonth; $day++) {
+                $dt = \DateTime::createFromFormat('Y-m-d', "$year-$month-$day");
+                $countsByDate[$dt->format('d.m.')][$state] = 0;
+            }
         }
+
+
 
         if (($handle = fopen($filename, "r")) !== false) {
             // Header auslesen, falls vorhanden
@@ -132,6 +138,7 @@ class DashboardController extends AbstractDashboardController
             while (($data = fgetcsv($handle, 1000, ";")) !== false) {
                 // Beispiel: Timestamp in Spalte 1 (Index 0 oder 1 je nach CSV)
                 $timestamp = $data[1]; // oder z.B. $data[1], je nach Aufbau
+                $status = $data[5]; // oder z.B. $data[1], je nach Aufbau
 
                 // Timestamp parsen: Format "d.m.Y H:i"
                 $dt = \DateTime::createFromFormat('Y-m-d H:i:s', $timestamp);
@@ -146,9 +153,9 @@ class DashboardController extends AbstractDashboardController
                     if (count($countsByDate) >= 30) {
                         break; // Abbruch, wenn schon 30 Tage gesammelt
                     }
-                    $countsByDate[$day] = 0;
+                    $countsByDate[$day][$status] = 0;
                 }
-                $countsByDate[$day]++;
+                $countsByDate[$day][$status]++;
             }
             fclose($handle);
 
@@ -159,6 +166,16 @@ class DashboardController extends AbstractDashboardController
             array_multisort($labels, SORT_ASC, $data);
         }
 
+        $stateOk = [];
+        $stateNotFound = [];
+        $stateServerError = [];
+
+        foreach ($data ?? [] as $date => $values) {
+            $stateOk[$date] = $values["200"];
+            $stateNotFound[$date] = $values["404"];
+            $stateServerError[$date] = $values["500"];
+        }
+
         return $this->render('admin/dashboard.html.twig', [
             'title' => 'test',
             'surveys' => $surveys,
@@ -167,6 +184,9 @@ class DashboardController extends AbstractDashboardController
             'serverStats' => $serverStats,
             'labels' => $labels ?? [],
             'data' => $data ?? [],
+            'stateOk' => $stateOk ?? [],
+            'stateNotFound' => $stateNotFound ?? [],
+            'stateServerError' => $stateServerError ?? [],
         ]);
 
         // Option 1. You can make your dashboard redirect to some common page of your backend

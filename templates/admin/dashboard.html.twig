@@ -69,6 +69,7 @@
 
 
         <div class="mb-5">
+            <h5>Aufrufe pro Tag für {{ "now"|format_datetime('full', 'none', 'MMMM Y', locale: 'de') }}</h5>
 
             <canvas id="botChart" width="800" height="200"></canvas>
 
@@ -79,13 +80,37 @@
                     type: 'line',
                     data: {
                         labels: {{ labels|json_encode|raw }},
-                        datasets: [{
-                            label: 'Zugriffe pro Tag für {{ "now"|format_datetime('full', 'none', 'MMMM Y', locale: 'de') }}',
-                            data: {{ data|json_encode|raw }},
-                            fill: false,
-                            borderColor: 'rgb(255, 99, 132)',
-                            tension: 0.1
-                        }]
+                        datasets: [
+                            {% set colors = {
+                                "200": {0:'#4caf50',1: '#81c784'},
+                                "404": {0:'#f44336',1: '#e57373'},
+                                "500": {0:'#ff9800',1: '#ffb74d'}
+                            } %}
+                            {
+                                label: 'fehlerfrei',
+                                data: {{ stateOk|json_encode|raw }},
+                                borderColor: '#4caf50',
+                                backgroundColor: '#81c784',
+                                tension: 0.1,
+                                fill: false
+                            },
+                            {
+                                label: 'nicht gefunden',
+                                data: {{ stateNotFound|json_encode|raw }},
+                                borderColor: '#f44336',
+                                backgroundColor: '#e57373',
+                                tension: 0.1,
+                                fill: false
+                            },
+                            {
+                                label: 'Serverfehler',
+                                data: {{ stateServerError|json_encode|raw }},
+                                borderColor: '#ff9800',
+                                backgroundColor: '#ffb74d',
+                                tension: 0.1,
+                                fill: false
+                            }
+                        ]
                     },
                 });
             </script>
