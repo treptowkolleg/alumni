@@ -15,8 +15,6 @@
 
         <div class="mb-5">
             <div class="h5 border-bottom pb-2 mb-3">Aufrufe pro Tag für {{ "now"|format_datetime('full', 'none', 'MMMM Y', locale: 'de') }}</div>
-            {{ dump(fraud) }}
-            {{ dump(targets) }}
             <canvas id="botChart" width="800" height="300"></canvas>
 
             <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
