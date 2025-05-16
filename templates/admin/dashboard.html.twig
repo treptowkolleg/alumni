@@ -76,7 +76,7 @@
             <script>
                 const ctx = document.getElementById('botChart').getContext('2d');
                 const botChart = new Chart(ctx, {
-                    type: 'line',
+                    type: 'bar',
                     data: {
                         labels: {{ labels|json_encode|raw }},
                         datasets: [{
