@@ -81,16 +81,19 @@
                     data: {
                         labels: {{ labels|json_encode|raw }},
                         datasets: [
-                            {% set colors = {
-                                "200": {0:'#4caf50',1: '#81c784'},
-                                "404": {0:'#f44336',1: '#e57373'},
-                                "500": {0:'#ff9800',1: '#ffb74d'}
-                            } %}
                             {
                                 label: 'fehlerfrei',
                                 data: {{ stateOk|json_encode|raw }},
                                 borderColor: '#4caf50',
                                 backgroundColor: '#81c784',
+                                tension: 0.1,
+                                fill: false
+                            },
+                            {
+                                label: 'Weiterleitung',
+                                data: {{ stateRedirect|json_encode|raw }},
+                                borderColor: '#2563eb',
+                                backgroundColor: '#3b82f6',
                                 tension: 0.1,
                                 fill: false
                             },

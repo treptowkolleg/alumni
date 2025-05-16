@@ -116,7 +116,7 @@ class DashboardController extends AbstractDashboardController
 
         $countsByDate = [];
 
-        $stati = ["200","404","500"];
+        $stati = ["200","302","404","500"];
 
         $year = date('Y');
         $month = date('m');
@@ -169,11 +169,13 @@ class DashboardController extends AbstractDashboardController
         $stateOk = [];
         $stateNotFound = [];
         $stateServerError = [];
+        $stateRedirect = [];
 
         foreach ($data ?? [] as $date => $values) {
             $stateOk[$date] = $values["200"];
             $stateNotFound[$date] = $values["404"];
             $stateServerError[$date] = $values["500"];
+            $stateRedirect[$date] = $values["302"];
         }
 
         return $this->render('admin/dashboard.html.twig', [
@@ -187,6 +189,7 @@ class DashboardController extends AbstractDashboardController
             'stateOk' => $stateOk ?? [],
             'stateNotFound' => $stateNotFound ?? [],
             'stateServerError' => $stateServerError ?? [],
+            'stateRedirect' => $stateRedirect ?? [],
         ]);
 
         // Option 1. You can make your dashboard redirect to some common page of your backend
