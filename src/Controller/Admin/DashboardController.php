@@ -167,7 +167,7 @@ class DashboardController extends AbstractDashboardController
             fclose($handle);
             $usersPerDay = [];
             foreach ($userPerDay as $day => $content) {
-                $usersPerDay[$day] = count(array_unique($content));
+                $usersPerDay[$day] = count($content);
             }
 
             array_pop($usersPerDay);
