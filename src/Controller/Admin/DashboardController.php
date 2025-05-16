@@ -261,22 +261,12 @@ class DashboardController extends AbstractDashboardController
             $stateServerError[$date] = $values["500"];
             $stateRedirect[$date] = $values["302"];
             $sum[$date] = $values["200"] + $values["404"] + $values["500"] + $values["302"];
-            $fraud = [];
 
-            foreach ($targets as $datum => $targetList) {
-                $fraudCount = 0; // ← Zähler pro Tag zurücksetzen
 
-                foreach ($targetList as $value) {
-                    foreach ($filters as $filter) {
-                        if (str_contains($value, $filter)) {
-                            $fraudCount++;
-                            break; // nur einmal pro Treffer zählen
-                        }
-                    }
-                }
-
-                $fraud[$datum] = $fraudCount;
-            }
+// Haupt-Logik
+            $fraud = array_map(function ($targetList) use ($filters) {
+                return $this->countFilterMatches($targetList, $filters);
+            }, $targets);
 
 
         }
@@ -314,6 +304,19 @@ class DashboardController extends AbstractDashboardController
         // (tip: it's easier if your template extends from @EasyAdmin/page/content.html.twig)
         //
         // return $this->render('some/path/my-dashboard.html.twig');
+    }
+
+    private function countFilterMatches(array $values, array $filters): int {
+        $count = 0;
+        foreach ($values as $value) {
+            foreach ($filters as $filter) {
+                if (str_contains($value, $filter)) {
+                    $count++;
+                    break;
+                }
+            }
+        }
+        return $count;
     }
 
     public function configureDashboard(): Dashboard
