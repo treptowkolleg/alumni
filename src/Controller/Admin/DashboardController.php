@@ -125,8 +125,6 @@ class DashboardController extends AbstractDashboardController
             'db',
             'sql',
             'dump',
-            'log',
-            'logs',
             'secret',
             'hidden',
             'pass',
