@@ -21,7 +21,19 @@ class ChatController extends AbstractController
 {
 
     #[Route('', name: 'start')]
-    public function chat(Request $request, UserRepository $userRepository, DirectMessageRepository $messageRepository, EntityManagerInterface $entityManager): Response
+    public function chat(DirectMessageRepository $messageRepository): Response
+    {
+        $sendMessages = $messageRepository->findBy(['sender' => $this->getUser()]);
+        $receivedMessages = $messageRepository->findBy(['recipient' => $this->getUser()]);
+
+        return $this->render('chat/start.html.twig', [
+            'sendMessages' => $sendMessages,
+            'receivedMessages' => $receivedMessages,
+        ]);
+    }
+
+    #[Route('/write/{subject}', name: 'new')]
+    public function new(Request $request, EntityManagerInterface $entityManager, ?string $subject = null): Response
     {
         $message = new DirectMessage();
         $message->setIsRead(false);
@@ -30,7 +42,7 @@ class ChatController extends AbstractController
         $message->setIsPinned(false);
 
         $form = $this->createForm(ChatMessageType::class, $message, [
-        'me' => $this->getUser(),
+            'me' => $this->getUser(),
         ]);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()) {
@@ -40,41 +52,8 @@ class ChatController extends AbstractController
             return $this->redirectToRoute('chat_start');
         }
 
-        $sendMessages = $messageRepository->findBy(['sender' => $this->getUser()]);
-        $receivedMessages = $messageRepository->findBy(['recipient' => $this->getUser()]);
-
-        return $this->render('chat/start.html.twig', [
-            'form' => $form,
-            'sendMessages' => $sendMessages,
-            'receivedMessages' => $receivedMessages,
-        ]);
-    }
-
-    #[Route('/write/{subject}', name: 'new')]
-    public function new(Request $request, Chat $chat, EntityManagerInterface $entityManager, ?string $subject = null): Response
-    {
-        $message = new DirectMessage();
-        $message->setIsRead(false);
-        $message->setSender($this->getUser());
-
-        if($subject !== null) {
-            $message->setTitle("RE: $subject");
-        }
-
-        $partner = $chat->getOwner()->getUserIdentifier() === $this->getUser()->getUserIdentifier() ? $chat->getParticipant() : $chat->getOwner();
-
-        $form = $this->createForm(ChatMessageType::class, $message);
-        $form->handleRequest($request);
-        if($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($message);
-            $entityManager->flush();
-            $this->addFlash('success', 'Deine Nachricht wurde verschickt.');
-            return $this->redirectToRoute('chat_start',['slug' => $partner->getSlug()]);
-        }
-
         return $this->render('chat/new.html.twig', [
             'form' => $form,
-            'partner' => $partner,
         ]);
     }
 

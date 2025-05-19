@@ -25,6 +25,7 @@ class ChatMessageType extends AbstractType
             ->add('recipient', EntityType::class, [
                 'choice_label' => fn(User $user) => $user->getUserProfiles()->first(),
                 'class' => User::class,
+                'attr' => ['class' => 'slim-select-multi-performance-course', 'data-max' => 21],
                 'query_builder' => function (UserRepository $repo) use ($me) {
                     return $repo->createVisibleRecipientsQuery($me);
                 },
