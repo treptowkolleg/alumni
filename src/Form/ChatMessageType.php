@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class ChatMessageType extends AbstractType
 {
@@ -25,10 +26,16 @@ class ChatMessageType extends AbstractType
             ->add('recipient', EntityType::class, [
                 'choice_label' => fn(User $user) => $user->getUserProfiles()->first(),
                 'class' => User::class,
-                'attr' => ['class' => 'slim-select-multi-performance-course', 'data-max' => 21],
+                'attr' => ['class' => 'slim-select-multi-recipient', 'data-max' => 1],
+                'empty_data' => null,
+                'placeholder' => 'auswählen',
+                'required' => true,
                 'query_builder' => function (UserRepository $repo) use ($me) {
                     return $repo->createVisibleRecipientsQuery($me);
                 },
+                'constraints' => [
+                    new NotBlank()
+                ]
             ])
             ->add('title', TextType::class,[
                 'label' => "Subject",

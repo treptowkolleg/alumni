@@ -40,6 +40,7 @@ class ChatController extends AbstractController
         $message->setSender($this->getUser());
         $message->setIsDeleted(false);
         $message->setIsPinned(false);
+        $message->setRecipient(null);
 
         $form = $this->createForm(ChatMessageType::class, $message, [
             'me' => $this->getUser(),
