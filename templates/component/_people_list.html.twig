@@ -5,7 +5,7 @@
                     <div class="card border-0 rounded rounded-2 shadow-sm text-bg-white align-self-stretch">
                         <div class="row g-0">
                             <div class="col-3 col-lg-4">
-                                {% if (app.user and  person.networkState == 'registered') or person.networkState == 'public'  or (filter in ['school','freunde'] and person.networkState == 'private') %}
+                                {% if (app.user and  person.networkState == 'registered') or person.networkState == 'public'  or (person.user.school == app.user.school and person.networkState == 'private') %}
                                     <a href="{{ url('people_show',{'slug':person.user.slug }) }}">
                                         {% if person.user.image.name %}
                                             <img src="{{ vich_uploader_asset(person.user)|imagine_filter('avatar')  }}" class="rounded-top img-fluid w-100" alt="..." style="border-top-right-radius:0!important">
@@ -24,7 +24,7 @@
                                         <div class="text-truncate small mb-0">{{ person.inYear }} - {{ person.outYear }}</div>
                                     {% endif %}
                                     <div class="d-flex align-items-start justify-content-between">
-                                        {% if (app.user and  person.networkState == 'registered') or person.networkState == 'public'  or (filter in ['school','freunde'] and person.networkState == 'private') %}
+                                        {% if (app.user and  person.networkState == 'registered') or person.networkState == 'public'  or (person.user.school == app.user.school and person.networkState == 'private') %}
                                             <a href="{{ url('people_show',{'slug':person.user.slug }) }}" class="mb-0 fw-bolder text-decoration-none stretched-link text-truncate">{{ person }}</a>
                                         {% else %}
                                             {% set blocks = ['▒', '░'] %}
@@ -38,7 +38,7 @@
                                         {% endif %}
                                     </div>
                                     <div  class="d-none d-lg-block text-off small mt-auto">
-                                        {% if (app.user and  person.networkState == 'registered') or person.networkState == 'public'  or (filter in ['school','freunde'] and person.networkState == 'private') %}
+                                        {% if (app.user and  person.networkState == 'registered') or person.networkState == 'public'  or (person.user.school == app.user.school and person.networkState == 'private') %}
                                         {{ person.examType|trans }}
                                         {% else %}
                                             {% set blocks = ['▒', '░'] %}
@@ -58,7 +58,7 @@
                             <div class="card-body rounded-bottom d-flex bg-light-subtle align-items-center">
                                 {% if app.user.userProfiles.count > 0 %}
                                     {% if person.user != app.user %}
-                                        {% if person.networkState == 'registered' or person.networkState == 'public'  or (filter in ['school','freunde'] and person.networkState == 'private') %}
+                                        {% if person.networkState == 'registered' or person.networkState == 'public'  or (person.user.school == app.user.school and person.networkState == 'private') %}
                                         <div>
                                             <span class="d-none small me-1 like-number-{{ person.id }}">{{ person.friends.count }}</span>
                                             <div class="text-off spinner-border spinner-border-sm d-none like-loader-{{ person.id }}" role="status" style="margin-right: 2px"></div>
