@@ -201,5 +201,7 @@
     <orderEntry type="library" name="de" level="application" />
     <orderEntry type="library" name="de.umd" level="application" />
     <orderEntry type="library" name="chart.js" level="application" />
+    <orderEntry type="library" name="chartjs-plugin-trendline" level="application" />
+    <orderEntry type="library" name="chartjs-plugin-regression" level="application" />
   </component>
 </module>
