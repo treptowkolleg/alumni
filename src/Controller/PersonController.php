@@ -134,8 +134,17 @@ class PersonController extends AbstractController
     }
 
     #[Route('/alumni/details/{slug}', name: 'show')]
-    public function show(Request $request, User $user, UserRepository $userRepository, UserProfileRepository $profileRepository, PinboardEntryRepository $entryRepository, EntityManagerInterface $entityManager): Response
+    public function show(Request $request, string $slug, UserRepository $userRepository, UserProfileRepository $profileRepository, PinboardEntryRepository $entryRepository, EntityManagerInterface $entityManager): Response
     {
+        $user = $userRepository->findOneBy(['slug' => $slug]);
+
+        // Wenn der BlogPost nicht gefunden wurde, eine Fehlerseite anzeigen
+        if (!$user) {
+            return $this->render('bundles/TwigBundle/Exception/error404.html.twig', [
+                'message' => 'Die angeforderte Meldung wurde nicht gefunden.',
+            ], new Response('', Response::HTTP_NOT_FOUND));
+        }
+
         $profile = $user->getUserProfiles()->first();
         if($profile != null){
 
