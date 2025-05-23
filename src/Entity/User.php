@@ -191,6 +191,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
     #[ORM\OneToMany(targetEntity: Gruschel::class, mappedBy: 'sendBy')]
     private Collection $sendGruschels;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $gruschelIsActive = null;
+
     public function __construct()
     {
         $this->blogPosts = new ArrayCollection();
@@ -1025,6 +1028,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
                 $sendGruschel->setSendBy(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isGruschelIsActive(): ?bool
+    {
+        return $this->gruschelIsActive;
+    }
+
+    public function setGruschelIsActive(?bool $gruschelIsActive): static
+    {
+        $this->gruschelIsActive = $gruschelIsActive;
 
         return $this;
     }

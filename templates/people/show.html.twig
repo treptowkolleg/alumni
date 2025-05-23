@@ -74,7 +74,7 @@
                         <span></span>
                     </a>
                 {% endif %}
-                {% if app.user %}
+                {% if app.user and app.user.gruschelIsActive and person.user.gruschelIsActive %}
                     {% if gruschelButton %}
                         <form method="post">
                             <input type="hidden" name="token" value="{{ csrf_token('gruscheln') }}">

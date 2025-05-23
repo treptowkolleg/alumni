@@ -217,6 +217,11 @@ class ProfileController extends AbstractController
                         'label' => 'Über neue Nachrichten informieren',
                         'help' => 'Üblicherweise wirst du einmal wöchentlich informiert.',
                     ])
+                    ->add('gruschelIsActive',CheckboxType::class,[
+                        'required' => false,
+                        'label' => 'Gruscheln aktivieren',
+                        'help' => 'Wenn aktiv, kannst du die Gruschel-Funktion nutzen oder andere können dich gruscheln.',
+                    ])
                     ->add('hasPinnboard',CheckboxType::class,[
                         'required' => false,
                         'label' => 'Pinnwand aktivieren',
