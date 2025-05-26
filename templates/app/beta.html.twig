@@ -12,38 +12,38 @@
 {% endblock %}
 
 {% block page %}
-    <div class="container-fluid container-lg">
+    <div class="container">
         <div class="row">
-            <div class="col-2 col-lg-2">
-                <ul class="list-unstyled fw-normal fs-5 pb-2 small sticky-top" style="top:2px">
+            <div class="col-2">
+                <ul class="list-unstyled fw-normal fs-5 pb-2 small sticky-top text-center text-xl-start" style="top:2px">
                     <li>
                         <a href="{{ url('app_beta') }}" class="bd-links-link ms-0 d-inline-block py-2 px-3 rounded-5 active" aria-current="page">
-                            <img src="{{ asset('images/logo.svg') }}" width="20" height="20" alt="logo"><span class="d-none d-lg-inline fw-bold ms-3">Home</span>
+                            <img src="{{ asset('images/logo.svg') }}" width="20" height="20" alt="logo"><span class="d-none d-xl-inline fw-bold ms-3">Home</span>
                         </a>
                     </li>
                     <li>
                         <a href="{{ url('people_index') }}" class="bd-links-link ms-0 d-inline-block py-2 px-3 rounded-5">
-                            <i class="ti ti-search text-primary"></i><span class="d-none d-lg-inline ms-3">Alumni</span>
+                            <i class="ti ti-search text-primary"></i><span class="d-none d-xl-inline ms-3">Alumni</span>
                         </a>
                     </li>
                     <li>
                         <a href="{{ url('event_index') }}" class="bd-links-link ms-0 d-inline-block py-2 px-3 rounded-5">
-                            <i class="ti ti-calendar-event text-primary"></i><span class="d-none d-lg-inline ms-3">Events</span>
+                            <i class="ti ti-calendar-event text-primary"></i><span class="d-none d-xl-inline ms-3">Events</span>
                         </a>
                     </li>
                     <li>
                         <a href="{{ url('group_hobby_index') }}" class="bd-links-link ms-0 d-inline-block py-2 px-3 rounded-5">
-                            <i class="ti ti-users text-primary"></i><span class="d-none d-lg-inline ms-3">Gruppen</span>
+                            <i class="ti ti-users text-primary"></i><span class="d-none d-xl-inline ms-3">Gruppen</span>
                         </a>
                     </li>
                     <li>
                         <a href="{{ url('chat_start') }}" class="bd-links-link ms-0 d-inline-block py-2 px-3 rounded-5">
-                            <i class="ti ti-message-2 text-primary"></i><span class="d-none d-lg-inline ms-3">Nachrichten</span>
+                            <i class="ti ti-message-2 text-primary"></i><span class="d-none d-xl-inline ms-3">Nachrichten</span>
                         </a>
                     </li>
                     <li>
                         <a href="{{ url('profile_index') }}" class="bd-links-link ms-0 d-inline-block py-2 px-3 rounded-5">
-                            <i class="ti ti-user text-primary"></i><span class="d-none d-lg-inline ms-3">Profil</span>
+                            <i class="ti ti-user text-primary"></i><span class="d-none d-xl-inline ms-3">Profil</span>
                         </a>
                     </li>
                 </ul>
@@ -120,7 +120,7 @@
                 </div>
 
             </div>
-            <div class="col-12 col-lg-4">
+            <div class="col-12 col-lg-4 mb-5 d-none d-lg-block">
                 <div class="row row-cols-1 g-3 mt-3 sticky-top" style="top:16px">
                     <div class="col">
                         <input class="form-control" type="search" placeholder="Suchen" aria-label="Suchen" autocomplete="off">
