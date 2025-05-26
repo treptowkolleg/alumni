@@ -38,6 +38,23 @@ class AppController extends AbstractController
         ]);
     }
 
+    #[Route('/beta', name: 'beta', methods: ['GET'])]
+    public function beta(BlogPostRepository $repository, EventRepository $eventRepository, UserProfileRepository $userProfileRepository): Response
+    {
+        $posts = $repository->findPublishedBlogPosts();
+        $news = $repository->findPublishedNews();
+
+        $events = $eventRepository->findBy([], ['startDate' => 'DESC'],4);
+        $profiles = $userProfileRepository->findBy(['networkState' => 'public'],['id' => 'DESC'], limit: 6);
+
+        return $this->render('app/beta.html.twig', [
+            'posts' => $posts,
+            'news' => $news,
+            'events' => $events,
+            'profiles' => $profiles,
+        ]);
+    }
+
     #[Route('/suchergebnisse', name: 'search', methods: ['POST'])]
     public function search(Request $request, BlogPostRepository $postRepository): Response
     {
