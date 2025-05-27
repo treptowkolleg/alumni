@@ -51,11 +51,17 @@
                     </a>
                     <ul class="dropdown-menu bg-white rounded-4 border-0 fs-5 shadow">
                         <li><a class="dropdown-item" href="#"><i class="ti ti-building text-primary"></i><span class="ms-3">Schulen</span></a></li>
-                        <li><a class="dropdown-item" href="#"><i class="ti ti-briefcase text-primary"></i><span class="ms-3">Jobs</span></a></li>
+                        <li><a class="dropdown-item" href="{{ url('blog_news_offer_index') }}"><i class="ti ti-briefcase text-primary"></i><span class="ms-3">Jobs</span></a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#"><i class="ti ti-settings text-primary"></i><span class="ms-3">Einstellungen</span></a></li>
-                        <li><a class="dropdown-item" href="#"><i class="ti ti-dashboard text-primary"></i><span class="ms-3">Administration</span></a></li>
-                        <li><a class="dropdown-item" href="#"><i class="ti ti-logout text-primary"></i><span class="ms-3">Abmelden</span></a></li>
+                        {% if app.user %}
+                            <li><a class="dropdown-item" href="{{ url('profile_settings') }}"><i class="ti ti-settings text-primary"></i><span class="ms-3">Einstellungen</span></a></li>
+                        {% endif %}
+                        {% if is_granted('ROLE_AUTHOR') or is_granted('ROLE_PLANNER') %}
+                            <li><a class="dropdown-item" href="{{ url('admin') }}" target="_blank"><i class="ti ti-dashboard text-primary"></i><span class="ms-3">Administration</span></a></li>
+                        {% endif %}
+                        {% if app.user %}
+                            <li><a class="dropdown-item" href="{{ url('app_logout') }}"><i class="ti ti-logout text-primary"></i><span class="ms-3">Abmelden</span></a></li>
+                        {% endif %}
                     </ul>
                 </li>
             </ul>
