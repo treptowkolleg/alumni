@@ -64,7 +64,7 @@
                 </li>
             </ul>
         </div>
-        <div id="content" style="max-width: 500px;">
+        <div id="content">
             <div class="card bg-white border-top-0 border-bottom-0">
                 <ul class="nav nav-underline nav-fill border-bottom sticky-top global-nav" role="tablist">
                     <li class="nav-item">
@@ -125,7 +125,7 @@
                 <div class="card-body py-5 border-top"></div>
             </div>
         </div>
-        <div id="sidebar" class="d-none d-xl-block sticky-top">
+        <div id="sidebar" class="d-none d-xl-block sticky-top" style="min-width: 500px;">
             <div class="container">
                 <div class="mt-4">
                     <div class="mb-3">
@@ -139,9 +139,16 @@
                             <div class="list-group list-group-flush border-0">
                                 {% for event in events|sort((a, b) => a.startDate <=> b.startDate) %}
                                     {% if event.endDate|date('Ymd') >= date('now')|date('Ymd')%}
-                                        <a href="{{ url('event_show',{'slug':event.slug}) }}" class="list-group-item list-group-item-action">
-                                            <div class="small">{{ event.startDate|date('d.m.Y') }}</div>
-                                            <div class="fw-bolder">{{ event.title }}</div>
+                                        <a href="{{ url('event_show',{'slug':event.slug}) }}" class="list-group-item d-flex align-items-center border-0 list-group-item-action">
+                                            <div class="small text-center bg-light border border-off p-3 rounded-circle me-2">
+                                                <div class="">{{ event.startDate|date('d.m.') }}</div>
+                                                <div>{{ event.startDate|date('Y') }}</div>
+                                            </div>
+                                            <div class="ms-2 d-flex flex-column">
+                                                <div class="link-primary text-truncate">{{ event.title }}</div>
+                                                <div class="small text-truncate">{{ event.location }}</div>
+                                                <div class="small text-truncate">{{ event.type.title }}</div>
+                                            </div>
                                         </a>
                                     {% endif %}
                                 {% endfor %}
