@@ -163,7 +163,10 @@
                                         {% else %}
                                             <img src="{{ asset('images/avatar-01-01.png') }}" class="img-fluid rounded-circle" style="max-width: 48px" alt="...">
                                         {% endif %}
-                                        <div class="ms-2">{{ profile }}</div>
+                                        <div class="ms-2 d-flex flex-column">
+                                            <div class="link-primary">{{ profile }}</div>
+                                            <div class="small">{{ profile.user.school.title }}</div>
+                                        </div>
                                     </a>
                                 {% endfor %}
                                 <a href="{{ url('people_index') }}" class="list-group-item list-group-item-action border-0 rounded-bottom-4 link-primary">mehr Alumni finden</a>
