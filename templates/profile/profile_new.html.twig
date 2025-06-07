@@ -92,9 +92,12 @@
                                 <h3 class="h5 mb-0 text-center text-lg-start">Sichtbarkeit</h3>
                             </div>
                             <div class="card-body">
-                                <div class="row row-cols-1 row-cols-lg-2 g-3 mb-5">
+                                <div class="row row-cols-1 row-cols-lg-2 g-3">
                                     {{ form_row(form.networkState) }}
                                     {{ form_row(form.displayName) }}
+                                </div>
+                                <div class="mb-5">
+                                    Die Auswahl der Sichtbarkeit deines Profils beeinflusst, wer deine Informationen sehen kann — von öffentlich über verifizierte Nutzer bis hin zur eingeschränkten Sichtbarkeit nur für deine Schule. Weitere Details und Auswirkungen findest du in unserer <a href="{{ url('app_green_data') }}" target="_blank">Green-Data-Richtlinie</a>.
                                 </div>
                                 <div class="">
                                     <div class="row g-3">
