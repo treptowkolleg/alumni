@@ -18,7 +18,7 @@
             {% for event in user.school.events|sort((a, b) => a.startDate <=> b.startDate) %}
                 {% if event.endDate|date('Ymd') >= date('now')|date('Ymd')%}
                     <li>
-                        <a href="{{ url('event_show',{'slug':event.slug}) }}" class="list-group-item list-group-item-action">
+                        <a href="https://www.alumni-portal.org/{{ path('event_show',{'slug':event.slug}) }}" class="list-group-item list-group-item-action">
                             <div>{{ event.title }}</div>
 
                         </a>
