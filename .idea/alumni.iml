@@ -203,5 +203,6 @@
     <orderEntry type="library" name="chart.js" level="application" />
     <orderEntry type="library" name="chartjs-plugin-trendline" level="application" />
     <orderEntry type="library" name="chartjs-plugin-regression" level="application" />
+    <orderEntry type="library" name="htmx.org" level="application" />
   </component>
 </module>

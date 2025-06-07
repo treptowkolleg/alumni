@@ -43,7 +43,7 @@
                                 </nav>
                             </div>
                             <div class="list-group list-group-flush">
-                                {% for post in posts|sort((a, b) => b.startDate <=> a.startDate) %}
+                                {% for post in posts|sort((a, b) => a.startDate <=> b.startDate) %}
                                     {% if loop.index <= 10 %}
                                         {% if post.endDate|date('Ymd') >= date('now')|date('Ymd')%}
                                             {{ include('component/_event_list.html.twig') }}

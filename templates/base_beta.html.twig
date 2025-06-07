@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="de" class=" h-100">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, viewport-fit=cover, initial-scale=1, shrink-to-fit=no">
+        <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="shortcut icon" href="/favicon.ico" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="Alumni" />
+        <link rel="manifest" href="/site.webmanifest" />
+
+        {# Meta-Tags #}
+        <meta name="description" content="{{ meta_description|default('Portal für Alumni, Lernende und Lehrkräfte des Treptow-Kollegs Berlin und des Zweiten Bildungswegs zum Austausch und der Kommunikation.') }}">
+        <meta name="robots" content="all">
+        <link rel="canonical" href="{{ app.request.uri }}">
+        <meta property="og:type" content="website">
+        <meta property="og:locale" content="de_DE">
+        <meta property="og:title" content="{{ seo_title ? seo_title ~ ' | Alumni Portal' : 'Alumni Portal des zweiten Bildungsweges' }}">
+        <meta property="og:description" content="{{ meta_description|default('Portal für Alumni, Lernende und Lehrkräfte des Treptow-Kollegs Berlin und des Zweiten Bildungswegs zum Austausch und der Kommunikation.') }}">
+        <title>{% block title %}{{ seo_title ? seo_title ~ ' | Alumni Portal' : 'Alumni Portal des zweiten Bildungsweges' }}{% endblock %}</title>
+
+        {% block stylesheets %}
+            <link href="{{ asset('build/webfont/tabler-icons.min.css') }}" rel="stylesheet"/>
+        {% endblock %}
+
+        {% block javascripts %}
+            {% block importmap %}{{ importmap('app') }}{% endblock %}
+            <script src="https://unpkg.com/htmx.org@2.0.4"></script>
+        {% endblock %}
+    </head>
+    <body>
+
+    {{ include('component/_toast.html.twig') }}
+
+    {% block header %}{% endblock %}
+
+    <main>{% block page %}{% endblock %}</main>
+
+    {% if not app.session.get('cookie_consent') %}
+        <div id="cookie-banner" class="fixed-bottom bg-dark text-white py-3">
+            <div class="container d-flex flex-column flex-md-row align-items-center justify-content-between">
+                <p class="mb-3 mb-lg-0 me-lg-2">
+                    Wir verwenden ausschließlich funktionale Cookies, um das Alumni-System umzusetzen. Cookies von Drittanbietern werden nicht genutzt.
+                    Mehr Informationen findest du in unserer <a href="{{ url('app_privacy') }}" class="text-info text-decoration-underline text-nowrap">Datenschutzerklärung</a> und der <a href="{{ url('app_green_data') }}" class="text-info text-decoration-underline text-nowrap">Green-Data-Richtlinie</a>.
+                </p>
+                <div class="d-flex">
+                    <button id="accept-all" class="btn text-nowrap btn-primary me-2">
+                        Nur funktionale Cookies
+                    </button>
+                    <button id="customize" class="btn btn-white" data-bs-toggle="modal" data-bs-target="#cookie-modal">
+                        Einstellungen
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="cookie-modal" class="modal fade" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Cookie-Einstellungen</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Wähle aus, welche Cookies du erlauben möchtest:</p>
+                        <form id="cookie-settings-form">
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="checkbox" name="cookie-category" id="necessary-cookies" value="necessary_cookies_only" checked disabled>
+                                <label class="form-check-label" for="necessary-cookies">
+                                    Notwendige Cookies (immer aktiv)
+                                </label>
+                                <p class="small">
+                                    Diese Cookies sind essenziell, um das Login-System des Alumni-Portals zu ermöglichen. Es handelt sich um sogenannte Session-Cookies, die automatisch gelöscht werden, sobald du den Browser schließt.
+                                </p>
+                            </div>
+                            <div class="">
+                                <p class="small">
+                                    Wenn du auf Speichern klickst, wird zusätzlich ein Cookie angelegt, das deine Auswahl speichert und festhält, welche Cookies erlaubt sind und welche nicht.
+                                </p>
+                                <p class="small mb-0">
+                                    Weitere Informationen, einschließlich einer Anleitung zum Löschen von Cookies, findest du in unserer <a href="{{ url('app_green_data') }}" target="_blank">Green-Data-Richtlinie</a>.
+                                </p>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="save-cookie-settings" class="btn btn-primary">Speichern</button>
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Abbrechen</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    {% block footer %}{% endblock %}
+    </body>
+</html>

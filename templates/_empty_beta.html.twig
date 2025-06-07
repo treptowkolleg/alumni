@@ -1,0 +1,13 @@
+{% extends 'base_beta.html.twig' %}
+
+{% set seo_title = null %}
+
+{% block header %}{% endblock %}
+
+{% block page %}
+    {% block page_header %}{% endblock %}
+    {% block body %}{% endblock %}
+    {% block aside %}{% endblock %}
+{% endblock %}
+
+{% block footer %}{{ include('component/_footer.html.twig') }}{% endblock %}
