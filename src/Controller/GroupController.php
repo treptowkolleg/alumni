@@ -39,7 +39,7 @@ class GroupController extends AbstractController
         $form = $this->createForm(GroupSubjectType::class, $groupSubject);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid() && $this->getUser() != null) {
             $groupSubject->setOwner($this->getUser());
             $groupSubject->setPrivate(false);
             $groupSubject->setHobby($hobby);
@@ -63,7 +63,7 @@ class GroupController extends AbstractController
         $form = $this->createForm(GroupSubjectType::class, $groupSubject);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()  && $this->getUser() != null) {
             $groupSubject->setOwner($this->getUser());
             $groupSubject->setPrivate(false);
             $groupSubject->setInterest($interest);
@@ -87,7 +87,7 @@ class GroupController extends AbstractController
         $form = $this->createForm(SubjectPostType::class, $subjectPost);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()  && $this->getUser() != null) {
             $subjectPost->setOwner($this->getUser());
             $subjectPost->setSubject($subject);
             $subjectPost->setParent(null);
