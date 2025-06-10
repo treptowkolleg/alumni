@@ -119,25 +119,27 @@
 {% block body %}{% endblock %}
 
 {% block aside %}
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable">
-            <div class="modal-content rounded-2 border-0 bg-white shadow">
-                {{ form_start(form) }}
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Plausch erstellen</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    {% if app.user %}
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable">
+                <div class="modal-content rounded-2 border-0 bg-white shadow">
+                    {{ form_start(form) }}
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Plausch erstellen</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        {{ form_row(form.title) }}
+                        {{ form_row(form.description) }}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light rounded-2" data-bs-dismiss="modal">Abbrechen</button>
+                        <button type="submit" class="btn btn-primary rounded-2">Speichern</button>
+                    </div>
+                    {{ form_end(form) }}
                 </div>
-                <div class="modal-body">
-                    {{ form_row(form.title) }}
-                    {{ form_row(form.description) }}
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-light rounded-2" data-bs-dismiss="modal">Abbrechen</button>
-                    <button type="submit" class="btn btn-primary rounded-2">Speichern</button>
-                </div>
-                {{ form_end(form) }}
             </div>
         </div>
-    </div>
+    {% endif %}
 {% endblock %}
