@@ -140,6 +140,7 @@ class NewsletterSendCommand extends Command
 
 
                 try {
+                    $email->returnPath('bounce@treptowkolleg.de');
                     $this->mailer->send($email);
                     $receiver->setSend(true);
                 } catch (\Exception|TransportExceptionInterface $e) {
