@@ -7,22 +7,27 @@
 </head>
 <body>
 
-
+{% if user %}
     <p>Hallo {{ user.fullname }},</p>
+{% else %}
+    <p>Hallo liebe Alumni des zweiten Bildungsweges,</p>
+{% endif %}
     {{ config.description|raw }}
     <p></p>
 
+{% if user %}
+    <p>Aktuell sind von deiner Schule schon {{ user_count }} Alumni registriert.</p>
     {% if show_events %}
         <p style="font-weight: bold">Kommende Veranstaltungen ({{ user.school.title }})</p>
         <ul>
             {% for event in user.school.events|sort((a, b) => a.startDate <=> b.startDate) %}
                 {% if event.endDate|date('Ymd') >= date('now')|date('Ymd')%}
                     <li>
-                        <a href="https://www.alumni-portal.org/{{ path('event_show',{'slug':event.slug}) }}" class="list-group-item list-group-item-action">
+                        <a href="https://www.alumni-portal.org{{ path('event_show',{'slug':event.slug}) }}" class="list-group-item list-group-item-action">
                             <div>{{ event.title }}</div>
 
                         </a>
-                        <div>{{ event.startDate|date('d.m.Y') }}</div>
+                        <div>{{ event.startDate|date('d.m.Y H:i') }} Uhr</div>
                     </li>
                 {% endif %}
             {% else %}
@@ -30,18 +35,45 @@
             {% endfor %}
         </ul>
     {% endif %}
-
+{% else %}
     {% if show_events %}
+        <p style="font-weight: bold">Kommende Veranstaltungen</p>
+        <ul>
+            {% for event in events|sort((a, b) => a.startDate <=> b.startDate) %}
+                {% if event.endDate|date('Ymd') >= date('now')|date('Ymd')%}
+                    <li>
+                        <a href="https://www.alumni-portal.org{{ path('event_show',{'slug':event.slug}) }}" class="list-group-item list-group-item-action">
+                            <div>{{ event.title }}</div>
+
+                        </a>
+                        <div>{{ event.startDate|date('d.m.Y H:i') }} Uhr</div>
+                    </li>
+                {% endif %}
+            {% else %}
+                <li>Aktuell sind keine Veranstaltungen geplant.</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endif %}
+
+{% if user %}
+    {% if show_messages %}
         <p>Auf dich warten aktuell {{ message_count ? message_count : 'keine' }} Nachrichten.</p>
     {% endif %}
-
+{% else %}
+    <p>
+        Wenn du Teil der Gemeinschaft werden möchtest, kannst du dich <a href="https://www.alumni-portal.org/register">direkt hier registrieren</a>.
+    </p>
+{% endif %}
+    <p>
+        Bei Fragen, Problemen und Anregungen kannst du direkt auf diese E-Mail antworten.
+    </p>
     <p>
         Vielen Dank für deine Unterstützung.<br>
         Dein Alumni-Portal
     </p>
-
     <p>
-        &copy; 2025 - Alumni Portal des ZBW<br>
+        &copy;2025 - Alumni Portal des ZBW<br>
         <a href="https://www.alumni-portal.org/">www.alumni-portal.org</a>
     </p>
 

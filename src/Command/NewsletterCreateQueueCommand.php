@@ -8,6 +8,7 @@ use App\Repository\NewsletterRepository;
 use App\Repository\NewsletterTemplateRepository;
 use DatePeriod;
 use Doctrine\ORM\EntityManagerInterface;
+use Proxies\__CG__\App\Entity\Newsletter;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -48,29 +49,46 @@ class NewsletterCreateQueueCommand extends Command
 
         $templates = $this->templateRepository->findAll();
         $today = new \DateTimeImmutable();
-        $today = $today->setTime(18,0,0);
 
         foreach ($templates as $template) {
-            if ($this->isSendDateToday($template->getStartDate(), $template->getPeriod(), $template->getPeriodUnit()) and !$template->isUseAllReceivers()) {
-                $schools = $template->getSchool();
-                foreach ($schools as $school) {
-                    foreach($school->getNewsletters() as $newsletter) {
-                        if(!$this->em->getRepository(NewsletterQueue::class)->findOneBy(['receiverEmail' => $newsletter->getEmail(),'send' => false])) {
+            if ($this->isSendDateToday($template->getStartDate(), $template->getPeriod(), $template->getPeriodUnit())) {
+                $sendHour = $template->getStartDate()->format("H");
+                $today = $today->setTime($sendHour,0,0);
+                if (!$template->isUseAllReceivers()) {
+                    $schools = $template->getSchool();
+                    foreach ($schools as $school) {
+                        foreach ($school->getNewsletters() as $newsletter) {
+                            if (!$this->em->getRepository(NewsletterQueue::class)->findOneBy(['receiverEmail' => $newsletter->getEmail(), 'send' => false])) {
+                                $queue = new NewsletterQueue();
+                                $queue->setTemplate($template);
+                                $queue->setReceiverEmail($newsletter->getEmail());
+                                $queue->setSendDate($today);
+                                $queue->setSend(false);
+                                $queue->setUserCount($school->getUsers()->count());
+                                $this->em->persist($queue);
+                            }
+                        }
+                    }
+                } else {
+                    $receivers = $this->em->getRepository(Newsletter::class)->findBy(['user' => null]);
+                    $count = count($receivers);
+                    $output->writeln("Es gibt $count Empfänger ohne Konto.");
+                    foreach ($receivers as $newsletter) {
+                        if (!$this->em->getRepository(NewsletterQueue::class)->findOneBy(['receiverEmail' => $newsletter->getEmail(), 'send' => false])) {
                             $queue = new NewsletterQueue();
                             $queue->setTemplate($template);
                             $queue->setReceiverEmail($newsletter->getEmail());
                             $queue->setSendDate($today);
                             $queue->setSend(false);
-                            $queue->setUserCount($school->getUsers()->count());
+                            $queue->setUserCount(0);
                             $this->em->persist($queue);
                         }
                     }
+
                 }
             }
 
-            if ($template->isUseAllReceivers()) {
-                // für alle Newsletter ohne hasSchool
-            }
+
         }
         $this->em->flush();
 

@@ -2,6 +2,8 @@
 
 namespace App\Command;
 
+use App\Entity\BlogPost;
+use App\Entity\Event;
 use App\Entity\NewsletterQueue;
 use App\Entity\NewsletterTemplate;
 use App\Entity\User;
@@ -19,6 +21,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
 
@@ -61,46 +64,102 @@ class NewsletterSendCommand extends Command
 
         $svgBase64 = 'data:image/svg+xml;base64,' . base64_encode(file_get_contents($logoPath));
 
-        $queue = $this->em->getRepository(NewsletterQueue::class)->findBy(['send' => false], orderBy: ['sendDate' => 'DESC'], limit: 100);
+        $queue = $this->em->getRepository(NewsletterQueue::class)->findBy(['send' => false], orderBy: ['sendDate' => 'DESC'], limit: 50);
 
         foreach ($queue as $receiver) {
             $now = new \DateTimeImmutable();
-            $output->writeln($now->format('Y-m-d H:i:s'));
-            $output->writeln($receiver->getSendDate()->format('Y-m-d H:i:s'));
-            $output->writeln($receiver->getSendDate() <= $now ? 'true' : 'false');
 
             $showEvents = $receiver->getTemplate()->isShowEvents();
+            $showBlogs = $receiver->getTemplate()->isShowRecentPosts();
             $showMessages = $receiver->getTemplate()->isShowRecentNews();
 
-            if($receiver->getSendDate() <= $now) {
-                $user = $this->em->getRepository(User::class)->findOneBy(['email' => $receiver->getReceiverEmail()]);
+            $blogs = [];
+            if($showBlogs) {
+                $blogs = $this->em->getRepository(BlogPost::class)->findBy(['isPublished' => true], ['updatedAt' => 'DESC'], 4);
+            }
 
-                $messages = $user->getSendDirectMessages();
-                $messageCount = 0;
-                foreach ($messages as $message) {
-                    if($message->getRecipient() == $user and !$message->isRead()) {
-                        $messageCount++;
+            $events = [];
+            if($showEvents) {
+                $events = $this->em->getRepository(Event::class)->findBy([], ['startDate' => 'DESC'], 4);
+            }
+
+            if($receiver->getSendDate() <= $now) {
+                if(!$receiver->getTemplate()->isUseAllReceivers()) {
+                    $user = $this->em->getRepository(User::class)->findOneBy(['email' => $receiver->getReceiverEmail()]);
+
+                    $messages = $user?->getSendDirectMessages();
+                    $messageCount = 0;
+                    if($messages) {
+                        foreach ($messages as $message) {
+                            if($message->getRecipient() == $user and !$message->isRead()) {
+                                $messageCount++;
+                            }
+                        }
                     }
+
+                    $email = (new TemplatedEmail())
+                        ->from(new Address('service@alumni-portal.org', 'Alumni-Portal'))
+                        ->to((string) $receiver->getReceiverEmail())
+                        ->subject($receiver->getTemplate()->getTitle())
+                        ->htmlTemplate('newsletter/default.html.twig')
+                        ->context([
+                            'user' => $user,
+                            'config' => $receiver->getTemplate(),
+                            'user_count' => $receiver->getUserCount(),
+                            'svg_base64' => $svgBase64,
+                            'logo_url' => $logoUrl,
+                            'show_events' => $showEvents,
+                            'events' => $events,
+                            'show_blogs' => $showBlogs,
+                            'blogs' => $blogs,
+                            'show_messages' => $showMessages,
+                            'message_count' => $messageCount,
+                        ])
+                    ;
+                } else {
+                    // Allgemeine E-Mail für Empfänger ohne Konto
+                    $email = (new TemplatedEmail())
+                        ->from(new Address('service@alumni-portal.org', 'Alumni-Portal'))
+                        ->to((string) $receiver->getReceiverEmail())
+                        ->subject($receiver->getTemplate()->getTitle())
+                        ->htmlTemplate('newsletter/default.html.twig')
+                        ->context([
+                            'user' => null,
+                            'config' => $receiver->getTemplate(),
+                            'svg_base64' => $svgBase64,
+                            'logo_url' => $logoUrl,
+                            'show_events' => $showEvents,
+                            'events' => $events,
+                            'show_blogs' => $showBlogs,
+                            'blogs' => $blogs,
+                            'show_messages' => $showMessages,
+                            'message_count' => null,
+                        ])
+                    ;
                 }
 
-                $email = (new TemplatedEmail())
-                    ->from(new Address('service@alumni-portal.org', 'Alumni-Portal'))
-                    ->to((string) $receiver->getReceiverEmail())
-                    ->subject($receiver->getTemplate()->getTitle())
-                    ->htmlTemplate('newsletter/default.html.twig')
-                    ->context([
-                        'user' => $user,
-                        'config' => $receiver->getTemplate(),
-                        'svg_base64' => $svgBase64,
-                        'logo_url' => $logoUrl,
-                        'show_events' => $showEvents,
-                        'show_messages' => $showMessages,
-                        'message_count' => $messageCount,
-                    ])
-                ;
 
-                $this->mailer->send($email);
-                $receiver->setSend(true);
+                try {
+                    $this->mailer->send($email);
+                    $receiver->setSend(true);
+                } catch (\Exception|TransportExceptionInterface $e) {
+                    $receiver->setSend(false);
+
+                    $message = $e->getMessage();
+
+                    // Versuche, SMTP-Code mit Regex zu extrahieren
+                    preg_match('/\b(5\d{2})\b.*?(\b5\.\d\.\d\b)?/', $message, $matches);
+
+                    $smtpCode = $matches[1] ?? null; // z. B. 550
+                    $smtpStatus = $matches[2] ?? null; // z. B. 5.1.1
+
+                    // Prüfen auf bekannte Codes für "Empfänger existiert nicht"
+                    if (in_array($smtpCode, ['550', '553', '554']) || $smtpStatus === '5.1.1') {
+                        $output->writeln('Empfänger gelöscht wegen SMTP-Code ' . $smtpCode . ': ' . $receiver->getReceiverEmail());
+                    } else {
+                        $output->writeln('Newsletter-Versand fehlgeschlagen für ' . $receiver->getReceiverEmail());
+                    }
+                }
                 $this->em->persist($receiver);
             }
         }

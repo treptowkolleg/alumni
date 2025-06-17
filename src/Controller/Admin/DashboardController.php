@@ -190,7 +190,7 @@ class DashboardController extends AbstractDashboardController
         $countsByDate = [];
         $userPerDay = [];
 
-        $stati = ["200","301","302","404","500"];
+        $stati = ["200","301","302","404", "405","500"];
         $targets = [];
 
 
