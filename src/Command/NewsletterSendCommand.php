@@ -84,6 +84,7 @@ class NewsletterSendCommand extends Command
             }
 
             if($receiver->getSendDate() <= $now) {
+                $unsubscribeLink = 'https://alumni-portal.org/unsubscribe?email='.urlencode($receiver->getReceiverEmail()).'&token='.urlencode($receiver->getToken());
                 if(!$receiver->getTemplate()->isUseAllReceivers()) {
                     $user = $this->em->getRepository(User::class)->findOneBy(['email' => $receiver->getReceiverEmail()]);
 
@@ -114,6 +115,7 @@ class NewsletterSendCommand extends Command
                             'blogs' => $blogs,
                             'show_messages' => $showMessages,
                             'message_count' => $messageCount,
+                            'unsubscribe_link' => $unsubscribeLink,
                         ])
                     ;
                 } else {
@@ -134,13 +136,14 @@ class NewsletterSendCommand extends Command
                             'blogs' => $blogs,
                             'show_messages' => $showMessages,
                             'message_count' => null,
+                            'unsubscribe_link' => $unsubscribeLink,
                         ])
                     ;
                 }
 
 
                 try {
-                    $email->getHeaders()->addTextHeader('List-Unsubscribe', '<https://alumni-portal.org/unsubscribe?email='.urlencode($receiver->getReceiverEmail()).'&token='.urlencode($receiver->getToken()).'>');
+                    $email->getHeaders()->addTextHeader('List-Unsubscribe', '<'.$unsubscribeLink.'>');
                     $email->returnPath('service@alumni-portal.org');
                     $this->mailer->send($email);
                     $receiver->setSend(true);

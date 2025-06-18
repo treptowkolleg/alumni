@@ -27,7 +27,14 @@ class RegistrationController extends AbstractController
     }
 
     #[Route('/unsubscribe', name: 'app_unsubscribe')]
-    public function unsubscribeFromNewsletter(Request $request, UserRepository $userRepository, NewsletterRepository $newsletterRepository, EntityManagerInterface $entityManager, TokenService $tokenService): Response
+    public function unsubscribeFromNewsletter
+    (
+        Request $request,
+        UserRepository $userRepository,
+        NewsletterRepository $newsletterRepository,
+        EntityManagerInterface $entityManager,
+        TokenService $tokenService
+    ): Response
     {
         try {
             $email = $request->query->get('email');
@@ -43,20 +50,18 @@ class RegistrationController extends AbstractController
                 throw new \RuntimeException();
             }
 
-            $user = $userRepository->findOneBy(['email' => $email]);
-
-            if (!$user) {
-                throw new \RuntimeException();
-            }
-
-            $newsletter = $newsletterRepository->findOneBy(['email' => $user->getUserIdentifier()]);
-
+            $newsletter = $newsletterRepository->findOneBy(['email' => $email]);
             if (!$newsletter) {
                 throw new \RuntimeException();
             }
 
-            $user->setHasNewsletter(false);
-            $entityManager->persist($user);
+            // Falls die E-Mail-Adresse ein Alumni-Konto besitzt:
+            $user = $userRepository->findOneBy(['email' => $email]);
+            if ($user) {
+                $user->setHasNewsletter(false);
+                $entityManager->persist($user);
+            }
+
             $entityManager->remove($newsletter);
             $entityManager->flush();
 
