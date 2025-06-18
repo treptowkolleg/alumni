@@ -8,6 +8,7 @@ use App\Operator\SoundExpression;
 use App\Repository\NewsletterRepository;
 use App\Repository\UserRepository;
 use App\Security\EmailVerifier;
+use App\Service\TokenService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,6 +24,49 @@ class RegistrationController extends AbstractController
 {
     public function __construct(private EmailVerifier $emailVerifier)
     {
+    }
+
+    #[Route('/unsubscribe', name: 'app_unsubscribe')]
+    public function unsubscribeFromNewsletter(Request $request, UserRepository $userRepository, NewsletterRepository $newsletterRepository, EntityManagerInterface $entityManager, TokenService $tokenService): Response
+    {
+        try {
+            $email = $request->query->get('email');
+            $token = $request->query->get('token');
+
+            if (!$email || !$token) {
+                throw new \RuntimeException();
+            }
+
+            $validToken = $tokenService->generateUnsubscribeToken($email);
+
+            if (!hash_equals($validToken, $token)) {
+                throw new \RuntimeException();
+            }
+
+            $user = $userRepository->findOneBy(['email' => $email]);
+
+            if (!$user) {
+                throw new \RuntimeException();
+            }
+
+            $newsletter = $newsletterRepository->findOneBy(['email' => $user->getUserIdentifier()]);
+
+            if (!$newsletter) {
+                throw new \RuntimeException();
+            }
+
+            $user->setHasNewsletter(false);
+            $entityManager->persist($user);
+            $entityManager->remove($newsletter);
+            $entityManager->flush();
+
+            $this->addFlash('success','Erfolgreich vom Newsletter abgemeldet.');
+
+        } catch (\Throwable $e) {
+            $this->addFlash('danger', 'Dieser Abmelde-Link ist nicht mehr gültig.');
+        }
+
+        return $this->redirectToRoute('app_index');
     }
 
     #[Route('/register', name: 'app_register')]

@@ -6,6 +6,7 @@ use App\Entity\NewsletterQueue;
 use App\Entity\NewsletterTemplate;
 use App\Repository\NewsletterRepository;
 use App\Repository\NewsletterTemplateRepository;
+use App\Service\TokenService;
 use DatePeriod;
 use Doctrine\ORM\EntityManagerInterface;
 use Proxies\__CG__\App\Entity\Newsletter;
@@ -26,11 +27,14 @@ class NewsletterCreateQueueCommand extends Command
     private EntityManagerInterface $em;
     private NewsletterTemplateRepository $templateRepository;
     private NewsletterRepository $newsletterRepository;
-    public function __construct(EntityManagerInterface $entityManager, NewsletterTemplateRepository $templateRepository, NewsletterRepository $newsletterRepository)
+
+    private TokenService $tokenService;
+    public function __construct(EntityManagerInterface $entityManager, NewsletterTemplateRepository $templateRepository, NewsletterRepository $newsletterRepository, TokenService $tokenService)
     {
         $this->em = $entityManager;
         $this->templateRepository = $templateRepository;
         $this->newsletterRepository = $newsletterRepository;
+        $this->tokenService = $tokenService;
         parent::__construct();
     }
 
@@ -63,6 +67,7 @@ class NewsletterCreateQueueCommand extends Command
                                 $queue->setTemplate($template);
                                 $queue->setReceiverEmail($newsletter->getEmail());
                                 $queue->setSendDate($today);
+                                $queue->setToken($this->tokenService->generateUnsubscribeToken($newsletter->getEmail()));
                                 $queue->setSend(false);
                                 $queue->setUserCount($school->getUsers()->count());
                                 $this->em->persist($queue);
@@ -79,6 +84,7 @@ class NewsletterCreateQueueCommand extends Command
                             $queue->setTemplate($template);
                             $queue->setReceiverEmail($newsletter->getEmail());
                             $queue->setSendDate($today);
+                            $queue->setToken($this->tokenService->generateUnsubscribeToken($newsletter->getEmail()));
                             $queue->setSend(false);
                             $queue->setUserCount(0);
                             $this->em->persist($queue);

@@ -29,6 +29,9 @@ class NewsletterQueue
     #[ORM\Column]
     private ?int $userCount = null;
 
+    #[ORM\Column(length: 64, nullable: true)]
+    private ?string $token = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -90,6 +93,18 @@ class NewsletterQueue
     public function setUserCount(int $userCount): static
     {
         $this->userCount = $userCount;
+
+        return $this;
+    }
+
+    public function getToken(): ?string
+    {
+        return $this->token;
+    }
+
+    public function setToken(string $token): static
+    {
+        $this->token = $token;
 
         return $this;
     }

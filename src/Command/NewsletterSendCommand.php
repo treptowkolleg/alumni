@@ -140,6 +140,7 @@ class NewsletterSendCommand extends Command
 
 
                 try {
+                    $email->getHeaders()->addTextHeader('List-Unsubscribe', '<https://alumni-portal.org/unsubscribe?email='.urlencode($receiver->getReceiverEmail()).'&token='.urlencode($receiver->getToken()).'>');
                     $email->returnPath('service@alumni-portal.org');
                     $this->mailer->send($email);
                     $receiver->setSend(true);
