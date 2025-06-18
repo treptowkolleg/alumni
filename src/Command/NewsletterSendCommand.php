@@ -140,7 +140,7 @@ class NewsletterSendCommand extends Command
 
 
                 try {
-                    $email->returnPath('bounce@treptowkolleg.de');
+                    $email->returnPath('service@alumni-portal.org');
                     $this->mailer->send($email);
                     $receiver->setSend(true);
                 } catch (\Exception|TransportExceptionInterface $e) {
@@ -153,6 +153,8 @@ class NewsletterSendCommand extends Command
 
                     $smtpCode = $matches[1] ?? null; // z. B. 550
                     $smtpStatus = $matches[2] ?? null; // z. B. 5.1.1
+
+                    $output->writeln($message);
 
                     // Prüfen auf bekannte Codes für "Empfänger existiert nicht"
                     if (in_array($smtpCode, ['550', '553', '554']) || $smtpStatus === '5.1.1') {
