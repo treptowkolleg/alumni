@@ -64,7 +64,7 @@ class NewsletterSendCommand extends Command
 
         $svgBase64 = 'data:image/svg+xml;base64,' . base64_encode(file_get_contents($logoPath));
 
-        $queue = $this->em->getRepository(NewsletterQueue::class)->findBy(['send' => false], orderBy: ['send' => 'ASC'], limit: 20);
+        $queue = $this->em->getRepository(NewsletterQueue::class)->findBy(['send' => false], orderBy: ['send' => 'ASC'], limit: 10);
 
         foreach ($queue as $receiver) {
             $now = new \DateTimeImmutable();
