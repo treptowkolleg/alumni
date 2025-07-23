@@ -58,7 +58,7 @@ class BlogPostRepository extends ServiceEntityRepository
             ->leftJoin('b.type', 't')
             ->orWhere('t.title IN (:a)')
             ->setParameter('a', $types)
-            ->orderBy('b.updatedAt', 'DESC')
+            ->orderBy('b.created', 'DESC')
             ->setFirstResult(($offset - 1) * $limit);
 
         if($user) {
@@ -82,7 +82,7 @@ class BlogPostRepository extends ServiceEntityRepository
             ->andWhere('t.title = :val')
             ->setParameter('a', true)
             ->setParameter('val', $value)
-            ->orderBy('b.updatedAt', 'DESC')
+            ->orderBy('b.created', 'DESC')
             ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult()
@@ -95,7 +95,7 @@ class BlogPostRepository extends ServiceEntityRepository
             ->andWhere('b.isPublished = :a')
             ->andWhere('b.isLeadPost = :a')
             ->setParameter('a', true)
-            ->orderBy('b.updatedAt', 'DESC')
+            ->orderBy('b.created', 'DESC')
             ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult()

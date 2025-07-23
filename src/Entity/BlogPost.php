@@ -64,6 +64,10 @@ class BlogPost
     private ?bool $isPublished = false;
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
+    #[Gedmo\Timestampable(on: 'create')]
+    private ?\DateTimeImmutable $created = null;
+
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
     #[Gedmo\Timestampable]
     public ?\DateTimeImmutable $updatedAt = null;
 
@@ -213,6 +217,18 @@ class BlogPost
 
         return $this;
     }
+
+    public function getCreated(): ?\DateTimeImmutable
+    {
+        return $this->created;
+    }
+
+    public function setCreated(?\DateTimeImmutable $created): void
+    {
+        $this->created = $created;
+    }
+
+
 
     public function getUpdatedAt(): ?\DateTimeImmutable
     {

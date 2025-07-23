@@ -17,6 +17,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\SearchDto;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
@@ -79,6 +80,7 @@ class BlogPostCrudController extends AbstractCrudController
             TextField::new('title')->onlyOnIndex(),
             AssociationField::new('type')->onlyOnIndex(),
             AssociationField::new('category')->onlyOnIndex(),
+            DateTimeField::new('created')->onlyOnIndex(),
             BooleanField::new('isPublished')->onlyOnIndex(),
             // Nur von speziellen Gruppen möglich.
             BooleanField::new('isLeadPost')->onlyOnIndex()->setPermission('ROLE_ADMIN'),
@@ -106,6 +108,7 @@ class BlogPostCrudController extends AbstractCrudController
                         ->orderBy('e.title', 'ASC'); // Order by the 'title' field in ascending order
                 }),
             AssociationField::new('author')->setRequired(true)->onlyOnForms()->setPermission('ROLE_ADMIN'),
+            DateTimeField::new('created')->onlyOnForms()->setPermission('ROLE_ADMIN'),
             BooleanField::new('isPublished')->onlyOnForms(),
             BooleanField::new('isLeadPost')->onlyOnForms(),
 
