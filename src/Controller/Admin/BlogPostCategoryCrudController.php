@@ -41,6 +41,7 @@ class BlogPostCategoryCrudController extends AbstractCrudController
     {
         return [
             TextField::new('label'),
+            AssociationField::new('parent')->hideOnForm(),
             AssociationField::new('parent')->setRequired(false)->onlyOnForms()
                 ->setFormTypeOption('query_builder', function (BlogPostCategoryRepository $repository) {
                     return $repository->createQueryBuilder('e')
