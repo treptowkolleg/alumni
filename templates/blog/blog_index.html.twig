@@ -30,7 +30,7 @@
                                             <img class="card-img" src="https://dummyimage.com/800x480/294a70/294a70&text=Preview" alt="{{ post }}" style="filter: brightness(60%);">
                                         {% endif %}
                                         <div class="card-img-overlay d-flex flex-column h-100">
-                                            <div class="text-uppercase small card-text">{{ post.type }}</div>
+                                            <div class="text-uppercase small card-text">{{ post.type }} | {{ post.category.label ?? 'ohne Kategorie' }}</div>
                                             <h3 class="fw-normal h2">{{ post.title }}</h3>
 
                                             <a href="{{ path('blog_show',{'slug':post.slug}) }}" class="card-link stretched-link text-decoration-none link-white mt-auto fs-5">weiterlesen <i class="fas fa-chevron-right"></i></a>

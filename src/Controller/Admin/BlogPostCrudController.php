@@ -78,6 +78,7 @@ class BlogPostCrudController extends AbstractCrudController
             // Index
             TextField::new('title')->onlyOnIndex(),
             AssociationField::new('type')->onlyOnIndex(),
+            AssociationField::new('category')->onlyOnIndex(),
             BooleanField::new('isPublished')->onlyOnIndex(),
             // Nur von speziellen Gruppen möglich.
             BooleanField::new('isLeadPost')->onlyOnIndex()->setPermission('ROLE_ADMIN'),
@@ -90,7 +91,7 @@ class BlogPostCrudController extends AbstractCrudController
             FormField::addColumn('col-xl-9'),
             TextField::new('title')->onlyOnForms(),
             TextField::new('subtitle')->onlyOnForms()->setRequired(true),
-            AssociationField::new('category')->setRequired(true)
+            AssociationField::new('category')->setRequired(true)->onlyOnForms()
                 ->setFormTypeOption('query_builder', function (BlogPostCategoryRepository $repository) {
                     return $repository->createQueryBuilder('e')
                         ->orderBy('e.label', 'ASC'); // Order by the 'title' field in ascending order
