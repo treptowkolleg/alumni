@@ -90,7 +90,7 @@ class BlogPostCrudController extends AbstractCrudController
             FormField::addColumn('col-xl-9'),
             TextField::new('title')->onlyOnForms(),
             TextField::new('subtitle')->onlyOnForms()->setRequired(true),
-            AssociationField::new('category')->setRequired(true)->onlyOnForms()
+            AssociationField::new('category')->setRequired(true)
                 ->setFormTypeOption('query_builder', function (BlogPostCategoryRepository $repository) {
                     return $repository->createQueryBuilder('e')
                         ->orderBy('e.label', 'ASC'); // Order by the 'title' field in ascending order
