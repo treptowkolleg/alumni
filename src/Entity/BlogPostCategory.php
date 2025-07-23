@@ -41,7 +41,11 @@ class BlogPostCategory
 
     public function __toString(): string
     {
-        return $this->label;
+        $label = $this->label;
+        if($this->parent){
+            $label .= " ({$this->parent->getLabel()})";
+        }
+        return $label;
     }
 
     public function getId(): ?int
