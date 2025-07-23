@@ -9,6 +9,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Vich\UploaderBundle\Entity\File as EmbeddedFile;
 use Symfony\Component\HttpFoundation\File\File;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[Vich\Uploadable]
 #[ORM\Entity(repositoryClass: BlogPostRepository::class)]
@@ -36,6 +37,15 @@ class BlogPost
         mapping: 'blogposts', # We will remember this value. It will serve as the identifier for the section in the configuration.
         fileNameProperty: 'image.name',
         size: 'image.size'
+    )]
+    #[Assert\Image(
+        maxSize: '2M',
+        mimeTypes: ['image/jpeg', 'image/png', 'image/webp'],
+        maxWidth: 2000,
+        maxHeight: 2000,
+        mimeTypesMessage: 'Bitte ein gültiges Bildformat hochladen (JPEG, PNG, WEBP).',
+        maxWidthMessage: 'Das Bild darf maximal 2000 Pixel breit sein.',
+        maxHeightMessage: 'Das Bild darf maximal 2000 Pixel hoch sein.'
     )]
     private ?File $imageFile = null;
     #[ORM\Embedded(class: EmbeddedFile::class)]

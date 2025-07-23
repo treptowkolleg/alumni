@@ -375,7 +375,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 searchHighlight: true,
                 maxValuesShown: 1,
                 maxValuesMessage: '{number} ausgewählt',
-                closeOnSelect: false,
+                closeOnSelect: true,
                 placeholderText: 'auswählen'
             }
             initMultiSlimSelect(element,multiSettings);

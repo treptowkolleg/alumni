@@ -565,3 +565,7 @@ blockquote {
   margin-right:          $spacer;
   font-size:        $font-size-base * 1.25;
 }
+
+.ss-main .ss-arrow,.ss-main .ss-deselect {
+  display: none!important;
+}
