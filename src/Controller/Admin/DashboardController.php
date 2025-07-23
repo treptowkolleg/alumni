@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\BlogPost;
+use App\Entity\BlogPostCategory;
 use App\Entity\BlogType;
 use App\Entity\Event;
 use App\Entity\EventType;
@@ -363,7 +364,11 @@ class DashboardController extends AbstractDashboardController
                 ->setCssClass('blog-link')
                 ->setPermission('ROLE_AUTHOR')
             ;
-            yield MenuItem::linkToCrud('Kategorien', 'ti ti-category',BlogType::class)
+            yield MenuItem::linkToCrud('Categories', 'ti ti-category',BlogPostCategory::class)
+                ->setCssClass('blog-link')
+                ->setPermission('ROLE_AUTHOR')
+            ;
+            yield MenuItem::linkToCrud('Blogtypes', 'ti ti-category',BlogType::class)
                 ->setCssClass('blog-link')
                 ->setPermission('ROLE_AUTHOR')
             ;

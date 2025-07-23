@@ -88,6 +88,9 @@ class BlogPost
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $imageCityUrl = null;
 
+    #[ORM\ManyToOne(inversedBy: 'blogPosts')]
+    private ?BlogPostCategory $category = null;
+
     public function __construct()
     {
         $this->image = new EmbeddedFile();
@@ -319,6 +322,18 @@ class BlogPost
     public function setImageCityUrl(?string $imageCityUrl): static
     {
         $this->imageCityUrl = $imageCityUrl;
+
+        return $this;
+    }
+
+    public function getCategory(): ?BlogPostCategory
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?BlogPostCategory $category): static
+    {
+        $this->category = $category;
 
         return $this;
     }

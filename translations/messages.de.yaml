@@ -3,6 +3,8 @@ Lastname: Nachname
 Email: E-Mail-Adresse
 Password: Passwort
 Login: Anmelden
+BlogPostCategory: Kategorie
+Parent: Übergeordnet
 Roles: Rollen
 ROLE_USER: Standardbenutzer
 ROLE_AUTHOR: Autor
@@ -20,7 +22,8 @@ Inbound: Posteingang
 PinBoardEntries: Pinnwand
 PinboardEntry: Pinnwand
 BlogPost: Beitrag
-BlogType: Kategorie
+BlogType: Artikeltyp
+Blogtypes: Artikeltypen
 Event: Veranstaltung
 EventType: Veranstaltungstyp
 schools: Schulen
@@ -253,6 +256,7 @@ User hobbies: Hobbies
 User university: Hochschule
 User interests: Berufliche Interessen
 Category: Kategorie
+Categories: Kategorien
 Interest: Interesse
 Interests: Interessen
 Interest Categories: Interessengruppen

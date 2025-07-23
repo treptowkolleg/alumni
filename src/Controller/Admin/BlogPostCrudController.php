@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\BlogPost;
+use App\Repository\BlogPostCategoryRepository;
 use App\Repository\BlogTypeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
@@ -78,7 +79,8 @@ class BlogPostCrudController extends AbstractCrudController
             TextField::new('title')->onlyOnIndex(),
             AssociationField::new('type')->onlyOnIndex(),
             BooleanField::new('isPublished')->onlyOnIndex(),
-            BooleanField::new('isLeadPost')->onlyOnIndex(),
+            // Nur von speziellen Gruppen möglich.
+            BooleanField::new('isLeadPost')->onlyOnIndex()->setPermission('ROLE_ADMIN'),
             AssociationField::new('author')->onlyOnIndex(),
 
             // Form
@@ -88,6 +90,11 @@ class BlogPostCrudController extends AbstractCrudController
             FormField::addColumn('col-xl-9'),
             TextField::new('title')->onlyOnForms(),
             TextField::new('subtitle')->onlyOnForms()->setRequired(true),
+            AssociationField::new('category')->setRequired(true)->onlyOnForms()
+                ->setFormTypeOption('query_builder', function (BlogPostCategoryRepository $repository) {
+                    return $repository->createQueryBuilder('e')
+                        ->orderBy('e.label', 'ASC'); // Order by the 'title' field in ascending order
+                }),
             TextEditorField::new('content')->onlyOnForms(),
 
             FormField::addColumn('col-xl-3','Einstellungen'),
