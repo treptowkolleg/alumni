@@ -6,6 +6,7 @@ use App\Repository\BlogPostCategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 #[ORM\Entity(repositoryClass: BlogPostCategoryRepository::class)]
 class BlogPostCategory
@@ -17,6 +18,10 @@ class BlogPostCategory
 
     #[ORM\Column(length: 255)]
     private ?string $label = null;
+
+    #[ORM\Column(length: 255, unique: true)]
+    #[Gedmo\Slug(fields: ['label'])]
+    private $slug;
 
     /**
      * @var Collection<int, BlogPost>
@@ -63,6 +68,11 @@ class BlogPostCategory
         $this->label = $label;
 
         return $this;
+    }
+
+    public function getSlug(): string
+    {
+        return $this->slug;
     }
 
     /**

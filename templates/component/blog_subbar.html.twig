@@ -1,14 +1,6 @@
 <div class="mb-3">
     <div class="nav nav-underline">
-        {% if selected|default() == 'show' %}
-        <a href="javascript:void(0)" onclick="history.back()" class="nav-item nav-link {{ selected|default() == 'index' ? 'active' : '' }} text-nowrap">
-            <i class="ti ti-chevrons-left text-primary"></i>
-            <span class="ms-1">Zurück</span>
-        </a>
-        {% else %}
-            <div class="mb-3"></div>
-        {% endif %}
-        {% if selected|default() == 'show' and (is_granted('ROLE_SUPER_AUTHOR') or (is_granted('ROLE_AUTHOR') and post.user == app.user ))  %}
+                {% if selected|default() == 'show' and (is_granted('ROLE_SUPER_AUTHOR') or (is_granted('ROLE_AUTHOR') and post.user == app.user ))  %}
             <a class="nav-item nav-link text-nowrap" target="_blank" href="{{ ea_url()
                 .setController('App\\Controller\\Admin\\BlogPostCrudController')
                 .setAction('edit')

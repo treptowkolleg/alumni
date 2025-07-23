@@ -12,16 +12,26 @@
 <section class="py-3">
     <div class="container">
 
-        {{ include('component/blog_subbar.html.twig',{'selected':'show'}) }}
-
         <div class="row g-3">
             <div class="col-lg-8">
-                <div class="text-uppercase">{{ post.category.label ?? 'ohne Kategorie' }}</div>
-                <h3 class="h3">{{ post }}</h3>
+                <div class="nav nav-underline mb-2">
+                    <a class="nav-item nav-link text-uppercase" href="{{ url('blog_index',{'category': post.category.slug ?? 'empty' }) }}" class="text-uppercase">{{ post.category.label ?? 'ohne Kategorie' }}</a>
+                </div>
+                <h3 class="h3">
+                    {{ post }}
+                    {% if (is_granted('ROLE_SUPER_AUTHOR') or (is_granted('ROLE_AUTHOR') and post.user == app.user ))  %}
+                        <a class="text-nowrap text-decoration-none" target="_blank" href="{{ ea_url()
+                            .setController('App\\Controller\\Admin\\BlogPostCrudController')
+                            .setAction('edit')
+                            .setEntityId(post.id)
+                        }}">
+                            <i class="ti ti-pencil text-primary"></i>
+                        </a>
+                    {% endif %}
+                </h3>
                 <h4 class="h5 text-primary">{{ post.subtitle }}</h4>
                 {% if post.blogPostImage %}
-                    <img src="{{ asset(post.blogPostImageUrl)|imagine_filter('lead_thumbnail')  }}" alt="{{ post }}" class="img-fluid mb-1 d-none d-lg-block">
-                    <img src="{{ asset(post.blogPostImageUrl)|imagine_filter('post_thumbnail')  }}" alt="{{ post }}" class="img-fluid mb-1 d-block d-lg-none">
+                    <img src="{{ asset(post.blogPostImageUrl)|imagine_filter('post_thumbnail')  }}" alt="{{ post }}" class="img-fluid mb-1">
                     {% if post.imageCite %}
                         <div class="d-block mb-3 small">Foto:
                         {% if post.imageCityUrl %}
@@ -44,7 +54,7 @@
                 <div>
                     {{ post.content|raw }}
                 </div>
-                <div class="mt-5 mb-0 small"><span>{{ post.updatedAt|date('d.m.Y') }}</span> | <span class="text-uppercase">{{ post.type }}</span></div>
+                <div class="mt-5 mb-0 small"><span>{{ post.created|date('d.m.Y') }}</span> | <span class="text-uppercase">{{ post.type }}</span></div>
                 <div class="fst-italic">Verfasst von: {{ post.author ? post.author.shortName : 'none' }}</div>
                 <div class="mt-3">
                     <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.de" target="_blank">
