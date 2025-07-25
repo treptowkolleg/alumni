@@ -52,6 +52,17 @@ class UserCrudController extends AbstractCrudController
             TextField::new('email'),
             TextField::new('firstname'),
             TextField::new('lastname'),
+            AssociationField::new('userProfiles')
+                ->setLabel('Profil')
+                ->onlyOnIndex() // oder where you need it
+                ->formatValue(function ($value, $entity) {
+                    // Wenn userProfiles eine Doctrine Collection ist:
+                    $profiles = $entity->getUserProfiles();
+                    if ($profiles && count($profiles) > 0) {
+                        return $profiles->first(); // gibt z.B. den Namen oder die ID zurück
+                    }
+                    return null;
+                }),
             ChoiceField::new('roles')->setChoices([
                 'ROLE_USER' => 'ROLE_USER',
                 'ROLE_PLANNER' => 'ROLE_PLANNER',
