@@ -63,6 +63,10 @@ class UserCrudController extends AbstractCrudController
                     }
                     return null;
                 }),
+            AssociationField::new('school')
+            ->setLabel('School')
+            ->onlyOnIndex(),
+            TextField::new('userType'),
             ChoiceField::new('roles')->setChoices([
                 'ROLE_USER' => 'ROLE_USER',
                 'ROLE_PLANNER' => 'ROLE_PLANNER',
@@ -77,6 +81,7 @@ class UserCrudController extends AbstractCrudController
                 'ROLE_SCHOOL' => 'ROLE_SCHOOL',
                 'ROLE_ADMIN' => 'ROLE_ADMIN',
             ])->allowMultipleChoices(),
+            BooleanField::new('isVerified')->onlyOnIndex(),
             ChoiceField::new('userType')->onlyWhenCreating()->setFormTypeOptions([
                 'choices' => ['student' => 'Student', 'teacher' => 'Teacher','employer' => 'Employer'],
             ]),
