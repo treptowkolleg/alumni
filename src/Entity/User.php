@@ -194,6 +194,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
     #[ORM\Column(nullable: true)]
     private ?bool $gruschelIsActive = null;
 
+    /**
+     * @var Collection<int, UserImageUpload>
+     */
+    #[ORM\OneToMany(targetEntity: UserImageUpload::class, mappedBy: 'user')]
+    private Collection $userImageUploads;
+
     public function __construct()
     {
         $this->blogPosts = new ArrayCollection();
@@ -211,6 +217,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
         $this->sendDirectMessages = new ArrayCollection();
         $this->gruschels = new ArrayCollection();
         $this->sendGruschels = new ArrayCollection();
+        $this->userImageUploads = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -1040,6 +1047,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
     public function setGruschelIsActive(?bool $gruschelIsActive): static
     {
         $this->gruschelIsActive = $gruschelIsActive;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, UserImageUpload>
+     */
+    public function getUserImageUploads(): Collection
+    {
+        return $this->userImageUploads;
+    }
+
+    public function addUserImageUpload(UserImageUpload $userImageUpload): static
+    {
+        if (!$this->userImageUploads->contains($userImageUpload)) {
+            $this->userImageUploads->add($userImageUpload);
+            $userImageUpload->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserImageUpload(UserImageUpload $userImageUpload): static
+    {
+        if ($this->userImageUploads->removeElement($userImageUpload)) {
+            // set the owning side to null (unless already changed)
+            if ($userImageUpload->getUser() === $this) {
+                $userImageUpload->setUser(null);
+            }
+        }
 
         return $this;
     }

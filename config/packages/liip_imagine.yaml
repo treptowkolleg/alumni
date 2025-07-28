@@ -13,6 +13,11 @@ liip_imagine:
                 thumbnail: { size: [800, 480], mode: outbound }
                 scale:
                     dim: [ 800, 480 ]
+        user_images:
+            quality: 75
+            filters:
+                scale:
+                    dim: [800, 800]
         lead_thumbnail:
             quality: 75
             filters:

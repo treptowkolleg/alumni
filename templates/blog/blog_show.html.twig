@@ -52,7 +52,7 @@
                     </figure>
                 {% endif %}
                 <div>
-                    {{ post.content|raw }}
+                    {{ post.content|shortcodes|raw }}
                 </div>
                 <div class="mt-5 mb-0 small"><span>{{ post.created|date('d.m.Y') }}</span> | <span class="text-uppercase">{{ post.type }}</span></div>
                 <div class="fst-italic">Verfasst von: {{ post.author ? post.author.shortName : 'none' }}</div>

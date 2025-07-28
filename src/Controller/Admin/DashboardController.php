@@ -24,6 +24,7 @@ use App\Entity\School;
 use App\Entity\Survey;
 use App\Entity\University;
 use App\Entity\User;
+use App\Entity\UserImageUpload;
 use App\Entity\UserProfile;
 use App\Repository\BlogPostRepository;
 use App\Repository\SurveyRepository;
@@ -369,6 +370,10 @@ class DashboardController extends AbstractDashboardController
                 ->setPermission('ROLE_AUTHOR')
             ;
             yield MenuItem::linkToCrud('Blogtypes', 'ti ti-category',BlogType::class)
+                ->setCssClass('blog-link')
+                ->setPermission('ROLE_AUTHOR')
+            ;
+            yield MenuItem::linkToCrud('UserImageUploads', 'ti ti-library-photo',UserImageUpload::class)
                 ->setCssClass('blog-link')
                 ->setPermission('ROLE_AUTHOR')
             ;
