@@ -81,8 +81,8 @@ class UserprofileFormType extends AbstractType
                 'query_builder' => function (HobbyRepository $er) {
                     return $er->createQueryBuilder('e')
                         ->leftJoin('e.category', 'c')
-                        ->andWhere('e.isPrivate = :isPrivate')
-                        ->setParameter('isPrivate', false)
+                        ->andWhere('e.isPrivate != :isPrivate')
+                        ->setParameter('isPrivate', true)
                         ->orderBy('c.label', 'ASC')
                         ->addOrderBy('e.label', 'ASC');
                 },
