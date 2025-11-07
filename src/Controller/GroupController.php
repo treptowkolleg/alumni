@@ -89,7 +89,7 @@ class GroupController extends AbstractController
     public function talkShow(Request $request, GroupSubject $subject, UserProfileRepository $profileRepository, EntityManagerInterface $entityManager): Response
     {
         $userProfile = $profileRepository->findOneBy(['user' => $this->getUser()])->first();
-        if ($subject->getHobby()->getUserProfiles()->contains($userProfile)) {
+        if (!$subject->getHobby()->getUserProfiles()->contains($userProfile)) {
             $this->addFlash("warning", "Du musst eingeloggt sein und Zugriff besitzen!");
             return $this->redirectToRoute('group_hobby_show', ['slug' => $subject->getHobby()->getSlug()]);
         }
