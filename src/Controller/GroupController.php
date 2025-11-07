@@ -10,6 +10,7 @@ use App\Form\GroupSubjectType;
 use App\Form\SubjectPostType;
 use App\Repository\HobbyCategoryRepository;
 use App\Repository\InterestCategoryRepository;
+use App\Repository\UserProfileRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -35,6 +36,10 @@ class GroupController extends AbstractController
     #[Route('/hobby/{slug}', name: 'hobby_show')]
     public function hobbyShow(Request $request, Hobby $hobby, EntityManagerInterface $entityManager): Response
     {
+        if(!$this->getUser()){
+            $this->addFlash("warning", "Du musst eingeloggt sein und Zugriff besitzen!");
+            return $this->redirectToRoute('group_hobby_index');
+        }
         $groupSubject = new GroupSubject();
         $form = $this->createForm(GroupSubjectType::class, $groupSubject);
         $form->handleRequest($request);
@@ -81,8 +86,13 @@ class GroupController extends AbstractController
     }
 
     #[Route('/plausch/{slug}', name: 'talk_show')]
-    public function talkShow(Request $request, GroupSubject $subject, EntityManagerInterface $entityManager): Response
+    public function talkShow(Request $request, GroupSubject $subject, UserProfileRepository $profileRepository, EntityManagerInterface $entityManager): Response
     {
+        $userProfile = $profileRepository->findOneBy(['user' => $this->getUser()])->first();
+        if ($subject->getHobby()->getUserProfiles()->contains($userProfile)) {
+            $this->addFlash("warning", "Du musst eingeloggt sein und Zugriff besitzen!");
+            return $this->redirectToRoute('group_hobby_show', ['slug' => $subject->getHobby()->getSlug()]);
+        }
         $subjectPost = new SubjectPost();
         $form = $this->createForm(SubjectPostType::class, $subjectPost);
         $form->handleRequest($request);
