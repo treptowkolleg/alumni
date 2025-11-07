@@ -16,29 +16,61 @@ class LinkifyExtension extends AbstractExtension
 
     public function linkify($text): array|string|null
     {
-        return preg_replace_callback('~(?<!href=["\'])((https?://)?(www\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}[^\s<]*)([.,!?])?~i', function($matches) {
-            // Falls der Link mit www. beginnt, füge "http://" hinzu
-            if (empty($matches[2])) {
-                $url = 'http://' . $matches[1];
-            } else {
-                $url = $matches[0];
-            }
+        return preg_replace_callback(
+            '~(?<!href=["\'])(((https?://)|(www\.))[a-zA-Z0-9/?&=%._+-]*[a-zA-Z0-9/])~i',
+            function ($matches) use ($text) {
+                $fullMatch = $matches[0];
 
-            // Entferne das letzte Satzzeichen aus der URL und dem Linktext
-            $urlWithoutPunctuation = rtrim($url, '.,!?');
-            $linkText = preg_replace('~https?://~', '', $matches[1]);
-            $linkTextWithoutPunctuation = rtrim($linkText, '.,!?');
+                // Extrahiere mögliche führende und abschließende Sonderzeichen
+                // Die eigentliche URL sollte nicht mit ( beginnen oder mit ) enden, wenn diese zum Satz gehören
+                $leading = '';
+                $trailing = '';
 
-            // Erstelle den Link-Tag mit der URL ohne Satzzeichen
-            $finalLink = '<a href="' . $urlWithoutPunctuation . '" target="_blank" rel="noopener noreferrer">' . $linkTextWithoutPunctuation . '</a>';
+                // Entferne ggf. führende öffnende Klammer, falls nicht Teil einer echten URL
+                if (str_starts_with($fullMatch, '(')) {
+                    $leading = '(';
+                    $fullMatch = substr($fullMatch, 1);
+                }
 
-            // Wenn es ein Satzzeichen gab, hänge es an das Ende des Links an (im Text)
-            if ($matches[4]) {
-                return $finalLink . $matches[4];
-            }
+                // Entferne abschließende Satzzeichen/Klammern, die nicht zur URL gehören
+                // Erlaubte URL-Zeichen am Ende: Buchstaben, Ziffern, Slash, Gleich, Prozent, Bindestrich, Punkt, Unterstrich
+                // Alles andere wie ), ], !, ?, ,, ., ; am Ende wird als Trennzeichen betrachtet
+                $trailingChars = '';
+                while (strlen($fullMatch) > 0) {
+                    $lastChar = substr($fullMatch, -1);
+                    if (in_array($lastChar, ['.', ',', ';', '!', '?', ':', ')', ']', '"', '\''])) {
+                        $trailingChars = $lastChar . $trailingChars;
+                        $fullMatch = substr($fullMatch, 0, -1);
+                    } else {
+                        break;
+                    }
+                }
+                $trailing = $trailingChars;
 
-            // Wenn kein Satzzeichen, gebe nur den Link aus
-            return $finalLink;
-        }, $text);
+                // Stelle sicher, dass die URL nicht leer ist
+                if ($fullMatch === '') {
+                    return $leading . $matches[0] . $trailing; // Fallback: gib Original zurück
+                }
+
+                // Baue korrekte URL
+                if (str_starts_with($fullMatch, 'www.')) {
+                    $url = 'http://' . $fullMatch;
+                } else {
+                    $url = $fullMatch;
+                }
+
+                // Link-Text: entferne Protokoll
+                $linkText = preg_replace('~https?://~', '', $fullMatch);
+
+                // HTML-Escaping für Sicherheit (optional, aber empfohlen)
+                $url = htmlspecialchars($url, ENT_QUOTES, 'UTF-8');
+                $linkText = htmlspecialchars($linkText, ENT_QUOTES, 'UTF-8');
+
+                $finalLink = '<a href="' . $url . '" target="_blank" rel="noopener noreferrer">' . $linkText . '</a>';
+
+                return $leading . $finalLink . $trailing;
+            },
+            $text
+        );
     }
 }
