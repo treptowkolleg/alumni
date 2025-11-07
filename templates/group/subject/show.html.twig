@@ -145,7 +145,7 @@
                                             <div class="me-1">Alumnymous</div>
                                             <div class="small text-muted">{{ entry.created|ago }}</div>
                                         {% endif %}
-                                        <div class="mb-0">{{ entry.text|raw|linkify }}</div>
+                                        <div class="mb-0">{{ entry.text|striptags|nl2br|linkify|hashtag|raw }}</div>
                                     </div>
                                 </div>
                             {% else %}
