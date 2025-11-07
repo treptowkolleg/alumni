@@ -62,7 +62,7 @@
                                 {% endif %}
                                 <div class="list-group list-group-flush bg-white">
                                     {% for subject in element.groupSubjects %}
-                                        {% if ( app.user.profiles.first in subject.hobby.userProfiles and subject.hobby.isPrivate ) or subject.hobby.isPrivate == false %}
+                                        {% if ( app.user.userProfiles.first in subject.hobby.userProfiles and subject.hobby.isPrivate ) or subject.hobby.isPrivate == false %}
                                         <a href="{{ url('group_talk_show',{'slug':subject.slug}) }}" class="list-group-item list-group-item-action ripplelink swipe-link-start py-3">
                                             <span class="text-primary">{{ subject }}</span><br>
                                             <small>{{ subject.description }}</small>
