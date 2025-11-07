@@ -7,6 +7,7 @@ use App\Entity\BlogPostCategory;
 use App\Entity\BlogType;
 use App\Entity\Event;
 use App\Entity\EventType;
+use App\Entity\GroupSubject;
 use App\Entity\Hobby;
 use App\Entity\HobbyCategory;
 use App\Entity\Inbound;
@@ -434,6 +435,10 @@ class DashboardController extends AbstractDashboardController
                 ->setPermission('ROLE_ADMIN')
             ;
 
+            yield MenuItem::linkToCrud('GroupSubjects', 'ti ti-roller-skating',GroupSubject::class)
+                ->setCssClass('admin-link')
+                ->setPermission('ROLE_ADMIN')
+            ;
             yield MenuItem::linkToCrud('Hobbies', 'ti ti-roller-skating',Hobby::class)
                 ->setCssClass('admin-link')
                 ->setPermission('ROLE_ADMIN')

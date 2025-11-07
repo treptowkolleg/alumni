@@ -50,6 +50,9 @@ class Hobby
     #[ORM\OneToMany(targetEntity: GroupSubject::class, mappedBy: 'hobby')]
     private Collection $groupSubjects;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $isPrivate = null;
+
     public function __construct()
     {
         $this->userProfiles = new ArrayCollection();
@@ -207,6 +210,18 @@ class Hobby
                 $groupSubject->setHobby(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isPrivate(): ?bool
+    {
+        return $this->isPrivate;
+    }
+
+    public function setIsPrivate(?bool $isPrivate): static
+    {
+        $this->isPrivate = $isPrivate;
 
         return $this;
     }
